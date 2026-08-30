@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 003 — Automation agent workflow for business research needs — Robby Aliasa Akbar</title>
+  <meta name="description" content="What does it actually take to optimally use AI as an autonomous research assistant? Is it just the model? As it turns out, no.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+
+  <!-- ===== SEO: Open Graph / Twitter / Canonical ===== -->
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp003.html">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp003.html">
+  <meta property="og:title" content="Experiment 003 — Automation agent workflow for business research needs">
+  <meta property="og:description" content="What does it actually take to optimally use AI as an autonomous research assistant? Is it just the model? As it turns out, no.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments003/experiment003.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 003 — Automation agent workflow for business research">
+  <meta name="twitter:description" content="What does it actually take to optimally use AI as an autonomous research assistant? Is it just the model? As it turns out, no.">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments003/experiment003.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Automation agent workflow for business research needs",
+        "description": "What does it actually take to optimally use AI as an autonomous research assistant? Is it just the model? As it turns out, no.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments003/experiment003.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp003.html",
+        "author": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar",
+          "url": "https://robbyaliasaakbar.github.io/profile.html"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://robbyaliasaakbar.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Experiments",
+            "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Experiment 003",
+            "item": "https://robbyaliasaakbar.github.io/exp003.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts: Manrope (display) + Inter (body) + JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS (CDN — no build step required) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#0C0C0C',
+            paper:  '#FFFFFF',
+            accent: '#D70000'
+          },
+          fontFamily: {
+            display: ['Manrope', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+            mono:    ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-paper text-ink font-body antialiased">
+
+  <!-- ================= NAVBAR ================= -->
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+
+      <!-- Left: Logo text -->
+      <a href="index.html" class="font-display font-extrabold tracking-tight text-sm md:text-base">
+        ROBBY ALIASA AKBAR<span class="text-accent">.</span>
+      </a>
+
+      <!-- Right: Desktop nav -->
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="index.html"            class="nav-link">Home</a>
+        <a href="profile.html"          class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html"          class="nav-link">Contact</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false"
+              class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="index.html"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html"          class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html"          class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= EXPERIMENT HEADER ================= -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal>
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 003</p>
+            <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+          </div>
+
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">
+            Automation agent workflow for business research needs.
+          </h1>
+
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">
+            What does it actually take to optimally use AI as an autonomous research assistant?
+            Is it just the model? As it turns out, no.
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SYSTEM REQUIREMENTS ================= -->
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>System Requirements</p>
+
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">MCP Tools</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Scrappling</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Jinja</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Custom</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">System Instruction</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Deterministic</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Backend</p>
+            <p class="mt-2 text-sm font-medium leading-snug">ROCm Native By The Rock</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">OS</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Ubuntu 26.04 LTS</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Inference Engine</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Ollama</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Frontend UI</p>
+            <p class="mt-2 text-sm font-medium leading-snug">OpenWebUI</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Gemma-4-26B-A4B-Q4_K_XL-GGUF</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Context</p>
+            <p class="mt-2 text-sm font-medium leading-snug">262144</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Status</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Stable</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREENSHOT ================= -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Screenshot</p>
+
+        <figure class="mt-8" data-reveal="150">
+          <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+            <img src="images/experiments003/experiment003.webp"
+                 alt="Screenshot of Experiment 003 — automation agent workflow for business research"
+                 loading="lazy" decoding="async"
+                 class="w-full h-auto">
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ================= VISUALIZATION — STEP CHART ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Visualization</p>
+
+        <div class="mt-8" data-reveal="100">
+          <h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">
+            Output quality based on system optimization.
+          </h2>
+          <p class="mt-2 text-sm text-neutral-600">
+            The percentage is determined based on the degree of coherence between the research
+            output and the research request.
+          </p>
+        </div>
+
+        <div class="mt-8 border border-black/10 rounded-2xl p-6 sm:p-10 bg-paper" data-reveal="200">
+          <div data-chart="step"
+               data-y-max="100"
+               data-value-suffix="%"
+               data-data='[{"label":"MCP","value":51},{"label":"MCP+RAG","value":58},{"label":"MCP+RAG+KVCM","value":69},{"label":"MCP+RAG+KVCM+LP","value":71},{"label":"MCP+RAG+KVCM+LP+DSP","value":87},{"label":"MCP+RAG+KVCM+LP+DSP+FTD","value":99}]'></div>
+          <div class="mt-4 flex items-center justify-between text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">
+            <span>Optimization stage</span>
+            <span>Success rate (%) / Output quality (%)</span>
+            <span>Max — 99%</span>
+          </div>
+        </div>
+
+        <!-- Abbreviation glossary -->
+        <div class="mt-8" data-reveal="250">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-neutral-400">Abbreviation Glossary</p>
+          <dl class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+            <div class="border border-black/10 rounded-xl p-5">
+              <dt class="font-display font-extrabold text-sm text-accent">MCP</dt>
+              <dd class="mt-1 text-sm text-neutral-600 leading-relaxed">External MCP tools</dd>
+            </div>
+
+            <div class="border border-black/10 rounded-xl p-5">
+              <dt class="font-display font-extrabold text-sm text-accent">RAG</dt>
+              <dd class="mt-1 text-sm text-neutral-600 leading-relaxed">Retrieval-Augmented Generation for domain-specific document understanding</dd>
+            </div>
+
+            <div class="border border-black/10 rounded-xl p-5">
+              <dt class="font-display font-extrabold text-sm text-accent">KVCM</dt>
+              <dd class="mt-1 text-sm text-neutral-600 leading-relaxed">KV Cache Management</dd>
+            </div>
+
+            <div class="border border-black/10 rounded-xl p-5">
+              <dt class="font-display font-extrabold text-sm text-accent">LP</dt>
+              <dd class="mt-1 text-sm text-neutral-600 leading-relaxed">Layer Placement</dd>
+            </div>
+
+            <div class="border border-black/10 rounded-xl p-5">
+              <dt class="font-display font-extrabold text-sm text-accent">DSP</dt>
+              <dd class="mt-1 text-sm text-neutral-600 leading-relaxed">Deterministic System Prompt</dd>
+            </div>
+
+            <div class="border border-black/10 rounded-xl p-5">
+              <dt class="font-display font-extrabold text-sm text-accent">FTD</dt>
+              <dd class="mt-1 text-sm text-neutral-600 leading-relaxed">Fine Tuning Domain</dd>
+            </div>
+
+          </dl>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= EXPERIMENT DETAILS ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+
+        <div class="mt-12 space-y-12">
+
+          <!-- PROBLEM -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Problem</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              My challenge is figuring out how to enable an LLM to understand my research needs,
+              particularly within the context of business requirements research.
+            </p>
+          </div>
+
+          <!-- HYPOTHESIS -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Hypothesis</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              When conducting research, we humans require an understanding of the business domain
+              and the necessary tools such as business documentation or prior work experience (for
+              foundational knowledge) and web browsers (as the operational tool). Yet, it goes
+              beyond that; we must be able to interact with website elements, take research notes,
+              and synthesize the findings. The same applies to LLMs; my reasoning leads to the
+              conclusion that AI requires tools, business documents, and an iterative process
+              regarding the specific business being researched.
+            </p>
+          </div>
+
+          <!-- EXPERIMENT -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Experiment</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              I provide comprehensive business documentation known as RAG in the world of LLMs
+              along with the right tools. I then build an integrated system that combines RAG,
+              external MCP tools (for browsing and data fetching/web scraping used by the LLMs),
+              and a notes function.
+            </p>
+          </div>
+
+          <!-- FAILURE AND NEW ITERATION -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Failure and New Iteration</span>
+            </div>
+            <div class="lg:col-span-9">
+              <p class="text-base text-neutral-700 leading-relaxed">
+                Based on the tests I conducted, it turns out that RAG, external MCP tools, and
+                Notes alone are insufficient. Midway through the research process, the model loses
+                its ability to maintain short-term context memory because the prompts being
+                processed are extensive and numerous. Therefore, the entire interconnected system
+                requires optimization: RAG, MCP tools, KV cache management, layer placement, and
+                finally deterministic instructions (system prompts) that the model can easily
+                grasp without stifling its creativity.
+              </p>
+              <blockquote class="quote-block mt-6 text-base text-ink leading-relaxed">
+                An additional step can be taken if necessary (domain-specific fine-tuning using a
+                private dataset rather than a public one). If this is done, you will obtain output
+                that precisely matches your requirements.
+              </blockquote>
+            </div>
+          </div>
+
+          <!-- ITERATION -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Iteration</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              When all these elements come together as a unified whole, the results are highly
+              effective, even if the process takes a bit longer. However, this is a reasonable
+              trade-off, considering that the work is being performed by local LLMs on
+              consumer-grade hardware rather than by massive frontier models with unlimited
+              resources.
+            </p>
+          </div>
+
+          <!-- EVIDENCE -->
+          <div data-reveal>
+            <div class="grid lg:grid-cols-12 gap-4 lg:gap-10">
+              <div class="lg:col-span-3">
+                <span class="detail-label">Evidence</span>
+              </div>
+              <div class="lg:col-span-9">
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-6">
+                  You can review the screenshots I provided earlier. They allow you to assess
+                  various aspects such as token usage, the number of tool calls made per request,
+                  and the number of URLs or websites accessed before the final output is
+                  generated. I have also included charts illustrating how the overall system
+                  configuration optimizes results; for instance, comparing the model's coherence
+                  when using only RAG and tools versus the performance gains achieved by adding
+                  KV cache management optimization, and so on.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Workflow Complexity</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">33 <span class="text-xs font-semibold text-neutral-500">tool calling</span></p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Tool Success Rate</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">~99%</p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Total Research Time</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">~51 <span class="text-xs font-semibold text-neutral-500">Minutes On 1x Turn</span></p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Self-Correction</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">Active</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RESULT -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Result</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              Only after everything is optimized as a unified whole can truly optimal results be
+              realized. The output is spot on — adhering to instructions and incorporating self
+              correction, all achieved with just a single request.
+            </p>
+          </div>
+
+          <!-- WHAT I LEARNED -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">What I Learned</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              To achieve optimal results, I shouldn't keep thinking that "this model lacks
+              sophistication" or "it turns out the model isn't that good." That mindset is
+              actually flawed because it relies on a perspective limited to a single environment.
+              In contrast, when looking at current AI applications such as ChatGPT, Claude,
+              Gemini, Qwen Studio, and others — engineers don't focus solely on the "model"
+              itself, they consider the entire operational infrastructure, recognizing that the
+              model is just one of many components requiring optimization.
+            </p>
+          </div>
+
+          <!-- PRACTICAL IMPLICATION -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Practical Implication</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              The example I have demonstrated in this experiment represents just one of the many
+              existing types of workflow agents. If you wish to use this approach, ensure you
+              fully understand your environment.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
+            For those of you unable to read this data from technical standpoint,
+            here is the conclusion
+          </h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>This experiment showed that getting an AI to perform complex business research
+               isn't simply a matter of using a more powerful model.</p>
+            <p>A useful AI system needs more than a model. It needs the right knowledge, the
+               right tools, a way to keep track of what it has learned, and a workflow that
+               allows it to check and correct its own work.</p>
+            <p>In this experiment, the initial setup was not enough. As the research became
+               longer and more complex, the system began losing coherence. Instead of replacing
+               the model, I optimized the entire system around it.</p>
+            <p>The result was a workflow capable of performing a complex research task through
+               33 tool calls, with approximately 99% tool-call success, self-correction enabled,
+               and a complete research process taking roughly 51 minutes from a single request.</p>
+            <p>The important takeaway is that AI capability doesn't come from the model alone.
+               It comes from how the entire system is designed around it.</p>
+            <p>A model is the engine. The real capability comes from the machine built around it.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= FOOTER CTA ================= -->
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal>
+          <a href="experiments-list.html" class="arrow-link font-display text-sm uppercase">
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+          <a href="contact.html" class="arrow-link font-display text-sm uppercase">
+            Have a problem worth exploring? <span aria-hidden="true">-&gt;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-dark-section text-white">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8">
+
+      <div class="grid gap-12 md:grid-cols-3">
+
+        <!-- Left: brand -->
+        <div>
+          <p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p>
+          <p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">
+            AI Systems Builder &amp; Experimenter
+          </p>
+          <p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">
+            Exploring AI systems, local LLMs, automation workflows, and practical tools that
+            actually work in real business operations.<br>
+            Building what matters, and checking whether AI is truly useful in everyday work.
+          </p>
+        </div>
+
+        <!-- Middle: navigate -->
+        <div class="md:justify-self-center">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="index.html"            class="footer-link">Home</a></li>
+            <li><a href="profile.html"          class="footer-link">Profile</a></li>
+            <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
+            <li><a href="contact.html"          class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Right: connect -->
+        <div class="md:justify-self-end">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="https://www.linkedin.com/in/ibbor-arts-001a2a267" target="_blank" rel="noopener" class="footer-link">Linkedin</a></li>
+            <li><a href="https://www.reddit.com/user/Full_Director87/"    target="_blank" rel="noopener" class="footer-link">Reddit</a></li>
+            <li><a href="https://www.instagram.com/ybboraa/"              target="_blank" rel="noopener" class="footer-link">Instagram</a></li>
+            <li><a href="mailto:ibborarts@gmail.com"                       class="footer-link">Email</a></li>
+            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">Whatsapp</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p>
+        <p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

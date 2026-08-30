@@ -1,0 +1,447 @@
+/* ============================================================
+   ROBBY ALIASA AKBAR — Portfolio Website
+   Custom stylesheet (complements Tailwind CDN)
+   Palette : White #FFFFFF · Black #0C0C0C · Red #D70000
+   Fonts   : Manrope (display) · Inter (body)
+   ============================================================ */
+
+:root {
+  --ink: #0C0C0C;
+  --paper: #FFFFFF;
+  --accent: #D70000;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: #FFFFFF;
+}
+
+/* ------------------------------------------------------------
+   NAVBAR
+   ------------------------------------------------------------ */
+
+#site-navbar {
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color .3s ease, border-color .3s ease, backdrop-filter .3s ease;
+}
+
+#site-navbar.nav-scrolled {
+  background-color: rgba(255, 255, 255, .88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom-color: rgba(12, 12, 12, .08);
+}
+
+/* Desktop nav link — animated underline */
+.nav-link {
+  position: relative;
+  padding-bottom: 4px;
+  color: var(--ink);
+  transition: color .25s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .3s ease;
+}
+
+.nav-link:hover {
+  color: var(--accent);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Active page — red with persistent underline */
+.nav-link.nav-active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.nav-link.nav-active::after {
+  transform: scaleX(1);
+}
+
+/* Footer nav links */
+.footer-link {
+  color: rgba(255, 255, 255, .72);
+  transition: color .25s ease, padding-left .25s ease;
+}
+
+.footer-link:hover {
+  color: #FFFFFF;
+  padding-left: 6px;
+}
+
+.footer-link.footer-active {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* Hamburger → X */
+#menu-toggle .menu-bar {
+  transition: transform .3s ease, opacity .3s ease;
+}
+
+#menu-toggle.menu-open .menu-bar:nth-child(1) {
+  transform: translateY(4px) rotate(45deg);
+}
+
+#menu-toggle.menu-open .menu-bar:nth-child(2) {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+#mobile-menu {
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+#mobile-menu.menu-hidden-state {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------
+   SCROLL REVEAL ANIMATION
+   ------------------------------------------------------------ */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .7s cubic-bezier(.22, .61, .36, 1),
+              transform .7s cubic-bezier(.22, .61, .36, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ------------------------------------------------------------
+   HERO — subtle blueprint grid backdrop
+   ------------------------------------------------------------ */
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(12, 12, 12, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(12, 12, 12, .045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, #000 40%, transparent 100%);
+}
+
+/* ------------------------------------------------------------
+   COMPONENTS
+   ------------------------------------------------------------ */
+
+/* Eyebrow label */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .625rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 2rem;
+  height: 2px;
+  background-color: var(--accent);
+}
+
+/* Blockquote / pull-quote */
+.quote-block {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.25rem;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+}
+
+/* Status badge variants (all 4 states per PRD) */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .375rem .875rem;
+  border-radius: 9999px;
+  font-family: 'Manrope', sans-serif;
+  font-size: .6875rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+/* STABLE — solid black, white pulse dot */
+.status-badge.status-stable {
+  background-color: var(--ink);
+  color: #FFFFFF;
+}
+
+/* WORKING ON IT — solid outline, red pulse dot */
+.status-badge.status-working {
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  background-color: transparent;
+}
+
+.status-badge.status-working .status-dot {
+  background-color: var(--accent);
+  animation-name: status-pulse-red;
+}
+
+/* EXPLORING — dashed outline, red pulse dot */
+.status-badge.status-exploring {
+  border: 1.5px dashed rgba(12, 12, 12, .45);
+  color: rgba(12, 12, 12, .75);
+  background-color: transparent;
+}
+
+.status-badge.status-exploring .status-dot {
+  background-color: var(--accent);
+  animation-name: status-pulse-red;
+}
+
+/* FAILED — solid red, white dot (no pulse) */
+.status-badge.status-failed {
+  background-color: var(--accent);
+  color: #FFFFFF;
+}
+
+.status-badge.status-failed .status-dot {
+  background-color: #FFFFFF;
+  animation: none;
+}
+
+.status-dot {
+  width: .5rem;
+  height: .5rem;
+  border-radius: 9999px;
+  background-color: #FFFFFF;
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 255, 255, .45); }
+  50%      { opacity: .6; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0); }
+}
+
+@keyframes status-pulse-red {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(215, 0, 0, .45); }
+  50%      { opacity: .6; box-shadow: 0 0 0 4px rgba(215, 0, 0, 0); }
+}
+
+/* Experiment card */
+.exp-card {
+  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+}
+
+.exp-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--ink);
+  box-shadow: 0 20px 40px -18px rgba(12, 12, 12, .25);
+}
+
+.exp-card:hover .exp-card-arrow {
+  transform: translateX(6px);
+  color: var(--accent);
+}
+
+.exp-card-arrow {
+  transition: transform .3s ease, color .3s ease;
+}
+
+/* Arrow link (e.g. "View Experiments List ->") */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  letter-spacing: .08em;
+  transition: color .25s ease, gap .25s ease;
+}
+
+.arrow-link:hover {
+  color: var(--accent);
+  gap: .875rem;
+}
+
+/* Photo frame */
+.photo-frame {
+  position: relative;
+}
+
+.photo-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translate(14px, 14px);
+  border: 2px solid var(--accent);
+  border-radius: 1rem;
+  z-index: 0;
+}
+
+/* Dark section subtle texture */
+.bg-dark-section {
+  background-color: var(--ink);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Approach pill */
+.approach-pill {
+  transition: border-color .25s ease, background-color .25s ease, transform .25s ease;
+}
+
+.approach-pill:hover {
+  border-color: var(--ink);
+  background-color: var(--ink);
+  color: #FFFFFF;
+  transform: translateY(-3px);
+}
+
+/* Buttons */
+.btn-primary {
+  transition: background-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -10px rgba(215, 0, 0, .5);
+}
+
+.btn-outline {
+  transition: border-color .25s ease, color .25s ease, transform .25s ease;
+}
+
+.btn-outline:hover {
+  border-color: var(--ink);
+  background-color: var(--ink);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+/* ------------------------------------------------------------
+   EXPERIMENT DETAIL PAGE COMPONENTS
+   ------------------------------------------------------------ */
+
+/* Chart interactions */
+.chart-bar {
+  transition: fill .25s ease;
+}
+
+.chart-bar:hover {
+  fill: #D70000;
+}
+
+.chart-point {
+  transition: r .2s ease;
+}
+
+/* Inline code (flags, file names) inside prose */
+.code-inline {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: .85em;
+  background-color: rgba(12, 12, 12, .06);
+  padding: .12em .4em;
+  border-radius: .3em;
+  white-space: nowrap;
+}
+
+/* Narrative subsection label */
+.detail-label {
+  font-family: 'Manrope', sans-serif;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: .625rem;
+}
+
+.detail-label::before {
+  content: '';
+  width: 1.25rem;
+  height: 2px;
+  background-color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Evidence stat tile */
+.stat-tile {
+  transition: border-color .25s ease, transform .25s ease;
+}
+
+.stat-tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* Code block */
+.code-block {
+  background-color: var(--ink);
+  color: rgba(255, 255, 255, .85);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: .8125rem;
+  line-height: 1.7;
+}
+
+.code-block .code-flag {
+  color: #FFFFFF;
+}
+
+/* Non-technical summary callout */
+.summary-callout {
+  border: 1.5px solid var(--accent);
+  border-radius: 1.5rem;
+  background-color: #FFFFFF;
+  position: relative;
+}
+

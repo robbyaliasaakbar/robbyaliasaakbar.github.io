@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 001 — The 35B MoE model runs on an older architecture with 12GB of VRAM — Robby Aliasa Akbar</title>
+  <meta name="description" content="Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+
+  <!-- ===== SEO: Open Graph / Twitter / Canonical ===== -->
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp001.html">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp001.html">
+  <meta property="og:title" content="Experiment 001 — The 35B MoE model runs on an older architecture with 12GB of VRAM">
+  <meta property="og:description" content="Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 001 — The 35B MoE model runs on 12GB of VRAM">
+  <meta name="twitter:description" content="Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "The 35B MoE model runs on an older architecture with 12GB of VRAM",
+        "description": "Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp001.html",
+        "author": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar",
+          "url": "https://robbyaliasaakbar.github.io/profile.html"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://robbyaliasaakbar.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Experiments",
+            "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Experiment 001",
+            "item": "https://robbyaliasaakbar.github.io/exp001.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts: Manrope (display) + Inter (body) + JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS (CDN — no build step required) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#0C0C0C',
+            paper:  '#FFFFFF',
+            accent: '#D70000'
+          },
+          fontFamily: {
+            display: ['Manrope', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+            mono:    ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-paper text-ink font-body antialiased">
+
+  <!-- ================= NAVBAR ================= -->
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+
+      <!-- Left: Logo text -->
+      <a href="index.html" class="font-display font-extrabold tracking-tight text-sm md:text-base">
+        ROBBY ALIASA AKBAR<span class="text-accent">.</span>
+      </a>
+
+      <!-- Right: Desktop nav -->
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="index.html"            class="nav-link">Home</a>
+        <a href="profile.html"          class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html"          class="nav-link">Contact</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false"
+              class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="index.html"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html"          class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html"          class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= EXPERIMENT HEADER ================= -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal>
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 001</p>
+            <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+          </div>
+
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">
+            The 35B MoE model runs on an older architecture with 12GB of VRAM.
+          </h1>
+
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">
+            Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs
+            optimally without putting undue strain on the GPU.
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SYSTEM REQUIREMENTS ================= -->
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>System Requirements</p>
+
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">CPU</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Intel Core i5 11400f</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">RAM</p>
+            <p class="mt-2 text-sm font-medium leading-snug">16GB DDR4 3200 MT/s</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">GPU</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Radeon RX 6700 XT</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Backend</p>
+            <p class="mt-2 text-sm font-medium leading-snug">ROCm Native</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">OS</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Ubuntu 26.04 LTS</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Inference Engine</p>
+            <p class="mt-2 text-sm font-medium leading-snug">LLaMa.cpp upstream</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Frontend UI</p>
+            <p class="mt-2 text-sm font-medium leading-snug">OpenWebUI v0.11.0</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5 col-span-2" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Ornith-1.0-35B-A3B-IQ4_NL-GGUF</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Context</p>
+            <p class="mt-2 text-sm font-medium leading-snug">128K</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Status</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Stable</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREENSHOT ================= -->
+    <section class="pb-20 bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Screenshot</p>
+
+        <figure class="mt-8" data-reveal="150">
+          <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+            <img src="images/experiments001/experiment001.webp"
+                 alt="Screenshot of Experiment 001 — 35B MoE model running on 12GB VRAM"
+                 loading="lazy" decoding="async"
+                 class="w-full h-auto">
+          </div>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ================= VISUALIZATION 1 — BAR CHART ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Visualization</p>
+
+        <div class="mt-8" data-reveal="100">
+          <h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">
+            Decode Speed With --n-cpu-moe Value Configuration
+          </h2>
+          <p class="mt-2 text-sm text-neutral-600">
+            Measured tokens/second across different <code class="code-inline">--n-cpu-moe</code> flags.
+          </p>
+        </div>
+
+        <div class="mt-8 border border-black/10 rounded-2xl p-6 sm:p-10 bg-paper" data-reveal="200">
+          <div data-chart="bar"
+               data-y-max="30"
+               data-data='[{"label":"18","value":28},{"label":"20","value":25},{"label":"22","value":23},{"label":"24","value":22},{"label":"25","value":20},{"label":"26","value":18}]'></div>
+          <div class="mt-4 flex items-center justify-between text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">
+            <span>Low — 18 tok/s</span>
+            <span>tok/s vs --n-cpu-moe value</span>
+            <span>High — 28 tok/s</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= VISUALIZATION 2 — LINE CHART ================= -->
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <div class="mt-0" data-reveal>
+          <h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">
+            Prompt Processing Speed With Total Tokens Processing
+          </h2>
+          <p class="mt-2 text-sm text-neutral-600">
+            Measured tokens/second across different stage Processing tokens.
+          </p>
+          <p class="mt-4">
+            <span class="status-badge status-working">Total Processing Tokens: 27K</span>
+          </p>
+        </div>
+
+        <div class="mt-8 border border-black/10 rounded-2xl p-6 sm:p-10 bg-paper" data-reveal="150">
+          <div data-chart="line"
+               data-y-max="600"
+               data-data='[{"label":"19.7K","value":582},{"label":"20.8K","value":548},{"label":"21.6K","value":531},{"label":"22.8K","value":509},{"label":"23.8K","value":502},{"label":"24.9K","value":497},{"label":"25.9K","value":492},{"label":"26.9K","value":488}]'></div>
+          <div class="mt-4 flex items-center justify-between text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">
+            <span>Low — 488 tok/s</span>
+            <span>tok/s vs stage context</span>
+            <span>High — 582 tok/s</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= EXPERIMENT DETAILS ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+
+        <div class="mt-12 space-y-12">
+
+          <!-- PROBLEM -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Problem</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              Can 35B MoE model run practically on 12GB VRAM GPU? The goal is to find the optimal
+              configuration that allows for stable performance without exceeding hardware limitations.
+            </p>
+          </div>
+
+          <!-- HYPOTHESIS -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Hypothesis</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              MoE architecture may provide better usability than dense models because active
+              parameters are smaller, even if total model size is large.
+            </p>
+          </div>
+
+          <!-- EXPERIMENT -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Experiment</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              Testing the model layer placement configuration using the expert splitting method
+              on the CPU.
+            </p>
+          </div>
+
+          <!-- WHAT FAILED -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">What Failed</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              Several configurations hit memory limits, bandwidth bottlenecks, or unstable
+              thermal behavior.
+            </p>
+          </div>
+
+          <!-- ITERATION -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Iteration</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              The backend adjustment (ROCm) for AMD must be native. Otherwise, prefill speeds are
+              unacceptable. This involves optimizing KV cache management and adjusting the
+              scheduler. But need GPU optimization too for better performance.
+            </p>
+          </div>
+
+          <!-- EVIDENCE -->
+          <div data-reveal>
+            <div class="grid lg:grid-cols-12 gap-4 lg:gap-10">
+              <div class="lg:col-span-3">
+                <span class="detail-label">Evidence</span>
+              </div>
+              <div class="lg:col-span-9">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Decode</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">up to 28 <span class="text-xs font-semibold text-neutral-500">tok/s</span></p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Context</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">128K</p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Prefill</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">up to 581 <span class="text-xs font-semibold text-neutral-500">tok/s</span></p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Memory Pressure</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">Manageable</p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Out of Memory</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">Never</p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">User Experience</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">losless</p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Junction GPU Thermal</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">Max 85</p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Edge GPU Thermal</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">Max 60</p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">VRAM GPU Thermal</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">Max 70</p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Stability</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">Stable</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RESULT -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Result</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              The model achieved stable performance with acceptable latency, proving that
+              constrained hardware can handle large MoE models with proper optimization.
+            </p>
+          </div>
+
+          <!-- WHAT I LEARNED -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">What I Learned</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              MoE models can be viable on constrained hardware when quantization and memory
+              management are properly tuned. The key is finding the right balance between model
+              size, quantization level, and context length.
+            </p>
+          </div>
+
+          <!-- PRACTICAL IMPLICATION -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Practical Implication</span>
+            </div>
+            <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
+              This approach can inform deployment decisions on constrained environments, showing
+              that large models don't always require expensive hardware if properly optimized.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONFIGURATION TEMPLATE ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Configuration Template</p>
+
+        <div class="mt-8" data-reveal="100">
+          <p class="font-mono text-sm text-neutral-500">~/Path build llama.cpp</p>
+          <pre class="code-block mt-4">MODEL="path model" (model 35B A3B) \
+  --host 0.0.0.0 \
+  --port 8080 \
+  --n-gpu-layers 99 \
+  --threads 4 \
+  --threads-batch 4 \
+  --n-cpu-moe 26 \
+  --moe-cache auto \
+  --ctx-size 131072 \
+  --batch-size 1024 \
+  --ubatch-size 512 \
+  --keep 8000 \
+  --cache-type-k f16 \
+  --cache-type-v f16 \
+  --swa-checkpoints 16 \
+  --checkpoint-min-step 2048 \
+  --embd-normalize 0 \
+  --no-kv-unified \
+  --kv-offload \
+  --jinja \
+  --flash-attn on \
+  --parallel 1 \
+  --cache-ram 8192 \
+  --cache-idle-slots \
+  --temp 0.6 \
+  --top-k 0 \
+  --top-p 0.95 \
+  --min-p 0 \
+  --repeat-penalty 1 \
+  --repeat-last-n 0 \
+  --alias coding \
+  --log-verbosity 4</pre>
+        </div>
+
+        <blockquote class="quote-block mt-10 text-sm sm:text-base text-ink leading-relaxed max-w-3xl" data-reveal>
+          Do not copy this configuration blindly; it must be adjusted to suit the specific
+          characteristics of your model and hardware. This configuration serves only as a
+          reference, as my choices were based on specific reasons that I will explain below.
+        </blockquote>
+
+        <ol class="mt-10 space-y-8 max-w-3xl list-none" data-reveal="100">
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">1.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              I chose <code class="code-inline">--n-gpu-layers 99</code> as a baseline to offload
+              the entire model to the GPU.
+            </p>
+          </li>
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">2.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              I chose <code class="code-inline">--threads 4</code> because testing showed this to
+              be my "sweet spot." This setting configures CPU threads to assist with token
+              generation; the optimal value cannot simply be guessed but must be determined
+              through testing based on your CPU's thread count. I happen to use an i5-11400F
+              (6 cores, 12 threads), and 4 threads worked best for me.
+            </p>
+          </li>
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">3.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              I chose <code class="code-inline">--threads-batch 4</code> because my tests showed
+              that higher values increased prefill latency. This happens because too many CPU
+              threads get involved in the prefill process—a task that should ideally rely more on
+              the GPU to maintain reasonable speeds. However, using fewer threads isn't always
+              faster either; bottlenecks can occur because parts of the model's "expert layers"
+              are offloaded to the CPU. Also, monitor the GPU junction temperature: if prefill
+              feels fast but the junction temperature is high, increase this value.
+            </p>
+          </li>
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">4.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              I chose <code class="code-inline">--n-cpu-moe 26</code> to offload 26 experts to the
+              CPU for optimal performance on my hardware. This value isn't universal; it varies
+              depending on the specific model and its quantization.
+            </p>
+          </li>
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">5.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              Regarding <code class="code-inline">batch</code> and
+              <code class="code-inline">ubatch</code>: these values shouldn't be chosen
+              arbitrarily, as they affect compatibility with kernels and the inference engine.
+              Higher numbers don't necessarily yield faster results; in fact, they often lead to
+              anomalies—such as unreasonable GPU junction temperatures or even slower prefill speeds.
+            </p>
+          </li>
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">6.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              I selected <code class="code-inline">f16</code> for KV cache compression to maintain
+              memory consistency for the model. Of course, this reduces the number of model layers
+              that can fit into the GPU, but I chose <code class="code-inline">f16</code> because,
+              personally, I find a model losing its context far worse than slow inference speeds.
+            </p>
+          </li>
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">7.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              I chose <code class="code-inline">--no-kv-unified</code> and
+              <code class="code-inline">--parallel 1</code> because the model is used only by me in
+              a single inference session. If multiple users were accessing the same model running
+              on your PC, you would need to enable <code class="code-inline">--kv-unified</code>
+              and increase the <code class="code-inline">--parallel</code> value.
+            </p>
+          </li>
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">8.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              The remaining configurations I haven't covered are standard settings that you can
+              find in any other post.
+            </p>
+          </li>
+
+        </ol>
+
+      </div>
+    </section>
+
+    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
+            For those of you unable to read this data from technical standpoint,
+            here is the conclusion
+          </h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>This experiment demonstrated that a 35-billion-parameter AI model can be run
+               practically on a consumer GPU with only 12GB of VRAM.</p>
+            <p>It wasn't achieved by adding more hardware. It was achieved by understanding the
+               system, identifying its bottlenecks, and carefully balancing what the CPU, GPU,
+               memory, and inference engine were each responsible for.</p>
+            <p>The important finding isn't that a 35B model can run on a 12GB GPU. It's that
+               hardware limitations can sometimes be worked around through better system
+               understanding and optimization.</p>
+            <p>The result was a stable configuration that could run the model continuously
+               without running out of memory, while still delivering practical inference
+               performance.</p>
+            <p>The takeaway: when resources are limited, the answer isn't always to buy more
+               resources. Sometimes, the better answer is to understand what you already have
+               and make it work harder.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= FOOTER CTA ================= -->
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal>
+          <a href="experiments-list.html" class="arrow-link font-display text-sm uppercase">
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+          <a href="contact.html" class="arrow-link font-display text-sm uppercase">
+            Have a problem worth exploring? <span aria-hidden="true">-&gt;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-dark-section text-white">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8">
+
+      <div class="grid gap-12 md:grid-cols-3">
+
+        <!-- Left: brand -->
+        <div>
+          <p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p>
+          <p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">
+            AI Systems Builder &amp; Experimenter
+          </p>
+          <p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">
+            Exploring AI systems, local LLMs, automation workflows, and practical tools that
+            actually work in real business operations.<br>
+            Building what matters, and checking whether AI is truly useful in everyday work.
+          </p>
+        </div>
+
+        <!-- Middle: navigate -->
+        <div class="md:justify-self-center">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="index.html"            class="footer-link">Home</a></li>
+            <li><a href="profile.html"          class="footer-link">Profile</a></li>
+            <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
+            <li><a href="contact.html"          class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Right: connect -->
+        <div class="md:justify-self-end">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="https://www.linkedin.com/in/ibbor-arts-001a2a267" target="_blank" rel="noopener" class="footer-link">Linkedin</a></li>
+            <li><a href="https://www.reddit.com/user/Full_Director87/"    target="_blank" rel="noopener" class="footer-link">Reddit</a></li>
+            <li><a href="https://www.instagram.com/ybboraa/"              target="_blank" rel="noopener" class="footer-link">Instagram</a></li>
+            <li><a href="mailto:ibborarts@gmail.com"                       class="footer-link">Email</a></li>
+            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">Whatsapp</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p>
+        <p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
