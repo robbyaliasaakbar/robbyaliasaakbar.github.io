@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 000 — [Your Title Here] — Robby Aliasa Akbar</title>
+  <meta name="description" content="[Your experiment description here]">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+
+  <!-- ===== SEO: Open Graph / Twitter / Canonical ===== -->
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp000.html">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp000.html">
+  <meta property="og:title" content="Experiment 000 — [Your Title Here]">
+  <meta property="og:description" content="[Your experiment description here]">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments000/experiment000.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 000 — [Your Title Here]">
+  <meta name="twitter:description" content="[Your experiment description here]">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments000/experiment000.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "[Your Title Here]",
+        "description": "[Your experiment description here]",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments000/experiment000.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp000.html",
+        "author": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar",
+          "url": "https://robbyaliasaakbar.github.io/profile.html"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://robbyaliasaakbar.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Experiments",
+            "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Experiment 000",
+            "item": "https://robbyaliasaakbar.github.io/exp000.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts: Manrope (display) + Inter (body) + JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS (CDN — no build step required) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#0C0C0C',
+            paper:  '#FFFFFF',
+            accent: '#D70000'
+          },
+          fontFamily: {
+            display: ['Manrope', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+            mono:    ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-paper text-ink font-body antialiased">
+
+  <!-- ================= NAVBAR ================= -->
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+
+      <!-- Left: Logo text -->
+      <a href="index.html" class="font-display font-extrabold tracking-tight text-sm md:text-base">
+        ROBBY ALIASA AKBAR<span class="text-accent">.</span>
+      </a>
+
+      <!-- Right: Desktop nav -->
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="index.html"            class="nav-link">Home</a>
+        <a href="profile.html"          class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html"          class="nav-link">Contact</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false"
+              class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="index.html"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html"          class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html"          class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= EXPERIMENT HEADER ================= -->
+    <section class="pt-32 pb-16 lg:pt-40 lg:pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="max-w-3xl" data-reveal>
+          <p class="font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">
+            Experiment 000
+          </p>
+          <h1 class="mt-4 font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-[1.1]">
+            [Your Experiment Title Here]
+          </h1>
+          <p class="mt-6 text-lg text-neutral-600 leading-relaxed">
+            [A brief description or research question for this experiment.]
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PLACEHOLDER SECTION 1 ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-10" data-reveal>
+          <div class="lg:col-span-3">
+            <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-neutral-400">
+              Section Label
+            </p>
+          </div>
+          <div class="lg:col-span-9 space-y-5">
+            <p class="text-base text-neutral-700 leading-relaxed">
+              [Placeholder content — write your first section here.]
+            </p>
+            <p class="text-base text-neutral-700 leading-relaxed">
+              [Add more paragraphs as needed.]
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PLACEHOLDER SECTION 2 ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="max-w-3xl" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed">
+            [Section Heading Placeholder]
+          </h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed">
+            <p>[Placeholder content — write your second section here.]</p>
+            <p>[Add more content as needed.]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
+            For those of you unable to read this data from technical standpoint,
+            here is the conclusion
+          </h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>[Placeholder — summarize your key findings here in plain language.]</p>
+            <p>[Add more takeaway points as needed.]</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= FOOTER CTA ================= -->
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal>
+          <a href="experiments-list.html" class="arrow-link font-display text-sm uppercase">
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+          <a href="contact.html" class="arrow-link font-display text-sm uppercase">
+            Have a problem worth exploring? <span aria-hidden="true">-&gt;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-dark-section text-white">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8">
+
+      <div class="grid gap-12 md:grid-cols-3">
+
+        <!-- Left: brand -->
+        <div>
+          <p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p>
+          <p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">
+            AI Systems Builder &amp; Experimenter
+          </p>
+          <p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">
+            Exploring AI systems, local LLMs, automation workflows, and practical tools that
+            actually work in real business operations.<br>
+            Building what matters, and checking whether AI is truly useful in everyday work.
+          </p>
+        </div>
+
+        <!-- Middle: navigate -->
+        <div class="md:justify-self-center">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="index.html"            class="footer-link">Home</a></li>
+            <li><a href="profile.html"          class="footer-link">Profile</a></li>
+            <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
+            <li><a href="contact.html"          class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Right: connect -->
+        <div class="md:justify-self-end">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="https://www.linkedin.com/in/ibbor-arts-001a2a267" target="_blank" rel="noopener" class="footer-link">Linkedin</a></li>
+            <li><a href="https://www.reddit.com/user/Full_Director87/"    target="_blank" rel="noopener" class="footer-link">Reddit</a></li>
+            <li><a href="https://www.instagram.com/ybboraa/"              target="_blank" rel="noopener" class="footer-link">Instagram</a></li>
+            <li><a href="mailto:ibborarts@gmail.com"                       class="footer-link">Email</a></li>
+            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">Whatsapp</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p>
+        <p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
