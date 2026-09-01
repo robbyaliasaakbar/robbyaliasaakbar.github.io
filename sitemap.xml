@@ -1,43 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://robbyaliasaakbar.github.io/</loc>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/Profile.webp</image:loc>
+      <image:title>Robby Aliasa Akbar — AI Systems Builder &amp; Experimenter</image:title>
+      <image:caption>Portrait of Robby Aliasa Akbar</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/logo.webp</image:loc>
+      <image:title>Robby Aliasa Akbar Logo</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/profile.html</loc>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/Profile.webp</image:loc>
+      <image:title>Portrait of Robby Aliasa Akbar</image:title>
+      <image:caption>AI Systems Builder &amp; Experimenter</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/experiments-list.html</loc>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp</image:loc>
+      <image:title>Experiment 001 — 35B MoE model on 12GB VRAM</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp001.html</loc>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp</image:loc>
+      <image:title>Experiment 001 — 35B MoE model runs on 12GB VRAM</image:title>
+      <image:caption>Screenshot of Experiment 001 — 35B MoE model running on 12GB VRAM</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp002.html</loc>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments002/experiment002.webp</image:loc>
+      <image:title>Experiment 002 — Prefill speed on long context inference</image:title>
+      <image:caption>Screenshot of Experiment 002 — prefill speed on long context inference</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp003.html</loc>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments003/experiment003.webp</image:loc>
+      <image:title>Experiment 003 — Automation agent workflow for business research</image:title>
+      <image:caption>Screenshot of Experiment 003 — automation agent workflow</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp004.html</loc>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments004/exp004-1.webp</image:loc>
+      <image:title>Experiment 004 — Creating digital employees with open-source LLMs</image:title>
+      <image:caption>Screenshot of digital employees workflow — n8n automation</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments004/exp004-2.webp</image:loc>
+      <image:title>Experiment 004 — Workflow details 2</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments004/exp004-3.webp</image:loc>
+      <image:title>Experiment 004 — Workflow details 3</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/contact.html</loc>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/Profile.webp</image:loc>
+      <image:title>Contact Robby Aliasa Akbar</image:title>
+    </image:image>
   </url>
 </urlset>

@@ -6,6 +6,10 @@
   <title>Experiments — Robby Aliasa Akbar</title>
   <meta name="description" content="Exploring AI capabilities, limitations, and practical usability. Each experiment is documented as a process: problem, hypothesis, experiment, failure, iteration, evidence, result, and lesson.">
   <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
@@ -18,7 +22,11 @@
 
   <!-- ===== SEO: Open Graph / Twitter / Canonical ===== -->
   <link rel="canonical" href="https://robbyaliasaakbar.github.io/experiments-list.html">
-  <meta name="robots" content="index, follow">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/experiments-list.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/experiments-list.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/experiments-list.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Robby Aliasa Akbar">
   <meta name="theme-color" content="#0C0C0C">
   <meta property="og:type" content="website">
@@ -28,10 +36,15 @@
   <meta property="og:title" content="Experiments — Robby Aliasa Akbar">
   <meta property="og:description" content="Exploring AI capabilities, limitations, and practical usability. Each experiment is documented as a process: problem, hypothesis, experiment, failure, iteration, evidence, result, and lesson.">
   <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="705">
+  <meta property="og:image:alt" content="Collection of AI experiments — technical case studies">
+  <meta property="og:image:type" content="image/webp">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Experiments — Robby Aliasa Akbar">
   <meta name="twitter:description" content="A collection of AI experiments documented as technical case studies: problem, hypothesis, experiment, failure, iteration, evidence, result, and lesson.">
   <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp">
+  <meta name="twitter:image:alt" content="Collection of AI experiments — technical case studies">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -41,6 +54,7 @@
         "name": "Experiments",
         "url": "https://robbyaliasaakbar.github.io/experiments-list.html",
         "description": "A collection of AI experiments documented as technical case studies.",
+        "dateModified": "2026-09-01",
         "isPartOf": {
           "@type": "WebSite",
           "name": "Robby Aliasa Akbar",
@@ -61,6 +75,45 @@
             "position": 2,
             "name": "Experiments",
             "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+          }
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "name": "Experiments",
+        "numberOfItems": 4,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "url": "https://robbyaliasaakbar.github.io/exp001.html",
+            "name": "The 35B MoE model runs on an older architecture with 12GB of VRAM",
+            "image": "https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp",
+            "description": "Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU."
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "url": "https://robbyaliasaakbar.github.io/exp002.html",
+            "name": "Prefill speed on long context inference",
+            "image": "https://robbyaliasaakbar.github.io/images/experiments002/experiment002.webp",
+            "description": "How can open-source LLMs achieve acceptable and reasonable prompt processing (prefill) speeds when the total context reaches 250K+ tokens?"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "url": "https://robbyaliasaakbar.github.io/exp003.html",
+            "name": "Automation agent workflow for business research needs",
+            "image": "https://robbyaliasaakbar.github.io/images/experiments003/experiment003.webp",
+            "description": "What does it actually take to optimally use AI as an autonomous research assistant? Is it just the model? As it turns out, no."
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "url": "https://robbyaliasaakbar.github.io/exp004.html",
+            "name": "Creating digital employees with the help of open-source LLMs",
+            "image": "https://robbyaliasaakbar.github.io/images/experiments004/exp004-1.webp",
+            "description": "Is it possible to set up customer service, operational admin, ads specialist, data analyst, and finance functions using only workflows and open-source LLMs?"
           }
         ]
       }
@@ -104,13 +157,13 @@
     <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
 
       <!-- Left: Logo text -->
-      <a href="index.html" class="font-display font-extrabold tracking-tight text-sm md:text-base">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">
         ROBBY ALIASA AKBAR<span class="text-accent">.</span>
       </a>
 
       <!-- Right: Desktop nav -->
       <div class="hidden md:flex items-center gap-10 text-sm font-medium">
-        <a href="index.html"            class="nav-link">Home</a>
+        <a href="/"            class="nav-link">Home</a>
         <a href="profile.html"          class="nav-link">Profile</a>
         <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
         <a href="contact.html"          class="nav-link">Contact</a>
@@ -126,7 +179,7 @@
 
     <!-- Mobile menu -->
     <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
-      <a href="index.html"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="/"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
       <a href="profile.html"          class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
       <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
       <a href="contact.html"          class="block py-3 text-sm font-medium text-ink">Contact</a>
@@ -141,6 +194,15 @@
 
       <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
         <div class="max-w-3xl">
+          
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiments</li>
+            </ol>
+          </nav>
+
           <p class="eyebrow" data-reveal>Experiments</p>
 
           <h1 class="mt-6 font-display font-extrabold tracking-tight text-4xl sm:text-5xl lg:text-6xl leading-[1.05]" data-reveal="100">
@@ -186,7 +248,7 @@
         <div class="mt-12 grid md:grid-cols-2 gap-6">
 
           <!-- EXP 001 -->
-          <a href="exp001.html" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="0">
+          <a href="exp001.html" aria-label="Read EXP 001: 35B MoE on 12GB VRAM — Robby Aliasa Akbar" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="0">
             <div class="flex items-center justify-between">
               <span class="font-display font-bold text-xs tracking-[0.2em] text-neutral-400">EXP 001</span>
               <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
@@ -199,12 +261,12 @@
               optimally without putting undue strain on the GPU.
             </p>
             <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
-              Read case study <span aria-hidden="true">-&gt;</span>
+              Read EXP 001: 35B MoE on 12GB VRAM <span aria-hidden="true">-&gt;</span>
             </span>
           </a>
 
           <!-- EXP 002 -->
-          <a href="exp002.html" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="100">
+          <a href="exp002.html" aria-label="Read EXP 002: Prefill Speed 256K Context — Robby Aliasa Akbar" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="100">
             <div class="flex items-center justify-between">
               <span class="font-display font-bold text-xs tracking-[0.2em] text-neutral-400">EXP 002</span>
               <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
@@ -217,12 +279,12 @@
               (prefill) speeds when the total context reaches 250K+ tokens?
             </p>
             <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
-              Read case study <span aria-hidden="true">-&gt;</span>
+              Read EXP 002: Prefill Speed 256K <span aria-hidden="true">-&gt;</span>
             </span>
           </a>
 
           <!-- EXP 003 -->
-          <a href="exp003.html" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="200">
+          <a href="exp003.html" aria-label="Read EXP 003: Automation Agent Workflow — Robby Aliasa Akbar" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="200">
             <div class="flex items-center justify-between">
               <span class="font-display font-bold text-xs tracking-[0.2em] text-neutral-400">EXP 003</span>
               <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
@@ -235,12 +297,12 @@
               Is it just the model? As it turns out, no.
             </p>
             <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
-              Read case study <span aria-hidden="true">-&gt;</span>
+              Read EXP 003: Automation Agent Workflow <span aria-hidden="true">-&gt;</span>
             </span>
           </a>
 
           <!-- EXP 004 -->
-          <a href="exp004.html" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="300">
+          <a href="exp004.html" aria-label="Read EXP 004: Digital Employees with LLMs — Robby Aliasa Akbar" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="300">
             <div class="flex items-center justify-between">
               <span class="font-display font-bold text-xs tracking-[0.2em] text-neutral-400">EXP 004</span>
               <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
@@ -254,7 +316,7 @@
               adequate hardware and reasonable resource usage?
             </p>
             <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
-              Read case study <span aria-hidden="true">-&gt;</span>
+              Read EXP 004: Digital Employees <span aria-hidden="true">-&gt;</span>
             </span>
           </a>
 
@@ -303,7 +365,7 @@
         <div class="md:justify-self-center">
           <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
           <ul class="mt-5 space-y-3 text-sm">
-            <li><a href="index.html"            class="footer-link">Home</a></li>
+            <li><a href="/"            class="footer-link">Home</a></li>
             <li><a href="profile.html"          class="footer-link">Profile</a></li>
             <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
             <li><a href="contact.html"          class="footer-link">Contact</a></li>

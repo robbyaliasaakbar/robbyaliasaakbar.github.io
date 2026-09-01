@@ -6,6 +6,10 @@
   <title>Profile — Robby Aliasa Akbar</title>
   <meta name="description" content="I'm a self-taught AI systems builder and experimenter. I explore local LLMs, inference, automation, agent architecture, and practical AI systems.">
   <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
@@ -18,7 +22,12 @@
 
   <!-- ===== SEO: Open Graph / Twitter / Canonical ===== -->
   <link rel="canonical" href="https://robbyaliasaakbar.github.io/profile.html">
-  <meta name="robots" content="index, follow">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/profile.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/profile.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/profile.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <link rel="preload" as="image" href="images/Profile.webp" type="image/webp" fetchpriority="high">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Robby Aliasa Akbar">
   <meta name="theme-color" content="#0C0C0C">
   <meta property="og:type" content="profile">
@@ -28,10 +37,15 @@
   <meta property="og:title" content="Profile — Robby Aliasa Akbar">
   <meta property="og:description" content="I'm a self-taught AI systems builder and experimenter. I explore local LLMs, inference, automation, agent architecture, and practical AI systems with a focus on finding what actually works.">
   <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/Profile.webp">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Portrait of Robby Aliasa Akbar — AI Systems Builder &amp; Experimenter">
+  <meta property="og:image:type" content="image/webp">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Profile — Robby Aliasa Akbar">
   <meta name="twitter:description" content="Self-taught AI systems builder and experimenter exploring local LLMs, inference, automation, and practical AI systems.">
   <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/Profile.webp">
+  <meta name="twitter:image:alt" content="Portrait of Robby Aliasa Akbar — AI Systems Builder &amp; Experimenter">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -44,6 +58,7 @@
         "jobTitle": "AI Systems Builder & Experimenter",
         "description": "Self-taught AI systems builder and experimenter exploring local LLMs, inference, automation, agent architecture, and practical AI systems.",
         "knowsAbout": ["Local LLMs and inference", "Automation workflows", "Agent architecture", "Hardware-aware AI evaluation"],
+        "dateModified": "2026-09-01",
         "sameAs": [
           "https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267",
           "https://www.reddit.com/user/Full_Director87/",
@@ -107,13 +122,13 @@
     <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
 
       <!-- Left: Logo text -->
-      <a href="index.html" class="font-display font-extrabold tracking-tight text-sm md:text-base">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">
         ROBBY ALIASA AKBAR<span class="text-accent">.</span>
       </a>
 
       <!-- Right: Desktop nav -->
       <div class="hidden md:flex items-center gap-10 text-sm font-medium">
-        <a href="index.html"            class="nav-link">Home</a>
+        <a href="/"            class="nav-link">Home</a>
         <a href="profile.html"          class="nav-link nav-active">Profile</a>
         <a href="experiments-list.html" class="nav-link">Experiments</a>
         <a href="contact.html"          class="nav-link">Contact</a>
@@ -129,7 +144,7 @@
 
     <!-- Mobile menu -->
     <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
-      <a href="index.html"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="/"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
       <a href="profile.html"          class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Profile</a>
       <a href="experiments-list.html" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Experiments</a>
       <a href="contact.html"          class="block py-3 text-sm font-medium text-ink">Contact</a>
@@ -146,6 +161,15 @@
 
         <!-- Left: identity -->
         <div class="lg:col-span-7">
+          
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Profile</li>
+            </ol>
+          </nav>
+
           <p class="eyebrow" data-reveal>Identity</p>
 
           <h1 class="mt-6 font-display font-extrabold tracking-tight text-4xl sm:text-5xl lg:text-6xl leading-[1.05]" data-reveal="100">
@@ -181,8 +205,10 @@
         <div class="lg:col-span-5 flex justify-center lg:justify-end" data-reveal="300">
           <div class="photo-frame relative w-64 sm:w-80 lg:w-full max-w-sm">
             <img src="images/Profile.webp"
-                 alt="Portrait of Robby Aliasa Akbar"
+                 alt="Portrait of Robby Aliasa Akbar — AI Systems Builder &amp; Experimenter"
                  fetchpriority="high"
+                 decoding="async"
+                 width="459" height="1288"
                  class="relative z-10 w-full rounded-2xl object-cover shadow-2xl">
           </div>
         </div>
@@ -589,7 +615,7 @@
         <div class="md:justify-self-center">
           <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
           <ul class="mt-5 space-y-3 text-sm">
-            <li><a href="index.html"            class="footer-link">Home</a></li>
+            <li><a href="/"            class="footer-link">Home</a></li>
             <li><a href="profile.html"          class="footer-link footer-active">Profile</a></li>
             <li><a href="experiments-list.html" class="footer-link">Experiments</a></li>
             <li><a href="contact.html"          class="footer-link">Contact</a></li>

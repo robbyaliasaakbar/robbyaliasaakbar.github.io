@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /template-exp000.html
+Disallow: /404.html
+
+# Crawl-delay: 1
 
 Sitemap: https://robbyaliasaakbar.github.io/sitemap.xml
+
+# Host: robbyaliasaakbar.github.io

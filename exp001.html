@@ -6,6 +6,10 @@
   <title>Experiment 001 — The 35B MoE model runs on an older architecture with 12GB of VRAM — Robby Aliasa Akbar</title>
   <meta name="description" content="Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.">
   <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
@@ -18,7 +22,11 @@
 
   <!-- ===== SEO: Open Graph / Twitter / Canonical ===== -->
   <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp001.html">
-  <meta name="robots" content="index, follow">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp001.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp001.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp001.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="author" content="Robby Aliasa Akbar">
   <meta name="theme-color" content="#0C0C0C">
   <meta property="og:type" content="article">
@@ -28,10 +36,17 @@
   <meta property="og:title" content="Experiment 001 — The 35B MoE model runs on an older architecture with 12GB of VRAM">
   <meta property="og:description" content="Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.">
   <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="705">
+  <meta property="og:image:alt" content="Screenshot of Experiment 001 — 35B MoE model running on 12GB VRAM">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2025-08-30T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-01T00:00:00+07:00">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Experiment 001 — The 35B MoE model runs on 12GB of VRAM">
   <meta name="twitter:description" content="Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.">
   <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp">
+  <meta name="twitter:image:alt" content="Screenshot of Experiment 001 — 35B MoE model running on 12GB VRAM">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -42,6 +57,12 @@
         "description": "Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.",
         "image": "https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp",
         "url": "https://robbyaliasaakbar.github.io/exp001.html",
+        "datePublished": "2025-08-30",
+        "dateModified": "2026-09-01",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp001.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["MoE", "LLM", "12GB VRAM", "ROCm", "llama.cpp", "local LLM", "inference optimization"],
         "author": {
           "@type": "Person",
           "name": "Robby Aliasa Akbar",
@@ -107,6 +128,30 @@
 
   <!-- Custom styles -->
   <link rel="stylesheet" href="css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can a 35B MoE model really run on 12GB VRAM?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes — with IQ4_NL quantization, native ROCm, and --n-cpu-moe 26, it runs stable at up to 28 tok/s decode and 581 tok/s prefill without out-of-memory on RX 6700 XT 12GB." }
+      },
+      {
+        "@type": "Question",
+        "name": "What was the biggest bottleneck you found?",
+        "acceptedAnswer": { "@type": "Answer", "text": "KV-cache and thread scheduling, not VRAM. Using --threads 4 and --no-kv-unified kept thermal at max 85C and made 128K context stable." }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I copy your llama.cpp config directly?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. The config is tuned for i5-11400F + RX 6700 XT. You must re-test n-cpu-moe, threads and batch sizes on your hardware." }
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body class="bg-paper text-ink font-body antialiased">
@@ -116,13 +161,13 @@
     <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
 
       <!-- Left: Logo text -->
-      <a href="index.html" class="font-display font-extrabold tracking-tight text-sm md:text-base">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">
         ROBBY ALIASA AKBAR<span class="text-accent">.</span>
       </a>
 
       <!-- Right: Desktop nav -->
       <div class="hidden md:flex items-center gap-10 text-sm font-medium">
-        <a href="index.html"            class="nav-link">Home</a>
+        <a href="/"            class="nav-link">Home</a>
         <a href="profile.html"          class="nav-link">Profile</a>
         <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
         <a href="contact.html"          class="nav-link">Contact</a>
@@ -138,7 +183,7 @@
 
     <!-- Mobile menu -->
     <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
-      <a href="index.html"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="/"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
       <a href="profile.html"          class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
       <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
       <a href="contact.html"          class="block py-3 text-sm font-medium text-ink">Contact</a>
@@ -153,6 +198,17 @@
 
       <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
         <div class="max-w-4xl">
+
+          
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 001</li>
+            </ol>
+          </nav>
 
           <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal>
             <span aria-hidden="true">&larr;</span> Back to Experiments
@@ -247,8 +303,9 @@
         <figure class="mt-8" data-reveal="150">
           <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
             <img src="images/experiments001/experiment001.webp"
-                 alt="Screenshot of Experiment 001 — 35B MoE model running on 12GB VRAM"
+                 alt="Screenshot of Experiment 001 — 35B MoE model running on 12GB VRAM, showing inference speed and memory usage"
                  loading="lazy" decoding="async"
+                 width="1440" height="705"
                  class="w-full h-auto">
           </div>
         </figure>
@@ -617,6 +674,44 @@
       </div>
     </section>
 
+    
+    <!-- ================= FAQ ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper open:border-ink/20" open>
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Can a 35B MoE model really run on 12GB VRAM?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Yes — with the right quantization (IQ4_NL), native ROCm backend, and careful layer placement using <code class="code-inline">--n-cpu-moe 26</code>, it runs stable at up to 28 tok/s decode and 581 tok/s prefill without ever hitting out-of-memory.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              What was the biggest bottleneck you found?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Not VRAM size but KV-cache and thread scheduling. Using <code class="code-inline">--threads 4</code> and <code class="code-inline">--no-kv-unified</code> for single-user kept junction thermal at max 85°C and made 128K context stable.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Should I copy your llama.cpp config directly?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              No. The config is a reference tuned for i5-11400F + RX 6700 XT. You must re-test <code class="code-inline">--n-cpu-moe</code>, <code class="code-inline">--threads</code>, and batch sizes on your own hardware.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <!-- ================= NON-TECHNICAL SUMMARY ================= -->
     <section class="bg-neutral-50 py-20">
       <div class="mx-auto max-w-6xl px-6 lg:px-8">
@@ -686,7 +781,7 @@
         <div class="md:justify-self-center">
           <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
           <ul class="mt-5 space-y-3 text-sm">
-            <li><a href="index.html"            class="footer-link">Home</a></li>
+            <li><a href="/"            class="footer-link">Home</a></li>
             <li><a href="profile.html"          class="footer-link">Profile</a></li>
             <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
             <li><a href="contact.html"          class="footer-link">Contact</a></li>

@@ -1,0 +1,23 @@
+/* TEAM */
+Developer: Robby Aliasa Akbar
+Role: AI Systems Builder & Experimenter
+Location: Indonesia
+Contact: ibborarts@gmail.com
+URL: https://robbyaliasaakbar.github.io/
+LinkedIn: https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267
+Instagram: https://www.instagram.com/ybboraa/
+Reddit: https://www.reddit.com/user/Full_Director87/
+
+/* SITE */
+Standards: HTML5, Tailwind CSS (CDN), Vanilla JavaScript
+Components: Custom CSS, Lightweight SVG Charts (no dependencies)
+Fonts: Manrope (display), Inter (body), JetBrains Mono (code)
+Analytics: Google Analytics 4 (G-H86RYQ2ML8)
+Last update: 2026-09-01
+Language: en-US
+Doctype: HTML5
+
+/* THANKS */
+Thanks for visiting — building what matters, and checking whether AI is truly useful in everyday work.
+
+/* HUMANS.TXT - https://humanstxt.org/ */
