@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 007 — From 30 Minutes to 5 Seconds: Automating Mass CV Screening Without In-System AI — Robby Aliasa Akbar</title>
+  <meta name="description" content="Can 1–5 CV PDFs be screened from 30-minute manual review to 5-second ranked shortlist without in-system AI? A local workflow: pdf.js → n8n 24 nodes → Postgres, 70% threshold.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+
+  <!-- ===== SEO: Open Graph / Twitter / Canonical ===== -->
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp007.html">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp007.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp007.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp007.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp007.html">
+  <meta property="og:title" content="Experiment 007 — Automating Mass CV Screening Without In-System AI">
+  <meta property="og:description" content="Local workflow, not LLM hallucination: landing page 626 lines, 24-node n8n, Postgres, 20/6/6 scoring at 70% threshold. 5 CV → ranking in 5s, 3-day deadline delivered in 5 hours, no data leaves private server.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments007/homepage-hero.webp">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="878">
+  <meta property="og:image:alt" content="Screenshot of Experiment 007 — CV screening landing page hero with upload 1-5 PDF">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-09-04T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-04T00:00:00+07:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 007 — Automating Mass CV Screening Without In-System AI">
+  <meta name="twitter:description" content="Can 1–5 CV PDFs be screened in 5 seconds without in-system AI? Local pdf.js → n8n 24 nodes → Postgres, 70% threshold, no hallucination.">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments007/homepage-hero.webp">
+  <meta name="twitter:image:alt" content="Screenshot of Experiment 007 — CV screening automation without hallucination">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "From 30 Minutes to 5 Seconds: Automating Mass CV Screening Without In-System AI",
+        "description": "Can 1–5 CV PDFs be screened from 30-minute manual review to 5-second ranked shortlist without in-system AI? A local workflow: pdf.js → n8n 24 nodes → Postgres, 70% threshold, delivered in 5 hours.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments007/homepage-hero.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp007.html",
+        "datePublished": "2026-09-04",
+        "dateModified": "2026-09-04",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp007.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["local AI", "n8n", "workflow orchestration", "CV screening", "HR automation", "pdf.js", "Postgres", "mass hiring", "predictable scoring", "private server"],
+        "author": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar",
+          "url": "https://robbyaliasaakbar.github.io/profile.html"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://robbyaliasaakbar.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Experiments",
+            "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Experiment 007",
+            "item": "https://robbyaliasaakbar.github.io/exp007.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts: Manrope (display) + Inter (body) + JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS (CDN — no build step required) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#0C0C0C',
+            paper:  '#FFFFFF',
+            accent: '#D70000'
+          },
+          fontFamily: {
+            display: ['Manrope', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+            mono:    ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @media (max-width: 640px) {
+      .detail-label { font-size: 0.6875rem; letter-spacing: 0.16em; }
+      .stat-tile p { word-break: break-word; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why not put AI inside the scoring system?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Small quantized models hallucinate and are unpredictable; big models are heavy and need strong hardware. Workflow orchestration (pdf.js + n8n + rule 40/30/30, 70% threshold) is stable, fast (~5s for 5 CV), auditable, and runs 100% locally — AI was only a supervised syntax assistant (Ornith 35B via OpenCode)." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does HR know why a CV passed or failed?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Each row has a clear reason: e.g., Lolos 75% utk Junior Architect. The CSV header is Indonesian and includes Peringkat, Skor (0-100), Status, Alasan — open in Excel directly. Scoring is 20 skill 40% + 6 edu 30% + 6 exp 30%, threshold 70%." }
+      },
+      {
+        "@type": "Question",
+        "name": "What if the CV is a scanned PDF or the webhook is offline?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Scanned PDFs with no text layer trigger a toast (text <10 chars) but don’t fail the whole batch — the item is still sent with empty text and an _error flag. If the webhook is offline (timeout 15s), the landing page shows a fallback Download JSON button so the demo still works." }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body class="bg-paper text-ink font-body antialiased">
+
+  <!-- ================= NAVBAR ================= -->
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">
+        ROBBY ALIASA AKBAR<span class="text-accent">.</span>
+      </a>
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="/"            class="nav-link">Home</a>
+        <a href="profile.html"          class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html"          class="nav-link">Contact</a>
+      </div>
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false"
+              class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="/"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html"          class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html"          class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= EXPERIMENT HEADER ================= -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 007</li>
+            </ol>
+          </nav>
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal>
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 007</p>
+            <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+          </div>
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">
+            From 30 Minutes to 5 Seconds: Automating Mass CV Screening Without In-System AI.
+          </h1>
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">
+            Can 1–5 CV PDFs be screened from a 30-minute manual review to a 5-second ranked shortlist — without heavy AI or hallucination — using only <code class="code-inline">pdf.js</code>, 24-node <code class="code-inline">n8n</code> orchestration, and a predictable rule-based scoring on a private server? Deadline: 3 days. Delivered in 5 hours.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SYSTEM REQUIREMENTS ================= -->
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>System Requirements</p>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Processor</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Intel Core I5 11400F</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">RAM</p>
+            <p class="mt-2 text-sm font-medium leading-snug">DDR4 16GB</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">GPU</p>
+            <p class="mt-2 text-sm font-medium leading-snug">AMD RX 6700 XT 12GB VRAM</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Inference Engine</p>
+            <p class="mt-2 text-sm font-medium leading-snug">llama.cpp</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model (Assistant Only)</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Ornith 1.0 35B A3B IQ4_NL</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="200">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Harness / IDE</p>
+            <p class="mt-2 text-sm font-medium leading-snug">OPENCODE + MCP</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="240">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Orchestration</p>
+            <p class="mt-2 text-sm font-medium leading-snug">n8n</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="280">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Database</p>
+            <p class="mt-2 text-sm font-medium leading-snug">PostgreSQL</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="320">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Frontend</p>
+            <p class="mt-2 text-sm font-medium leading-snug">HTML5 + Tailwind CDN</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="360">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Logic</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Vanilla JS + pdf.js 2.16</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="400">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Server</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Python 3 (Private)</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="440">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Status</p>
+            <p class="mt-2 text-sm font-medium leading-snug">STABLE — 5 Hours</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREENSHOTS — GALLERY ================= -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Screenshots</p>
+
+        <!-- Hero row: 1 large -->
+        <div class="mt-8" data-reveal="0">
+          <figure>
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments007/homepage-hero.webp"
+                   alt="Screenshot 1 — hero of CV screening landing page — Seleksi CV 10x Lebih Cepat, upload 1-5 PDF, webhook card"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Hero — Seleksi CV 10x Lebih Cepat, 1–5 PDF</figcaption>
+          </figure>
+        </div>
+
+        <!-- Row 2: 2 cols -->
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <figure data-reveal="120">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments007/upload-queue.webp"
+                   alt="Screenshot 2 — upload queue showing 5 files with badges cv_1..cv_5, size, remove X, drag & drop zone"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Upload Queue — 5 Files, Badges cv_1..cv_5, Max 5MB</figcaption>
+          </figure>
+          <figure data-reveal="240">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments007/ranking-result.webp"
+                   alt="Screenshot 3 — ranking table result with 5 CV ranked by score 80,75,50,35,25 and Lolos/Tidak status"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Ranking Result — 5 CV Ranked, 2 Lolos (≥70%)</figcaption>
+          </figure>
+        </div>
+
+        <!-- Row 3: 2 cols -->
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <figure data-reveal="0">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments007/n8n-workflow.webp"
+                   alt="Screenshot 4 — n8n workflow Technical Test with 24 nodes from Webhook to Postgres Clean"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">n8n Workflow — 24 Nodes, 3 Branches, No Hallucination</figcaption>
+          </figure>
+          <figure data-reveal="120">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments007/local-server.webp"
+                   alt="Screenshot 5 — local server running on private computer via Python, localhost:8010"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Private Server — Python 3, No Data Leaves</figcaption>
+          </figure>
+        </div>
+
+        <!-- Optional 6th -->
+        <div class="mt-8 max-w-3xl mx-auto" data-reveal="0">
+          <figure>
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments007/local-url.webp"
+                   alt="Screenshot 6 — local URL proof http://localhost:8010 and webhook http://localhost:5678"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Local URL — Private, No Public Link</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VISUALIZATION ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Visualization</p>
+
+        <div class="mt-8" data-reveal="100">
+          <h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">
+            Predictable Scoring — 70% Threshold, No LLM Feeling
+          </h2>
+          <p class="mt-2 text-sm text-neutral-600">
+            20 skill = 40% + 6 education = 30% + 6 experience = 30%. 5 CV samples: 80,75,50,35,25 — only 2 <code class="code-inline">Lolos ≥70%</code>. The rest are predictable, auditable, and adjustable.
+          </p>
+        </div>
+
+        <!-- Chart 1: Scores -->
+        <div class="mt-8 border border-black/10 rounded-2xl p-6 sm:p-10 bg-paper" data-reveal="150">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-display font-extrabold text-sm tracking-[0.08em] uppercase">Ranking — 5 CV Samples</h3>
+            <span class="status-badge status-stable !text-[0.58rem] sm:!text-[0.65rem] !px-2.5 sm:!px-3 !py-1 shrink-0"><span class="status-dot"></span>2 Lolos at ≥70%</span>
+          </div>
+          <div class="mt-6" data-chart="bar" data-y-max="100" data-data='[{"label":"CV3 Drafter 80","value":80},{"label":"CV1 Arch 75","value":75},{"label":"CV4 S2 50","value":50},{"label":"CV2 ITB 35","value":35},{"label":"CV5 SMK 25","value":25}]'></div>
+          <div class="mt-4 flex items-center justify-between text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">
+            <span>0</span>
+            <span>score / 100 — threshold 70 (dashed line in analysis, not in chart)</span>
+            <span>100</span>
+          </div>
+          <p class="mt-4 text-xs text-neutral-500 leading-relaxed">CV3 (Drafter & 3D, 10y) 80 → Lolos, CV1 (Arch, 7y) 75 → Lolos, CV4/2/5 (50,35,25) → Tidak Lolos. CSV says <code class="code-inline">Lolos 80% utk Drafter & 3D Visualization</code> — HR knows why.</p>
+        </div>
+
+        <!-- Flow diagram -->
+        <div class="mt-8 border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="200">
+          <h3 class="font-display font-extrabold text-sm tracking-[0.08em] uppercase">Workflow Orchestration, Not Hallucination</h3>
+          <p class="mt-2 text-xs text-neutral-500">Bot without in-system AI — local LLM only as syntax assistant.</p>
+          <div class="mt-6 flex flex-col gap-3 text-xs font-mono">
+            <div class="flex flex-col lg:flex-row items-center gap-3">
+              <span class="px-3 py-2 bg-ink text-white rounded-lg font-bold">1–5 PDF (Browser)</span>
+              <span class="text-accent hidden lg:block">→</span><span class="text-accent lg:hidden">↓</span>
+              <span class="px-3 py-2 border border-black/10 rounded-lg bg-neutral-50">pdf.js extract → JSON Array</span>
+              <span class="text-accent hidden lg:block">→</span><span class="text-accent lg:hidden">↓</span>
+              <span class="px-3 py-2 bg-accent text-white rounded-lg font-bold">POST /webhook/upload-cv</span>
+            </div>
+            <div class="flex flex-col lg:flex-row items-center gap-3">
+              <span class="px-3 py-2 border border-black/10 rounded-lg bg-white">Switch Posisi A/B/C</span>
+              <span class="text-accent hidden lg:block">→</span><span class="text-accent lg:hidden">↓</span>
+              <span class="px-3 py-2 border border-black/10 rounded-lg bg-neutral-50">Code Hitung 40/30/30</span>
+              <span class="text-accent hidden lg:block">→</span><span class="text-accent lg:hidden">↓</span>
+              <span class="px-3 py-2 bg-ink text-white rounded-lg font-bold">Merge + Rank</span>
+              <span class="text-accent hidden lg:block">→</span><span class="text-accent lg:hidden">↓</span>
+              <span class="px-3 py-2 border border-black/10 rounded-lg bg-white">Postgres + CSV/JSON</span>
+            </div>
+            <div class="flex items-center gap-2 text-[11px] text-neutral-400 font-mono justify-center">
+              <span>TRUNCATE after delivery → fresh for next batch</span>
+              <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+              <span>Private server — no data leaves</span>
+            </div>
+          </div>
+          <p class="mt-4 text-[11px] text-neutral-400 font-mono text-center">Local LLM (Ornith 35B) = assistant only, supervised by builder — not the brain</p>
+        </div>
+
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal>
+          Deadline was 3 days (Fri 4 Sept 2026) — delivered in 5 hours. That speed came from keeping AI outside the system and keeping the workflow predictable.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIMENT DETAILS ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+        <div class="mt-12 space-y-12">
+
+          <!-- PROBLEM -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Problem</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">A manufacturing company is hiring fast for 3 roles (Junior Architect, Drafter & 3D Visualization, Interior Designer). HR screens CVs manually — opening 5 PDFs one-by-one takes ~30 minutes, is subjective, and doesn’t scale. The AI Specialist test asks for a POC in 3 days that is end-to-end, lightweight, HR-friendly, mobile-friendly, and runs locally on a private server (not public, no login, no SaaS).</p></div>
+          </div>
+
+          <!-- SPECIFICATIONS -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Specifications</span></div>
+            <ol class="lg:col-span-9 space-y-4 list-none">
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Single-page landing `index.html` 626 lines — `HTML5 + Tailwind CDN + Vanilla JS + pdf.js 2.16.105`, `Inter + Manrope`, `bg-grid`, `data-reveal`, `mobile sticky bottom` bar, `toast` (success/error/info, auto 3.2s), `progress Mengekstrak 3/5...` with bar, validation `PDF only, max 5MB/file, max 5 files, dup check`, badge `cv_1..cv_5`, no login.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Client-side extraction: <code class="code-inline">pdfjsLib.getDocument({data: arrayBuffer}).promise → getPage → getTextContent → join</code>, returns <code class="code-inline">{text, page_count}</code>, wraps as JSON Array <code class="code-inline">[{id: "cv_1", filename, size_kb, page_count, text, uploaded_at}]</code> — array directly, for n8n `Split In Batches`, with `AbortController 15s` and `fallback Download JSON` if webhook offline.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">n8n workflow `Technical Test` 24 nodes — `Webhook POST /upload-cv (responseNode)` → `Code Extractor` (pecah 5 CV) → `Code Keyword Router` (Posisi A/B/C) → `Edit Fields Rapihin` (10 fields) → `Switch Posisi` (3 outputs + fallback) → 3 branches each `Pemecah (1 per 1) → Normalisasi → Edit Fields → Hitung 40/30/30 → ekstrak` → `Merge Gabungan (Append 3)` → `Code Ranking (sort desc)` → `database (Postgres upsert)` → `Respond Ranking (allIncomingItems)` → `Postgres Clean (TRUNCATE)`.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Keyword routing: Posisi A `Junior Architect` (12 keywords: autocad, revit, sketchup, lumion, building code...), Posisi B `Drafter & 3D Visualization` (15: enscape, d5 render, shop drawing, as-built...), Posisi C `Interior Designer` (10: furniture, lighting, photoshop, illustrator...).</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">5.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Predictable scoring (per report, 70% threshold): <code class="code-inline">20 skill = 40% + 6 edu = 30% + 6 exp = 30%</code>, <code class="code-inline">total = round(skillScore+eduScore+expScore)</code>, <code class="code-inline">≥70% Lolos, &lt;70% Tidak</code> — implemented as 1 CV per 1, no batch OOM, 3 jalur duplicated for fairness per position.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">6.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Output: ranking `rank 1..5` with <code class="code-inline">{id_cv, nama_file, posisi, total_score, status, alasan}</code> — e.g., `Lolos 80% utk Drafter & 3D Visualization` — table in landing page + `Download Ranking (JSON)` + `Download CSV` with Indonesian headers <code class="code-inline">Peringkat, ID CV, Nama File, Posisi Dilamar, Skor (0-100), Status, Alasan</code> + BOM <code class="code-inline">0xEFBBBF</code> for Excel.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">7.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Local private server: <code class="code-inline">Python 3 http.server</code> on <code class="code-inline">http://localhost:8010</code> (8000 taken) + webhook <code class="code-inline">http://localhost:5678/webhook/upload-cv</code> — no public URL, no data leaves, PDFs only in browser memory.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">8.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Mobile & robust: breakpoints `sm 640 md 768 lg 1024`, upload zone `full width`, file cards `full width`, ranking table `overflow-x-auto scrollbar-thin`, <code class="code-inline">try/catch per file</code>, `firstLine` name fallback, `slice(0,5)` guard, `TRUNCATE` after delivery → fresh for next batch.</p></li>
+            </ol>
+          </div>
+
+          <!-- HYPOTHESIS -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Hypothesis</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">For mass hiring with a 3-day deadline, workflow orchestration (pdf.js + n8n + Postgres) with a predictable, auditable rule is more maintainable, predictable, and resource-efficient than embedding an LLM (even local) inside the scoring. Hallucination risk outweighs benefit; local LLM is better as a supervised syntax assistant (Ornith 35B via OpenCode/MCP) rather than the system’s brain.</p></div>
+          </div>
+
+          <!-- EXPERIMENT -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Experiment</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">I built the landing page per component (upload zone, list with `cv_1..cv_5`, pdf.js extract, JSON POST, ranking table) with deterministic prompts via OpenCode + MCP, each validated in small windows. I built the n8n workflow 1 node per checkpoint (18 checkpoints, 24 nodes), tested per node, and confirmed with the owner before next. The whole POC was delivered in 5 hours — well under the 3-day deadline — on consumer hardware, 100% locally.</p></div>
+          </div>
+
+          <!-- WHAT FAILED -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">What Failed</span></div>
+            <ol class="lg:col-span-9 space-y-4 list-none">
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Small quantized LLM → unstable:</strong> aggressive quant made scoring unpredictable, hard to debug, hallucinated skills — abandoned for rule-based 40/30/30.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Big LLM → heavy:</strong> more stable but needs strong hardware (my 12GB VRAM cannot sustain 5 CV parallel efficiently) — abandoned for workflow lightness.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>One-shot n8n generation → wrong:</strong> missed `body` vs `body.data` wrapping, Switch missed keyword, Merge misaligned — fixed by 1-node-per-checkpoint with explicit `Map` and `responseNode`.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>pdf.js on scanned PDFs → empty:</strong> no text layer → `text.length &lt;10` — handled with toast + `_error` flag per file, still pushing item instead of failing batch, plus 15s `AbortController` and fallback `Download JSON`.</p></li>
+            </ol>
+          </div>
+
+          <!-- ITERATION -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Iteration</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Pivoted from “AI inside” to “workflow without AI inside, AI only as assistant”. Extracted PDFs in the <strong>browser</strong> (not server) to keep n8n light and allow fallback. Duplicated 3 branches (A/B/C) for fairness per position instead of one generic flow. Made scoring auditable (HR can tweak 20/6/6 or threshold 70). Delivered in 5 hours because context was kept small and each node was tested before the next.</p></div>
+          </div>
+
+          <!-- EVIDENCE -->
+          <div data-reveal>
+            <div class="grid lg:grid-cols-12 gap-4 lg:gap-10">
+              <div class="lg:col-span-3"><span class="detail-label">Evidence</span></div>
+              <div class="lg:col-span-9">
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-6">Figures from the live POC on private server. You can verify via screenshots above and the workflow ID <code class="code-inline">v1lQYQUZndoeoR6w</code>.</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Landing Lines</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">626</p><p class="text-xs text-neutral-500">index.html</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">n8n Nodes</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">24</p><p class="text-xs text-neutral-500">Technical Test</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Branches</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">3</p><p class="text-xs text-neutral-500">A/B/C + fallback</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">CV Tested</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">5</p><p class="text-xs text-neutral-500">+ Vacancy PDF</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Threshold</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">70%</p><p class="text-xs text-neutral-500">Lolos / Tidak</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Time</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">~5s</p><p class="text-xs text-neutral-500">vs 30min manual</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Deadline</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">5 Hours</p><p class="text-xs text-neutral-500">of 3 days</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Ranking</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">2 Lolos</p><p class="text-xs text-neutral-500">80,75 / 50,35,25</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RESULT -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Result</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">POC is stable and delivered well within the 3-day deadline — <strong>actually completed in just 5 hours</strong> — live on private server <code class="code-inline">http://localhost:8010</code>. HR uploads on mobile or desktop, gets a ranked shortlist in ~5 seconds (2 Lolos of 5), downloads CSV for Excel, and Postgres is truncated automatically — no token cost, no data leaves, no manual cleanup, HR only does 3 clicks: Upload → Send → Download.</p></div>
+          </div>
+
+          <!-- WHAT I LEARNED -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">What I Learned</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Predictability beats probability for HR: a simple auditable formula HR can tweak is more valuable than a black-box LLM. Workflow orchestration is the skill — supervision over syntax, bug potential, and ease of maintenance matters more than model size. Keeping AI as assistant (Ornith 35B) rather than the system’s brain made the POC shippable in 5 hours on consumer hardware, 100% locally.</p></div>
+          </div>
+
+          <!-- PRACTICAL IMPLICATION -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Practical Implication</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed"><strong>For business owners/HR:</strong> you don’t need a SaaS ATS — a local workflow you own 100% cuts 30 min to 5 sec, with a clear <code class="code-inline">Lolos 70% utk Junior Architect</code> reason per candidate, fair per position, private. <strong>For recruiters:</strong> this proves the builder can ship landing page + n8n + Postgres end-to-end in 5 hours, 3-day deadline, with no hallucination and no data exfiltration — predictable engineering.</p></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONFIGURATION TEMPLATE ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Configuration Template</p>
+
+        <div class="mt-8" data-reveal="100">
+          <p class="font-mono text-sm text-neutral-500">pdf.js — browser-side extract (keeps n8n light)</p>
+          <pre class="code-block mt-4">async function extractTextFromPDF(file){
+  const pdf = await pdfjsLib.getDocument({ 
+    data: await file.arrayBuffer() 
+  }).promise;
+  let fullText = "";
+  for(let i=1; i<=pdf.numPages; i++){
+    const page = await pdf.getPage(i);
+    fullText += (await page.getTextContent())
+      .items.map(it=>it.str||"").join(" ") + "\n";
+  }
+  return { text: fullText.trim(), page_count: pdf.numPages };
+}
+// → wrap as [{id: "cv_1", filename, size_kb, page_count, text, uploaded_at}]</pre>
+        </div>
+
+        <div class="mt-8" data-reveal="100">
+          <p class="font-mono text-sm text-neutral-500">n8n scoring — predictable 40/30/30, 70% threshold (report)</p>
+          <pre class="code-block mt-4">// 20 skill = 40% + 6 edu = 30% + 6 exp = 30% → 70% Lolos (per report)
+const skillScore = (Math.min(keahlian.length,20)/20)*40;
+const eduScore   = (Math.min(edukasi.length,6)/6)*30;
+const expScore   = (Math.min(expTahun,6)/6)*30;
+const total = Math.round(skillScore+eduScore+expScore);
+const status = total>=70 ? "Lolos" : "Tidak Lolos";
+const alasan = status==="Lolos"
+  ? `Lolos ${total}% utk ${posisi}`
+  : `Tidak Lolos ${total}% utk ${posisi}`;</pre>
+        </div>
+
+        <blockquote class="quote-block mt-10 text-sm sm:text-base text-ink leading-relaxed max-w-3xl" data-reveal>
+          Do not copy this snippet blindly. The key is <code class="code-inline">pdf.js in browser + rule 40/30/30</code>: local LLM was only a syntax assistant (Ornith 35B), supervised — not the brain. That kept the POC predictable and shippable in 5 hours.
+        </blockquote>
+
+        <ol class="mt-10 space-y-8 max-w-3xl list-none" data-reveal="100">
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I extracted PDFs in the <strong>browser</strong> so n8n only receives clean JSON — no binary handling, demo works even if n8n is offline (fallback <code class="code-inline">Download JSON</code>).</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I kept scoring <strong>rule-based</strong> (20/6/6, 70%) so HR can audit and tweak it — not an LLM guess that hallucinates skills.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I duplicated <strong>3 branches A/B/C</strong> for fairness — Architect scored on Revit, Drafter on Enscape, Interior on Photoshop — same 40/30/30 but different skill sets.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I kept it <strong>private & fresh</strong>: <code class="code-inline">Python 3</code> on <code class="code-inline">localhost:8010</code>, <code class="code-inline">TRUNCATE</code> after delivery — no data leaves, no manual DB cleanup.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper" open>
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why not put AI inside the scoring system?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Small quantized models hallucinate and are unpredictable; big models are heavy and need strong hardware (RX 6700 XT 12GB cannot sustain 5 CV parallel). Workflow orchestration (<code class="code-inline">pdf.js + n8n + rule 40/30/30, 70% threshold</code>) is stable, fast (~5s), auditable, and 100% local — AI was only a supervised syntax assistant (Ornith 35B).
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              How does HR know why a CV passed or failed?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Each row has a clear reason: e.g., <code class="code-inline">Lolos 80% utk Drafter & 3D Visualization</code> or <code class="code-inline">Tidak Lolos 35% utk Junior Architect</code>. The CSV header is Indonesian — <code class="code-inline">Peringkat, Skor (0-100), Status, Alasan</code> — so HR opens it in Excel and knows immediately. Threshold 70% is adjustable.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              What if the CV is a scanned PDF or the webhook is offline?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Scanned PDFs with no text layer trigger a toast (<code class="code-inline">text &lt;10 chars</code>) but don’t fail the batch — the item is sent with empty text and an <code class="code-inline">_error</code> flag. If the webhook is offline (<code class="code-inline">15s timeout</code>), the landing page shows a fallback <code class="code-inline">Download JSON</code> so the demo still works.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
+            For those of you unable to read this data from technical standpoint,
+            here is the conclusion
+          </h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>This is not a demo — it’s a hiring tool that cuts 30 minutes of manual CV opening to about 5 seconds. You upload 1–5 PDFs on your phone or laptop (drag & drop or tap), and it ranks them for you.</p>
+            <p>It’s fair per position: a Junior Architect is scored on AutoCAD/Revit, a Drafter on Enscape/D5, an Interior Designer on Photoshop — so no one is judged on the wrong skills. You get a table (Rank, CV, Position, Score, Status) and a CSV you open in Excel — with a clear reason like “Lolos 75% utk Junior Architect”.</p>
+            <p>It doesn’t use heavy AI inside. The score is a simple, auditable rule HR can change (20 skills 40% + 6 edu 30% + 6 exp 30%, pass at 70%). That makes it predictable and fast, with no hallucination.</p>
+            <p>It runs 100% on your own private computer — the PDFs never leave your browser, and the database cleans itself after each batch. No SaaS fee, no token cost.</p>
+            <p>It was due in 3 days — it was delivered in 5 hours. For a small team hiring a few roles at a time, it’s sufficient, stable, and you own it 100%.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DISCLAIMER ================= -->
+    <section class="py-16 border-t border-black/10 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="max-w-3xl" data-reveal>
+          <p class="eyebrow">Disclaimer</p>
+          <h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">A Note on Results</h2>
+          <blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">
+            This is a 3-day Proof of Concept — actually delivered in 5 hours — not a full Applicant Tracking System. The 70% threshold and 40/30/30 weights are subjective and based on the 5 CV samples — intentionally adjustable to the recruitment team’s criteria. The result (2 Lolos of 5) is a reference for HR to decide who to interview, not a final hiring decision. For its scope (5 CVs at a time, local, no token cost), it is sufficient and stable, but a scanned PDF with no text layer will still need manual review.
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER CTA ================= -->
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal>
+          <a href="experiments-list.html" class="arrow-link font-display text-sm uppercase">
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+          <a href="contact.html" class="arrow-link font-display text-sm uppercase">
+            Have a problem worth exploring? <span aria-hidden="true">-&gt;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-dark-section text-white">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8">
+      <div class="grid gap-12 md:grid-cols-3">
+        <div>
+          <p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p>
+          <p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">
+            AI Systems Builder &amp; Experimenter
+          </p>
+          <p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">
+            Exploring AI systems, local LLMs, automation workflows, and practical tools that
+            actually work in real business operations.<br>
+            Building what matters, and checking whether AI is truly useful in everyday work.
+          </p>
+        </div>
+        <div class="md:justify-self-center">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="/"            class="footer-link">Home</a></li>
+            <li><a href="profile.html"          class="footer-link">Profile</a></li>
+            <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
+            <li><a href="contact.html"          class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="md:justify-self-end">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">Linkedin</a></li>
+            <li><a href="https://www.reddit.com/user/Full_Director87/"    target="_blank" rel="noopener" class="footer-link">Reddit</a></li>
+            <li><a href="https://www.instagram.com/ybboraa/"              target="_blank" rel="noopener" class="footer-link">Instagram</a></li>
+            <li><a href="mailto:ibborarts@gmail.com"                       class="footer-link">Email</a></li>
+            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">Whatsapp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p>
+        <p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

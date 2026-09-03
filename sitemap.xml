@@ -140,6 +140,29 @@
     </image:image>
   </url>
   <url>
+    <loc>https://robbyaliasaakbar.github.io/exp007.html</loc>
+    <lastmod>2026-09-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments007/homepage-hero.webp</image:loc>
+      <image:title>Experiment 007 — CV screening landing page hero — 10x faster</image:title>
+      <image:caption>Screenshot of CV screening landing page hero</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments007/upload-queue.webp</image:loc>
+      <image:title>Experiment 007 — Upload queue 5 CV with badges cv_1..cv_5</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments007/ranking-result.webp</image:loc>
+      <image:title>Experiment 007 — Ranking result 5 CV with 70% threshold</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments007/n8n-workflow.webp</image:loc>
+      <image:title>Experiment 007 — n8n workflow 24 nodes Technical Test</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://robbyaliasaakbar.github.io/contact.html</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
