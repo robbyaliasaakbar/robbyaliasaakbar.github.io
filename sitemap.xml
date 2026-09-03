@@ -117,6 +117,29 @@
     </image:image>
   </url>
   <url>
+    <loc>https://robbyaliasaakbar.github.io/exp006.html</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments006/invoice-form-preview.webp</image:loc>
+      <image:title>Experiment 006 — Invoice generator form and live A4 preview</image:title>
+      <image:caption>Screenshot of invoice generator with form and live A4 preview — 919 lines</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments006/invoice-mobile-sticky.webp</image:loc>
+      <image:title>Experiment 006 — Mobile sticky bar for invoice admin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments006/invoice-pdf-selectable.webp</image:loc>
+      <image:title>Experiment 006 — Text-based PDF with selectable bank account</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments006/invoice-filemanager-hostinger.webp</image:loc>
+      <image:title>Experiment 006 — Hostinger File Manager file-based storage</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://robbyaliasaakbar.github.io/contact.html</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>

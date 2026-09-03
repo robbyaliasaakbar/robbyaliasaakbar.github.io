@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 006 — Building a Self-Contained Invoice System Without a Database — Robby Aliasa Akbar</title>
+  <meta name="description" content="Can a live A4 invoice tool with customer DB and selectable PDF be built with only local LLMs — no MySQL, just .js + 44 lines PHP? Evidence: 919 lines.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+
+  <!-- ===== SEO: Open Graph / Twitter / Canonical ===== -->
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp006.html">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp006.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp006.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp006.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp006.html">
+  <meta property="og:title" content="Experiment 006 — Building a Self-Contained Invoice System Without a Database">
+  <meta property="og:description" content="Can a live A4 invoice tool with customer DB and selectable PDF be built with only local LLMs — no MySQL, just 44 lines PHP? 919 lines, file-based.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments006/invoice-form-preview.webp">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="878">
+  <meta property="og:image:alt" content="Screenshot of Experiment 006 — invoice generator with form and live A4 preview">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-09-03T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-03T00:00:00+07:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 006 — Building a Self-Contained Invoice System Without a Database">
+  <meta name="twitter:description" content="Can an internal invoice tool with live A4 preview and selectable PDF be built with only local LLMs — without MySQL, just .js + 44 lines PHP?">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments006/invoice-form-preview.webp">
+  <meta name="twitter:image:alt" content="Screenshot of Experiment 006 — invoice generator built with local AI">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Building a Self-Contained Invoice System Without a Database — File-Based Persistence with Local AI",
+        "description": "Can a live A4 invoice tool with customer DB and selectable PDF be built with only local LLMs — no MySQL, just .js + 44 lines PHP? Evidence: 919 lines.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments006/invoice-form-preview.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp006.html",
+        "datePublished": "2026-09-03",
+        "dateModified": "2026-09-03",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp006.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["local AI", "invoice generator", "jsPDF", "file-based database", "Hostinger", "vanilla JavaScript", "Tailwind CSS", "small business tools", "ORNITH", "llama.cpp"],
+        "author": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar",
+          "url": "https://robbyaliasaakbar.github.io/profile.html"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://robbyaliasaakbar.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Experiments",
+            "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Experiment 006",
+            "item": "https://robbyaliasaakbar.github.io/exp006.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts: Manrope (display) + Inter (body) + JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS (CDN — no build step required) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#0C0C0C',
+            paper:  '#FFFFFF',
+            accent: '#D70000'
+          },
+          fontFamily: {
+            display: ['Manrope', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+            mono:    ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @media (max-width: 640px) {
+      .detail-label { font-size: 0.6875rem; letter-spacing: 0.16em; }
+      .stat-tile p { word-break: break-word; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do I need a database for a small business invoice system?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No — for under ~10k customers, a single customers.js file on Hostinger file storage (100GB) is enough. It's downloadable via File Manager, no phpMyAdmin. save.php (44 lines) handles POST {type, content} with allowlist. localStorage is fallback if fetch fails." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is selectable text in PDF important?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Customers need to copy the bank account BCA 5771 •• 465 without retyping. Screenshot PDFs (850KB, image) don't allow copy. Text-based jsPDF (45KB) does — plus it's 19x smaller. Logo still embeds via canvas PNG conversion." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can local AI really handle jsPDF and file save logic?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, but batched per component. One-shot generation hallucinated pricelist and broke logo CORS. Batched prompting (form → preview → pdf → save.php) with human validation produced 919 lines that work on shared hosting." }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body class="bg-paper text-ink font-body antialiased">
+
+  <!-- ================= NAVBAR ================= -->
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">
+        ROBBY ALIASA AKBAR<span class="text-accent">.</span>
+      </a>
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="/"            class="nav-link">Home</a>
+        <a href="profile.html"          class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html"          class="nav-link">Contact</a>
+      </div>
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false"
+              class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="/"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html"          class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html"          class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= EXPERIMENT HEADER ================= -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 006</li>
+            </ol>
+          </nav>
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal>
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 006</p>
+            <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+          </div>
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">
+            Building a Self-Contained Invoice System Without a Database.
+          </h1>
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">
+            Can an internal business tool with customer DB, live A4 preview, and selectable text-based PDF be built end-to-end using only local LLMs — without a traditional database, just <code class="code-inline">.js</code> files + 44 lines of PHP on shared hosting?
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SYSTEM REQUIREMENTS ================= -->
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>System Requirements</p>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">CPU</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Intel Core I5 11400F</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">RAM</p>
+            <p class="mt-2 text-sm font-medium leading-snug">16GB DDR4 3200 MT/s</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">GPU</p>
+            <p class="mt-2 text-sm font-medium leading-snug">RX 6700 XT</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">OS</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Ubuntu 26.04 LTS</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Inference Engine</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Llama.cpp</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="200">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Coding Tools</p>
+            <p class="mt-2 text-sm font-medium leading-snug">OpenCode + Cline (VS Code)</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">The Model That Helped Me</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">ORNITH-1.0-35B-A3B-IQ4_NL-GGUF</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Frontend Stack</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Tailwind CDN + Vanilla JS + jsPDF 2.5.1</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Status</p>
+            <p class="mt-2 text-sm font-medium leading-snug">STABLE</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREENSHOTS — GALLERY ================= -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Screenshots</p>
+
+        <!-- Hero row: 1 large -->
+        <div class="mt-8" data-reveal="0">
+          <figure>
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments006/invoice-form-preview.webp"
+                   alt="Screenshot 1 — invoice generator desktop with left form (customer, items, totals) and right live A4 preview"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Form + Live A4 Preview — Desktop (lg:grid-cols-12)</figcaption>
+          </figure>
+        </div>
+
+        <!-- Row 2: 3 cols -->
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <figure data-reveal="120">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments006/invoice-mobile-sticky.webp"
+                   alt="Screenshot 2 — mobile view with sticky bar Preview | PDF | Print for admin on phone"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Mobile Sticky Bar — Admin on Phone</figcaption>
+          </figure>
+          <figure data-reveal="240">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments006/invoice-pdf-selectable.webp"
+                   alt="Screenshot 3 — generated PDF with selectable text, BCA bank account can be highlighted and copied"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Text-Based PDF — Selectable & Copyable (45KB)</figcaption>
+          </figure>
+          <figure data-reveal="360">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments006/invoice-filemanager-hostinger.webp"
+                   alt="Screenshot 4 — Hostinger File Manager showing customers.js file storage (100GB)"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">File-Based Storage — Hostinger File Manager</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VISUALIZATION ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Visualization</p>
+
+        <div class="mt-8" data-reveal="100">
+          <h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">
+            Why Text-Based PDF Won — Size, Selectability, and Cost
+          </h2>
+          <p class="mt-2 text-sm text-neutral-600">
+            The same invoice generated two ways. Local AI initially suggested <code class="code-inline">html2canvas</code> screenshot — human corrected to <code class="code-inline">jsPDF</code> text API. The difference is 19x size and copy-paste.
+          </p>
+        </div>
+
+        <!-- Chart 1: Text-based -->
+        <div class="mt-8 border border-black/10 rounded-2xl p-6 sm:p-10 bg-paper" data-reveal="150">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-display font-extrabold text-sm tracking-[0.08em] uppercase">Text-Based PDF — jsPDF (Chosen)</h3>
+            <span class="status-badge status-stable !text-[0.58rem] sm:!text-[0.65rem] !px-2.5 sm:!px-3 !py-1 shrink-0"><span class="status-dot"></span>45KB — Selectable</span>
+          </div>
+          <div class="mt-6" data-chart="bar" data-y-max="100" data-data='[{"label":"Size","value":45},{"label":"Selectable","value":100},{"label":"Logo","value":100},{"label":"Copy Rek","value":100}]'></div>
+          <div class="mt-4 flex items-center justify-between text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">
+            <span>0</span>
+            <span>score / 100 — text-based is smaller & copyable</span>
+            <span>100</span>
+          </div>
+          <p class="mt-4 text-xs text-neutral-500 leading-relaxed">Size is KB for the first bar (45KB) and 0/100 for booleans. Rekening <code class="code-inline">BCA 5771 •• 465</code> is selectable — masked here, full in real PDF.</p>
+        </div>
+
+        <!-- Chart 2: Screenshot -->
+        <div class="mt-6 border border-black/10 rounded-2xl p-6 sm:p-10 bg-paper" data-reveal="200">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-display font-extrabold text-sm tracking-[0.08em] uppercase">Screenshot PDF — html2canvas (Rejected)</h3>
+            <span class="status-badge status-failed !text-[0.58rem] sm:!text-[0.65rem] !px-2.5 sm:!px-3 !py-1 shrink-0">850KB — Image Only</span>
+          </div>
+          <!-- y-max 900 to fit 850 -->
+          <div class="mt-6" data-chart="bar" data-y-max="900" data-data='[{"label":"Size KB","value":850},{"label":"Selectable","value":0},{"label":"Logo","value":100},{"label":"Copy Rek","value":0}]'></div>
+          <div class="mt-4 flex items-center justify-between text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">
+            <span>0</span>
+            <span>size KB / boolean — screenshot is 19x heavier & not copyable</span>
+            <span>900</span>
+          </div>
+        </div>
+
+        <!-- Flow diagram -->
+        <div class="mt-8 border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="250">
+          <h3 class="font-display font-extrabold text-sm tracking-[0.08em] uppercase">File-Based Flow — No Database</h3>
+          <p class="mt-2 text-xs text-neutral-500">One <code class="code-inline">customers.js</code> file, not MySQL. Download via File Manager anytime.</p>
+          <div class="mt-6 flex flex-col lg:flex-row items-center gap-3 text-xs font-mono">
+            <span class="px-3 py-2 bg-ink text-white rounded-lg font-bold">Input (form)</span>
+            <span class="text-accent hidden lg:block">→</span><span class="text-accent lg:hidden">↓</span>
+            <span class="px-3 py-2 border border-black/10 rounded-lg bg-neutral-50">calcTotals() + updatePreview() <span class="text-neutral-400">600ms</span></span>
+            <span class="text-accent hidden lg:block">→</span><span class="text-accent lg:hidden">↓</span>
+            <span class="px-3 py-2 border border-black/10 rounded-lg bg-neutral-50">localStorage <span class="text-emerald-600">fallback</span></span>
+            <span class="text-neutral-300 hidden lg:block">+</span><span class="text-neutral-300 lg:hidden">+</span>
+            <span class="px-3 py-2 bg-accent text-white rounded-lg font-bold">fetch(save.php) POST {type, content}</span>
+            <span class="text-accent hidden lg:block">→</span><span class="text-accent lg:hidden">↓</span>
+            <span class="px-3 py-2 border border-black/10 rounded-lg bg-white font-bold">customers.js / company.js <span class="text-neutral-400">Hostinger 100GB</span></span>
+          </div>
+          <p class="mt-4 text-[11px] text-neutral-400 font-mono">save.php allowlist: ['customers','company'] → file_put_contents → JSON {status:"ok"}</p>
+        </div>
+
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal>
+          EXP 005’s chart was Lighthouse performance. This chart is architecture — proving file-based persistence is 19x smaller and more practical for SMB than a screenshot or a full DB.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIMENT DETAILS ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+        <div class="mt-12 space-y-12">
+
+          <!-- PROBLEM -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Problem</span></div>
+            <div class="lg:col-span-9">
+              <p class="text-base text-neutral-700 leading-relaxed">
+                The public site from EXP 005 solved marketing — but operations were still manual. Invoices were typed in Word/Excel, customer data was scattered across WhatsApp, the 44 price items had to be remembered, and PDFs were inconsistent. I needed an internal tool that could (a) autocomplete returning customers, (b) auto-calculate from the same pricelist, (c) show a live A4 preview, and (d) generate a PDF where the bank account can be copied — without a SaaS subscription and without setting up MySQL on shared hosting.
+              </p>
+            </div>
+          </div>
+
+          <!-- SPECIFICATIONS -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Specifications</span></div>
+            <ol class="lg:col-span-9 space-y-4 list-none">
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Single-file app: <code class="code-inline">invoice.html</code> 919 lines — <code class="code-inline">lg:grid-cols-12</code> (form 5 + preview 7 sticky), Tailwind CDN + jsPDF 2.5.1 + html2canvas 1.4.1 (loaded but not used for final PDF), Vanilla JS only, <code class="code-inline">noindex, nofollow</code> at <code class="code-inline">.../invoice/admin/data/invoice.html (internal, noindex)</code>.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Company data: <code class="code-inline">company.js</code> 19 lines — <code class="code-inline">name, logo, address, whatsapp, email, rekening {bank, no, an}</code> — editable via <code class="code-inline">⚙️ Edit Company</code> modal (6 fields + logo upload base64 max 500KB), auto-save via <code class="code-inline">save.php?file=company</code> + <code class="code-inline">localStorage</code> fallback.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Customer DB file-based: <code class="code-inline">customers.js</code> 21 lines — array <code class="code-inline">[{id, name, address, whatsapp}]</code> with 2 dummy samples (Budi & Siti — labeled dummy), <code class="code-inline">datalist</code> autocomplete, dedup <code class="code-inline">Map(name|wa)</code> on <code class="code-inline">init()</code>, auto-grow via <code class="code-inline">save.php</code> POST JSON — storage on Hostinger 100GB file storage, downloadable via File Manager.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Backend: <code class="code-inline">save.php</code> 44 lines — <code class="code-inline">header JSON + CORS</code>, <code class="code-inline">file_get_contents('php://input')</code>, allowlist <code class="code-inline">['customers','company']</code>, <code class="code-inline">file_put_contents($filename, $content)</code> — no DB, no ORM.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">5.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Items logic: reads <code class="code-inline">indeepPricelist</code> (22 categories → 44 items, same as EXP 005) — dependent dropdowns <code class="code-inline">kategori → ukuran</code>, price auto, qty, discount, plus dynamic extras <code class="code-inline">latex +40k, lepasPasang +20k/seat, lebar75 +20k/seat</code> — <code class="code-inline">calcTotals()</code> + <code class="code-inline">renderItems()</code>.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">6.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Live preview: <code class="code-inline">preview-a4</code> 210mm, <code class="code-inline">setInterval(updatePreview, 600)</code> — header with logo, meta (No, Date, Due +1 day), 7-column table, payment box, signature — updates on every input change.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">7.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">PDF generation: <strong>text-based only</strong> <code class="code-inline">generateTextPDF()</code> via jsPDF — logo from DOM <code class="code-inline">canvas.toDataURL('image/png')</code> (fixes CORS), all text via <code class="code-inline">pdf.text()</code> + <code class="code-inline">pdf.rect()</code> so <code class="code-inline">BCA 5771 •• 465</code> is selectable (masked in portfolio, full in real PDF), filename <code class="code-inline">INV-YYYYMMDD-001 - Customer.pdf</code>.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">8.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Mobile & print: <code class="code-inline">@media (max-width: 1024px)</code> table <code class="code-inline">overflow-x: auto</code>, <code class="code-inline">preview-a4</code> full-width, <code class="code-inline">mobile-sticky-bar</code> fixed bottom (<code class="code-inline">Preview | PDF | Print</code>), <code class="code-inline">@media print</code> hides <code class="code-inline">.no-print</code>, <code class="code-inline">window.print()</code> fallback.</p></li>
+            </ol>
+          </div>
+
+          <!-- HYPOTHESIS -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Hypothesis</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">A local open-source LLM (ORNITH 35B IQ4_NL via Llama.cpp) can generate this operational tool if prompts are deterministic per component (form, preview, PDF, save.php) and the builder understands the file-persistence vs DB trade-off. File-based is sufficient for SMB (&lt;10k customers) and more maintainable than MySQL on shared hosting.</p></div>
+          </div>
+
+          <!-- EXPERIMENT -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Experiment</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">I built it by prompting the local model per batch — first <code class="code-inline">invoice.html</code> skeleton, then <code class="code-inline">company.js</code> modal, then <code class="code-inline">customers.js</code> autocomplete + <code class="code-inline">save.php</code>, then <code class="code-inline">calcTotals/updatePreview</code>, then <code class="code-inline">generateTextPDF</code> — each validated in a small context window via OpenCode + Cline in VS Code. Not one-shot.</p></div>
+          </div>
+
+          <!-- WHAT FAILED -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">What Failed</span></div>
+            <ol class="lg:col-span-9 space-y-4 list-none">
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Logo CORS to PDF:</strong> <code class="code-inline">fetch(logo.png)</code> failed on <code class="code-inline">file://</code> and on the Hostinger path <code class="code-inline">../../../assets/img/logo.png</code>. Had to grab the already-loaded DOM <code class="code-inline">&lt;img&gt;</code>, draw to <code class="code-inline">canvas</code>, <code class="code-inline">toDataURL('image/png')</code>, then <code class="code-inline">pdf.addImage()</code> — initial <code class="code-inline">fetch</code> + <code class="code-inline">FileReader</code> blob approach broke.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Pricelist hallucination (continuation of EXP 005):</strong> model invented prices for Kasur 200/180 etc. Fixed by forcing verbatim read of <code class="code-inline">indeepPricelist[kategori]</code> and disabling <code class="code-inline">ukuran</code> until <code class="code-inline">kategori</code> is selected.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Mobile table overflow:</strong> 7-column table broke on phone — fixed with <code class="code-inline">display:block; overflow-x:auto;</code> and <code class="code-inline">table thead/tbody display:table; width:100%</code> at 1024px.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Dual persistence race:</strong> <code class="code-inline">localStorage</code> vs <code class="code-inline">save.php</code> went out of sync after save — fixed with <code class="code-inline">Map</code> dedup <code class="code-inline">name|wa</code> on load + <code class="code-inline">Export manual</code> button fallback when <code class="code-inline">fetch</code> fails (500 or CORS).</p></li>
+            </ol>
+          </div>
+
+          <!-- ITERATION -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Iteration</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Same pivot as EXP 005: stop relying 100% on AI. AI drafts syntax, human decides if <code class="code-inline">save.php</code> allowlist is safe, if <code class="code-inline">pdf.addImage</code> needs PNG conversion, if <code class="code-inline">pricelist.js</code> is the single source. Added business insight: for a small service business, <strong>file-based &gt; MySQL</strong> — one <code class="code-inline">customers.js</code> downloadable via File Manager beats setting up phpMyAdmin on shared hosting.</p></div>
+          </div>
+
+          <!-- EVIDENCE -->
+          <div data-reveal>
+            <div class="grid lg:grid-cols-12 gap-4 lg:gap-10">
+              <div class="lg:col-span-3"><span class="detail-label">Evidence</span></div>
+              <div class="lg:col-span-9">
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-6">Figures from the live internal tool on Hostinger. You can verify via the screenshots above and by inspecting <code class="code-inline">save.php</code> (44 lines).</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Total Files</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">5</p><p class="text-xs text-neutral-500">1 html + 2 js + 1 php + 1 txt</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Invoice Lines</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">919</p><p class="text-xs text-neutral-500">invoice.html</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Backend</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">44 <span class="text-xs font-semibold text-neutral-500">lines PHP</span></p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Storage</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">100GB</p><p class="text-xs text-neutral-500">Hostinger file-based</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Preview Sync</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">600ms</p><p class="text-xs text-neutral-500">setInterval</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Customer DB</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">2 → ∞</p><p class="text-xs text-neutral-500">auto-grow</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">PDF Mode</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">Text-based</p><p class="text-xs text-neutral-500">selectable, 45KB</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Revisions</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">~12 <span class="text-xs font-semibold text-neutral-500">batched</span></p><p class="text-xs text-neutral-500">per component</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RESULT -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Result</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">The tool is stable and live internally — an admin can create an invoice in under 2 minutes, customer data auto-saves to <code class="code-inline">customers.js</code> (and <code class="code-inline">localStorage</code>), the PDF is 45KB text-selectable (vs 850KB image), and the owner can backup <code class="code-inline">customers.js</code> anytime via File Manager without DB knowledge. Not an enterprise ERP, but sufficient for a Jabodetabek SMB.</p></div>
+          </div>
+
+          <!-- WHAT I LEARNED -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">What I Learned</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Determinism matters even more for internal tools: <code class="code-inline">save.php</code> must have an allowlist, <code class="code-inline">logo</code> must be converted to PNG, <code class="code-inline">pricelist</code> must be read verbatim. File-based persistence is underrated — local AI can generate CRUD without a database if the builder understands file I/O trade-offs. The model is the typer, the builder is the reviewer.</p></div>
+          </div>
+
+          <!-- PRACTICAL IMPLICATION -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Practical Implication</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed"><strong>For business owners:</strong> you don’t need a Rp200k/month SaaS — with local AI + Hostinger 100GB you own your invoice tool 100%, backup is one download. <strong>For recruiters:</strong> this proves the builder can ship both the public marketing site (EXP 005) and the internal ops tool (EXP 006) with the same local stack — end-to-end ownership, no cloud dependency. Start from one file (<code class="code-inline">save.php</code>), validate file writes, then batch the next component.</p></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONFIGURATION TEMPLATE ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Configuration Template</p>
+
+        <div class="mt-8" data-reveal="100">
+          <p class="font-mono text-sm text-neutral-500">save.php — the entire backend (44 lines)</p>
+          <pre class="code-block mt-4">&lt;?php
+// save.php — 44 lines, no DB, file-based persistence
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(200); exit(); }
+
+$input = file_get_contents('php://input');
+$data = json_decode($input, true);
+
+$allowed = ['customers', 'company'];
+if (!$data || !in_array($data['type'], $allowed)) {
+  http_response_code(400);
+  echo json_encode(["status" => "error"]);
+  exit();
+}
+
+file_put_contents($data['type'] . '.js', $data['content']);
+echo json_encode(["status" => "ok", "file" => $data['type'] . '.js']);</pre>
+        </div>
+
+        <div class="mt-8" data-reveal="100">
+          <p class="font-mono text-sm text-neutral-500">customers.js — file-based DB (dummy samples)</p>
+          <pre class="code-block mt-4">/* dummy sample — not real customers */
+const customersData = [
+  {
+    id: "CUST-001",
+    name: "Budi Santoso",
+    address: "Jl. Kemang Raya No. 12, Jakarta Selatan 12130",
+    whatsapp: "081234567890"
+  },
+  {
+    id: "CUST-002",
+    name: "Siti Aminah",
+    address: "Cluster Galaxy Blok B2 No. 8, Bekasi Selatan",
+    whatsapp: "082112345678"
+  }
+];
+// auto-updated via fetch(save.php) POST {type: "customers", content} + localStorage Map dedup</pre>
+        </div>
+
+        <blockquote class="quote-block mt-10 text-sm sm:text-base text-ink leading-relaxed max-w-3xl" data-reveal>
+          Do not copy this snippet blindly. The key lesson is the allowlist + file storage: local AI can generate the <code class="code-inline">fetch</code> + <code class="code-inline">localStorage</code> dual save, but you must ensure <code class="code-inline">customers.js</code> is never overwritten with an invalid type. That safety check is human judgment.
+        </blockquote>
+
+        <ol class="mt-10 space-y-8 max-w-3xl list-none" data-reveal="100">
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I kept persistence to <strong>files, not tables</strong> — <code class="code-inline">customers.js</code> on Hostinger 100GB is downloadable via File Manager in one click, no phpMyAdmin. For &lt;10k rows, this is faster to maintain.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I required <code class="code-inline">text-based PDF</code> (<code class="code-inline">pdf.text()</code> + <code class="code-inline">pdf.rect()</code>) instead of screenshot — local AI defaulted to <code class="code-inline">html2canvas</code> which creates a heavy image where <code class="code-inline">BCA 5771 •• 465</code> cannot be copied.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I forced the single source <code class="code-inline">indeepPricelist</code> (22 keys, 44 items) so invoice totals always match the public calculator — any hallucination is caught by diffing against this file.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I kept <code class="code-inline">localStorage</code> as fallback — if <code class="code-inline">fetch(save.php)</code> fails (500 or CORS on Hostinger), data is still saved and an <code class="code-inline">Export customers.js</code> button appears for manual download.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper" open>
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Do I need a database for a small business invoice system?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              No — for under ~10k customers, a single <code class="code-inline">customers.js</code> file on Hostinger file storage (100GB) is enough. It's downloadable via File Manager, no phpMyAdmin. <code class="code-inline">save.php</code> (44 lines) handles <code class="code-inline">POST {type, content}</code> with allowlist. <code class="code-inline">localStorage</code> is fallback if <code class="code-inline">fetch</code> fails.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why is selectable text in PDF important?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Customers need to copy the bank account <code class="code-inline">BCA 5771 •• 465</code> without retyping. Screenshot PDFs (850KB, image) don't allow copy. Text-based jsPDF (45KB) does — plus it's 19x smaller. Logo still embeds via canvas PNG conversion.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Can local AI really handle jsPDF and file save logic?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Yes, but batched per component. One-shot generation hallucinated pricelist and broke logo CORS. Batched prompting (form → preview → pdf → save.php) with human validation produced 919 lines that work on shared hosting.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
+            For those of you unable to read this data from technical standpoint,
+            here is the conclusion
+          </h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>This is not a public website — it's the internal cashier tool that comes after the website. If EXP 005 is the storefront, this is the cash register.</p>
+            <p>It lets the admin create an invoice in under 2 minutes: pick a returning customer (autocomplete), add items from the same 44-price list used on the website, see a live A4 preview, and download a PDF where the bank account can be copied.</p>
+            <p>It doesn't use a database. Customer data lives in one <code class="code-inline">customers.js</code> file on Hostinger (100GB) — you can download it anytime via File Manager, no database setup. A tiny 44-line PHP file saves it.</p>
+            <p>The PDF is text-based (45KB), not a screenshot (850KB) — so it's small and copyable, and the logo still appears. It was built with a local AI on consumer hardware, batched one component at a time.</p>
+            <p>It's not for a big enterprise with millions of rows, but for a small service business in the Jabodetabek area, it's sufficient, it's stable, it connects directly to the pricing from EXP 005, and you own it 100% — no monthly SaaS fee.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DISCLAIMER ================= -->
+    <section class="py-16 border-t border-black/10 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="max-w-3xl" data-reveal>
+          <p class="eyebrow">Disclaimer</p>
+          <h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">A Note on Results</h2>
+          <blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">
+            From a purely objective standpoint, this is not an enterprise-grade ERP. Given it was built with a 35B local model on consumer hardware and runs on shared hosting file storage, I consider it sufficient and practical for real small-business invoicing. The trade-off (file-based vs MySQL) is intentional for maintainability at this scale — with known limits if customer count grows beyond file-based practicality. That said, for the Jabodetabek service business it serves, it is stable, live, and fully owned.
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER CTA ================= -->
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal>
+          <a href="experiments-list.html" class="arrow-link font-display text-sm uppercase">
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+          <a href="contact.html" class="arrow-link font-display text-sm uppercase">
+            Have a problem worth exploring? <span aria-hidden="true">-&gt;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-dark-section text-white">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8">
+      <div class="grid gap-12 md:grid-cols-3">
+        <div>
+          <p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p>
+          <p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">
+            AI Systems Builder &amp; Experimenter
+          </p>
+          <p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">
+            Exploring AI systems, local LLMs, automation workflows, and practical tools that
+            actually work in real business operations.<br>
+            Building what matters, and checking whether AI is truly useful in everyday work.
+          </p>
+        </div>
+        <div class="md:justify-self-center">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="/"            class="footer-link">Home</a></li>
+            <li><a href="profile.html"          class="footer-link">Profile</a></li>
+            <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
+            <li><a href="contact.html"          class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="md:justify-self-end">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">Linkedin</a></li>
+            <li><a href="https://www.reddit.com/user/Full_Director87/"    target="_blank" rel="noopener" class="footer-link">Reddit</a></li>
+            <li><a href="https://www.instagram.com/ybboraa/"              target="_blank" rel="noopener" class="footer-link">Instagram</a></li>
+            <li><a href="mailto:ibborarts@gmail.com"                       class="footer-link">Email</a></li>
+            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">Whatsapp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p>
+        <p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
