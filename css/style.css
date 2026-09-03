@@ -194,6 +194,8 @@ body {
   padding-left: 1.25rem;
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* Status badge variants (all 4 states per PRD) */
@@ -387,7 +389,9 @@ body {
   background-color: rgba(12, 12, 12, .06);
   padding: .12em .4em;
   border-radius: .3em;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* Narrative subsection label */

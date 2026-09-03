@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 005 — Building a Full Feature Services Business Website Using Only Local AI — Robby Aliasa Akbar</title>
+  <meta name="description" content="Can a full-feature business website with before-after slider, page animations, 44-item cost calculator, and full SEO be built end-to-end using only local open-source LLMs? Real build evidence from 14 pages, 28 images, 3 JS files.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+
+  <!-- ===== SEO: Open Graph / Twitter / Canonical ===== -->
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp005.html">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp005.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp005.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp005.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp005.html">
+  <meta property="og:title" content="Experiment 005 — Building a Full Feature Services Business Website Using Only Local AI">
+  <meta property="og:description" content="Full build evidence: 14 pages, slider 14 pairs, 44-item calculator, 3 vanilla JS files, 1306 CSS lines, Lighthouse scores. Can it be done with only local LLMs?">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments005/homepage.webp">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="878">
+  <meta property="og:image:alt" content="Screenshot of Experiment 005 — homepage layout of full-feature business website built with local AI">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-09-01T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-01T00:00:00+07:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 005 — Building a Full Feature Services Business Website Using Only Local AI">
+  <meta name="twitter:description" content="Can a full-feature business website with slider, animations, 44-item calculator, and full SEO be built using only local LLMs?">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments005/homepage.webp">
+  <meta name="twitter:image:alt" content="Screenshot of Experiment 005 — homepage layout built with local AI">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Building a Full Feature Services Business Website Using Only Local AI",
+        "description": "Can a full-feature business website with before-after slider, page animations, 44-item cost calculator, and full SEO be built end-to-end using only local open-source LLMs? Real build evidence from 14 pages, 28 images, 3 JS files.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments005/homepage.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp005.html",
+        "datePublished": "2026-09-01",
+        "dateModified": "2026-09-01",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp005.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["local AI", "open-source LLM", "business website", "before-after slider", "cost calculator", "Tailwind CSS", "vanilla JavaScript", "SEO optimization", "llama.cpp", "ORNITH"],
+        "author": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar",
+          "url": "https://robbyaliasaakbar.github.io/profile.html"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://robbyaliasaakbar.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Experiments",
+            "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Experiment 005",
+            "item": "https://robbyaliasaakbar.github.io/exp005.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts: Manrope (display) + Inter (body) + JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS (CDN — no build step required) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#0C0C0C',
+            paper:  '#FFFFFF',
+            accent: '#D70000'
+          },
+          fontFamily: {
+            display: ['Manrope', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+            mono:    ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Mobile fixes for EXP005: ensure no horizontal overflow on small screens */
+    @media (max-width: 640px) {
+      .detail-label { font-size: 0.6875rem; letter-spacing: 0.16em; }
+      .stat-tile p { word-break: break-word; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can local AI really generate a production estimator with 44 price rules?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, but only with deterministic prompts and manual validation. Initial calc hallucinated prices; splitting pricelist.js as single source of truth fixed it. AI drafted the dependent dropdowns and WA link — human ensured 44 items matched." }
+      },
+      {
+        "@type": "Question",
+        "name": "What broke when you let AI build the slider fully?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Clip-path direction, divider sync, and touch vs mouse handlers. Local LLM needed zero-ambiguity instructions for inset() percentages and event handling. One-shot full-page generation failed — batched per-component succeeded." }
+      },
+      {
+        "@type": "Question",
+        "name": "How did you get SEO 100 without cloud tools?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Manual SEO layer: canonical, OG, 3 JSON-LD schemas, preload, sitemap fix for Search Console, internal linking pass. AI gave baseline meta; human optimized beyond template. Pagespeed still shows perf headroom (65 mobile / 88 desktop)." }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body class="bg-paper text-ink font-body antialiased">
+
+  <!-- ================= NAVBAR ================= -->
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+
+      <!-- Left: Logo text -->
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">
+        ROBBY ALIASA AKBAR<span class="text-accent">.</span>
+      </a>
+
+      <!-- Right: Desktop nav -->
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="/"            class="nav-link">Home</a>
+        <a href="profile.html"          class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html"          class="nav-link">Contact</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false"
+              class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="/"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html"          class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html"          class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= EXPERIMENT HEADER ================= -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 005</li>
+            </ol>
+          </nav>
+
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal>
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 005</p>
+            <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+          </div>
+
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">
+            Building a Full Feature Services Business Website Using Only Local AI.
+          </h1>
+
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">
+            Can a full-feature business website with before-after slider, page animations, 44-item cost calculator, and full SEO be built end-to-end using only local open-source LLMs without cloud AI?
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SYSTEM REQUIREMENTS ================= -->
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>System Requirements</p>
+
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4">
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">CPU</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Intel Core I5 11400F</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">RAM</p>
+            <p class="mt-2 text-sm font-medium leading-snug">16GB DDR4 3200 MT/s</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">GPU</p>
+            <p class="mt-2 text-sm font-medium leading-snug">RX 6700 XT</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">OS</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Ubuntu 26.04 LTS</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Inference Engine</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Llama.cpp</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="200">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Coding Tools</p>
+            <p class="mt-2 text-sm font-medium leading-snug">OpenCode + Cline (VS Code)</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">The Model That Helped Me</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">ORNITH-1.0-35B-A3B-IQ4_NL-GGUF</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Frontend Stack</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Tailwind CDN + Vanilla JS</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Status</p>
+            <p class="mt-2 text-sm font-medium leading-snug">STABLE</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREENSHOTS — GALLERY ================= -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Screenshots</p>
+
+        <!-- Row 1: 3 main layouts -->
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <figure data-reveal="0">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments005/homepage.webp"
+                   alt="Screenshot 1 — homepage layout of InDeepCleaningID business website with hero, badge, CTA and services grid"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Homepage Layout</figcaption>
+          </figure>
+          <figure data-reveal="120" class="pb-1">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments005/gallery.webp"
+                   alt="Screenshot 2 — gallery layout with 14 before-after sliders and category filter buttons"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 mb-1 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Gallery Layout — 14 Before-After Sliders</figcaption>
+          </figure>
+          <figure data-reveal="240">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments005/estimation-calculator.webp"
+                   alt="Screenshot 3 — cost estimation calculator UI with 22 service categories and 44 price items and WhatsApp deep-link"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Estimation Calculator UI/UX</figcaption>
+          </figure>
+        </div>
+
+        <!-- Row 2: 2 pagespeed scores -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <figure data-reveal="0">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments005/seo-score-pagespeed-mobile.webp"
+                   alt="Pagespeed Insights mobile version — performance 65, accessibility 86, best practices 100, SEO 100"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Pagespeed — Mobile Version</figcaption>
+          </figure>
+          <figure data-reveal="120">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments005/seo-score-pagespeed-desktop.webp"
+                   alt="Pagespeed Insights desktop version — performance 88, accessibility 86, best practices 100, SEO 100"
+                   loading="lazy" decoding="async"
+                   width="1440" height="878"
+                   class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Pagespeed — Desktop Version</figcaption>
+          </figure>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= VISUALIZATION — PAGESPEED SCORES ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Visualization</p>
+
+        <div class="mt-8" data-reveal="100">
+          <h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">
+            Lighthouse Pagespeed Scores — Mobile vs Desktop
+          </h2>
+          <p class="mt-2 text-sm text-neutral-600">
+            Real scores from <code class="code-inline">pagespeed.web.dev</code> on the live 14-page site (https://indeepcleaningid.site). Performance is the only metric with clear headroom — SEO is already 100.
+          </p>
+        </div>
+
+        <!-- Mobile Chart -->
+        <div class="mt-8 border border-black/10 rounded-2xl p-6 sm:p-10 bg-paper" data-reveal="150">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-extrabold text-sm tracking-[0.08em] uppercase">Mobile Version</h3>
+            <span class="status-badge status-failed !text-[0.65rem] !px-3 !py-1">Perf 65 — Needs Improvement</span>
+          </div>
+          <div class="mt-6" data-chart="bar" data-y-max="100" data-data='[{"label":"Perf","value":65},{"label":"A11y","value":86},{"label":"Best Pr.","value":100},{"label":"SEO","value":100},{"label":"Agentic","value":50}]'></div>
+          <div class="mt-4 flex items-center justify-between text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">
+            <span>Low — 50</span>
+            <span>score / 100 — mobile</span>
+            <span>High — 100</span>
+          </div>
+        </div>
+
+        <!-- Desktop Chart -->
+        <div class="mt-6 border border-black/10 rounded-2xl p-6 sm:p-10 bg-paper" data-reveal="200">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-extrabold text-sm tracking-[0.08em] uppercase">Desktop Version</h3>
+            <span class="status-badge status-stable !text-[0.65rem] !px-3 !py-1"><span class="status-dot"></span>Perf 88 — Good</span>
+          </div>
+          <div class="mt-6" data-chart="bar" data-y-max="100" data-data='[{"label":"Perf","value":88},{"label":"A11y","value":86},{"label":"Best Pr.","value":100},{"label":"SEO","value":100},{"label":"Agentic","value":100}]'></div>
+          <div class="mt-4 flex items-center justify-between text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">
+            <span>Low — 86</span>
+            <span>score / 100 — desktop</span>
+            <span>High — 100</span>
+          </div>
+        </div>
+
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal>
+          Agentic Explorer is an experimental diagnostic in Pagespeed, not a Lighthouse core metric. The gap between Mobile (65) and Desktop (88) reflects image weight from 28 before-after .webp files — a known optimization headroom.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- ================= EXPERIMENT DETAILS ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+
+        <div class="mt-12 space-y-12">
+
+          <!-- PROBLEM -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Problem</span>
+            </div>
+            <div class="lg:col-span-9">
+              <p class="text-base text-neutral-700 leading-relaxed">
+                I needed a home-service business website that could explain services clearly, prove results with before-after evidence, give transparent pricing through a cost calculator, and rank for search — without relying on cloud AI or an expensive agency. The question was whether a small local model could handle the full frontend complexity deterministically.
+              </p>
+            </div>
+          </div>
+
+          <!-- SPECIFICATIONS -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Specifications</span>
+            </div>
+            <ol class="lg:col-span-9 space-y-4 list-none">
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">1.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Multi-page architecture: 14 pages — 7 main (index, pricing-estimator, gallery, coverage, about, contact, services/index), 5 detail (cuci-kasur, cuci-sofa, cuci-karpet-gordyn, interior-mobil, baby-stuff), 1 landingpage/v2 for Meta/Google Ads conversion, and 1 invoice/admin for data control.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">2.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Before-after slider: 14 pairs (28 .webp), draggable <code class="code-inline">clip-path: inset()</code>, divider + handle, <code class="code-inline">data-slider</code>, filter <code class="code-inline">data-filter</code> for all/kasur/sofa/mobil/baby/karpet.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">3.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Scroll animations on every page: <code class="code-inline">reveal</code>, <code class="code-inline">reveal-left/right/scale</code> via <code class="code-inline">IntersectionObserver</code>, <code class="code-inline">stagger-1..8</code>, counter <code class="code-inline">data-counter="5000"</code>, <code class="code-inline">magnetic-btn</code>, <code class="code-inline">tilt-card</code> 3D, <code class="code-inline">navbar-glass</code> hide-on-scroll, <code class="code-inline">float-organic</code>, <code class="code-inline">pulse-ring</code>.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">4.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Cost estimation calculator: 22 service categories mapped to 44 price items (<code class="code-inline">indeepPricelist</code>), dependent dropdowns (<code class="code-inline">service-type → item-size</code>), dynamic extras (Kasur Latex +40k, Sofa Lepas Pasang +20k/seat, Lebar >75cm +20k/seat), live result + WhatsApp deep-link via <code class="code-inline">encodeURIComponent</code>.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">5.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Separate data source: <code class="code-inline">assets/data/pricelist.js</code> + <code class="code-inline">assets/pricelist.json</code> as single source of truth, so prices can be updated without touching UI logic.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">6.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Full SEO: canonical, OG <code class="code-inline">1200x630</code>, Twitter, hreflang, <code class="code-inline">preload Hero.webp</code>, JSON-LD <code class="code-inline">LocalBusiness + BreadcrumbList + Service + OfferCatalog + GeoCircle 50km</code>, <code class="code-inline">sitemap.xml</code>, <code class="code-inline">robots.txt</code>, <code class="code-inline">optimize-meta.sh</code> / <code class="code-inline">add-schema.sh</code>.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">7.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Responsive & performant: <code class="code-inline">assets/css/style.css</code> 1306 lines, 15 animation types, 3 vanilla JS files (main 487, estimator 214, slider 76) — no heavy framework, Tailwind CDN only.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">8.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Consistent brand: <code class="code-inline">primary #062C3D / accent #F4A100</code> + <code class="code-inline">Poppins (heading) + Inter (body)</code> for the business site (portfolio page itself stays in <code class="code-inline">ink/paper/accent + Manrope/Inter</code> for coherence).
+                </p>
+              </li>
+            </ol>
+          </div>
+
+          <!-- HYPOTHESIS -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Hypothesis</span>
+            </div>
+            <div class="lg:col-span-9">
+              <p class="text-base text-neutral-700 leading-relaxed">
+                A local open-source LLM (ORNITH 35B IQ4_NL via Llama.cpp) is sufficient to generate production-ready vanilla JS + Tailwind syntax — <em>if</em> prompts are fully deterministic and the builder has enough HTML, Tailwind, JS, SEO, and chart/styling knowledge to judge whether the syntax is actually correct. AI can write the syntax; it cannot decide if the syntax is correct.
+              </p>
+            </div>
+          </div>
+
+          <!-- EXPERIMENT -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Experiment</span>
+            </div>
+            <div class="lg:col-span-9">
+              <p class="text-base text-neutral-700 leading-relaxed">
+                I built the 14-page site by prompting the local model per component — slider, estimator, navbar, reveal animations — and per batch, using OpenCode + Cline in VS Code. Each component was generated, manually validated, and iterated in small context windows to preserve output quality, instead of asking the model to generate the whole site in one shot.
+              </p>
+            </div>
+          </div>
+
+          <!-- WHAT FAILED -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">What Failed</span>
+            </div>
+            <ol class="lg:col-span-9 space-y-4 list-none">
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">1.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Too many revisions — 33 revisions with ~4M total context split across sessions. Single-shot full-site generation collapsed after the first few pages; context bloat degraded coherence immediately.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">2.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  <code class="code-inline">slider.js</code> before-after logic was surprisingly complex for a local LLM. It required zero-ambiguity deterministic instructions: exact <code class="code-inline">clip-path: inset(0 0 0 50%)</code> direction, divider/handle sync at the same percentage, and separate mouse vs touch handlers (mousedown/mousemove vs touchstart/touchmove). Any vague phrasing broke dragging on mobile.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">3.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  The initial cost calculator did not match the real <code class="code-inline">pricelist.js</code> (44 items). The model hallucinated prices and sizes for Kasur 200/180/160 etc., until I isolated <code class="code-inline">pricelist.js</code> as the single source and forced dependent dropdowns to read from it verbatim.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">4.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  First-pass designs for all pages were too templated and “safe” — generic Tailwind cards that did not match the brand preference (<code class="code-inline">#062C3D / #F4A100</code>, Poppins/Inter, premium minimalism). Required manual design direction per page.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">5.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Internal linking needed a separate optimization pass. The model generated basic <code class="code-inline">&lt;a href&gt;</code> but missed contextual anchor distribution between services/index and detail pages — manual pass fixed crawl depth.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">6.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Initial SEO was too basic — just title/description. Achieving OG/Twitter consistency, three JSON-LD schemas, <code class="code-inline">preload</code>, and correct <code class="code-inline">GeoCircle</code> radius required my own deeper SEO understanding; AI alone stayed at template level.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">7.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Initial <code class="code-inline">sitemap.xml</code> was not readable in Google Search Console (wrong loc / missing image:image namespaces). Required manual schema fix via <code class="code-inline">add-schema.sh</code> and re-submission.
+                </p>
+              </li>
+              <li class="flex gap-4">
+                <span class="font-display font-extrabold text-accent shrink-0">8.</span>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+                  Animations had to be revised piece-by-piece, per batch. Attempting to generate all 15 animation types at once (reveal, magnetic, tilt, counter, float, pulse) overflowed the context window and degraded output quality — batching restored determinism.
+                </p>
+              </li>
+            </ol>
+          </div>
+
+          <!-- ITERATION -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Iteration</span>
+            </div>
+            <div class="lg:col-span-9">
+              <p class="text-base text-neutral-700 leading-relaxed">
+                The pivot was to stop relying 100% on AI. I kept a deterministic-first workflow: understand HTML, Tailwind CSS, Vanilla JS, SEO, chart types, and styling at a human level, then let AI <em>help write</em> the syntax — not decide it. By generating one component per session, validating against the real pricelist and real Lighthouse, and batching animations, the quality jumped from templated to production. AI is the assistant that types; the builder remains the reviewer who judges.
+              </p>
+            </div>
+          </div>
+
+          <!-- EVIDENCE -->
+          <div data-reveal>
+            <div class="grid lg:grid-cols-12 gap-4 lg:gap-10">
+              <div class="lg:col-span-3">
+                <span class="detail-label">Evidence</span>
+              </div>
+              <div class="lg:col-span-9">
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-6">
+                  Figures from the live site at `indeepcleaningid.site` (Hostinger). You can verify via the screenshots above and `pagespeed.web.dev`.
+                </p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Total Pages</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">14</p>
+                    <p class="text-xs text-neutral-500">7 main + 5 detail + 1 landing + 1 admin</p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Before-After Pairs</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">14 <span class="text-xs font-semibold text-neutral-500">(28 images .webp)</span></p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Calculator Items</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">44 <span class="text-xs font-semibold text-neutral-500">/ 22 categories</span></p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Custom JS Files</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">3</p>
+                    <p class="text-xs text-neutral-500">main / estimator / slider</p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Custom CSS</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">1306 <span class="text-xs font-semibold text-neutral-500">lines</span></p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Animation Types</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">15</p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Pagespeed Mobile</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">65<span class="text-xs font-semibold text-neutral-500"> perf</span> / 100<span class="text-xs font-semibold text-neutral-500"> SEO</span></p>
+                  </div>
+
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Pagespeed Desktop</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">88<span class="text-xs font-semibold text-neutral-500"> perf</span> / 100<span class="text-xs font-semibold text-neutral-500"> SEO</span></p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RESULT -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Result</span>
+            </div>
+            <div class="lg:col-span-9">
+              <p class="text-base text-neutral-700 leading-relaxed">
+                The site is stable and live on Hostinger with 14 pages, 14 sliders with filter, a 44-item calculator with WA deep-link, 3 JSON-LD schemas, and honest Lighthouse scores (SEO 100 on both, performance 65 mobile / 88 desktop, accessibility 86, best practices 100). It is not pixel-perfect on performance yet, but it is sufficient and production-ready for the Jabodetabek service business it was built for.
+              </p>
+            </div>
+          </div>
+
+          <!-- WHAT I LEARNED -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">What I Learned</span>
+            </div>
+            <div class="lg:col-span-9">
+              <p class="text-base text-neutral-700 leading-relaxed">
+                Capability does not come from prompting harder — it comes from knowing the domain well enough to make prompts deterministic. Local AI (ORNITH 35B) is strong at syntax generation when instructions leave zero ambiguity (clip-path direction, pricelist binding, JSON-LD structure). The builder’s understanding of HTML/Tailwind/JS/SEO is the bottleneck, not the model size. Batch per component; keep context small.
+              </p>
+            </div>
+          </div>
+
+          <!-- PRACTICAL IMPLICATION -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Practical Implication</span>
+            </div>
+            <div class="lg:col-span-9">
+              <p class="text-base text-neutral-700 leading-relaxed">
+                If you want to replicate this, do not ask local AI to “build a whole website.” Start with one component — the slider or the calculator — isolate your data (`pricelist.js`), master deterministic prompting for that slice, ship it, then batch the next. Learn Tailwind and vanilla JS first; AI will then accelerate you instead of replacing you. This pattern scales to the invoice (EXP006) and n8n (EXP007) you’ll see next.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONFIGURATION TEMPLATE ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Configuration Template</p>
+
+        <div class="mt-8" data-reveal="100">
+          <p class="font-mono text-sm text-neutral-500">assets/js/estimator.js — dependent dropdown (deterministic pattern)</p>
+          <pre class="code-block mt-4">function updateSizeDropdown(service) {
+  sizeSelect.innerHTML = '&lt;option&gt;-- Pilih Ukuran / Tipe --&lt;/option&gt;';
+  if (!service || !priceData[service]) {
+    sizeSelect.disabled = true; return;
+  }
+  priceData[service].forEach(function (item) {
+    var opt = document.createElement('option');
+    opt.value = item.id;
+    opt.textContent = item.nama_barang + ' (' + item.ukuran + ') — Rp ' + item.harga.toLocaleString('id-ID');
+    opt.dataset.price = item.harga;
+    sizeSelect.appendChild(opt);
+  });
+  sizeSelect.disabled = false;
+}
+
+// Keep data separate — single source of truth
+// assets/data/pricelist.js → const indeepPricelist = { kasur: [{id:1, ukuran:"200", harga:300000}, ...], sofa: [...] };</pre>
+        </div>
+
+        <blockquote class="quote-block mt-10 text-sm sm:text-base text-ink leading-relaxed max-w-3xl" data-reveal>
+          Do not copy this snippet blindly; adapt it to your pricelist structure. The key lesson is to keep data (`pricelist.js`) separate from UI — AI can generate the loop, but you must ensure the 44 items are exactly correct.
+        </blockquote>
+
+        <ol class="mt-10 space-y-8 max-w-3xl list-none" data-reveal="100">
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">1.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              I chose to keep <code class="code-inline">indeepPricelist</code> in a dedicated <code class="code-inline">assets/data/pricelist.js</code> file (22 keys, 44 items) so the estimator never hardcodes prices — any hallucination is caught by diffing against this file.
+            </p>
+          </li>
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">2.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              I chose dependent dropdowns (<code class="code-inline">service-type → item-size</code>) with <code class="code-inline">disabled</code> handling because the model initially generated two independent selects — which allowed invalid combinations (e.g., “Sofa — 200” size).
+            </p>
+          </li>
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">3.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              For <code class="code-inline">slider.js</code>, I required the exact <code class="code-inline">clip-path: inset(0 0 0 50%)</code> pattern with synced <code class="code-inline">divider.style.left</code> and <code class="code-inline">handle.style.left</code> — vague “slide” prompts produced inverted masks on mobile.
+            </p>
+          </li>
+
+          <li class="flex gap-4">
+            <span class="font-display font-extrabold text-accent shrink-0">4.</span>
+            <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
+              I batched animations (reveal, then magnetic, then tilt, then counter) because generating all 15 types at once overflowed the 35B context window — output quality dropped from 99% to ~60% coherence.
+            </p>
+          </li>
+
+        </ol>
+
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper" open>
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Can local AI really generate a production estimator with 44 price rules?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Yes, but only with deterministic prompts and manual validation. Initial calc hallucinated prices for Kasur 200/180 etc. Splitting <code class="code-inline">pricelist.js</code> as single source of truth (22 categories, 44 items) and forcing dependent dropdowns to read from it verbatim fixed it. AI drafted the loops and WA deep-link — human ensured every item matched.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              What broke when you let AI build the slider fully?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Clip-path direction, divider sync, and touch vs mouse handlers. The local LLM needed zero-ambiguity instructions for <code class="code-inline">inset()</code> percentages and event handling (mousedown vs touchstart). One-shot full-page generation failed — batched per-component with explicit <code class="code-inline">slider.js</code> pattern succeeded.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              How did you get SEO 100 without cloud tools?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Manual SEO layer: canonical, OG 1200x630, three JSON-LD schemas (LocalBusiness, Service, BreadcrumbList), preload Hero.webp, sitemap fix for Search Console, internal linking pass. AI gave baseline meta; human optimized beyond template. Performance still has headroom (65 mobile / 88 desktop) — SEO is 100, perf is not, and that honesty is intentional.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
+            For those of you unable to read this data from technical standpoint,
+            here is the conclusion
+          </h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>This was not a demo or a template bought online. It is a live business website with 14 pages that serves real customers in the Jabodetabek area.</p>
+            <p>Local AI helped write the code — the before-after sliders, the scroll animations on every page, and the price calculator — but it took 33 revisions and about 4 million tokens of context to get it right. The first versions were generic and broken.</p>
+            <p>The site now shows real proof of work (14 before-after pairs, 28 images), gives instant price estimates for 44 service variants, and is fully structured for search engines with sitemaps and business schemas.</p>
+            <p>It runs stably on consumer hardware with a 35-billion-parameter local model. You do not need a cloud subscription to build something this complete — but you do need to know what you are building and how to check the AI’s work.</p>
+            <p>It is not flawless. Performance can still be improved — especially on mobile. But it is sufficient, it is live, it is maintainable, and it proves that local AI is practical when you use it deterministically: one component at a time, with the builder as the reviewer.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= DISCLAIMER ================= -->
+    <section class="py-16 border-t border-black/10 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="max-w-3xl" data-reveal>
+          <p class="eyebrow">Disclaimer</p>
+          <h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">A Note on Results</h2>
+          <blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">
+            From a purely objective standpoint, I wouldn’t claim this is the optimal outcome. Given the local model (ORNITH 35B IQ4_NL via Llama.cpp) and consumer-grade hardware used, I personally consider the result to be sufficient and practical for real business use. That said, there is clear room for further optimization — particularly in overall website performance (65 on mobile / 88 on desktop) and image weight from the 28 before-after files.
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER CTA ================= -->
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal>
+          <a href="experiments-list.html" class="arrow-link font-display text-sm uppercase">
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+          <a href="contact.html" class="arrow-link font-display text-sm uppercase">
+            Have a problem worth exploring? <span aria-hidden="true">-&gt;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-dark-section text-white">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8">
+
+      <div class="grid gap-12 md:grid-cols-3">
+
+        <!-- Left: brand -->
+        <div>
+          <p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p>
+          <p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">
+            AI Systems Builder &amp; Experimenter
+          </p>
+          <p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">
+            Exploring AI systems, local LLMs, automation workflows, and practical tools that
+            actually work in real business operations.<br>
+            Building what matters, and checking whether AI is truly useful in everyday work.
+          </p>
+        </div>
+
+        <!-- Middle: navigate -->
+        <div class="md:justify-self-center">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="/"            class="footer-link">Home</a></li>
+            <li><a href="profile.html"          class="footer-link">Profile</a></li>
+            <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
+            <li><a href="contact.html"          class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Right: connect -->
+        <div class="md:justify-self-end">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">Linkedin</a></li>
+            <li><a href="https://www.reddit.com/user/Full_Director87/"    target="_blank" rel="noopener" class="footer-link">Reddit</a></li>
+            <li><a href="https://www.instagram.com/ybboraa/"              target="_blank" rel="noopener" class="footer-link">Instagram</a></li>
+            <li><a href="mailto:ibborarts@gmail.com"                       class="footer-link">Email</a></li>
+            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">Whatsapp</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p>
+        <p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

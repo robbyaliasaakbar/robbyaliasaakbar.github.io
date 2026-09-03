@@ -90,6 +90,33 @@
     </image:image>
   </url>
   <url>
+    <loc>https://robbyaliasaakbar.github.io/exp005.html</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments005/homepage.webp</image:loc>
+      <image:title>Experiment 005 — Building a Full Feature Services Business Website Using Only Local AI — homepage</image:title>
+      <image:caption>Screenshot of Experiment 005 — homepage layout built with local AI</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments005/gallery.webp</image:loc>
+      <image:title>Experiment 005 — Gallery with 14 before-after sliders</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments005/estimation-calculator.webp</image:loc>
+      <image:title>Experiment 005 — Cost estimation calculator with 44 items</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments005/seo-score-pagespeed-mobile.webp</image:loc>
+      <image:title>Experiment 005 — Pagespeed score mobile version</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments005/seo-score-pagespeed-desktop.webp</image:loc>
+      <image:title>Experiment 005 — Pagespeed score desktop version</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://robbyaliasaakbar.github.io/contact.html</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
