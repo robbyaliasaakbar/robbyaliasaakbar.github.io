@@ -389,6 +389,26 @@
       </div>
     </section>
 
+    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
+            For those of you unable to read this data from technical standpoint,
+            here is the conclusion
+          </h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>This is not a public website — it's the internal cashier tool that comes after the website. If EXP 005 is the storefront, this is the cash register.</p>
+            <p>It lets the admin create an invoice in under 2 minutes: pick a returning customer (autocomplete), add items from the same 44-price list used on the website, see a live A4 preview, and download a PDF where the bank account can be copied.</p>
+            <p>It doesn't use a database. Customer data lives in one <code class="code-inline">customers.js</code> file on Hostinger (100GB) — you can download it anytime via File Manager, no database setup. A tiny 44-line PHP file saves it.</p>
+            <p>The PDF is text-based (45KB), not a screenshot (850KB) — so it's small and copyable, and the logo still appears. It was built with a local AI on consumer hardware, batched one component at a time.</p>
+            <p>It's not for a big enterprise with millions of rows, but for a small service business in the Jabodetabek area, it's sufficient, it's stable, it connects directly to the pricing from EXP 005, and you own it 100% — no monthly SaaS fee.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
     <!-- ================= EXPERIMENT DETAILS ================= -->
     <section class="py-20 bg-neutral-50">
       <div class="mx-auto max-w-6xl px-6 lg:px-8">
@@ -586,25 +606,6 @@ const customersData = [
               Yes, but batched per component. One-shot generation hallucinated pricelist and broke logo CORS. Batched prompting (form → preview → pdf → save.php) with human validation produced 919 lines that work on shared hosting.
             </p>
           </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
-    <section class="py-20">
-      <div class="mx-auto max-w-6xl px-6 lg:px-8">
-        <div class="summary-callout p-8 sm:p-12" data-reveal>
-          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
-            For those of you unable to read this data from technical standpoint,
-            here is the conclusion
-          </h2>
-          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
-            <p>This is not a public website — it's the internal cashier tool that comes after the website. If EXP 005 is the storefront, this is the cash register.</p>
-            <p>It lets the admin create an invoice in under 2 minutes: pick a returning customer (autocomplete), add items from the same 44-price list used on the website, see a live A4 preview, and download a PDF where the bank account can be copied.</p>
-            <p>It doesn't use a database. Customer data lives in one <code class="code-inline">customers.js</code> file on Hostinger (100GB) — you can download it anytime via File Manager, no database setup. A tiny 44-line PHP file saves it.</p>
-            <p>The PDF is text-based (45KB), not a screenshot (850KB) — so it's small and copyable, and the logo still appears. It was built with a local AI on consumer hardware, batched one component at a time.</p>
-            <p>It's not for a big enterprise with millions of rows, but for a small service business in the Jabodetabek area, it's sufficient, it's stable, it connects directly to the pricing from EXP 005, and you own it 100% — no monthly SaaS fee.</p>
-          </div>
         </div>
       </div>
     </section>
