@@ -148,6 +148,26 @@
         "@type": "Question",
         "name": "Can a beginner build this?",
         "acceptedAnswer": { "@type": "Answer", "text": "Start with AI parsing + templates. Full system is 3 workflows 266 nodes but pattern scales." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can this really handle the work of 9–10 people?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It handles the repetitive, rule-based workload — 4–5 admin sales operational, 2–3 customer service, 1 data analyst, 1 ads specialist, and 1 finance role — not strategic decisions. Those still need human judgment." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the >Rp 50 million saving guaranteed?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No — it's my own estimation using UMR Kabupaten Bekasi 2025 for 9–10 headcount. Actual saving depends on salary structure and business scale." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need expensive hardware to run this 24/7?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. I run it on modest hardware — Intel I5 11400F, 16GB DDR4, RX 6700 XT, Ubuntu 26.04, with Ollama and Qwen 1.5B. For 24/7, small increments like 32GB RAM, UPS and backup are enough." }
+      },
+      {
+        "@type": "Question",
+        "name": "Will automating cut demand? What about inputs the system misses?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Demand stayed flat in my experiment. Inputs the system couldn't detect are saved to my private database and used for market research and promo decisions." }
       }
     ]
   }
@@ -470,6 +490,30 @@
             Scores are qualitative ratings derived from the evidence reported in this experiment:
             hallucinations, task completion, effectiveness, debug &amp; mitigation ease, and system stability.
           </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
+            For those of you unable to read this data from technical standpoint,
+            here is the conclusion
+          </h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>This experiment was not designed merely as a theoretical exercise — it is a real-world implementation that I have actively deployed. ✨</p>
+            <p>Initially, I relied entirely on AI and it failed badly — hallucinations at cost estimation, coverage and payment verification, unpredictable and hard to debug with hundreds of tests.</p>
+            <p>I switched to deterministic-first: I let AI write JavaScript for deterministic output, and used AI only for keyword detection (4 of 266 n8n nodes with Qwen 1.5B). The rest is standard n8n — JavaScript, HTTP Request, Postgres — 0 hallucinations, 100% effectiveness, easy to debug.</p>
+            <p>In practice, this now handles the repetitive workload of 9–10 roles I actually needed: 4–5 admin sales operational, 2–3 customer service, 1 data analyst (failed inputs saved to my DB for market research, not guessing), 1 ads specialist (Evolution API sends conversions to Meta &amp; Google in real time), and 1 finance — for rule-based tasks, not strategic decisions. 🤝</p>
+            <p>What that means for cost: hiring 9–10 people in Kab. Bekasi would be &gt;Rp 50M/month by my own estimation — now I only spend electricity + hardware maintenance. As my own calculation, not a guarantee for every business. 💰</p>
+            <p>It already runs on modest hardware (I5 11400F, 16GB, 6700 XT, Ollama + Qwen 1.5B) — stable for this experiment. For 24/7 with less distraction, small increments like 32GB RAM, UPS, and backup are enough. Reliability matters more than specs. 🛡️</p>
+            <p>Demand didn't drop — it stayed flat. What improved was efficiency: available 24/7, consistent execution, lower recurring overhead, and every undetected input becomes data for future upgrades. 🎯</p>
+            <p>The system is currently running stably and will undergo continuous upgrades to meet evolving business needs.</p>
+          </div>
         </div>
 
       </div>
@@ -805,6 +849,224 @@
     </section>
 
     
+    <!-- ================= BUSINESS IMPACT — IN PRACTICE (NEW) ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Business Impact — What I Actually Needed To Cover</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight max-w-3xl" data-reveal="100">
+          In practice, this system handles the repetitive workload of 9–10 roles.
+        </h2>
+        <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-3xl" data-reveal="150">
+          Not replacing people entirely, but covering the rule-based, repetitive parts of 5 vacant functions I struggled to fill. Based on what I actually built and tested.
+        </p>
+
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">4–5 × Admin Sales Operational</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              Handling WhatsApp from first chat to closing, checking sub-district coverage, and normalizing customer language against the price list.
+            </p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">2–3 × Customer Service</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              Handling complaints and providing solutions — without shift limitations or waiting for the next working hour.
+            </p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">1 × Data Analyst</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              Inputs that fail to enter the main flow are saved to my private database. When I need market research, a new service, or a promo amount — I just look at the data instead of guessing.
+            </p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">1 × Ads Specialist</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              Evolution API sends conversion payloads to Meta CAPI and Google in real time via n8n HTTP Request, so custom audiences can grow on their own without paying an agency just to optimize.
+            </p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">1 × Finance</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              Tracking who has paid and who hasn't, and generating financial and tax reports when needed — integrated with the payment gateway verification.
+            </p>
+          </div>
+        </div>
+
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal="200">
+          Note: This is about repetitive, rule-based tasks. Strategic and creative decisions still need human judgment.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="py-20">
+    <!-- ================= COST IMPLICATION (NEW) ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Cost Implication — An Estimation</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight max-w-3xl" data-reveal="100">
+          What 9–10 people would have cost — and what I actually spend now.
+        </h2>
+        <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-3xl" data-reveal="150">
+          I calculated this using UMR Kabupaten Bekasi as a reference. This is an estimation to illustrate the operational implication, not a guaranteed saving for every business.
+        </p>
+
+        <div class="mt-10 grid md:grid-cols-2 gap-6">
+          <!-- Left: Human cost -->
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
+            <div class="flex items-center justify-between">
+              <p class="font-display font-bold text-xs tracking-[0.14em] uppercase text-neutral-500">If I hired 9–10 people</p>
+              <span class="inline-flex items-center rounded-full bg-neutral-100 px-3 py-1 text-[0.65rem] font-bold tracking-[0.12em] uppercase text-neutral-600">Recurring</span>
+            </div>
+            <p class="mt-4 font-display font-extrabold text-2xl tracking-tight">>Rp 50,000,000 <span class="text-sm font-semibold text-neutral-500">/ month</span></p>
+            <ul class="mt-6 space-y-2.5 text-sm text-neutral-600 leading-relaxed">
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Salary — UMR Kab. Bekasi × 9–10</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>THR, allowances &amp; training</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Management overhead &amp; limited working hours</span></li>
+            </ul>
+          </div>
+
+          <!-- Right: System cost -->
+          <div class="border border-[#2E8B2E]/25 rounded-2xl p-6 sm:p-8 bg-[#F3FAF3]" data-reveal="80">
+            <div class="flex items-center justify-between">
+              <p class="font-display font-bold text-xs tracking-[0.14em] uppercase text-[#2E8B2E]">What I run now</p>
+              <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+            </div>
+            <p class="mt-4 font-display font-extrabold text-2xl tracking-tight">Electricity <span class="text-neutral-400 font-bold">+</span> Maintenance</p>
+            <ul class="mt-6 space-y-2.5 text-sm text-neutral-700 leading-relaxed">
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E8B2E] shrink-0"></span><span>Electricity for modest hardware</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E8B2E] shrink-0"></span><span>Hardware maintenance</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E8B2E] shrink-0"></span><span>Postgres + Evolution API + Qwen 1.5B via Ollama</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Simple bar visualization -->
+        <div class="mt-10 border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="160">
+          <p class="text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500">Estimated monthly operational cost</p>
+          <div class="mt-6 space-y-5">
+            <div>
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-medium text-neutral-700">Human team (9–10 people)</span>
+                <span class="font-display font-bold text-neutral-500">>Rp 50M</span>
+              </div>
+              <div class="mt-2 h-3 rounded-full bg-neutral-100 overflow-hidden">
+                <div class="h-full rounded-full bg-neutral-800" style="width: 100%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-medium text-neutral-700">Digital system (this experiment)</span>
+                <span class="font-display font-bold text-[#2E8B2E]">Electricity + Maintenance</span>
+              </div>
+              <div class="mt-2 h-3 rounded-full bg-neutral-100 overflow-hidden">
+                <div class="h-full rounded-full bg-[#2E8B2E]" style="width: 12%"></div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-6 text-xs text-neutral-500 leading-relaxed">
+            *Estimation based on UMR Kab. Bekasi 2025. Actual numbers depend on headcount, salary structure, and business type. I share this as my own calculation from this experiment.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= HARDWARE REALITY (NEW) ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Hardware &amp; Reliability — What I Learned</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight max-w-3xl" data-reveal="100">
+          It already runs on modest hardware. For 24/7, reliability matters more than specs.
+        </h2>
+        <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-3xl" data-reveal="150">
+          This is the spec I actually use. It works. But if you want to run it 24/7 with more peace of mind and minimal distraction, a small increment helps.
+        </p>
+
+        <div class="mt-10 grid md:grid-cols-2 gap-6">
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
+            <p class="font-display font-bold text-xs tracking-[0.14em] uppercase text-neutral-500">Current — What I run today</p>
+            <p class="mt-2 text-xs text-neutral-400">Stable for this experiment</p>
+            <ul class="mt-6 space-y-3 text-sm text-neutral-700 leading-relaxed">
+              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">CPU</span><span class="font-medium">Intel Core I5 11400F</span></li>
+              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">RAM</span><span class="font-medium">16GB DDR4 3200 MT/s</span></li>
+              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">GPU</span><span class="font-medium">RX 6700 XT</span></li>
+              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">OS</span><span class="font-medium">Ubuntu 26.04 LTS</span></li>
+              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">Inference</span><span class="font-medium">Llama.cpp &amp; Ollama</span></li>
+              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">Model</span><span class="font-medium break-all">Qwen2.5-1.5B-Instruct-Q8_0</span></li>
+              <li class="flex justify-between gap-4"><span class="text-neutral-500">Frontend</span><span class="font-medium">Open WebUI &amp; n8n</span></li>
+            </ul>
+          </div>
+
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-neutral-50" data-reveal="80">
+            <p class="font-display font-bold text-xs tracking-[0.14em] uppercase text-neutral-500">If you want 24/7 with less distraction</p>
+            <p class="mt-2 text-xs text-neutral-400">Not about being high-end — about being reliable</p>
+            <ul class="mt-6 space-y-3 text-sm text-neutral-700 leading-relaxed">
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Consider 32GB RAM — smoother when multiple workflows run</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>NVMe with regular backup — faster recovery</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>UPS + stable internet — avoids interruptions</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Auto-restart for Ollama — restarts itself when needed</span></li>
+            </ul>
+            <p class="mt-6 text-xs text-neutral-500 leading-relaxed bg-white border border-black/5 rounded-xl p-4">
+              Small incremental cost, big reliability gain. You don't need a beast — you need a system you can leave running without checking every hour.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 border border-black/10 rounded-xl p-6 bg-paper" data-reveal="160">
+          <blockquote class="quote-block text-sm sm:text-base text-neutral-700 leading-relaxed !border-l-accent !my-0">
+            The constraint was never “can it run?” but “can it be relied on without distraction?” — that's what I learned after hundreds of tests.
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= OPERATIONAL EFFICIENCY (NEW) ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Operational Efficiency — What Changed</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight max-w-3xl" data-reveal="100">
+          Demand stayed flat. What changed was the efficiency.
+        </h2>
+        <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-3xl" data-reveal="150">
+          I didn't cut demand. I cut the most expensive part of the operation — repetitive work with its inherent limitations — and kept the service running.
+        </p>
+
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Available 24/7</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              No shift constraints. The system responds whether it's 2 PM or 2 AM.
+            </p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Consistent Execution</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              No psychological fatigue or inconsistency in repetitive tasks.
+            </p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Lower Recurring Overhead</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              No THR or allowances for repetitive operational tasks.
+            </p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Failed Inputs Become Data</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              Every input the system couldn't detect is saved to the database. I use it for market research, new services, and promo decisions — no more guessing.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 border border-black/10 rounded-xl p-6 sm:p-8 bg-paper" data-reveal="160">
+          <blockquote class="quote-block text-sm sm:text-base text-neutral-700 leading-relaxed !my-0">
+            Demand didn't drop — it stayed flat. What improved was how much it costs to serve that demand consistently.
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
     <!-- ================= FAQ ================= -->
     <section class="py-20">
       <div class="mx-auto max-w-6xl px-6 lg:px-8">
@@ -838,36 +1100,43 @@
               Start small: AI parsing + reply templates. The full system is 3 workflows, 266 nodes — not beginner-friendly, but the keyword-first pattern scales.
             </p>
           </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Can this really handle the work of 9–10 people?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              In my case it handles the repetitive, rule-based workload — 4–5 admin sales operational, 2–3 customer service, 1 data analyst, 1 ads specialist, and 1 finance role — not strategic or creative decisions. Those still need human judgment.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Is the &gt;Rp 50 million saving guaranteed?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              No — it's my own estimation using UMR Kabupaten Bekasi 2025 for 9–10 headcount. Your actual saving depends on salary structure and business scale. I share it to illustrate the operational implication, not as a promise.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Do I need expensive hardware to run this 24/7?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              No. I run it on modest hardware — Intel I5 11400F, 16GB DDR4, RX 6700 XT, Ubuntu 26.04, with Ollama and Qwen 1.5B. For 24/7 with less distraction, I recommend small increments like 32GB RAM, NVMe backup, UPS, and auto-restart — not a high-end server.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Will automating cut demand? What about inputs the system misses?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              In my experiment demand stayed flat. Inputs the system couldn't detect aren't lost — they are saved to my private database and I use them for market research, deciding new services, and setting promo amounts. No more guessing.
+            </p>
+          </details>
         </div>
-      </div>
-    </section>
-
-    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
-    <section class="py-20">
-      <div class="mx-auto max-w-6xl px-6 lg:px-8">
-
-        <div class="summary-callout p-8 sm:p-12" data-reveal>
-          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
-            For those of you unable to read this data from technical standpoint,
-            here is the conclusion
-          </h2>
-          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
-            <p>This experiment was not designed merely as a theoretical exercise — it is a
-               real-world implementation that I have actively deployed.</p>
-            <p>Initially, I employed a method that relied entirely on AI, which resulted in
-               frequent failures — the outcomes were unpredictable, difficult to mitigate, and
-               hard to debug.</p>
-            <p>I subsequently adopted a different approach, utilizing the AI to write JavaScript
-               code that ensures deterministic output and clear system readability, achieving 100%
-               precision in the journey structure at every node.</p>
-            <p>I created a total of three separate workflows comprising 266 nodes; only four of
-               these nodes utilize AI for keyword detection, while the remainder consist of
-               standard n8n components such as JavaScript code nodes, HTTP requests, and others.</p>
-            <p>The system is currently running stably and will undergo continuous upgrades to
-               meet evolving business needs.</p>
-          </div>
-        </div>
-
       </div>
     </section>
 
