@@ -242,12 +242,12 @@
 
           <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
             <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">CPU</p>
-            <p class="mt-2 text-sm font-medium leading-snug">Intel Core i5 11400F</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Intel Core i5-11400F</p>
           </div>
 
           <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
             <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">RAM</p>
-            <p class="mt-2 text-sm font-medium leading-snug">16GBB DDR4 3200 MT/s</p>
+            <p class="mt-2 text-sm font-medium leading-snug">16GB DDR4 3200 MT/s</p>
           </div>
 
           <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
@@ -321,7 +321,7 @@
 
         <div class="mt-8" data-reveal="100">
           <h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">
-            Prompt Processing Speed Tok/s vs Context Length
+            Prompt Processing Speed (tok/s) vs. Context Length
           </h2>
           <p class="mt-2 text-sm text-neutral-600">
             Chart of prompt processing speed (prefill) in tok/s, based on total context window length.
@@ -348,7 +348,7 @@
 
         <div class="summary-callout p-8 sm:p-12" data-reveal>
           <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
-            For those of you unable to read this data from technical standpoint,
+            For those unable to interpret the data from a technical standpoint, here is the conclusion:
             here is the conclusion
           </h2>
           <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
@@ -396,10 +396,7 @@
               <span class="detail-label">Hypothesis</span>
             </div>
             <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
-              Long-context inference can be performed within smaller context windows. However,
-              prefill costs and memory pressure increase non-linearly once a certain threshold is
-              exceeded. This appears to be the behavior of the scheduler regarding CPU threads and
-              token batches during processing.
+              Long-context inference is feasible, but prefill cost and memory pressure grow non-linearly beyond a threshold. This appears to be scheduler behavior related to CPU threads and token batches during processing.
             </p>
           </div>
 
@@ -438,7 +435,7 @@
             <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
               Lower the configuration number <code class="code-inline">--n-cpu-moe</code>,
               reconfigure <code class="code-inline">--threads</code> and
-              <code class="code-inline">--threads-batchs</code>, set the batching process
+              <code class="code-inline">--threads-batch</code>, set the batching process
               (<code class="code-inline">--batch</code>, and
               <code class="code-inline">--ubatch</code>) to get optimal results.
             </p>
@@ -469,13 +466,13 @@
                   </div>
 
                   <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
-                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Prompt Processing Speed Average (Total 256K Context)</p>
-                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">Average 314.71 <span class="text-xs font-semibold text-neutral-500">Tok/s</span></p>
+                    <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Prompt Processing Speed (256K Context)</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">314.71 <span class="text-xs font-semibold text-neutral-500">tok/s</span> <span class="text-xs font-normal text-neutral-400">(avg)</span></p>
                   </div>
 
                   <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
                     <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Data Visualization</p>
-                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">You can see on my chart.</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">See the chart above.</p>
                   </div>
 
                 </div>
@@ -754,11 +751,11 @@
         <div class="md:justify-self-end">
           <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p>
           <ul class="mt-5 space-y-3 text-sm">
-            <li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">Linkedin</a></li>
+            <li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li>
             <li><a href="https://www.reddit.com/user/Full_Director87/"    target="_blank" rel="noopener" class="footer-link">Reddit</a></li>
             <li><a href="https://www.instagram.com/ybboraa/"              target="_blank" rel="noopener" class="footer-link">Instagram</a></li>
             <li><a href="mailto:ibborarts@gmail.com"                       class="footer-link">Email</a></li>
-            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">Whatsapp</a></li>
+            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">WhatsApp</a></li>
           </ul>
         </div>
 
