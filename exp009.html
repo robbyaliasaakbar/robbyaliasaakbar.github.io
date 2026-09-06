@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 009 — From Override to Native: Robust ROCm gfx1031 Without HSA_OVERRIDE — Robby Aliasa Akbar</title>
+  <meta name="description" content="Native ROCm on RX 6700 XT gfx1031 with one-line MMA fix: 580 tok/s prefill sustained at 20K+ cached on 35B A3B split, no override, flash-attn + KV q8_0 + 131K ctx.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp009.html">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp009.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp009.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp009.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp009.html">
+  <meta property="og:title" content="Experiment 009 — Native gfx1031: 580 tok/s Prefill Without Override">
+  <meta property="og:description" content="Override caused FA-off + CPU fallback + core dumps. Native fix forces MMA kernel for head_dim 512 — 581 to 502 tok/s sustained, multi-engine ROCm.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments009/server-prefill-580.webp">
+  <meta property="og:image:width" content="640">
+  <meta property="og:image:height" content="672">
+  <meta property="og:image:alt" content="Server log sustained prefill 581 to 502 tok/s on native ROCm gfx1031">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-09-06T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-06T00:00:00+07:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 009 — Native gfx1031: 580 tok/s Prefill Without Override">
+  <meta name="twitter:description" content="Native ROCm gfx1031 one-line MMA fix: 580 tok/s sustained at 20K+ cached on 35B split, 131K ctx, 6 engines.">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments009/server-prefill-580.webp">
+  <meta name="twitter:image:alt" content="Native ROCm gfx1031 sustained prefill proof">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "From Override to Native: Robust ROCm gfx1031 Without HSA_OVERRIDE",
+        "description": "Native ROCm on RX 6700 XT gfx1031 with one-line MMA fix: 580 tok/s prefill sustained at 20K+ cached on 35B A3B split, no override, flash-attn + KV q8_0 + 131K ctx.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments009/server-prefill-580.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp009.html",
+        "datePublished": "2026-09-06",
+        "dateModified": "2026-09-06",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp009.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["gfx1031 native", "ROCm TheRock", "RX 6700 XT", "flash-attention MMA", "head_dim 512", "prefill TTFT", "35B A3B split", "KV q8_0"],
+        "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
+        "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
+          { "@type": "ListItem", "position": 3, "name": "Experiment 009", "item": "https://robbyaliasaakbar.github.io/exp009.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { ink: '#0C0C0C', paper: '#FFFFFF', accent: '#D70000' }, fontFamily: { display: ['Manrope','sans-serif'], body: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } }
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @media (max-width: 640px) { .detail-label { font-size: 0.6875rem; letter-spacing: 0.16em; } .stat-tile p { word-break: break-word; } }
+    .placeholder-shot { border: 2px dashed rgba(12,12,12,.2); background: repeating-linear-gradient(45deg, #fafafa, #fafafa 12px, #f3f4f6 12px, #f3f4f6 24px); }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Why require native instead of HSA_OVERRIDE?", "acceptedAnswer": { "@type": "Answer", "text": "Override gave FA-off, top_k CPU fallback tanking decode, and random mid-inference core dumps. For 35B split at 70K+ that is unusable. Native was slower to achieve but stable — rocminfo proves no spoofing." } },
+      { "@type": "Question", "name": "Is head_dim 512 a universal fix I can copy?", "acceptedAnswer": { "@type": "Answer", "text": "No. It is conditional on amd_mfma_available and the tile shared-memory limit on this setup and commit fc3f10b38 with HIP 7.14.60850. Validate failure mode first. Method generalizes, number doesn't." } },
+      { "@type": "Question", "name": "Why did SGLang and vLLM start working too?", "acceptedAnswer": { "@type": "Answer", "text": "Unknown — author flags this honestly. Likely parallel ROCm-level changes resolved alongside, untracked. If you understand the mechanics, author invites explanation." } }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-paper text-ink font-body antialiased">
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">ROBBY ALIASA AKBAR<span class="text-accent">.</span></a>
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="/" class="nav-link">Home</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="/" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html" class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+  <main>
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 009</li>
+            </ol>
+          </nav>
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal><span aria-hidden="true">&larr;</span> Back to Experiments</a>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 009</p>
+            <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+            <a href="exp008.html" class="text-xs font-mono underline hover:text-accent">Continuation of EXP 008 →</a>
+          </div>
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">From Override to Native: Robust ROCm gfx1031 Without HSA_OVERRIDE.</h1>
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">Can RX 6700 XT (gfx1031) run ROCm natively — no HSA_OVERRIDE, no spoofing — with flash-attention stable and prefill sustained above 500 tok/s at 20K+ cached context on a 35B A3B CPU/GPU split?</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="350">
+            <a href="https://github.com/ggml-org/llama.cpp/issues/26702" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Issue #26702 <span aria-hidden="true">↗</span></a>
+            <a href="https://www.reddit.com/r/LocalLLM/s/vmF6MQm8OC" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-accent text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Reddit proof <span aria-hidden="true">↗</span></a>
+            <a href="exp008.html" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Read EXP 008 first</a>
+          </div>
+          <p class="mt-4 text-xs text-neutral-500 font-mono" data-reveal="360">Phase 1 (EXP 008): override workaround · Phase 2 (this page): native robust fix · 581 → 502 tok/s sustained</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>System Requirements</p>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">CPU</p><p class="mt-2 text-sm font-medium leading-snug">Intel Core i5-11400F</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">RAM</p><p class="mt-2 text-sm font-medium leading-snug">16GB DDR4 3200MT/s</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">GPU</p><p class="mt-2 text-sm font-medium leading-snug">RX 6700 XT 12GB gfx1031 Sapphire PULSE</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">OS</p><p class="mt-2 text-sm font-medium leading-snug">Ubuntu Desktop 26.04 LTS</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">ROCm</p><p class="mt-2 text-sm font-medium leading-snug break-all">TheRock HIP 7.14.60850 clang 23.0.0git</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="200"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">llama.cpp</p><p class="mt-2 text-sm font-medium leading-snug break-all">10307 fc3f10b38 GNU 15.2.0</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="240"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model</p><p class="mt-2 text-sm font-medium leading-snug break-all">Ornith-1.0-35B-UD-IQ4_NL n-cpu-moe 22</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="280"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Engines</p><p class="mt-2 text-sm font-medium leading-snug">llama.cpp Ollama Unsloth LM Studio SGLang vLLM</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="320"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Status</p><p class="mt-2 text-sm font-medium leading-snug">STABLE native, no override</p></div>
+        </div>
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal><code class="code-inline">rocminfo | grep gfx → gfx1031</code> (not spoofed). <code class="code-inline">lspci Navi 22 rev c1 Sapphire PULSE</code>. Exact HIP + commit matter — see Caveats. Previous phase: <a class="underline hover:text-accent" href="exp008.html">EXP 008</a> + <a class="underline hover:text-accent" href="https://github.com/ggml-org/llama.cpp/issues/26702" target="_blank" rel="noopener">#26702</a>.</p>
+      </div>
+    </section>
+
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Screenshots</p>
+        <p class="mt-4 text-sm text-neutral-600 max-w-3xl" data-reveal="50">Native evidence — versions, sustained prefill, btop + lact + logs in one frame. Full write-up in <a class="underline hover:text-accent" href="https://www.reddit.com/r/LocalLLM/s/vmF6MQm8OC" target="_blank" rel="noopener">Reddit post</a>.</p>
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <figure data-reveal="0"><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments009/rocminfo-versions.webp" alt="Terminal versions llama-server hipcc rocminfo proving native gfx1031" loading="lazy" decoding="async" width="790" height="656" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Versions — llama-server hipcc rocminfo native</figcaption></figure>
+          <figure data-reveal="120"><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments009/server-prefill-580.webp" alt="Prefill reaching 580 tokens per second sustained" loading="lazy" decoding="async" width="640" height="672" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Prefill 580 tok/s — sustained, not cold-start</figcaption></figure>
+        </div>
+        <div class="mt-8" data-reveal="0"><figure><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments009/prefill-perf.webp" alt="Prefill performance btop lact and llama log in one frame" loading="lazy" decoding="async" width="1080" height="559" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Prefill perf — btop + lact + log</figcaption></figure></div>
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <figure data-reveal="0"><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments009/decode-perf.webp" alt="Decode performance btop lact and llama log in one frame" loading="lazy" decoding="async" width="1080" height="559" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Decode perf — btop + lact + log</figcaption></figure>
+          <figure data-reveal="120"><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments009/evidence-native-log.webp" alt="Evidence ROCm native llama server log long context stable" loading="lazy" decoding="async" width="854" height="1080" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Native evidence — server log long context</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Visualization</p>
+        <div class="mt-8" data-reveal="100"><h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">580 to 502 tok/s sustained — not a cold-start number.</h2><p class="mt-2 text-sm text-neutral-600">Real session on <code class="code-inline">Ornith-1.0-35B</code> split CPU/GPU, 18–23K already cached, prompt chunks 2048→6144. This is TTFT that matters for 70K+.</p><p class="mt-2 text-xs text-neutral-500">Note: different model than <a class="underline hover:text-accent" href="exp008.html">EXP 008</a> (gemma4 12B fully on GPU) — same goal, different experiment, do not compare 581 vs 653 directly.</p></div>
+        <div class="mt-8 border border-black/10 rounded-2xl p-6 sm:p-10 bg-paper" data-reveal="150">
+          <p class="font-display font-extrabold text-sm uppercase tracking-[0.08em]">Prefill sustained <span class="text-[#2E8B2E]">500+ floor</span></p>
+          <div class="mt-4" data-chart="line" data-data='[{"label":"2K 581","value":581.81},{"label":"3K 548","value":548.24},{"label":"4K 531","value":531.24},{"label":"5K 508","value":508.61},{"label":"6K 502","value":502.11}]'></div>
+          <p class="mt-3 text-xs text-neutral-500 font-mono">3.52s/581.81 → 5.60s/548.24 → 7.71s/531.24 → 10.07s/508.61 → 12.24s/502.11 · Vulkan same regime 70–100</p>
+        </div>
+        <div class="mt-6 border border-black/10 rounded-2xl p-6 sm:p-10 bg-paper" data-reveal="200">
+          <h3 class="font-display font-bold text-lg tracking-tight">Clock +45% vs bandwidth +7% — prefill is compute, decode is bandwidth.</h3>
+          <div class="mt-6 space-y-5">
+            <div><div class="flex justify-between text-xs font-display font-bold uppercase"><span>6700XT 2581MHz vs 3060 1777MHz</span><span class="text-[#2E8B2E]">+45% clock</span></div><div class="mt-2 flex h-7 rounded-full overflow-hidden border border-black/10"><div class="bg-[#2E8B2E]" style="width:59%"></div><div class="bg-neutral-200" style="width:41%"></div></div></div>
+            <div><div class="flex justify-between text-xs font-display font-bold uppercase"><span>384 vs 360 GB/s</span><span class="text-neutral-500">+7% bandwidth</span></div><div class="mt-2 flex h-7 rounded-full overflow-hidden border border-black/10"><div class="bg-ink" style="width:52%"></div><div class="bg-neutral-200" style="width:48%"></div></div></div>
+          </div>
+          <blockquote class="quote-block mt-8 text-sm text-neutral-600 leading-relaxed">3060 split peaks ~300 tok/s prefill. 6700XT should clear it widely — Vulkan didn’t. That gap signaled software bottleneck, not hardware ceiling. Decode 22–23 tok/s flat past 40K — consistent, not the bottleneck chased.</blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">For those of you unable to read this data from technical standpoint, here is the conclusion:</h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>Running a big 35B model split across 12GB GPU + CPU means waiting for the prompt to process at 70K+ context is what hurts — not writing answers.</p>
+            <p>Easy mode was okay at 16–32K but painful beyond. Pretending my card is a different model caused crashes and silent slowdowns.</p>
+            <p>I insisted on native recognition, watched a stable mode to find the real kernel, and forced the matrix-core path for one specific size — one line of code.</p>
+            <p>Result: ~580 pages/sec peak staying above 500 with 20K already loaded, 131K context stable, working across 6 apps — not just one.</p>
+            <p>I’m self-taught and found this by observation — if you know why it works deeper, I’d love to learn. Full repro versions and flags are inside; don’t copy the number blindly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+        <div class="mt-12 space-y-12">
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Problem</span></div><div class="lg:col-span-9 space-y-5"><p class="text-base text-neutral-700 leading-relaxed">gfx1031 sits awkwardly: RDNA2 but not gfx1030 (RX 6800/6900) where official ROCm support and community docs concentrate. Applying gfx1030 guides as-is to a 6700XT either silently falls back or crashes outright.</p><p class="text-base text-neutral-700 leading-relaxed">I tried <code class="code-inline">HSA_OVERRIDE_GFX_VERSION=10.3.0</code>: flash-attention wouldn’t enable, top_k silently fell back to CPU tanking decode, and random mid-inference core dumps appeared. I required <strong>native gfx1031, no override</strong> — costly trial and error, but necessary. This backend optimization is why <a class="underline hover:text-accent" href="exp001.html">EXP 001</a> exists at all: <a class="underline hover:text-accent" href="exp008.html">EXP 008</a> was the first unlock via override, this page (EXP 009) is the refinement to native.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Specifications</span></div><ol class="lg:col-span-9 space-y-4 list-none">
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">TheRock HIP <code class="code-inline">7.14.60850</code> clang <code class="code-inline">23.0.0git</code> — don’t substitute arbitrary TheRock builds, variance is large.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">llama.cpp <code class="code-inline">10307 fc3f10b38 GNU 15.2.0</code> — commit drift is real, <code class="code-inline">fattn.cu</code> logic shifts per commit.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Native proof: <code class="code-inline">rocminfo → gfx1031</code> + <code class="code-inline">lspci Navi 22 rev c1 Sapphire PULSE RX 6700 XT GAMING OC</code>.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Model split: <code class="code-inline">Ornith-1.0-35B-UD-IQ4_NL --n-cpu-moe 22 --n-gpu-layers 99 --ctx-size 131072 --cache-type-k q8_0 --cache-type-v q8_0</code> — 22 from VRAM headroom, not arbitrary.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">5.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Threads: <code class="code-inline">--threads 4</code> bandwidth-bound on DDR4-3200; 3 slightly faster on paper but 95C spikes vs 83C controlled at 4.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">6.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Batch <code class="code-inline">1024</code>: 1536/2048 gave no meaningful prefill gain, added ~10C — not worth it.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">7.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Multi-engine: llama.cpp (build-rocm-test) + Ollama (moved from Vulkan) + Unsloth + LM Studio + SGLang + vLLM — all native after fix.</p></li>
+          </ol></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Hypothesis</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">6700XT boost +45% over 3060 12GB should dominate prefill (compute-bound) while barely moving decode (bandwidth-bound, only +7%). 3060 split references peak ~300 tok/s prefill — 6700XT clearing it narrowly or not at all on Vulkan signals a software bottleneck, fixable at kernel dispatch.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Experiment</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Builds kept failing: documented RDNA2 head_dim config failed, guesses 1024/2048/4096 all failed. I stopped guessing, ran the model through stable Vulkan as baseline, watched kernel activity in <code class="code-inline">btop</code>, and correlated it to dispatch logic in <code class="code-inline">fattn.cu</code>. That’s where 512 came from — observation, not documentation.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">What Failed</span></div><ol class="lg:col-span-9 space-y-4 list-none">
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Documented head_dim for RDNA2</strong> — failed to build/run natively on this HIP + commit combo.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Random power-of-2 guesses (1024/2048/4096)</strong> — failed on all, blind guessing doesn’t work.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Override path</strong> — “worked” but FA off, top_k CPU fallback, random dumps. Functional failure for 35B split long-context.</p></li>
+          </ol></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Iteration</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">From spoofing the runtime to fixing dispatch: force MMA matrix-core path at 512 where tile hits shared-memory limit. Flash-attn stable → KV q8_0 viable → 131K usable. One fix unblocked the whole chain. I’m not a developer (creative director, self-taught) — this reads as empirical diagnosis; I invite kernel experts to fill in the <em>why</em>.</p></div></div>
+          <div data-reveal><div class="grid lg:grid-cols-12 gap-4 lg:gap-10"><div class="lg:col-span-3"><span class="detail-label">Evidence</span></div><div class="lg:col-span-9"><p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-6">Sustained-session logs (not cold-start) + version pins. Verify via screenshots + <a class="underline hover:text-accent" href="https://www.reddit.com/r/LocalLLM/s/vmF6MQm8OC" target="_blank" rel="noopener">Reddit post</a> + <code class="code-inline">rocminfo</code>.</p><div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Prefill peak</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">581.8 t/s</p><p class="text-xs text-neutral-500">20K+ cached</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Prefill floor</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">502.1 t/s</p><p class="text-xs text-neutral-500">still &gt;500</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Decode</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">22–23 t/s</p><p class="text-xs text-neutral-500">flat 40K+</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Context</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">131072</p><p class="text-xs text-neutral-500">stable q8_0</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Threads</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">4 @83C</p><p class="text-xs text-neutral-500">vs 3 @95C spikes</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Batch</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">1024</p><p class="text-xs text-neutral-500">2048 +10C no gain</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Engines</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">6 native</p><p class="text-xs text-neutral-500">incl. SGLang vLLM</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Override</p><p class="mt-2 font-display font-extrabold text-lg leading-tight text-[#2E8B2E]">None</p><p class="text-xs text-neutral-500">gfx1031 native</p></div>
+          </div></div></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Result</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Native ROCm/HIPBLAS/ROCBLAS with no override, flash-attention stable, KV q8_0, 131K confirmed stable, Ollama moved from Vulkan to native ROCm too. Prefill is what was fixed; decode stayed consistent as expected.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">What I Learned</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">What generalizes isn’t 512 — it’s the method: stable-backend baseline + kernel watch + dispatch correlation finds your fix without deep theory. I genuinely don’t know why SGLang/vLLM (no shared ggml code) also fixed — likely parallel ROCm changes untracked. If you understand shared-memory mechanics here, I’d appreciate the explanation.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Practical Implication</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed"><strong>For under-documented AMD:</strong> don’t hardcode 512 blindly — check failure mode, HIP build, commit, board and RAM first. <strong>For repro:</strong> pin TheRock 7.14.60850 + fc3f10b38 + Sapphire PULSE + i5-11400F/DDR4 context. Chain: <code class="code-inline">EXP 009 (native stack) → EXP 001 (35B usable) → EXP 008 (why ROCm wins)</code>.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Configuration Template</p>
+        <div class="mt-8" data-reveal="100"><p class="font-mono text-sm text-neutral-500">The fix — ggml/src/ggml-cuda/fattn.cu</p><pre class="code-block mt-4">// Force MMA kernel for head_dim 512 on AMD to avoid tile kernel shared memory limit
+if (amd_mfma_available(cc) && Q->ne[0] == 512) {
+  return BEST_FATTN_KERNEL_MMA_F16;
+}
+return BEST_FATTN_KERNEL_TILE;</pre></div>
+        <div class="mt-8" data-reveal="100"><p class="font-mono text-sm text-neutral-500">Full llama-server — Ornith-35B split (copy-paste, then tune VRAM)</p><pre class="code-block mt-4">BASE="$HOME/Documents/Model LLM/Ornith-1.0-35B"
+MODEL="$BASE/Ornith-1.0-35B-UD-IQ4_NL.gguf"
+PORT=8082
+~/Projects/llama2/build-rocm-test/bin/llama-server \
+ --model "$MODEL" --host 0.0.0.0 --port "$PORT" \
+ --n-gpu-layers 99 --threads 4 --threads-batch 4 --n-cpu-moe 22 \
+ --ctx-size 131072 --batch-size 1024 --ubatch-size 1024 --keep 20480 \
+ --cache-type-k q8_0 --cache-type-v q8_0 --swa-checkpoints 24 \
+ --checkpoint-min-step 2048 --embd-normalize 0 --no-kv-unified --kv-offload \
+ --jinja --reasoning-preserve --flash-attn on --parallel 1 \
+ --cache-ram 8192 --cache-idle-slots \
+ --temp 0.6 --top-k 20 --top-p 0.95 --min-p 0.1 \
+ --repeat-penalty 1.1 --repeat-last-n 512 --alias udinllama --log-verbosity 4</pre></div>
+        <blockquote class="quote-block mt-10 text-sm sm:text-base text-ink leading-relaxed max-w-3xl" data-reveal>Do not hardcode 512 or copy <code class="code-inline">--n-cpu-moe 22</code> blindly. 22 came from my 12GB headroom; threads 4 is bandwidth + thermal optimum on my DDR4 rig, not a universal best.</blockquote>
+        <ol class="mt-10 space-y-8 max-w-3xl list-none" data-reveal="100">
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I validated <strong>versions first</strong> — TheRock 7.14.60850 + fc3f10b38 — because drift changes <code class="code-inline">fattn.cu</code> behavior.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I proved <strong>native</strong> with <code class="code-inline">rocminfo gfx1031</code> + board ID, not just “it runs.”</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I measured <strong>sustained</strong> (20K+ cached), not cold-start peaks.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I kept <strong>unknowns explicit</strong> — SGLang/vLLM side-effect unexplained, 512 observational.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper" open><summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">Why require native instead of HSA_OVERRIDE?<span class="text-accent group-open:rotate-180 transition-transform">▼</span></summary><p class="mt-4 text-sm text-neutral-600 leading-relaxed">Override gave FA-off, top_k CPU fallback tanking decode, and random mid-inference core dumps. For 35B split at 70K+ that is unusable. Native was slower to achieve but stable — rocminfo proves no spoofing.</p></details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper"><summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">Is head_dim 512 a universal fix I can copy?<span class="text-accent group-open:rotate-180 transition-transform">▼</span></summary><p class="mt-4 text-sm text-neutral-600 leading-relaxed">No. Conditional on <code class="code-inline">amd_mfma_available</code> and this HIP + commit. Validate failure mode first. Method generalizes, number doesn’t.</p></details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper"><summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">Why did SGLang and vLLM start working too?<span class="text-accent group-open:rotate-180 transition-transform">▼</span></summary><p class="mt-4 text-sm text-neutral-600 leading-relaxed">Unknown — flagged honestly. Likely parallel ROCm-level changes untracked. If you understand the mechanics, author invites explanation.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 border-t border-black/10 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8"><div class="max-w-3xl" data-reveal><p class="eyebrow">Disclaimer</p><h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">Version-pinned, not universal</h2><blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">Validated on Ubuntu Desktop 26.04 LTS + TheRock HIP 7.14.60850 + commit fc3f10b38 + Sapphire PULSE 6700 XT + Intel Core i5-11400F/16GB DDR4. Commit drift is real; other ROCm sources/distros may differ; 512 is conditional. Numbers are sustained-session logs, not cold-start peaks. I’m self-taught — method is empirical; corrections on the why are welcome.</blockquote><p class="mt-6 text-sm text-neutral-700 leading-relaxed"><strong>Previous phase:</strong> <a class="underline hover:text-accent" href="exp008.html">EXP 008</a> · <strong>Upstream:</strong> <a class="underline hover:text-accent font-mono text-[13px]" href="https://github.com/ggml-org/llama.cpp/issues/26702" target="_blank" rel="noopener">ggml-org/llama.cpp#26702</a> · <strong>Write-up:</strong> <a class="underline hover:text-accent" href="https://www.reddit.com/r/LocalLLM/s/vmF6MQm8OC" target="_blank" rel="noopener">Reddit r/LocalLLM native gfx1031 post</a></p></div></div>
+    </section>
+
+    <section class="pb-24 lg:pb-32"><div class="mx-auto max-w-6xl px-6 lg:px-8"><div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal><a href="experiments-list.html" class="arrow-link font-display text-sm uppercase"><span aria-hidden="true">&larr;</span> Back to Experiments</a><a href="contact.html" class="arrow-link font-display text-sm uppercase">Have a problem worth exploring? <span aria-hidden="true">-&gt;</span></a></div><p class="mt-6 text-xs text-neutral-500" data-reveal>Chain: <a class="underline hover:text-accent" href="exp008.html">EXP 008 workaround</a> → EXP 009 native → <a class="underline hover:text-accent" href="exp001.html">EXP 001 35B usable</a>.</p></div></section>
+  </main>
+  <footer class="bg-dark-section text-white"><div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8"><div class="grid gap-12 md:grid-cols-3"><div><p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p><p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">AI Systems Builder &amp; Experimenter</p><p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">Exploring AI systems, local LLMs, automation workflows, and practical tools that actually work in real business operations.<br>Building what matters, and checking whether AI is truly useful in everyday work.</p></div><div class="md:justify-self-center"><p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p><ul class="mt-5 space-y-3 text-sm"><li><a href="/" class="footer-link">Home</a></li><li><a href="profile.html" class="footer-link">Profile</a></li><li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li><li><a href="contact.html" class="footer-link">Contact</a></li></ul></div><div class="md:justify-self-end"><p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p><ul class="mt-5 space-y-3 text-sm"><li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li><li><a href="https://www.reddit.com/user/Full_Director87/" target="_blank" rel="noopener" class="footer-link">Reddit</a></li><li><a href="https://www.instagram.com/ybboraa/" target="_blank" rel="noopener" class="footer-link">Instagram</a></li><li><a href="mailto:ibborarts@gmail.com" class="footer-link">Email</a></li><li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">WhatsApp</a></li></ul></div></div><div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40"><p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p><p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p></div></div></footer>
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

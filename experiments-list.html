@@ -54,7 +54,7 @@
         "name": "Experiments",
         "url": "https://robbyaliasaakbar.github.io/experiments-list.html",
         "description": "A collection of AI experiments documented as technical case studies.",
-        "dateModified": "2026-09-01",
+        "dateModified": "2026-09-06",
         "isPartOf": {
           "@type": "WebSite",
           "name": "Robby Aliasa Akbar",
@@ -81,7 +81,7 @@
       {
         "@type": "ItemList",
         "name": "Experiments",
-        "numberOfItems": 7,
+        "numberOfItems": 9,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -138,6 +138,22 @@
             "name": "From 30 Minutes to 5 Seconds: Automating Mass CV Screening Without In-System AI",
             "image": "https://robbyaliasaakbar.github.io/images/experiments007/homepage-hero.webp",
             "description": "Can 1–5 CV PDFs be screened from 30-minute manual review to 5-second ranked shortlist without in-system AI? A local workflow: pdf.js → n8n 24 nodes → Postgres, 70% threshold, 5-hour delivery."
+          },
+          {
+            "@type": "ListItem",
+            "position": 8,
+            "url": "https://robbyaliasaakbar.github.io/exp008.html",
+            "name": "Found the Bug, Fixed the Stack: ROCm gfx1031 vs Vulkan on RX 6700 XT",
+            "image": "https://robbyaliasaakbar.github.io/images/experiments008/rocm-bench.webp",
+            "description": "Can RX 6700 XT gfx1031 beat Vulkan by 23% wall-clock on 8K context once the ROCm GFX-target bug and flash-attention assert are fixed? ROCm 653 vs Vulkan 354 t/s prefill."
+          },
+          {
+            "@type": "ListItem",
+            "position": 9,
+            "url": "https://robbyaliasaakbar.github.io/exp009.html",
+            "name": "From Override to Native: Robust ROCm gfx1031 Without HSA_OVERRIDE",
+            "image": "https://robbyaliasaakbar.github.io/images/experiments009/server-prefill-580.webp",
+            "description": "Can RX 6700 XT gfx1031 run ROCm natively with 580 tok/s prefill sustained at 20K+ cached on 35B A3B split? One-line MMA fix, no override, 131K ctx."
           }
         ]
       }
@@ -396,6 +412,40 @@
             </p>
             <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
               Read EXP 007: Mass CV Screening 5s <span aria-hidden="true">-&gt;</span>
+            </span>
+          </a>
+
+          <!-- EXP 008 -->
+          <a href="exp008.html" aria-label="Read EXP 008: Found the Bug Fixed the Stack ROCm gfx1031 vs Vulkan — Robby Aliasa Akbar" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="700">
+            <div class="flex items-center justify-between">
+              <span class="font-display font-bold text-xs tracking-[0.2em] text-neutral-400">EXP 008</span>
+              <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+            </div>
+            <h3 class="mt-6 font-display font-bold text-xl leading-snug">
+              Found the Bug, Fixed the Stack: ROCm gfx1031 vs Vulkan on RX 6700 XT.
+            </h3>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed flex-1">
+              Can RX 6700 XT gfx1031 beat Vulkan by 23% wall-clock on 8K context — once the GFX-target bug and flash-attention assert are found and fixed? ROCm 653 vs Vulkan 354 t/s.
+            </p>
+            <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
+              Read EXP 008: ROCm gfx1031 vs Vulkan <span aria-hidden="true">-&gt;</span>
+            </span>
+          </a>
+
+          <!-- EXP 009 -->
+          <a href="exp009.html" aria-label="Read EXP 009: From Override to Native Robust ROCm gfx1031 — Robby Aliasa Akbar" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="800">
+            <div class="flex items-center justify-between">
+              <span class="font-display font-bold text-xs tracking-[0.2em] text-neutral-400">EXP 009</span>
+              <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+            </div>
+            <h3 class="mt-6 font-display font-bold text-xl leading-snug">
+              From Override to Native: Robust ROCm gfx1031 Without HSA_OVERRIDE.
+            </h3>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed flex-1">
+              Can RX 6700 XT gfx1031 run ROCm natively with 580 tok/s prefill sustained at 20K+ cached on 35B A3B split? One-line MMA fix, no override, 131K ctx.
+            </p>
+            <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
+              Read EXP 009: Native gfx1031 580 tok/s <span aria-hidden="true">-&gt;</span>
             </span>
           </a>
 

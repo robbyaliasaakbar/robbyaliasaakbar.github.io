@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 008 — Found the Bug, Fixed the Stack: ROCm gfx1031 vs Vulkan on RX 6700 XT — Robby Aliasa Akbar</title>
+  <meta name="description" content="Can RX 6700 XT gfx1031 beat Vulkan by 23% wall-clock on 8K context once the ROCm GFX-target bug and flash-attention assert are fixed? ROCm 653 vs Vulkan 354 t/s prefill.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+
+  <!-- ===== SEO: Open Graph / Twitter / Canonical ===== -->
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp008.html">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp008.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp008.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp008.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp008.html">
+  <meta property="og:title" content="Experiment 008 — Found the Bug, Fixed the Stack: ROCm gfx1031 vs Vulkan">
+  <meta property="og:description" content="ROCm needs 2 workarounds on gfx1031 but wins 23% net wall-clock over Vulkan at 8K context. 653 vs 354 t/s prefill. Upstream report #26702.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments008/rocm-bench.webp">
+  <meta property="og:image:width" content="1264">
+  <meta property="og:image:height" content="886">
+  <meta property="og:image:alt" content="Screenshot of Experiment 008 — ROCm benchmark 653 t/s vs Vulkan 354 t/s on RX 6700 XT gfx1031">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-09-06T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-06T00:00:00+07:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 008 — Found the Bug, Fixed the Stack: ROCm gfx1031 vs Vulkan">
+  <meta name="twitter:description" content="Can RX 6700 XT gfx1031 beat Vulkan by 23% wall-clock on 8K context once ROCm bugs are fixed? 653 vs 354 t/s prefill, full evidence.">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments008/rocm-bench.webp">
+  <meta name="twitter:image:alt" content="ROCm vs Vulkan benchmark on RX 6700 XT gfx1031">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Found the Bug, Fixed the Stack: ROCm gfx1031 vs Vulkan on RX 6700 XT",
+        "description": "Can RX 6700 XT gfx1031 beat Vulkan by 23% wall-clock on 8K context once the ROCm GFX-target bug and flash-attention assert are fixed? ROCm 653 vs Vulkan 354 t/s prefill.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments008/rocm-bench.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp008.html",
+        "datePublished": "2026-09-06",
+        "dateModified": "2026-09-06",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp008.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["ROCm", "gfx1031", "RX 6700 XT", "llama.cpp", "flash-attention", "Vulkan vs ROCm", "long-context inference", "RDNA2", "KV cache quantization"],
+        "author": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar",
+          "url": "https://robbyaliasaakbar.github.io/profile.html"
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": "Robby Aliasa Akbar"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://robbyaliasaakbar.github.io/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Experiments",
+            "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Experiment 008",
+            "item": "https://robbyaliasaakbar.github.io/exp008.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts: Manrope (display) + Inter (body) + JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS (CDN — no build step required) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#0C0C0C',
+            paper:  '#FFFFFF',
+            accent: '#D70000'
+          },
+          fontFamily: {
+            display: ['Manrope', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+            mono:    ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @media (max-width: 640px) {
+      .detail-label { font-size: 0.6875rem; letter-spacing: 0.16em; }
+      .stat-tile p { word-break: break-word; }
+    }
+    .placeholder-shot {
+      border: 2px dashed rgba(12,12,12,.2);
+      background: repeating-linear-gradient(45deg, #fafafa, #fafafa 12px, #f3f4f6 12px, #f3f4f6 24px);
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why not just use Vulkan? It works out of the box.",
+        "acceptedAnswer": { "@type": "Answer", "text": "Vulkan needs no patch, but at 8192 context it does 354 t/s prefill vs ROCm 653 t/s. That is 23.1s vs 12.5s prefill — net 35.6s vs 27.3s full cycle. Below ~1760 tokens Vulkan is net-faster, above that ROCm wins. For long-context work ROCm is clearly better once running." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is forcing max_blocks_per_sm = 1 safe?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Unknown — that is why it is reported as bug #26702, not a fix. It avoids the crash and benches stably, but only a maintainer can confirm correctness for gfx1031. Do not treat the sed one-liner as upstream fix." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this explain the decode being slower on ROCm?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. llama-bench excludes sampling time, so the TOP_K sampler gap seen in llama-server logs is not confirmed as the cause of the tg512 gap. Decode deficit is under separate investigation — planned as EXP 009." }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body class="bg-paper text-ink font-body antialiased">
+
+  <!-- ================= NAVBAR ================= -->
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">
+        ROBBY ALIASA AKBAR<span class="text-accent">.</span>
+      </a>
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="/"            class="nav-link">Home</a>
+        <a href="profile.html"          class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html"          class="nav-link">Contact</a>
+      </div>
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false"
+              class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="/"            class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html"          class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html"          class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= EXPERIMENT HEADER ================= -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 008</li>
+            </ol>
+          </nav>
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal>
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 008</p>
+            <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+          </div>
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">
+            Found the Bug, Fixed the Stack: ROCm gfx1031 vs Vulkan on RX 6700 XT.
+          </h1>
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">
+            Can an “unsupported” RDNA2 card (RX 6700 XT gfx1031) beat Vulkan by 23% wall-clock on 8K context — once the GFX-target bug and flash-attention assert are found and fixed?
+          </p>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="350">
+            <a href="https://github.com/ggml-org/llama.cpp/issues/26702" target="_blank" rel="noopener"
+               class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">
+              View upstream issue #26702 <span aria-hidden="true">↗</span>
+            </a>
+            <span class="text-xs text-neutral-500 font-mono">ROCm 653.9 vs Vulkan 354.4 t/s prefill · 3 runs each</span>
+          </div>
+          <div class="mt-8 border border-[#2E8B2E]/25 bg-[#F3FAF3] rounded-2xl p-5 sm:p-6 max-w-3xl" data-reveal="400">
+            <p class="text-sm text-neutral-700 leading-relaxed"><strong>Looking for the better native version?</strong> This page uses override workaround. <a class="underline hover:text-accent font-semibold" href="exp009.html">EXP 009 refines it to native without override</a> + <a class="underline hover:text-accent" href="https://www.reddit.com/r/LocalLLM/s/vmF6MQm8OC" target="_blank" rel="noopener">Reddit write-up</a> (580 tok/s sustained, 35B split).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SYSTEM REQUIREMENTS ================= -->
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>System Requirements</p>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">CPU</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Intel Core i5-11400F</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">RAM</p>
+            <p class="mt-2 text-sm font-medium leading-snug">16GB DDR4 3200 MT/s XMP</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">GPU</p>
+            <p class="mt-2 text-sm font-medium leading-snug">RX 6700 XT 12GB (gfx1031 Navi22)</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">OS</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Ubuntu Desktop 26.04 LTS</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">ROCm / HIP</p>
+            <p class="mt-2 text-sm font-medium leading-snug">7.1.52801 + clang 21.1.8</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="200">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">llama.cpp</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">0a50d99 build 10108</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="240">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model Under Test</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">gemma-4-12b-it-IQ4_NL 6.24GiB</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="280">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Tuning</p>
+            <p class="mt-2 text-sm font-medium leading-snug">LACT Manual Compute 182W -90mV</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="320">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Status</p>
+            <p class="mt-2 text-sm font-medium leading-snug">STABLE (workaround)</p>
+          </div>
+        </div>
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal>
+          Native gfx1031 requires <code class="code-inline">HSA_OVERRIDE_GFX_VERSION=10.3.0</code> + FA assert patch. Upstream fix pending — see <a class="underline hover:text-accent" href="https://github.com/ggml-org/llama.cpp/issues/26702" target="_blank" rel="noopener">GitHub #26702</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= SCREENSHOTS — GALLERY ================= -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Screenshots</p>
+        <p class="mt-4 text-sm text-neutral-600 max-w-3xl" data-reveal="50">Same LACT tuning for both backends — no backend-specific tuning. Full terminal tables in <a class="underline hover:text-accent" href="https://github.com/ggml-org/llama.cpp/issues/26702" target="_blank" rel="noopener">issue #26702</a>.</p>
+
+        <!-- Row 1: 2 cols LACT -->
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <figure data-reveal="0">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments008/lact-rocm.webp" alt="LACT tuning during ROCm benchmark — Manual Compute 182W minus 90mV VRAM 1900MHz" loading="lazy" decoding="async" width="877" height="400" class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">LACT — ROCm run (same tuning)</figcaption>
+          </figure>
+          <figure data-reveal="120">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments008/lact-vulkan.webp" alt="LACT tuning during Vulkan benchmark — same Manual Compute profile" loading="lazy" decoding="async" width="1952" height="881" class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">LACT — Vulkan run (same tuning)</figcaption>
+          </figure>
+        </div>
+
+        <!-- Row 2: full-width core dump -->
+        <div class="mt-8" data-reveal="0">
+          <figure>
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments008/core-dump.webp" alt="Core dump assert crash max_blocks_per_sm greater than 0 on gfx1031 ROCm" loading="lazy" decoding="async" width="1080" height="589" class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">The bug that gates ROCm out of long-context</figcaption>
+          </figure>
+        </div>
+
+        <!-- Row 3: 2 cols bench -->
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <figure data-reveal="0">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments008/rocm-bench.webp" alt="llama-bench ROCm 3 runs pp8192 653 t/s tg512 34.6 t/s gemma 12B" loading="lazy" decoding="async" width="1264" height="886" class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">ROCm bench — 653 t/s prefill (3 runs)</figcaption>
+          </figure>
+          <figure data-reveal="120">
+            <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+              <img src="images/experiments008/vulkan-bench.webp" alt="llama-bench Vulkan 3 runs pp8192 354 t/s tg512 40.9 t/s same model flags" loading="lazy" decoding="async" width="1264" height="886" class="w-full h-auto">
+            </div>
+            <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Vulkan bench — 354 t/s prefill (3 runs)</figcaption>
+          </figure>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= VISUALIZATION ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Visualization</p>
+        <div class="mt-8" data-reveal="100">
+          <h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">Prefill wins, decode loses — net win.</h2>
+          <p class="mt-2 text-sm text-neutral-600">Same model <code class="code-inline">gemma-4-12b-it-IQ4_NL</code> (layers fully on GPU), same flags. Only backend changed. 3-run average from issue #26702.</p>
+          <p class="mt-2 text-xs text-neutral-500">Note: numbers here use a different model than <a class="underline hover:text-accent" href="exp009.html">EXP 009</a> (35B A3B split CPU/GPU) — same goal, different experiment, do not compare directly.</p>
+        </div>
+
+        <div class="mt-8 grid md:grid-cols-2 gap-6">
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="150">
+            <p class="font-display font-extrabold text-sm uppercase tracking-[0.08em]">Prefill pp8192 <span class="text-[#2E8B2E]">+84.5%</span></p>
+            <p class="mt-1 text-xs text-neutral-500">tokens / second, higher is better</p>
+            <div class="mt-4 mx-auto max-w-md" data-chart="bar" data-y-max="750" data-data='[{"label":"ROCm 653.9","value":653.9},{"label":"Vulkan 354.4","value":354.4}]'></div>
+            <p class="mt-3 text-xs text-neutral-500">ROCm 653.37 / 654.06 / 654.38 · Vulkan 354.24 / 354.53 / 354.35</p>
+          </div>
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="200">
+            <p class="font-display font-extrabold text-sm uppercase tracking-[0.08em]">Decode tg512 <span class="text-neutral-500">-15.4%</span></p>
+            <p class="mt-1 text-xs text-neutral-500">tokens / second, higher is better — ROCm loses here</p>
+            <div class="mt-4 mx-auto max-w-md" data-chart="bar" data-y-max="50" data-data='[{"label":"ROCm 34.6","value":34.6},{"label":"Vulkan 40.9","value":40.9}]'></div>
+            <p class="mt-3 text-xs text-neutral-500">ROCm 34.61 / 34.62 / 34.56 · Vulkan 40.94 / 40.89 / 40.93 — TOP_K gap under investigation (EXP 009)</p>
+          </div>
+        </div>
+
+        <div class="mt-6 border border-black/10 rounded-2xl p-6 sm:p-10 bg-paper" data-reveal="250">
+          <h3 class="font-display font-bold text-lg tracking-tight">23% net wall-clock win — why prefill matters more.</h3>
+          <p class="mt-2 text-sm text-neutral-600">Full cycle: 8192 prefill + 512 generate. Prefill dominates at this depth.</p>
+          <div class="mt-8 space-y-6">
+            <div>
+              <div class="flex items-center justify-between text-xs font-display font-bold tracking-[0.12em] uppercase"><span class="text-[#2E8B2E]">ROCm — 27.3s total</span><span class="text-neutral-400">12.5s + 14.8s</span></div>
+              <div class="mt-2 flex h-8 rounded-full overflow-hidden border border-black/10" role="img" aria-label="ROCm total 27.3 seconds: 12.5 prefill plus 14.8 decode">
+                <div class="bg-[#2E8B2E]" style="width:45.8%"></div>
+                <div class="bg-ink" style="width:54.2%"></div>
+              </div>
+              <p class="mt-1 text-xs text-neutral-500 font-mono">prefill 12.5s (653.9 t/s) + decode 14.8s (34.6 t/s)</p>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-xs font-display font-bold tracking-[0.12em] uppercase"><span>Vulkan — 35.6s total</span><span class="text-neutral-400">23.1s + 12.5s</span></div>
+              <div class="mt-2 flex h-8 rounded-full overflow-hidden border border-black/10" role="img" aria-label="Vulkan total 35.6 seconds: 23.1 prefill plus 12.5 decode">
+                <div class="bg-neutral-400" style="width:64.9%"></div>
+                <div class="bg-neutral-700" style="width:35.1%"></div>
+              </div>
+              <p class="mt-1 text-xs text-neutral-500 font-mono">prefill 23.1s (354.4 t/s) + decode 12.5s (40.9 t/s)</p>
+            </div>
+          </div>
+          <blockquote class="quote-block mt-8 text-sm text-neutral-600 leading-relaxed">
+            Crossover ~1760 tokens — below that Vulkan is net-faster, above that ROCm wins. Effectively all long-context workloads (32K–120K+) favor ROCm once it runs.
+          </blockquote>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">
+            For those of you unable to read this data from technical standpoint, here is the conclusion:
+          </h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>My graphics card (RX 6700 XT) is officially “unsupported” by the fast AI software (ROCm). The easy software (Vulkan) works instantly but is slow where it matters most.</p>
+            <p>I found two roadblocks: the software didn’t recognize my card so I had to disguise it as its close neighbor, and a safety check crashed the fast-memory mode I need for long documents.</p>
+            <p>I fixed both locally with two small workarounds — and measured carefully 3 times each: fast mode reads 653 pages per second vs 354 for easy mode on long documents.</p>
+            <p>Over a full job (read 8192 + write 512), fast mode finishes in 27 seconds vs 36 seconds — 23% faster — even though it writes slightly slower. For long documents, reading dominates the total time.</p>
+            <p>My fix is stable for daily use, but I reported it publicly upstream so everyone benefits. I linked the bug report so you can verify — no magic numbers. The remaining write-speed mystery is next in EXP 009.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIMENT DETAILS ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+        <div class="mt-12 space-y-12">
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Problem</span></div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">My RX 6700 XT is gfx1031 (Navi22) — no first-class ROCm target in llama.cpp. The choice is painful: Vulkan just works but is ~85% slower on prefill at 8K, while ROCm is faster but needs manual workarounds and crashes on flash-attention. For long-context research and agentic workloads that routinely run 32K–120K+ tokens, this decides whether 12GB VRAM is usable or constantly OOM.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">This backend optimization was not optional — <a class="underline hover:text-accent" href="exp001.html">EXP 001</a> would not exist without it. EXP 001 is the result after successfully tuning the GPU backend. This page (EXP 008) is the first mandatory unlock via override workaround; <a class="underline hover:text-accent" href="exp009.html">EXP 009</a> refines it to native without override.</p>
+            </div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Specifications</span></div>
+            <ol class="lg:col-span-9 space-y-4 list-none">
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">LACT sweet-spot for long-context: Manual level, Compute profile, power 182/223W, max clock 2350MHz (vs 2600 stock), voltage -90mV, VRAM 1900MHz — identical tuning for both backends, no backend-specific tuning.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">ROCm build from commit <code class="code-inline">0a50d99</code>: <code class="code-inline">-DGGML_HIP=ON -DAMDGPU_TARGETS=gfx1030</code> with <code class="code-inline">clang / hipcc</code>, runtime <code class="code-inline">HSA_OVERRIDE_GFX_VERSION=10.3.0</code> to masquerade gfx1031 as gfx1030.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Vulkan build: <code class="code-inline">cmake -B build -DGGML_VULKAN=1</code> — no tweak, no drama, RADV NAVI22.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Bench template (only backend changed): <code class="code-inline">--n-prompt 8192 --n-gen 512 --batch-size 1024 --ubatch-size 1024 --cache-type-k q8_0 --cache-type-v q8_0 --n-gpu-layers 99 --flash-attn on</code> on <code class="code-inline">gemma-4-12b-it-IQ4_NL.gguf</code> (6.24 GiB).</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">5.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Server template proving long-context usable: <code class="code-inline">--ctx-size 131072 --spec-draft-model mtp-gemma --flash-attn on --kv-unified --kv-offload</code> — full command in Configuration Template. Note: at this stage I had not yet understood <code class="code-inline">kv-unified</code> in detail — see <a class="underline hover:text-accent" href="exp009.html">EXP 009</a> for the refined <code class="code-inline">--no-kv-unified</code> iteration.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">6.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Flash-attention is mandatory: KV quant, usable context size, and MTP speculative decoding all depend on it. Turning FA off is not a viable fallback.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">7.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Measurement: 3 runs per backend, identical batch/cache, <code class="code-inline">llama-bench</code> excludes sampling time — so decode gap needs separate isolation.</p></li>
+            </ol>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Hypothesis</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">For gfx1031 long-context, ROCm with correct GFX handling and working flash-attention will beat Vulkan net wall-clock despite a decode deficit — because prefill dominates the cycle. The friction is build/runtime packaging, not hardware capability.</p></div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Experiment</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">I built both backends from the same commit, ran <code class="code-inline">llama-bench</code> 3× each with identical flags, and captured terminal tables. I attempted a native <code class="code-inline">gfx1031</code> target first — confirmed it fails without override. I then hit the FA assert, patched it locally with a minimal guard, kept FA on, and re-ran. Finally I converted t/s to wall-clock math and computed the crossover point.</p></div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">What Failed</span></div>
+            <ol class="lg:col-span-9 space-y-4 list-none">
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>gfx1031 has no working native target.</strong> Building with <code class="code-inline">-DAMDGPU_TARGETS=gfx1031</code> fails to run correctly — I must build for neighboring <code class="code-inline">gfx1030</code> and override at runtime with <code class="code-inline">HSA_OVERRIDE_GFX_VERSION=10.3.0</code>. Ask: native Navi22 support without masquerade.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Flash-attention assert crash.</strong> <code class="code-inline">GGML_ASSERT(max_blocks_per_sm &gt; 0)</code> in <code class="code-inline">ggml/src/ggml-cuda/fattn-common.cuh</code> crashes on this backend/target combo. Workaround <code class="code-inline">if &lt;=0 then =1</code> avoids crash but correctness/occupancy is unknown. Ask: root-cause fix or reviewed guidance.</p></li>
+            </ol>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Iteration</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">From “Vulkan is enough” to “ROCm is worth the friction.” I kept Vulkan as baseline, isolated ROCm variables one by one (GFX override → FA patch → bench), and refused to disable FA because that would hide the exact workload where ROCm wins. I documented workarounds honestly with an unknown-correctness disclaimer instead of silently forking — so maintainers can fix root cause while users stay productive.</p></div>
+          </div>
+
+          <div data-reveal>
+            <div class="grid lg:grid-cols-12 gap-4 lg:gap-10">
+              <div class="lg:col-span-3"><span class="detail-label">Evidence</span></div>
+              <div class="lg:col-span-9">
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-6">3-run average per backend, same commit <code class="code-inline">0a50d99</code>, same model and flags. Full tables in <a class="underline hover:text-accent" href="https://github.com/ggml-org/llama.cpp/issues/26702" target="_blank" rel="noopener">issue #26702</a> + screenshots above.</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">pp8192 ROCm</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">653.9 t/s</p><p class="text-xs text-neutral-500">avg of 3</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">pp8192 Vulkan</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">354.4 t/s</p><p class="text-xs text-neutral-500">avg of 3</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Delta prefill</p><p class="mt-2 font-display font-extrabold text-lg leading-tight text-[#2E8B2E]">+84.5%</p><p class="text-xs text-neutral-500">ROCm wins</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">tg512 ROCm</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">34.6 t/s</p><p class="text-xs text-neutral-500">avg of 3</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">tg512 Vulkan</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">40.9 t/s</p><p class="text-xs text-neutral-500">avg of 3</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Delta decode</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">-15.4%</p><p class="text-xs text-neutral-500">Vulkan wins</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Total 8192+512</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">27.3s vs 35.6s</p><p class="text-xs text-neutral-500">ROCm vs Vulkan</p></div>
+                  <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Net win</p><p class="mt-2 font-display font-extrabold text-lg leading-tight text-[#2E8B2E]">~23% Stable</p><p class="text-xs text-neutral-500">workaround</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Result</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">ROCm wins net wall-clock by ~23% at 8K (27.3s vs 35.6s) despite losing decode throughput. Crossover is ~1760 prompt tokens — ROCm is the better backend for effectively all long-context workloads on this hardware, once it can be built and run without manual patching. The workaround stack is <strong>STABLE</strong> locally for 131K server + MTP speculative decoding use.</p></div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">What I Learned</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Optimization lives under the model: GFX target handling + flash-attention occupancy matter more than prompt tricks for long-context. A one-line assert can gate an entire hardware family out of its best workload. An honest workaround with an unknown-correctness disclaimer + an upstream report beats a silent fork — it keeps me productive today while letting maintainers fix the root cause for everyone.</p></div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Practical Implication</span></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed"><strong>For RDNA2 owners (RX 6600/6700):</strong> don’t settle for Vulkan if you do long-context — use the override + patch documented below, keep LACT conservative, keep KV <code class="code-inline">q8_0</code> + FA on. <strong>For llama.cpp:</strong> two small fixes (native gfx1031 + FA occupancy) would unlock this series without user patching. Until then this page + <code class="code-inline">#26702</code> is the reproducible reference. Decode TOP_K gap is next — see EXP 009 teaser.</p></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONFIGURATION TEMPLATE ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Configuration Template</p>
+
+        <div class="mt-8" data-reveal="100">
+          <p class="font-mono text-sm text-neutral-500">ROCm workaround — build + FA patch + bench (from #26702)</p>
+          <pre class="code-block mt-4"># Build ROCm as gfx1030 (gfx1031 native fails without override)
+cmake -S ~/Projects/llama2 -B ~/Projects/llama2/build-rocm \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=hipcc \
+  -DGGML_HIP=ON -DAMDGPU_TARGETS=gfx1030 -DCMAKE_HIP_ARCHITECTURES=gfx1030
+cmake --build ~/Projects/llama2/build-rocm -j"$(nproc)"
+
+# FA assert workaround (correctness UNKNOWN — see #26702)
+sed -i 's/GGML_ASSERT(max_blocks_per_sm &gt; 0);/if (max_blocks_per_sm &lt;= 0) { max_blocks_per_sm = 1; }/g' \
+  ~/Projects/llama2/ggml/src/ggml-cuda/fattn-common.cuh
+
+# Bench (only backend changed vs Vulkan)
+HSA_OVERRIDE_GFX_VERSION=10.3.0 ~/Projects/llama2/build-rocm/bin/llama-bench \
+  --model "$MODEL" --n-prompt 8192 --n-gen 512 \
+  --batch-size 1024 --ubatch-size 1024 \
+  --cache-type-k q8_0 --cache-type-v q8_0 \
+  --n-gpu-layers 99 --flash-attn on</pre>
+        </div>
+
+        <div class="mt-8" data-reveal="100">
+          <p class="font-mono text-sm text-neutral-500">Vulkan baseline — no bug, no drama</p>
+          <pre class="code-block mt-4">cmake -B build -DGGML_VULKAN=1
+cmake --build build --config Release
+~/Projects/llama.cpp/build/bin/llama-bench \
+  --model "$MODEL" --n-prompt 8192 --n-gen 512 \
+  --batch-size 1024 --ubatch-size 1024 \
+  --cache-type-k q8_0 --cache-type-v q8_0 \
+  --n-gpu-layers 99 --flash-attn on</pre>
+        </div>
+
+        <blockquote class="quote-block mt-10 text-sm sm:text-base text-ink leading-relaxed max-w-3xl" data-reveal>
+          Do not copy the <code class="code-inline">sed</code> patch blindly. It avoids the crash and benches stably, but only a maintainer can confirm it is safe for gfx1031. Track <a class="underline hover:text-accent" href="https://github.com/ggml-org/llama.cpp/issues/26702" target="_blank" rel="noopener">issue #26702</a> for reviewed guidance.
+        </blockquote>
+
+        <ol class="mt-10 space-y-8 max-w-3xl list-none" data-reveal="100">
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I kept <strong>LACT identical</strong> for both backends so the win cannot be dismissed as tuning difference — Manual Compute, 182W, -90mV.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I kept <strong>FA on</strong> because KV <code class="code-inline">q8_0</code> + long context + MTP all require it — disabling FA would hide ROCm’s advantage.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I used <strong>override at runtime, not build time</strong> — <code class="code-inline">HSA_OVERRIDE_GFX_VERSION=10.3.0</code> lets gfx1031 masquerade as gfx1030 without forking the build.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I reported <strong>upstream with full tables</strong> — 3 runs each, same commit, so anyone can reproduce instead of trusting my summary.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper" open>
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why not just use Vulkan? It works out of the box.
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Vulkan needs no patch, but at 8192 context it does 354 t/s prefill vs ROCm 653 t/s. That is 23.1s vs 12.5s prefill — net 35.6s vs 27.3s full cycle. Below ~1760 tokens Vulkan is net-faster, above that ROCm wins. For long-context research and agentic work, ROCm is clearly better once running.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Is forcing max_blocks_per_sm = 1 safe?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Unknown — that is why it is reported as <code class="code-inline">bug #26702</code>, not a fix. It avoids the crash and benches stably across 3 runs, but only a maintainer can confirm correctness and occupancy for gfx1031. Do not treat the one-liner as an upstream fix.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Does this explain the decode being slower on ROCm?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              No. <code class="code-inline">llama-bench</code> excludes sampling time, so the <code class="code-inline">TOP_K unsupported on ROCm</code> log seen in <code class="code-inline">llama-server</code> is not confirmed as the cause of the tg512 gap here. That TOP_K CPU fallback was a side effect of the gfx override — it is indirectly fixed in <a class="underline hover:text-accent" href="exp009.html">EXP 009</a> by running natively without override.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DISCLAIMER ================= -->
+    <section class="py-16 border-t border-black/10 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="max-w-3xl" data-reveal>
+          <p class="eyebrow">Disclaimer</p>
+          <h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">Workaround, Not Upstream Fix</h2>
+          <blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">
+            This experiment is STABLE with my local workarounds (GFX override + FA assert guard) on the hardware and commit listed above. It is not an upstream fix. Native gfx1031 support and a reviewed flash-attention fix are pending with maintainers. Numbers are from 3-run <code class="code-inline">llama-bench</code> on <code class="code-inline">gemma-4-12b-it-IQ4_NL</code> — reproducible with the commands above, not a guarantee for every model or ROCm version. I disclosed the <code class="code-inline">max_blocks_per_sm = 1</code> guard as correctness-unknown on purpose.
+          </blockquote>
+          <p class="mt-6 text-sm text-neutral-700 leading-relaxed">
+            <strong>Upstream report:</strong> <a class="underline hover:text-accent font-mono text-[13px]" href="https://github.com/ggml-org/llama.cpp/issues/26702" target="_blank" rel="noopener">ggml-org/llama.cpp#26702 — Misc. bug: ROCm gfx1031 build report (why ROCM is better than vulkan)</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER CTA ================= -->
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal>
+          <a href="experiments-list.html" class="arrow-link font-display text-sm uppercase">
+            <span aria-hidden="true">&larr;</span> Back to Experiments
+          </a>
+          <a href="contact.html" class="arrow-link font-display text-sm uppercase">
+            Have a problem worth exploring? <span aria-hidden="true">-&gt;</span>
+          </a>
+        </div>
+        <p class="mt-6 text-xs text-neutral-500" data-reveal>Upstream: <a class="underline hover:text-accent" href="https://github.com/ggml-org/llama.cpp/issues/26702" target="_blank" rel="noopener">llama.cpp #26702</a> — EXP 009 will cover TOP_K decode investigation.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-dark-section text-white">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8">
+      <div class="grid gap-12 md:grid-cols-3">
+        <div>
+          <p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p>
+          <p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">
+            AI Systems Builder &amp; Experimenter
+          </p>
+          <p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">
+            Exploring AI systems, local LLMs, automation workflows, and practical tools that
+            actually work in real business operations.<br>
+            Building what matters, and checking whether AI is truly useful in everyday work.
+          </p>
+        </div>
+        <div class="md:justify-self-center">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="/"            class="footer-link">Home</a></li>
+            <li><a href="profile.html"          class="footer-link">Profile</a></li>
+            <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
+            <li><a href="contact.html"          class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="md:justify-self-end">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li>
+            <li><a href="https://www.reddit.com/user/Full_Director87/"    target="_blank" rel="noopener" class="footer-link">Reddit</a></li>
+            <li><a href="https://www.instagram.com/ybboraa/"              target="_blank" rel="noopener" class="footer-link">Instagram</a></li>
+            <li><a href="mailto:ibborarts@gmail.com"                       class="footer-link">Email</a></li>
+            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p>
+        <p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/charts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

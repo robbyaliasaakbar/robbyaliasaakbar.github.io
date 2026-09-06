@@ -29,7 +29,7 @@
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/experiments-list.html</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-09-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -160,6 +160,60 @@
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments007/n8n-workflow.webp</image:loc>
       <image:title>Experiment 007 — n8n workflow 24 nodes Technical Test</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://robbyaliasaakbar.github.io/exp008.html</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments008/rocm-bench.webp</image:loc>
+      <image:title>Experiment 008 — ROCm benchmark 653 t/s vs Vulkan 354 t/s on RX 6700 XT</image:title>
+      <image:caption>Screenshot of ROCm vs Vulkan benchmark on gfx1031</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments008/vulkan-bench.webp</image:loc>
+      <image:title>Experiment 008 — Vulkan benchmark baseline</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments008/core-dump.webp</image:loc>
+      <image:title>Experiment 008 — Flash-attention assert core dump on gfx1031</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments008/lact-rocm.webp</image:loc>
+      <image:title>Experiment 008 — LACT tuning ROCm run</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments008/lact-vulkan.webp</image:loc>
+      <image:title>Experiment 008 — LACT tuning Vulkan run</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://robbyaliasaakbar.github.io/exp009.html</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments009/server-prefill-580.webp</image:loc>
+      <image:title>Experiment 009 — Prefill reaching 580 tok/s sustained native gfx1031</image:title>
+      <image:caption>Prefill 580 tok/s sustained at 20K+ cached on 35B split</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments009/rocminfo-versions.webp</image:loc>
+      <image:title>Experiment 009 — Versions llama-server hipcc rocminfo native proof</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments009/prefill-perf.webp</image:loc>
+      <image:title>Experiment 009 — Prefill perf btop lact log in one frame</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments009/decode-perf.webp</image:loc>
+      <image:title>Experiment 009 — Decode perf btop lact log in one frame</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments009/evidence-native-log.webp</image:loc>
+      <image:title>Experiment 009 — Evidence ROCm native server log</image:title>
     </image:image>
   </url>
   <url>
