@@ -290,8 +290,8 @@ function escapeHtml(s) {
   }[c]));
 }
 
-// 8. Submit form (tambah baru ATAU simpan edit)
-form.addEventListener("submit", (e) => {
+// 8. Submit form (tambah baru ATAU simpan edit) — tulis ke SERVER via store.js
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const data = {
@@ -309,17 +309,22 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  if (editingId) {
-    update(editingId, data); // dari store.js
-    toast(`${editingId} diupdate`);
-    editingId = null;
-    btnSubmit.textContent = "+ Tambah Lamaran";
-    btnBatal.classList.add("hidden");
-    formTitle.textContent = "Tambah Lamaran";
-  } else {
-    const baru = add(data); // dari store.js
-    lastAddedId = baru.id;
-    toast(`${baru.id} kesimpen`);
+  try {
+    if (editingId) {
+      await update(editingId, data); // dari store.js (server)
+      toast(`${editingId} diupdate`);
+      editingId = null;
+      btnSubmit.textContent = "+ Tambah Lamaran";
+      btnBatal.classList.add("hidden");
+      formTitle.textContent = "Tambah Lamaran";
+    } else {
+      const baru = await add(data); // dari store.js (server)
+      lastAddedId = baru.id;
+      toast(`${baru.id} kesimpen`);
+    }
+  } catch (err) {
+    toast(err.message || "Gagal menyimpan", true);
+    return;
   }
 
   form.reset();
@@ -339,7 +344,7 @@ btnBatal.addEventListener("click", () => {
 
 // 10. Edit: isi form dengan data lama
 function mulaiEdit(id) {
-  const item = getAll().find((x) => x.id === id);
+  const item = getAll().find((x) => String(x.id) === String(id));
   if (!item) return;
   editingId = id;
   inputCompany.value = item.company;
@@ -354,12 +359,17 @@ function mulaiEdit(id) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// 11. Hapus + confirm
-function hapusData(id) {
-  const item = getAll().find((x) => x.id === id);
+// 11. Hapus + confirm (hapus di SERVER via store.js)
+async function hapusData(id) {
+  const item = getAll().find((x) => String(x.id) === String(id));
   const nama = item ? `${item.id} ${item.company}` : id;
   if (!confirm(`Yakin hapus ${nama}?`)) return;
-  remove(id); // dari store.js
+  try {
+    await remove(id); // dari store.js (server)
+  } catch (err) {
+    toast(err.message || "Gagal menghapus", true);
+    return;
+  }
   toast(`${id} dihapus`);
   if (editingId === id) {
     editingId = null;
@@ -386,9 +396,15 @@ sortSelect.addEventListener("change", (e) => {
   renderTabel();
 });
 
-// 13. Jalan pertama: set default + render + efek portfolio (reveal + navbar blur)
+// 13. Jalan pertama: tarik server dulu (initStore), baru render.
+// Kalau server mati: tampilkan arsip lokal + toast (guard juga notice).
 inputDate.value = todayISO();
-renderTabel();
+initStore()
+  .then(() => renderTabel())
+  .catch((err) => {
+    renderTabel();
+    toast(err.message || "Server tidak terjangkau. Menampilkan data lokal.", true);
+  });
 
 // Reveal on scroll ala portfolio (hormat prefers-reduced-motion)
 (function initReveal() {
