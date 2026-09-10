@@ -29,7 +29,7 @@ function keluar() {
       if (box) {
         const d = document.createElement("div");
         d.className = "jt-toast pointer-events-auto px-4 py-3 rounded-xl shadow text-sm font-medium text-white bg-accent";
-        d.textContent = "Backend :7002 mati — mode baca lokal. Nyalakan backend lalu refresh.";
+        d.textContent = "Server tidak terjangkau. Menampilkan data lokal.";
         box.appendChild(d);
       }
     });

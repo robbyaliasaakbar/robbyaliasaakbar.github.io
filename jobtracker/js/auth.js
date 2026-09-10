@@ -10,11 +10,11 @@ const TOKEN_KEY = "jobTracker.token";
 const el = (id) => document.getElementById(id);
 const msgBox = el("auth-msg");
 const JUDUL = {
-  login: ["Masuk", "Token mati = ditendang ke sini. Itu satpamnya."],
-  daftar: ["Daftar", "Daftar → cek email → verifikasi."],
-  otp: ["Verifikasi OTP", "Tukar 6 digit jadi token 1 jam."],
+  login: ["Masuk", ""],
+  daftar: ["Daftar", "Daftar, verifikasi email, selesai."],
+  otp: ["Verifikasi OTP", "Masukkan 6 digit dari email kamu."],
   lupa: ["Lupa Password", "OTP reset dikirim kalau email terdaftar."],
-  reset: ["Password Baru", "Tukar OTP reset + password baru."],
+  reset: ["Password Baru", "Masukkan OTP dan password baru kamu."],
 };
 
 // Ganti mode form yang tampil. 1 terlihat, 4 disembunyiin.
@@ -47,7 +47,7 @@ async function post(path, obj) {
       body: JSON.stringify(obj),
     });
   } catch (e) {
-    return { ok: false, status: 0, data: { error: "Backend :7002 tidak terjangkau — nyalakan dulu: docker compose up -d (di folder backend/)" } };
+    return { ok: false, status: 0, data: { error: "Server tidak terjangkau. Coba lagi nanti." } };
   }
   return { ok: r.ok, status: r.status, data: await r.json().catch(() => ({})) };
 }
