@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Masuk - Job Tracker</title>
   <meta name="description" content="Login Job Tracker. Tanpa token, tidak bisa masuk.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230C0C0C'/%3E%3Crect x='8' y='19' width='3.6' height='5' rx='1.2' fill='white' opacity='.5'/%3E%3Crect x='12.8' y='16' width='3.6' height='8' rx='1.2' fill='white' opacity='.75'/%3E%3Crect x='17.6' y='13' width='3.6' height='11' rx='1.2' fill='white'/%3E%3Cpath d='M8 12.5 15 8.5l4 2.5 5-5' stroke='%23D70000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M20.6 6H24v3.4' stroke='%23D70000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -104,5 +105,21 @@
   <!-- JOB_API: sama kayak index.html, harus di atas auth.js -->
   <script>window.JOB_API = "https://aispec.tail06293c.ts.net";</script>
   <script src="js/auth.js"></script>
+  <!-- Reveal kartu login: auth.html tidak load app.js, jadi observer-nya dipasang di sini (pola sama kayak app.js). Tanpa ini kartu opacity 0 selamanya di browser tanpa reduced-motion. -->
+  <script>
+  (function () {
+    var els = document.querySelectorAll("[data-reveal]");
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      els.forEach(function (n) { n.classList.add("revealed"); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add("revealed"); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (n) { io.observe(n); });
+  })();
+  </script>
 </body>
 </html>
