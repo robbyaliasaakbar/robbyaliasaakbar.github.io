@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 010 — Building a Production-Ready Job Tracker UI With Only a 35B Local Coder — Robby Aliasa Akbar</title>
+  <meta name="description" content="Job Tracker frontend built in 5 hours with only Tiel-Coder 35B local LLM: real OTP auth, CRUD, search/filter/sort, responsive table-to-cards, no framework, live on GitHub Pages.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp010.html">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp010.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp010.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp010.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp010.html">
+  <meta property="og:title" content="Experiment 010 — Real Job Tracker UI With Local AI, No Framework">
+  <meta property="og:description" content="5-hour local-AI build: OTP login, CRUD lamaran, responsive UI, vanilla JS. Backend local PC for now, full entrypoint in EXP 011.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments010/desktop-version.webp">
+  <meta property="og:image:width" content="980">
+  <meta property="og:image:height" content="823">
+  <meta property="og:image:alt" content="Job Tracker dashboard with stats filter form and table">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-09-09T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-09T00:00:00+07:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 010 — Real Job Tracker UI With Local AI, No Framework">
+  <meta name="twitter:description" content="5-hour local-AI build: OTP login, CRUD lamaran, responsive UI, vanilla JS. Backend local PC for now, full entrypoint in EXP 011.">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments010/desktop-version.webp">
+  <meta name="twitter:image:alt" content="Job Tracker dashboard proof">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Building a Production-Ready Job Tracker UI With Only a 35B Local Coder — No Framework",
+        "description": "Job Tracker frontend built in 5 hours with only Tiel-Coder 35B local LLM: real OTP auth, CRUD, search/filter/sort, responsive table-to-cards, no framework, live on GitHub Pages.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments010/desktop-version.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp010.html",
+        "datePublished": "2026-09-09",
+        "dateModified": "2026-09-09",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp010.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["job tracker frontend", "local coder 35B", "Tiel-Coder", "vanilla JS CRUD", "OTP auth frontend", "Tailwind GitHub Pages", "responsive table cards", "local AI portfolio"],
+        "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
+        "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
+          { "@type": "ListItem", "position": 3, "name": "Experiment 010", "item": "https://robbyaliasaakbar.github.io/exp010.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { ink: '#0C0C0C', paper: '#FFFFFF', accent: '#D70000' }, fontFamily: { display: ['Manrope','sans-serif'], body: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } }
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @media (max-width: 640px) { .detail-label { font-size: 0.6875rem; letter-spacing: 0.16em; } .stat-tile p { word-break: break-word; } }
+    .placeholder-shot { border: 2px dashed rgba(12,12,12,.2); background: repeating-linear-gradient(45deg, #fafafa, #fafafa 12px, #f3f4f6 12px, #f3f4f6 24px); }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Is this just a static HTML demo?", "acceptedAnswer": { "@type": "Answer", "text": "No. Frontend is static on GitHub Pages, but auth and data go to a real backend (PHP 8.3 + SQLite) running on my PC for now. Guard checks token via /api/me on every open. Full entrypoint in EXP 011." } },
+      { "@type": "Question", "name": "Why no framework? Is vanilla production-ready?", "acceptedAnswer": { "@type": "Answer", "text": "For this scale yes. Four small files (guard/store/app/auth) are easier to review and faster to iterate than framework boilerplate. No build step means GitHub Pages deploy is trivial." } },
+      { "@type": "Question", "name": "Why does login sometimes fail?", "acceptedAnswer": { "@type": "Answer", "text": "Backend is not on a 24/7 VPS yet — it lives on my personal PC, online daily 08.00-21.00 WIB (UTC+7) when my PC is on. Outside those hours API is unreachable and login cannot succeed. Frontend shows a toast and stays readable. Screenshots remain as proof." } }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-paper text-ink font-body antialiased">
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">ROBBY ALIASA AKBAR<span class="text-accent">.</span></a>
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="/" class="nav-link">Home</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="/" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html" class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+  <main>
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 010</li>
+            </ol>
+          </nav>
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal><span aria-hidden="true">&larr;</span> Back to Experiments</a>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 010</p>
+            <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+            <span class="text-xs font-mono text-neutral-500">Frontend only · Backend in EXP 011 →</span>
+          </div>
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">Building a Production-Ready Job Tracker UI With Only a 35B Local Coder — No Framework.</h1>
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">Can a production-ready, recruiter-usable Job Tracker frontend — real auth flow, CRUD, search/filter/sort, responsive table-to-cards — be shipped in 4-5 hours with only a 35B local coder, no framework, just HTML5 + Tailwind CDN + Vanilla JS?</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="350">
+            <a href="https://robbyaliasaakbar.github.io/jobtracker/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Open Job Tracker <span aria-hidden="true">↗</span></a>
+            <a href="exp001.html" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Inference background: EXP 001</a>
+          </div>
+          <p class="mt-4 text-xs text-neutral-500 font-mono" data-reveal="360">Tiel-Coder-35B via llama.cpp-server · 4-5 hours in one day · Live daily 08.00–21.00 WIB (UTC+7) · Full backend entrypoint in EXP 011</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>System Requirements</p>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">CPU</p><p class="mt-2 text-sm font-medium leading-snug">Intel Core i5-11400F</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">RAM</p><p class="mt-2 text-sm font-medium leading-snug">16GB DDR4 3200MT/s</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">GPU</p><p class="mt-2 text-sm font-medium leading-snug">RX 6700 XT 12GB gfx1031</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">OS</p><p class="mt-2 text-sm font-medium leading-snug">Ubuntu Desktop 26.04 LTS</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model</p><p class="mt-2 text-sm font-medium leading-snug break-all">Tiel-Coder-35B-A3B-MTP-UD-Q4_K_S.gguf</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="200"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Engine</p><p class="mt-2 text-sm font-medium leading-snug">llama.cpp-server</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="240"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Stack</p><p class="mt-2 text-sm font-medium leading-snug">HTML5 + Tailwind CDN + Vanilla JS</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="280"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Time / Status</p><p class="mt-2 text-sm font-medium leading-snug">4-5 hours in one day / STABLE</p></div>
+        </div>
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal>Built with local model above via <code class="code-inline">llama.cpp-server</code>. Inference flags covered in <a class="underline hover:text-accent" href="exp001.html">EXP 001</a> — not repeated here. Frontend runs browser-only on GitHub Pages, no build step.</p>
+      </div>
+    </section>
+
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Screenshots</p>
+        <p class="mt-4 text-sm text-neutral-600 max-w-3xl" data-reveal="50">Real UI proof — auth, dashboard, mobile. If backend is offline when you click demo, these still show exactly how it works.</p>
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <figure data-reveal="0"><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments010/auth-html.webp" alt="Job Tracker login form with email and password" loading="lazy" decoding="async" width="335" height="477" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Auth — login form</figcaption></figure>
+          <figure data-reveal="120"><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments010/otp.webp" alt="Register and 6-digit OTP verification flow" loading="lazy" decoding="async" width="562" height="710" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Auth — OTP verification</figcaption></figure>
+        </div>
+        <div class="mt-8" data-reveal="0"><figure><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments010/desktop-version.webp" alt="Job Tracker dashboard with stats filter form and table" loading="lazy" decoding="async" width="980" height="823" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Dashboard — desktop full view</figcaption></figure></div>
+        <div class="mt-8 max-w-xs mx-auto" data-reveal="0"><figure><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments010/mobile-version.webp" alt="Mobile cards view replacing table on small screens" loading="lazy" decoding="async" width="339" height="727" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Mobile — cards, not table</figcaption></figure></div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live Demo</p>
+        <div class="mt-8" data-reveal="100"><h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">Try it live — not a mockup.</h2><p class="mt-2 text-sm text-neutral-600">Frontend live on GitHub Pages. New here? Register first, verify the OTP, then login to get your access token (see Live Demo Status for online hours).</p></div>
+        <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="150">
+          <a href="https://robbyaliasaakbar.github.io/jobtracker/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Open Job Tracker <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="mt-4 text-xs text-neutral-500 font-mono" data-reveal="160">Frontend: /jobtracker/ • Auth: /jobtracker/auth.html • API base: window.JOB_API (tunnel, changes when PC restarts)</p>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">For those of you unable to read this data from technical standpoint, here is the conclusion:</h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>I needed a place to track job applications that works on laptop and phone, with real login.</p>
+            <p>I built it in an afternoon with a local AI coder running on my own GPU — no cloud AI, no framework.</p>
+            <p>You can click and try it live: login, add, edit, search. It looks simple because internal tools should be simple.</p>
+            <p>If login sometimes fails, my home PC (the database) is likely off — it is online daily 08.00–21.00 WIB (UTC+7). Screenshots above still show how it works.</p>
+            <p>Next page explains where the data goes and how login codes work.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+        <div class="mt-12 space-y-12">
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Problem</span></div><div class="lg:col-span-9 space-y-5"><p class="text-base text-neutral-700 leading-relaxed">Job hunting scatters across spreadsheets, chat threads, and portal inboxes. I needed one tracker that enforces real login (not fake localStorage login), fast CRUD, searchable history, and thumb-friendly mobile.</p><p class="text-base text-neutral-700 leading-relaxed">A framework was overkill for a single-user internal tool. The bet: small separated files stay fast to iterate and easy to review.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">The 5-Hour Build</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Built in one day, 4-5 hours total, with <code class="code-inline">Tiel-Coder-35B-A3B-MTP-UD-Q4_K_S.gguf</code> via <code class="code-inline">llama.cpp-server</code>. AI handled syntax and boilerplate, decisions stayed with me. Inference flags are covered in <a class="underline hover:text-accent" href="exp001.html">EXP 001</a> and not repeated here. Honest scope: frontend only in this page, backend entrypoint in EXP 011.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Hypothesis</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Vanilla separation — <code class="code-inline">guard.js</code> as guard, <code class="code-inline">store.js</code> as database brain, <code class="code-inline">app.js</code> as view brain, <code class="code-inline">auth.js</code> as front door — is enough for production-feel internal tooling. Tailwind CDN gives portfolio-grade look with zero build step, ideal for GitHub Pages.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">What I Built</span></div><ol class="lg:col-span-9 space-y-4 list-none">
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Auth in one file:</strong> <code class="code-inline">auth.html</code> holds 5 modes — login, register (name + phone + email + password), OTP verify, forgot, reset. Show/hide via <code class="code-inline">data-lihat</code>, green/red <code class="code-inline">auth-msg</code> box.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Dashboard:</strong> 4 stat cards, filter bar (search company/position/portal + 7 statuses + newest/oldest sort), left form, right list.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Form rules:</strong> company, position, portal required. Date defaults to today. 7 stages: <code class="code-inline">baru, interview-hr, technical-test, interview-user, offering, diterima, ditolak</code>. Optional link renders as <code class="code-inline">Buka ↗</code>.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Responsive:</strong> desktop table <code class="code-inline">min-w-[800px] hidden lg:block</code> vs mobile cards <code class="code-inline">lg:hidden</code> with big Edit/Delete. Empty state kept friendly.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">5.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Feedback:</strong> <code class="code-inline">toast()</code> 3s (<code class="code-inline">bg-ink</code> success, <code class="code-inline">bg-accent</code> error), <code class="code-inline">confirm()</code> before delete, new-row highlight via <code class="code-inline">lastAddedId</code>.</p></li>
+          </ol></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Backend Teaser</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed"><code class="code-inline">window.JOB_API</code> override for GitHub Pages tunnel, else <code class="code-inline">hostname:7002</code>. <code class="code-inline">store.js</code> exposes <code class="code-inline">getAll/add/update/remove</code> — sync cache read, async API write. <code class="code-inline">guard.js</code> checks <code class="code-inline">GET /api/me</code> with <code class="code-inline">Bearer</code> token from <code class="code-inline">localStorage jobTracker.token</code>, redirects to <code class="code-inline">auth.html</code> when missing or invalid. Full contract — 6 endpoints, Gmail OTP, opaque 1-hour token — in EXP 011.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">What Failed</span></div><ol class="lg:col-span-9 space-y-4 list-none">
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>CORS on different ports</strong> — fetch blocked until backend allowed the frontend origin. Touched here, fixed there (EXP 011).</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Offline chart edge</strong> — when Chart.js fails to load, percentages still update via defensive <code class="code-inline">typeof Chart === undefined</code>.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>1-hour token expiry</strong> — first looked like a bug when kicked to login, turned out expected session behavior.</p></li>
+          </ol></div>
+          <div data-reveal><div class="grid lg:grid-cols-12 gap-4 lg:gap-10"><div class="lg:col-span-3"><span class="detail-label">Evidence</span></div><div class="lg:col-span-9"><p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-6">Small numbers that matter for an internal tool — no tok/s here, that is EXP 009.</p><div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Auth modes</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">5 in 1 file</p><p class="text-xs text-neutral-500">login → reset</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Status stages</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">7 stages</p><p class="text-xs text-neutral-500">baru → ditolak</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Views</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">Table + cards</p><p class="text-xs text-neutral-500">desktop + mobile</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Filter</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">3-way</p><p class="text-xs text-neutral-500">search + status + sort</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Feedback</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">3s toast</p><p class="text-xs text-neutral-500">ink / accent</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Framework</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">0 / 0 build</p><p class="text-xs text-neutral-500">vanilla + CDN</p></div>
+          </div></div></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Result</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Stable frontend live on GitHub Pages. Auditable vanilla files, responsive, auth-guarded. Backend local limitation documented separately below, not hidden.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">What I Learned</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Small, clear files beat one giant file when iterating quickly. Keeping auth decisions on the server — opaque tokens, route guards, generic error messages — keeps the frontend simple and easy to review, even for an internal tool. Chain: <code class="code-inline">EXP 010 (UI you can click) → EXP 011 (where data goes) → EXP 001 (what machine runs the AI)</code>.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Frontend Code</p>
+        <div class="mt-8" data-reveal="100"><p class="font-mono text-sm text-neutral-500">Guard — js/guard.js (essence)</p><pre class="code-block mt-4">// No token → kick to auth.html before app renders
+const token = localStorage.getItem("jobTracker.token");
+if (!token) location.replace("auth.html");
+fetch(GUARD_API + "/api/me", {
+  headers: { Authorization: "Bearer " + token }
+}).then(r =&gt; { if (!r.ok) location.replace("auth.html"); });</pre></div>
+        <div class="mt-8" data-reveal="100"><p class="font-mono text-sm text-neutral-500">Store pattern — js/store.js (essence)</p><pre class="code-block mt-4">// app.js never touches localStorage directly
+// getAll() reads cache sync, add/update/remove write via API
+window.JOB_API = "https://aispec.tail06293c.ts.net"; // tunnel, changes</pre></div>
+        <blockquote class="quote-block mt-10 text-sm sm:text-base text-ink leading-relaxed max-w-3xl" data-reveal>No .env, no SMTP secrets, no auth.db content here. That is EXP 011.</blockquote>
+      </div>
+    </section>
+
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper" open><summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">Is this just a static HTML demo?<span class="text-accent group-open:rotate-180 transition-transform">▼</span></summary><p class="mt-4 text-sm text-neutral-600 leading-relaxed">No. Frontend is static on GitHub Pages, but auth + data go to a real backend (PHP 8.3 + SQLite) running on my PC for now. Guard checks token via <code class="code-inline">/api/me</code> on every open. Full entrypoint in EXP 011.</p></details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper"><summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">Why no framework? Is vanilla production-ready?<span class="text-accent group-open:rotate-180 transition-transform">▼</span></summary><p class="mt-4 text-sm text-neutral-600 leading-relaxed">For this scale yes. Four small files (guard/store/app/auth) are easier to review and faster to iterate than framework boilerplate. No build step means GitHub Pages deploy is trivial.</p></details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper"><summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">Why does login sometimes fail?<span class="text-accent group-open:rotate-180 transition-transform">▼</span></summary><p class="mt-4 text-sm text-neutral-600 leading-relaxed">Backend is not on a 24/7 VPS yet — it lives on my personal PC, online daily 08.00–21.00 WIB (UTC+7) when my PC is on. Outside those hours API is unreachable and login cannot succeed. Frontend shows a toast and stays readable. Screenshots remain as proof.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live Demo Status</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Local PC, not yet 24/7 VPS.</h2>
+        <div class="mt-8 grid sm:grid-cols-2 gap-4" data-reveal="150">
+          <div class="border border-emerald-200 rounded-2xl p-6 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-emerald-700">✅ What works now</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>Frontend live on GitHub Pages</li>
+              <li>Auth flow (login, register, OTP, reset)</li>
+              <li>CRUD lamaran</li>
+              <li>Search / filter / sort</li>
+              <li>Responsive UI (table → cards)</li>
+              <li>Real backend integration</li>
+              <li>Usable by invited testers</li>
+              <li>Backend online daily 08.00–21.00 WIB (UTC+7) when my PC is on</li>
+            </ul>
+          </div>
+          <div class="border border-amber-300 bg-amber-50/50 rounded-2xl p-6">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-amber-700">🚧 What isn&apos;t production yet</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>Backend not yet 24/7</li>
+              <li>Deployment still local (personal PC)</li>
+              <li>Early-stage features</li>
+              <li>Collecting user feedback</li>
+              <li>Next iteration not yet done</li>
+            </ul>
+          </div>
+        </div>
+        <blockquote class="quote-block mt-8 text-sm sm:text-base text-neutral-600 leading-relaxed border-amber-300 bg-amber-50 rounded-r-2xl p-6" data-reveal>As of now the backend runs locally on my personal PC, not yet published online to a VPS for 24/7 running. It is live daily 08.00–21.00 WIB (UTC+7) when my PC is on. If my PC is off, the backend is also off and the login page may fail to reach the server. This is expected. The frontend + screenshots on this page still show exactly how it works.</blockquote>
+      </div>
+    </section>
+
+    <section class="py-16 border-t border-black/10 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8"><div class="max-w-3xl" data-reveal><p class="eyebrow">Disclaimer</p><h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">Frontend stable, backend local</h2><blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">Validated with Tiel-Coder-35B via llama.cpp-server (flags in EXP 001). Times are build times (4-5h), not benchmark peaks. Demo backend online daily 08.00–21.00 WIB (UTC+7) when home PC on, unreachable outside those hours. I’m self-taught — corrections welcome.</blockquote><p class="mt-6 text-sm text-neutral-700 leading-relaxed"><strong>Live:</strong> <a class="underline hover:text-accent" href="https://robbyaliasaakbar.github.io/jobtracker/" target="_blank" rel="noopener">/jobtracker/</a> · <strong>Auth:</strong> <a class="underline hover:text-accent" href="https://robbyaliasaakbar.github.io/jobtracker/auth.html" target="_blank" rel="noopener">/jobtracker/auth.html</a> · <strong>Next:</strong> EXP 011 backend entrypoint (PHP 8.3 + SQLite auth.db, Docker :7002, 6 endpoints, Gmail OTP, opaque token 1h) · <strong>Inference background:</strong> <a class="underline hover:text-accent" href="exp001.html">EXP 001</a></p></div></div>
+    </section>
+
+    <section class="pb-24 lg:pb-32"><div class="mx-auto max-w-6xl px-6 lg:px-8"><div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal><a href="experiments-list.html" class="arrow-link font-display text-sm uppercase"><span aria-hidden="true">&larr;</span> Back to Experiments</a><a href="contact.html" class="arrow-link font-display text-sm uppercase">Have a problem worth exploring? <span aria-hidden="true">-&gt;</span></a></div><p class="mt-6 text-xs text-neutral-500" data-reveal>Chain: <a class="underline hover:text-accent" href="exp001.html">EXP 001 inference</a> → EXP 010 frontend → EXP 011 backend next.</p></div></section>
+  </main>
+  <footer class="bg-dark-section text-white"><div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8"><div class="grid gap-12 md:grid-cols-3"><div><p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p><p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">AI Systems Builder &amp; Experimenter</p><p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">Exploring AI systems, local LLMs, automation workflows, and practical tools that actually work in real business operations.<br>Building what matters, and checking whether AI is truly useful in everyday work.</p></div><div class="md:justify-self-center"><p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p><ul class="mt-5 space-y-3 text-sm"><li><a href="/" class="footer-link">Home</a></li><li><a href="profile.html" class="footer-link">Profile</a></li><li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li><li><a href="contact.html" class="footer-link">Contact</a></li></ul></div><div class="md:justify-self-end"><p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p><ul class="mt-5 space-y-3 text-sm"><li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li><li><a href="https://www.reddit.com/user/Full_Director87/" target="_blank" rel="noopener" class="footer-link">Reddit</a></li><li><a href="https://www.instagram.com/ybboraa/" target="_blank" rel="noopener" class="footer-link">Instagram</a></li><li><a href="mailto:ibborarts@gmail.com" class="footer-link">Email</a></li><li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">WhatsApp</a></li></ul></div></div><div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40"><p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p><p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p></div></div></footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

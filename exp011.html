@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 011 — One Auth Backend for Many Frontends — PHP SQLite Docker — Robby Aliasa Akbar</title>
+  <meta name="description" content="One PHP + SQLite + Docker auth backend for many frontends, built with only Tiel-Coder 35B local LLM: OTP via Gmail, opaque tokens, rate limits, per-user Job Tracker API, zero dependencies.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp011.html">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp011.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp011.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp011.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp011.html">
+  <meta property="og:title" content="Experiment 011 — One Backend, Many Frontends, Zero Dependencies">
+  <meta property="og:description" content="PHP 8.3 + SQLite + Docker: 6 auth endpoints, Gmail OTP, 1-hour tokens, CORS + rate limits. Full backend, not just an entrypoint.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments011/docker-ps.webp">
+  <meta property="og:image:width" content="1049">
+  <meta property="og:image:height" content="653">
+  <meta property="og:image:alt" content="Docker backend running on port 7002">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-09-09T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-09T00:00:00+07:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 011 — One Backend, Many Frontends, Zero Dependencies">
+  <meta name="twitter:description" content="PHP 8.3 + SQLite + Docker: 6 auth endpoints, Gmail OTP, 1-hour tokens, CORS + rate limits. Full backend, not just an entrypoint.">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments011/docker-ps.webp">
+  <meta name="twitter:image:alt" content="Docker backend proof">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "One Auth Backend for Many Frontends — PHP, SQLite & Docker Entry Point in a Day",
+        "description": "One PHP + SQLite + Docker auth backend for many frontends, built with only Tiel-Coder 35B local LLM: OTP via Gmail, opaque tokens, rate limits, per-user Job Tracker API, zero dependencies.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments011/docker-ps.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp011.html",
+        "datePublished": "2026-09-09",
+        "dateModified": "2026-09-09",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp011.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["auth backend PHP", "SQLite auth", "Docker PHP SQLite", "opaque token", "OTP Gmail SMTP", "CORS Tailscale", "rate limit", "job tracker API"],
+        "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
+        "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
+          { "@type": "ListItem", "position": 3, "name": "Experiment 011", "item": "https://robbyaliasaakbar.github.io/exp011.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { ink: '#0C0C0C', paper: '#FFFFFF', accent: '#D70000' }, fontFamily: { display: ['Manrope','sans-serif'], body: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } }
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @media (max-width: 640px) { .detail-label { font-size: 0.6875rem; letter-spacing: 0.16em; } .stat-tile p { word-break: break-word; } }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Why PHP + SQLite + Docker instead of Node + Postgres?", "acceptedAnswer": { "@type": "Answer", "text": "Locked for this scale: PHP built-ins already cover hash + random + PDO, SQLite is 1 file with zero server, Docker gives PHP without native install. Postgres + JWT + mailer libs are noted as production upgrades, not v1." } },
+      { "@type": "Question", "name": "How can :7001 talk to :7002 without being blocked?", "acceptedAnswer": { "@type": "Answer", "text": "Explicit CORS allowlist plus same-host pass for Tailscale. Preflight OPTIONS returns 204 with Allow-Origin only for listed hosts. Next app (:7003) just gets added to the list." } },
+      { "@type": "Question", "name": "Why does the API sometimes not answer?", "acceptedAnswer": { "@type": "Answer", "text": "Not on a 24/7 VPS yet — home PC, online daily 08.00-21.00 WIB (UTC+7). Outside those hours fetch fails and frontend shows a toast. Screenshots + curl logs remain as proof." } }
+    ]
+  }
+  </script>
+</head>
+<body class="bg-paper text-ink font-body antialiased">
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">ROBBY ALIASA AKBAR<span class="text-accent">.</span></a>
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="/" class="nav-link">Home</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="/" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html" class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+  <main>
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 011</li>
+            </ol>
+          </nav>
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal><span aria-hidden="true">&larr;</span> Back to Experiments</a>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 011</p>
+            <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+            <span class="text-xs font-mono text-neutral-500">Full backend · Frontend in EXP 010 →</span>
+          </div>
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">One Auth Backend for Many Frontends — PHP, SQLite &amp; Docker Entry Point in a Day.</h1>
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">Can one small auth backend — PHP + SQLite + Docker, no framework, no Composer — serve many frontends with real OTP, opaque tokens, rate limits and per-user Job Tracker sync, built with only a 35B local coder?</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="350">
+            <a href="exp010.html" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Read EXP 010 frontend</a>
+            <a href="exp001.html" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Machine: EXP 001</a>
+          </div>
+          <p class="mt-4 text-xs text-neutral-500 font-mono" data-reveal="360">Same Tiel-Coder-35B via llama.cpp-server · 1 image · 1 file · 0 deps · Live daily 08.00–21.00 WIB (UTC+7)</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>System Requirements</p>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">CPU</p><p class="mt-2 text-sm font-medium leading-snug">Intel Core i5-11400F</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">RAM</p><p class="mt-2 text-sm font-medium leading-snug">16GB DDR4 3200MT/s</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">GPU</p><p class="mt-2 text-sm font-medium leading-snug">RX 6700 XT 12GB</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">OS</p><p class="mt-2 text-sm font-medium leading-snug">Ubuntu Desktop 26.04 LTS</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model</p><p class="mt-2 text-sm font-medium leading-snug break-all">Tiel-Coder-35B-A3B-MTP-UD-Q4_K_S.gguf</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="200"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Engine</p><p class="mt-2 text-sm font-medium leading-snug">llama.cpp-server</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="240"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Stack</p><p class="mt-2 text-sm font-medium leading-snug">PHP 8.3 + PDO SQLite + Docker</p></div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="280"><p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Time / Status</p><p class="mt-2 text-sm font-medium leading-snug">Same 35B local coder / STABLE</p></div>
+        </div>
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal>Same local coder as EXP 010 via <code class="code-inline">llama.cpp-server</code>. Inference flags in <a class="underline hover:text-accent" href="exp001.html">EXP 001</a>. Backend runs via 1 Docker image (<code class="code-inline">php:8.3-cli + pdo_sqlite</code>), 1 SQLite file, 0 Composer packages.</p>
+      </div>
+    </section>
+
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Screenshots</p>
+        <p class="mt-4 text-sm text-neutral-600 max-w-3xl" data-reveal="50">Terminal proof — no UI to hide behind. If the API is offline when you try curl, these still show exactly how it answers.</p>
+        <div class="mt-8" data-reveal="0"><figure><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments011/docker-ps.webp" alt="Docker backend running on port 7002" loading="lazy" decoding="async" width="1049" height="653" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Docker — 1 command up</figcaption></figure></div>
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <figure data-reveal="0"><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments011/health-curl.webp" alt="Health check returning ok without login" loading="lazy" decoding="async" width="1047" height="171" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Health — ok without login</figcaption></figure>
+          <figure data-reveal="120"><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments011/rate-limit.webp" alt="Rate limit returning 429 after 5 tries" loading="lazy" decoding="async" width="744" height="452" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Rate — 429 after 5 tries</figcaption></figure>
+        </div>
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <figure data-reveal="0"><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments011/auth-flow.webp" alt="Register verify login me flow with redacted secrets" loading="lazy" decoding="async" width="1048" height="254" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Auth — register to me</figcaption></figure>
+          <figure data-reveal="120"><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm"><img src="images/experiments011/Cors-preflight.webp" alt="CORS preflight allowing frontend origin" loading="lazy" decoding="async" width="809" height="452" class="w-full h-auto"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">CORS — preflight 204</figcaption></figure>
+        </div>
+        <div class="mt-8" data-reveal="0"><figure><div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm overflow-x-auto"><img src="images/experiments011/databse-users.webp" alt="SQLite schema showing 6 tables structure only" loading="lazy" decoding="async" width="1590" height="368" class="w-full h-auto max-w-none sm:max-w-full"></div><figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">DB — structure only, no rows</figcaption></figure></div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live API</p>
+        <div class="mt-8" data-reveal="100"><h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">Talk to it with curl — no UI needed.</h2><p class="mt-2 text-sm text-neutral-600">Backend live daily 08.00–21.00 WIB (UTC+7) when my PC is on. Outside those hours curl fails — expected (see Live Status).</p></div>
+        <div class="mt-8" data-reveal="150"><p class="font-mono text-sm text-neutral-500">Health — no login needed</p><pre class="code-block mt-4">curl -s localhost:7002/api/health
+# {"ok":true,"time":"2026-09-09T00:00:00Z"}</pre></div>
+        <div class="mt-8" data-reveal="150"><p class="font-mono text-sm text-neutral-500">Auth — register to me (redacted)</p><pre class="code-block mt-4">curl -X POST localhost:7002/api/register -H 'Content-Type: application/json' -d '{"email":"you@mail.com","nama":"You","telepon":"08123456789","password":"Rahasia123","password_konfirmasi":"Rahasia123"}'
+curl -X POST localhost:7002/api/verify -H 'Content-Type: application/json' -d '{"email":"you@mail.com","kode":"******"}'
+curl -X POST localhost:7002/api/login -H 'Content-Type: application/json' -d '{"email":"you@mail.com","password":"Rahasia123"}'
+curl localhost:7002/api/me -H 'Authorization: Bearer ******'</pre></div>
+        <div class="mt-8" data-reveal="150"><p class="font-mono text-sm text-neutral-500">Job Tracker as client — token required</p><pre class="code-block mt-4">curl localhost:7002/api/lamaran -H 'Authorization: Bearer ******'
+# 200 own rows only. Full UI in EXP 010.</pre></div>
+        <p class="mt-4 text-xs text-neutral-500 font-mono" data-reveal="160">Local base: http://localhost:7002 • Tunnel when PC is on: https://aispec.tail06293c.ts.net • .env never shown</p>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">For those of you unable to read this data from technical standpoint, here is the conclusion:</h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>Every new app needs login. Copying login 5 times gets messy fast. I asked myself if 1 small service could serve them all. ✨</p>
+            <p>I built one small login service on my own machine with local AI — no extra packages. My first try with scattered auth failed and drifted, so I switched to one place that decides everything. 🤝</p>
+            <p>The Job Tracker is the first customer. Next apps just register their address, no re-code. It sends 6-digit codes via email, gives 1-hour passes, and blocks spam after 5 tries. 💰</p>
+            <p>It already runs on modest hardware with 1 Docker image and 1 database file. For now it lives on my home PC (08.00–21.00 WIB) — stable for this experiment, not yet 24/7. Reliability matters more than specs. 🛡️</p>
+            <p>What that means in practice: I only maintain auth once. Every new frontend just does fetch. That is the whole trick. 🎯</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+        <div class="mt-12 space-y-12">
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Problem</span></div><div class="lg:col-span-9 space-y-5"><p class="text-base text-neutral-700 leading-relaxed">Am I capable of running login for many apps without rebuilding it every time? I ask because every new webapp needs register + OTP + login + forgot, and copying that 5 times drifts fast.</p><p class="text-base text-neutral-700 leading-relaxed">I need 1 local auth service many frontends can share. Frontend only does <code class="code-inline">fetch</code>. All decisions — hash, OTP, expiry, token — live in 1 backend.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Why This Stack</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">I locked PHP because it is the same family as my invoice <code class="code-inline">save.php</code>. I need <code class="code-inline">password_hash</code>, <code class="code-inline">random_bytes</code>, <code class="code-inline">PDO</code> — all built-in, 0 Composer packages. I chose Docker because my laptop has no native PHP and I cannot apt install. I chose raw SMTP because every line is traceable: <code class="code-inline">EHLO → STARTTLS → AUTH → MAIL → RCPT → DATA → QUIT</code>. Mailer libs and JWT are production upgrades, not v1.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">The Build</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">I built it with the same <code class="code-inline">Tiel-Coder-35B-A3B-MTP-UD-Q4_K_S.gguf</code> via <code class="code-inline">llama.cpp-server</code>. AI handled syntax and boilerplate, decisions stayed with me. Flags are in <a class="underline hover:text-accent" href="exp001.html">EXP 001</a>. Honest scope: local + auth flow working. Full hardening and deploy is a separate project, not here.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Router</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed"><code class="code-inline">public/index.php</code> is the front door. I load <code class="code-inline">.env</code> with no library, check CORS (explicit list + same-host pass), answer <code class="code-inline">OPTIONS 204</code>, then route <code class="code-inline">health / register / verify / login / me / forgot / reset / lamaran</code>. Unknown paths get generic <code class="code-inline">404/405/500</code>. I keep messages generic on purpose — no internal details leak to the browser.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Auth Flow</span></div><ol class="lg:col-span-9 space-y-4 list-none">
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><code class="code-inline">POST /api/register</code> — I create a <code class="code-inline">pending</code> user and send a 6-digit OTP via Gmail. Password must be <code class="code-inline">≥8 + upper + digit</code>, checked on the server, not just the browser.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><code class="code-inline">POST /api/verify</code> — I flip <code class="code-inline">pending → active</code> and issue a 64-hex opaque token (1 hour). Wrong 5 times locks for 10 minutes. Errors stay generic.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><code class="code-inline">POST /api/login + GET /api/me</code> — I check hash, issue token, then guard every open with <code class="code-inline">/api/me</code>. Dead token kicks back to login. I never tell whether the email or the password was wrong.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><code class="code-inline">POST /api/forgot + /api/reset</code> — I always answer generic <code class="code-inline">200</code> so emails cannot be harvested. Reset re-hashes and wipes all sessions — forced relogin everywhere. OTP 5 min, reset 10 min, by my own setting for local use.</p></li>
+          </ol></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Data Model</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">I keep 1 file <code class="code-inline">data/auth.db</code>: <code class="code-inline">users</code> (email UNIQUE, hash, nama, telepon, pending→active), <code class="code-inline">otps</code>, <code class="code-inline">reset_tokens</code>, <code class="code-inline">sessions</code> (token + 1h), <code class="code-inline">rate_limits</code>, <code class="code-inline">lamaran</code> (owner email + idx, company, position, tanggal, status, portal, link). I migrate with <code class="code-inline">PRAGMA table_info + ALTER</code> — no data loss. Honest tradeoff: I store OTP plaintext with short expiry locally so I can trace it. I will hash it in production later.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">Docker Run</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">I run <code class="code-inline">php:8.3-cli + pdo_sqlite</code> in 1 image. Command is <code class="code-inline">php -S 0.0.0.0:7002 -t public public/index.php</code>. I start all with <code class="code-inline">docker compose up --build</code>, then serve the webapp with <code class="code-inline">python3 -m http.server 7001</code>. Data persists in <code class="code-inline">./data/</code> (gitignored). I need no native PHP at all.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">CORS + Limits</span></div><div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Different port means different origin — browsers block <code class="code-inline">fetch</code> until I allow it. I keep an explicit <code class="code-inline">CORS_ORIGINS</code> list (<code class="code-inline">:7001</code>, add <code class="code-inline">:7003</code> for the next app, no re-code) plus a same-host pass so Tailscale IP changes need no config. I cap sensitive endpoints at 5/min/IP via SQLite. Job Tracker as client: every <code class="code-inline">/api/lamaran</code> needs a token, I check <code class="code-inline">email from token == row owner</code>. UI detail stays in <a class="underline hover:text-accent" href="exp010.html">EXP 010</a>.</p></div></div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal><div class="lg:col-span-3"><span class="detail-label">What Failed</span></div><ol class="lg:col-span-9 space-y-4 list-none">
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>CORS blocked everything first.</strong> My reasoning was flawed — I forgot different ports are different origins. I fixed it with an allowlist, not a wildcard.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Mailpit had to go.</strong> I removed it 2026-09-09. OTP must go via real Gmail App Password (16 chars, not login password). No shortcut.</p></li>
+            <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>1-hour kick looked like a bug.</strong> I got kicked to login and thought I broke sessions. It turned out to be expected expiry doing its job.</p></li>
+          </ol></div>
+          <div data-reveal><div class="grid lg:grid-cols-12 gap-4 lg:gap-10"><div class="lg:col-span-3"><span class="detail-label">Evidence</span></div><div class="lg:col-span-9"><p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-6">Small numbers that prove it runs — screenshots above, no cold-start tricks.</p><div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Docker images</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">1 image</p><p class="text-xs text-neutral-500">php 8.3 + sqlite</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">SQLite files</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">1 file</p><p class="text-xs text-neutral-500">6 tables</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Auth endpoints</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">6 endpoints</p><p class="text-xs text-neutral-500">+ health + tracker</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Rate</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">5 / min</p><p class="text-xs text-neutral-500">then 429</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">OTP windows</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">5 → 10 min</p><p class="text-xs text-neutral-500">max 5 tries</p></div>
+            <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper"><p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Dependencies</p><p class="mt-2 font-display font-extrabold text-lg leading-tight">0 Composer</p><p class="text-xs text-neutral-500">vanilla SMTP</p></div>
+          </div></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Backend Code</p>
+        <div class="mt-8" data-reveal="100"><p class="font-mono text-sm text-neutral-500">Router CORS — public/index.php (essence, no secrets)</p><pre class="code-block mt-4">$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+$boleh = array_map('trim', explode(',', $cfg['CORS_ORIGINS']));
+$izinkan = in_array($origin, $boleh, true);
+// + same-host Tailscale pass, then:
+header("Access-Control-Allow-Origin: $origin"); // only if allowed
+// OPTIONS → 204, then route health/register/verify/login/me/forgot/reset/lamaran</pre></div>
+        <div class="mt-8" data-reveal="100"><p class="font-mono text-sm text-neutral-500">DB — src/db.php (schema only)</p><pre class="code-block mt-4">users(email UNIQUE, password_hash, nama, telepon, pending→active)
+otps(email, kode 6-digit, +5min, max 5 tries)
+sessions(token 64hex, +1h) -- opaque, SELECT to check, DELETE to revoke
+lamaran(email owner + idx, company, position, tanggal, status, portal, link)</pre></div>
+        <div class="mt-8" data-reveal="100"><p class="font-mono text-sm text-neutral-500">Guard — token check (essence)</p><pre class="code-block mt-4">$email = email_dari_token($pdo, $_SERVER['HTTP_AUTHORIZATION'] ?? '');
+if ($email === null) json(401, ['error' => 'Token tidak sah atau kedaluwarsa']);</pre></div>
+        <blockquote class="quote-block mt-10 text-sm sm:text-base text-ink leading-relaxed max-w-3xl" data-reveal>No .env content, no SMTP secrets, no real OTP or tokens here. I keep those off the page on purpose.</blockquote>
+      </div>
+    </section>
+
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper" open><summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">Why PHP + SQLite + Docker instead of Node + Postgres?<span class="text-accent group-open:rotate-180 transition-transform">▼</span></summary><p class="mt-4 text-sm text-neutral-600 leading-relaxed">Locked for this scale: PHP built-ins already cover hash + random + PDO, SQLite is 1 file with zero server, Docker gives PHP without native install. Postgres + JWT + mailer libs are noted as production upgrades, not v1.</p></details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper"><summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">How can :7001 talk to :7002 without being blocked?<span class="text-accent group-open:rotate-180 transition-transform">▼</span></summary><p class="mt-4 text-sm text-neutral-600 leading-relaxed">Explicit CORS allowlist plus same-host pass for Tailscale. Preflight OPTIONS returns 204 with Allow-Origin only for listed hosts. Next app (:7003) just gets added to the list.</p></details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper"><summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">Why does the API sometimes not answer?<span class="text-accent group-open:rotate-180 transition-transform">▼</span></summary><p class="mt-4 text-sm text-neutral-600 leading-relaxed">Not on a 24/7 VPS yet — home PC, online daily 08.00–21.00 WIB (UTC+7). Outside those hours fetch fails and frontend shows a toast. Screenshots + curl logs remain as proof.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live Status</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Local PC, not yet 24/7 VPS.</h2>
+        <div class="mt-8 grid sm:grid-cols-2 gap-4" data-reveal="150">
+          <div class="border border-emerald-200 rounded-2xl p-6 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-emerald-700">✅ What works now</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>Docker 1-command up</li>
+              <li>Health ok without login</li>
+              <li>6 auth endpoints</li>
+              <li>Gmail OTP delivery</li>
+              <li>1-hour opaque tokens</li>
+              <li>Rate 5/min anti-spam</li>
+              <li>Job Tracker per-user sync</li>
+              <li>Reusable origins</li>
+              <li>Online daily 08.00–21.00 WIB (UTC+7)</li>
+            </ul>
+          </div>
+          <div class="border border-amber-300 bg-amber-50/50 rounded-2xl p-6">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-amber-700">🚧 What isn&apos;t production yet</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>Not yet 24/7</li>
+              <li>Still local (personal PC)</li>
+              <li>Early-stage features</li>
+              <li>Collecting feedback</li>
+              <li>Hardening + deploy = separate project</li>
+            </ul>
+          </div>
+        </div>
+        <blockquote class="quote-block mt-8 text-sm sm:text-base text-neutral-600 leading-relaxed border-amber-300 bg-amber-50 rounded-r-2xl p-6" data-reveal>Runs locally on my personal PC, live daily 08.00–21.00 WIB (UTC+7). Off-hours → unreachable, expected. Screenshots + curl logs above still show exactly how it answers.</blockquote>
+      </div>
+    </section>
+
+    <section class="py-16 border-t border-black/10 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8"><div class="max-w-3xl" data-reveal><p class="eyebrow">Disclaimer</p><h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">Local stable, not production-hardened</h2><blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">Validated with the same Tiel-Coder-35B via llama.cpp-server (flags in EXP 001). OTP plaintext short-expiry locally for learning — I will hash it in production later, by my own note, not a guarantee for every setup. Mailpit removed 2026-09-09, Gmail only.</blockquote><p class="mt-6 text-sm text-neutral-700 leading-relaxed"><strong>Frontend:</strong> <a class="underline hover:text-accent" href="exp010.html">EXP 010</a> + <a class="underline hover:text-accent" href="https://robbyaliasaakbar.github.io/jobtracker/" target="_blank" rel="noopener">/jobtracker/</a> · <strong>This:</strong> EXP 011 backend · <strong>Machine:</strong> <a class="underline hover:text-accent" href="exp001.html">EXP 001</a></p></div></div>
+    </section>
+
+    <section class="pb-24 lg:pb-32"><div class="mx-auto max-w-6xl px-6 lg:px-8"><div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal><a href="experiments-list.html" class="arrow-link font-display text-sm uppercase"><span aria-hidden="true">&larr;</span> Back to Experiments</a><a href="contact.html" class="arrow-link font-display text-sm uppercase">Have a problem worth exploring? <span aria-hidden="true">-&gt;</span></a></div><p class="mt-6 text-xs text-neutral-500" data-reveal>Chain: <a class="underline hover:text-accent" href="exp010.html">EXP 010 UI</a> → EXP 011 backend → <a class="underline hover:text-accent" href="exp001.html">EXP 001 machine</a>.</p></div></section>
+  </main>
+  <footer class="bg-dark-section text-white"><div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8"><div class="grid gap-12 md:grid-cols-3"><div><p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p><p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">AI Systems Builder &amp; Experimenter</p><p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">Exploring AI systems, local LLMs, automation workflows, and practical tools that actually work in real business operations.<br>Building what matters, and checking whether AI is truly useful in everyday work.</p></div><div class="md:justify-self-center"><p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p><ul class="mt-5 space-y-3 text-sm"><li><a href="/" class="footer-link">Home</a></li><li><a href="profile.html" class="footer-link">Profile</a></li><li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li><li><a href="contact.html" class="footer-link">Contact</a></li></ul></div><div class="md:justify-self-end"><p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p><ul class="mt-5 space-y-3 text-sm"><li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li><li><a href="https://www.reddit.com/user/Full_Director87/" target="_blank" rel="noopener" class="footer-link">Reddit</a></li><li><a href="https://www.instagram.com/ybboraa/" target="_blank" rel="noopener" class="footer-link">Instagram</a></li><li><a href="mailto:ibborarts@gmail.com" class="footer-link">Email</a></li><li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">WhatsApp</a></li></ul></div></div><div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40"><p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p><p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p></div></div></footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

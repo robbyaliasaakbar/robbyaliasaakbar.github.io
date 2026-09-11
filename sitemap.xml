@@ -29,7 +29,7 @@
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/experiments-list.html</loc>
-    <lastmod>2026-09-06</lastmod>
+    <lastmod>2026-09-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -214,6 +214,60 @@
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments009/evidence-native-log.webp</image:loc>
       <image:title>Experiment 009 — Evidence ROCm native server log</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://robbyaliasaakbar.github.io/exp010.html</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments010/desktop-version.webp</image:loc>
+      <image:title>Experiment 010 — Job Tracker dashboard desktop full view</image:title>
+      <image:caption>Dashboard with stats filter form and table built with local 35B coder</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments010/auth-html.webp</image:loc>
+      <image:title>Experiment 010 — Job Tracker login form</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments010/otp.webp</image:loc>
+      <image:title>Experiment 010 — Register and OTP verification flow</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments010/mobile-version.webp</image:loc>
+      <image:title>Experiment 010 — Mobile cards view replacing table</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://robbyaliasaakbar.github.io/exp011.html</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/docker-ps.webp</image:loc>
+      <image:title>Experiment 011 — Docker backend running on port 7002</image:title>
+      <image:caption>One auth backend for many frontends with PHP SQLite Docker</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/health-curl.webp</image:loc>
+      <image:title>Experiment 011 — Health check returning ok without login</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/auth-flow.webp</image:loc>
+      <image:title>Experiment 011 — Register verify login me flow</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/Cors-preflight.webp</image:loc>
+      <image:title>Experiment 011 — CORS preflight allowing frontend origin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/databse-users.webp</image:loc>
+      <image:title>Experiment 011 — SQLite schema structure only</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/rate-limit.webp</image:loc>
+      <image:title>Experiment 011 — Rate limit returning 429 after 5 tries</image:title>
     </image:image>
   </url>
   <url>

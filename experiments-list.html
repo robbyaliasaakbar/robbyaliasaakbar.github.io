@@ -54,7 +54,7 @@
         "name": "Experiments",
         "url": "https://robbyaliasaakbar.github.io/experiments-list.html",
         "description": "A collection of AI experiments documented as technical case studies.",
-        "dateModified": "2026-09-06",
+        "dateModified": "2026-09-09",
         "isPartOf": {
           "@type": "WebSite",
           "name": "Robby Aliasa Akbar",
@@ -81,7 +81,7 @@
       {
         "@type": "ItemList",
         "name": "Experiments",
-        "numberOfItems": 9,
+        "numberOfItems": 11,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -154,6 +154,22 @@
             "name": "From Override to Native: Robust ROCm gfx1031 Without HSA_OVERRIDE",
             "image": "https://robbyaliasaakbar.github.io/images/experiments009/server-prefill-580.webp",
             "description": "Can RX 6700 XT gfx1031 run ROCm natively with 580 tok/s prefill sustained at 20K+ cached on 35B A3B split? One-line MMA fix, no override, 131K ctx."
+          },
+          {
+            "@type": "ListItem",
+            "position": 10,
+            "url": "https://robbyaliasaakbar.github.io/exp010.html",
+            "name": "Building a Production-Ready Job Tracker UI With Only a 35B Local Coder — No Framework",
+            "image": "https://robbyaliasaakbar.github.io/images/experiments010/desktop-version.webp",
+            "description": "Can a production-ready Job Tracker frontend with OTP auth, CRUD and responsive UI be shipped in 5 hours with only a 35B local coder? No framework, live on GitHub Pages."
+          },
+          {
+            "@type": "ListItem",
+            "position": 11,
+            "url": "https://robbyaliasaakbar.github.io/exp011.html",
+            "name": "One Auth Backend for Many Frontends — PHP, SQLite & Docker Entry Point in a Day",
+            "image": "https://robbyaliasaakbar.github.io/images/experiments011/docker-ps.webp",
+            "description": "Can one small auth backend serve many frontends with real OTP, opaque tokens and per-user Job Tracker sync? PHP + SQLite + Docker, zero dependencies."
           }
         ]
       }
@@ -446,6 +462,40 @@
             </p>
             <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
               Read EXP 009: Native gfx1031 580 tok/s <span aria-hidden="true">-&gt;</span>
+            </span>
+          </a>
+
+          <!-- EXP 010 -->
+          <a href="exp010.html" aria-label="Read EXP 010: Production-Ready Job Tracker UI With Local AI — Robby Aliasa Akbar" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="900">
+            <div class="flex items-center justify-between">
+              <span class="font-display font-bold text-xs tracking-[0.2em] text-neutral-400">EXP 010</span>
+              <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+            </div>
+            <h3 class="mt-6 font-display font-bold text-xl leading-snug">
+              Building a Production-Ready Job Tracker UI With Only a 35B Local Coder — No Framework.
+            </h3>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed flex-1">
+              Can a production-ready Job Tracker frontend with OTP auth, CRUD and responsive UI be shipped in 5 hours with only a 35B local coder? No framework, live on GitHub Pages.
+            </p>
+            <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
+              Read EXP 010: Job Tracker UI Local AI <span aria-hidden="true">-&gt;</span>
+            </span>
+          </a>
+
+          <!-- EXP 011 -->
+          <a href="exp011.html" aria-label="Read EXP 011: One Auth Backend for Many Frontends — Robby Aliasa Akbar" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="1000">
+            <div class="flex items-center justify-between">
+              <span class="font-display font-bold text-xs tracking-[0.2em] text-neutral-400">EXP 011</span>
+              <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+            </div>
+            <h3 class="mt-6 font-display font-bold text-xl leading-snug">
+              One Auth Backend for Many Frontends — PHP, SQLite &amp; Docker Entry Point in a Day.
+            </h3>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed flex-1">
+              Can one small auth backend serve many frontends with real OTP, opaque tokens and per-user Job Tracker sync? PHP + SQLite + Docker, zero dependencies.
+            </p>
+            <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
+              Read EXP 011: Auth Backend PHP SQLite <span aria-hidden="true">-&gt;</span>
             </span>
           </a>
 
