@@ -1,0 +1,20 @@
+// Logo.jsx — lockup logo dipakai App + Auth (1 tempat, tidak dobel).
+// Icon: pola JobTracker dibalik (box putih, batang hitam, panah merah).
+// Wordmark: SVG text biar crisp.
+export default function Logo() {
+  return (
+    <div className="flex items-center gap-2.5">
+      <svg className="w-8 h-8 shrink-0" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#FFFFFF" />
+        <rect x="8" y="19" width="3.6" height="5" rx="1.2" fill="#0C0C0C" opacity="0.5" />
+        <rect x="12.8" y="16" width="3.6" height="8" rx="1.2" fill="#0C0C0C" opacity="0.75" />
+        <rect x="17.6" y="13" width="3.6" height="11" rx="1.2" fill="#0C0C0C" />
+        <path d="M8 12.5 15 8.5l4 2.5 5-5" stroke="#D70000" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M20.6 6H24v3.4" stroke="#D70000" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <svg className="h-4 w-auto" viewBox="0 0 110 16" fill="none" role="img" aria-label="Mini Leads">
+        <text x="0" y="12.5" fontFamily="Manrope, Inter, sans-serif" fontWeight="800" fontSize="13" letterSpacing="0.02em" fill="#FFFFFF">MINI LEADS<tspan fill="#D70000">.</tspan></text>
+      </svg>
+    </div>
+  );
+}

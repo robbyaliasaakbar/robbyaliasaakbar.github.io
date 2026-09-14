@@ -1,0 +1,13 @@
+# Rahasia — JANGAN PERNAH commit (ada password di miniLeads/.env)
+**/.env
+
+# Sampah install (55M+, install ulang via npm install)
+node_modules/
+
+# Database (bikin ulang via load, jangan ikut repo)
+*.db
+*.db.bak-*
+
+# Log + sampah OS
+*.log
+.DS_Store

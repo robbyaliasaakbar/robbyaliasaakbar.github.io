@@ -1,0 +1,40 @@
+/* Simple styles: copy pola sandbox vanilla biar Bang langsung kenal. */
+
+/* Warna HEX paten + dark mode eksplisit (.dark ...). Tanpa variabel ajaib. */
+:root { color-scheme: light; }
+.dark { color-scheme: dark; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, sans-serif; background-color: #FFFFFF; color: #0C0C0C; -webkit-font-smoothing: antialiased; }
+h1, h2, .font-display { font-family: 'Manrope', 'Inter', sans-serif; }
+::selection { background-color: #D70000; color: #fff; }
+
+#site-navbar { background: #0C0C0C; border-bottom: 1px solid rgba(255,255,255,.08); }
+
+.eyebrow { display: inline-flex; align-items: center; gap: .625rem; font-family: 'Manrope', sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: #D70000; }
+
+.bg-grid { background-image: linear-gradient(rgba(12,12,12,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(12,12,12,.045) 1px, transparent 1px); background-size: 56px 56px; mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, #000 40%, transparent 100%); -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, #000 40%, transparent 100%); pointer-events: none; }
+.dark .bg-grid { background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px); }
+.bg-dark-section { background: #0C0C0C; }
+.dark .bg-dark-section { background: #ededed; }
+
+.btn-primary { transition: background-color .25s ease, transform .25s ease, box-shadow .25s ease; }
+.btn-primary:hover { background: #D70000 !important; transform: translateY(-2px); box-shadow: 0 12px 24px -10px rgba(215,0,0,.5); }
+.jt-btn:active { transform: scale(.97); }
+.jt-lift { transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
+.jt-lift:hover { transform: translateY(-4px); border-color: #0C0C0C; box-shadow: 0 20px 40px -18px rgba(12,12,12,.25); }
+.dark .jt-lift:hover { border-color: #ededed; }
+
+.badge { font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 9999px; white-space: nowrap; }
+.b-New { background: #EFF6FF; color: #1D4ED8; }
+.b-Contacted { background: #FEF9C3; color: #854D0E; }
+.b-Connected { background: #F5F3FF; color: #6D28D9; }
+.b-Qualified { background: #ECFDF5; color: #047857; }
+.b-Opportunity { background: #FFF7ED; color: #C2410C; }
+.b-ClosedWon { background: #F0FDF4; color: #15803D; border: 1px solid #BBF7D0; }
+.b-ClosedLost { background: #FEF2F2; color: #B91C1C; }
+
+.jt-table tbody tr { transition: background-color .15s ease; }
+.jt-table tbody tr:hover { background: #f8fafc; }
+.dark .jt-table tbody tr:hover { background: #1e1e22; }
+
+@media (max-width: 640px) { input, select { font-size: 16px !important; } }
