@@ -29,7 +29,7 @@
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/experiments-list.html</loc>
-    <lastmod>2026-09-09</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -268,6 +268,52 @@
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/rate-limit.webp</image:loc>
       <image:title>Experiment 011 — Rate limit returning 429 after 5 tries</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://robbyaliasaakbar.github.io/exp012.html</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/homepage-light.webp</image:loc>
+      <image:title>Experiment 012 — Dashboard in light theme</image:title>
+      <image:caption>MiniLeads CRM dashboard with 2049 leads and analytics</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/homepage-dark.webp</image:loc>
+      <image:title>Experiment 012 — Dashboard in dark theme</image:title>
+      <image:caption>MiniLeads CRM dashboard with dark theme and preserved rank colors</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/auth-login-light.webp</image:loc>
+      <image:title>Experiment 012 — Login screen light mode</image:title>
+      <image:caption>Shared auth login reusing EXP 011 backend</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/auth-login-dark.webp</image:loc>
+      <image:title>Experiment 012 — Login screen dark mode</image:title>
+      <image:caption>Shared auth login in dark mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/auth-regis-light.webp</image:loc>
+      <image:title>Experiment 012 — Registration screen light mode</image:title>
+      <image:caption>Registration and OTP verification flow in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/auth-regis-dark.webp</image:loc>
+      <image:title>Experiment 012 — Registration screen dark mode</image:title>
+      <image:caption>Registration and OTP verification flow in dark mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/setting-page-light.webp</image:loc>
+      <image:title>Experiment 012 — Settings page light mode</image:title>
+      <image:caption>Account details and appearance picker in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/setting-page-dark.webp</image:loc>
+      <image:title>Experiment 012 — Settings page dark mode</image:title>
+      <image:caption>Account details and appearance picker in dark mode</image:caption>
     </image:image>
   </url>
   <url>

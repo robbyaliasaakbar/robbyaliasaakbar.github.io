@@ -212,8 +212,9 @@ body {
   text-transform: uppercase;
 }
 
-/* STABLE — solid black, white pulse dot */
-.status-badge.status-stable {
+/* STABLE & LIVE — solid black, white pulse dot */
+.status-badge.status-stable,
+.status-badge.status-live {
   background-color: var(--ink);
   color: #FFFFFF;
 }
