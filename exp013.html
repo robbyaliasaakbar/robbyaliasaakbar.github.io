@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 013 - Multi-User CV Screening Platform, React + Vite, Live on GitHub Pages - Robby Aliasa Akbar</title>
+  <meta name="description" content="CV screening platform with shared auth backend: React + Vite, in-browser PDF extraction, 7-step realtime pipeline, n8n scoring, live on GitHub Pages via Tailscale Funnel.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp013.html">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp013.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp013.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp013.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp013.html">
+  <meta property="og:title" content="Experiment 013 - Multi-User React CV Screening Platform, Live on GitHub Pages">
+  <meta property="og:description" content="Technical test CV screener evolved into a multi-user React platform with shared auth, in-browser PDF extraction, and live n8n workflow scoring.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments013/homepage-light.webp">
+  <meta property="og:image:width" content="637">
+  <meta property="og:image:height" content="959">
+  <meta property="og:image:alt" content="CV Screening platform dashboard and upload queue preview">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-09-15T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-15T00:00:00+07:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 013 - Multi-User React CV Screening Platform, Live on GitHub Pages">
+  <meta name="twitter:description" content="Technical test CV screener evolved into a multi-user React platform with shared auth, in-browser PDF extraction, and live n8n workflow scoring.">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments013/homepage-light.webp">
+  <meta name="twitter:image:alt" content="CV Screening platform preview">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "From Technical Test to Live Multi-User CV Screening Platform on One Shared Auth Backend",
+        "description": "CV screening platform with shared auth backend: React + Vite, in-browser PDF extraction, 7-step realtime pipeline, n8n scoring, live on GitHub Pages via Tailscale Funnel.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments013/homepage-light.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp013.html",
+        "datePublished": "2026-09-15",
+        "dateModified": "2026-09-15",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp013.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["shared auth backend third app", "React Vite GitHub Pages", "n8n webhook scoring", "Tailscale Funnel path restriction", "pdf.js browser extract", "local LLM app", "Tiel-Coder", "rule-based ranking", "additive backend upgrade"],
+        "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
+        "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
+          { "@type": "ListItem", "position": 3, "name": "Experiment 013", "item": "https://robbyaliasaakbar.github.io/exp013.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why does screening require login when the original test did not?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The test proved the engine. The platform proves one account serves many apps. Login ties screenings to people, and the same backend serves all three apps with zero re-code."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where do my CVs go? Is anything stored?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Text is extracted in your browser, scored by the workflow, then the result table is wiped fresh every run by design. Downloads (JSON/CSV) are yours to keep. 5 sample CVs, 2780 to 7523 chars each, never leave your browser as files."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is the screening webhook open? Is that not a hole?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Measured decision, documented on-page: stateless endpoint, self-wiping results, near-zero attacker ROI (a spammer only scores their own junk). The n8n editor itself answers 404 on the public door. Hardening scales with threat, not with fear."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Too good to be true? 27 failures says otherwise - which one hurt most?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Exposing the n8n editor to the internet during go-live. Full stop, documented with curl receipts. Also: a workflow edit that never persisted while the tool said saved. Both are on this page with evidence."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does it fail when your PC is off?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No VPS by decision, home PC plus secure tunnels (:443 auth, :10000 screening). Off means doors closed and the page says so instead of pretending. Same honesty as EXP 010/011/012."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why React for the portal but rule-code instead of AI for scoring?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "React earns its place (upload queue, live pipeline view, auth, settings in one state tree). Scoring stays rule-based 50-20-30 so every point is explainable. AI is used where it helps, not where it impresses."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { ink: '#0C0C0C', paper: '#FFFFFF', accent: '#D70000' }, fontFamily: { display: ['Manrope','sans-serif'], body: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } }
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @media (max-width: 640px) { .detail-label { font-size: 0.6875rem; letter-spacing: 0.16em; } .stat-tile p { word-break: break-word; } }
+  </style>
+</head>
+<body class="bg-paper text-ink font-body antialiased">
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">ROBBY ALIASA AKBAR<span class="text-accent">.</span></a>
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="/" class="nav-link">Home</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="/" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html" class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+  <main>
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 013</li>
+            </ol>
+          </nav>
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal><span aria-hidden="true">&larr;</span> Back to Experiments</a>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 013</p>
+            <span class="status-badge status-live"><span class="status-dot"></span>Live</span>
+            <span class="text-xs font-mono text-neutral-500">React + Vite · Shared Auth · n8n Scoring · Tailscale Funnel</span>
+          </div>
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">From Technical Test to Live Multi-User CV Screening Platform on One Shared Auth Backend.</h1>
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">Can a raw technical test CV screener evolve into a live multi-user platform on one shared auth backend, with in-browser text extraction, a transparent seven-step pipeline, and every single failure kept on record?</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="350">
+            <a href="https://robbyaliasaakbar.github.io/cv_screening/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Open Live App - /cv_screening/</a>
+            <a href="exp011.html" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Shared Backend: EXP 011</a>
+          </div>
+          <p class="mt-4 text-xs text-neutral-500 font-mono" data-reveal="360">Same Tiel-Coder-35B model · React 18 + Vite 6 · 5 sample CVs · 2 Funnel doors · Online daily</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>System Requirements</p>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Live App</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">/cv_screening/ on GitHub Pages</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Screening API</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Funnel :10000 (/webhook) to n8n :5678</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Auth API</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Funnel :443 to Docker :7002 (+ PUT /api/me)</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Engine</p>
+            <p class="mt-2 text-sm font-medium leading-snug">n8n Technical Test (24 nodes, 50-20-30 rule)</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Dataset</p>
+            <p class="mt-2 text-sm font-medium leading-snug">5 sample CVs (2780 to 7523 chars extracted)</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="200">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Build Size</p>
+            <p class="mt-2 text-sm font-medium leading-snug">38 modules transformed, clean bundle</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="240">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Local Dev</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Vite dev server on :7008</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="280">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model Engine</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Tiel-Coder-35B on llama.cpp</p>
+          </div>
+        </div>
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal>Built with the exact same local model as EXP 010, EXP 011, and EXP 012. The frontend is statically hosted on GitHub Pages. The screening engine operates inside dockerized n8n on my personal computer, reachable via an encrypted path-restricted Tailscale Funnel.</p>
+      </div>
+    </section>
+
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Screenshots</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Side by Side Visual Proof: Light and Dark Themes</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">Every view in the CV screening platform supports daylight clarity and high-contrast dark mode. All 12 captures below were taken directly on mobile viewports to document the actual production interface.</p>
+
+        <div class="mt-12 space-y-16">
+          <div data-reveal="0">
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <h3 class="font-display font-bold text-base sm:text-lg">1. Hero and Upload Queue</h3>
+              <span class="text-xs font-mono text-neutral-400">Light vs Dark</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/homepage-light.webp" alt="CV Screening platform hero and upload queue in light mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Homepage (Light) - 1 to 5 PDFs, validation first, clean action buttons</figcaption>
+              </figure>
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/homepage-dark.webp" alt="CV Screening platform hero and upload queue in dark mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Homepage (Dark) - Identical workflow and contrast in dark mode</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div data-reveal="50">
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <h3 class="font-display font-bold text-base sm:text-lg">2. PDF Text Extraction to JSON</h3>
+              <span class="text-xs font-mono text-neutral-400">Light vs Dark</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/extracting-pdf-to-json-light.webp" alt="CV Screening in-browser PDF extraction to JSON in light mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Extraction (Light) - Text parsed in-browser, clean JSON structure</figcaption>
+              </figure>
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/extracting-pdf-to-json-dark.webp" alt="CV Screening in-browser PDF extraction to JSON in dark mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Extraction (Dark) - Inspect character count and structured payload</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div data-reveal="50">
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <h3 class="font-display font-bold text-base sm:text-lg">3. Live Visual Pipeline Progress</h3>
+              <span class="text-xs font-mono text-neutral-400">Light vs Dark</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/realtime-visual-progress-light.webp" alt="CV Screening live seven-step pipeline progress in light mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Pipeline (Light) - 7 visible steps mirroring real n8n workflow</figcaption>
+              </figure>
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/realtime-visual-progress-dark.webp" alt="CV Screening live seven-step pipeline progress in dark mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Pipeline (Dark) - Displays actual live response and ranking output</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div data-reveal="50">
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <h3 class="font-display font-bold text-base sm:text-lg">4. Shared Authentication Login</h3>
+              <span class="text-xs font-mono text-neutral-400">Light vs Dark</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/login-light.webp" alt="CV Screening login view in light mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Login (Light) - Same backend as EXP 011 on port 7002, zero new auth code</figcaption>
+              </figure>
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/login-dark.webp" alt="CV Screening login view in dark mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Login (Dark) - Secure token storage under dedicated cv.token key</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div data-reveal="50">
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <h3 class="font-display font-bold text-base sm:text-lg">5. User Registration Flow</h3>
+              <span class="text-xs font-mono text-neutral-400">Light vs Dark</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/register-light.webp" alt="CV Screening registration view in light mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Register (Light) - Same contract with username, birthdate, and Gmail OTP</figcaption>
+              </figure>
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/register-dark.webp" alt="CV Screening registration view in dark mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Register (Dark) - Verified account creation without backend branching</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div data-reveal="50">
+            <div class="flex items-center justify-between gap-4 mb-4">
+              <h3 class="font-display font-bold text-base sm:text-lg">6. User Settings and Profile Preferences</h3>
+              <span class="text-xs font-mono text-neutral-400">Light vs Dark</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/settings-light.webp" alt="CV Screening settings and profile edit view in light mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Settings (Light) - Profile edit via PUT /api/me with theme selector</figcaption>
+              </figure>
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments013/settings-dark.webp" alt="CV Screening settings and profile edit view in dark mode - Robby Aliasa Akbar" width="637" height="959" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Settings (Dark) - Password reset flow and live theme switching</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live Demo</p>
+        <div class="mt-8 border border-black/10 rounded-2xl p-8 sm:p-12 bg-white" data-reveal="50">
+          <h2 class="font-display font-bold text-2xl sm:text-3xl tracking-tight">Try the Real Application Online</h2>
+          <p class="mt-4 text-base text-neutral-600 leading-relaxed max-w-2xl">The frontend is deployed live on GitHub Pages. You can test the interface, upload sample CVs, watch the text extraction, and observe the live ranking in your browser.</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a href="https://robbyaliasaakbar.github.io/cv_screening/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Open Live App - /cv_screening/</a>
+            <span class="text-xs font-mono text-neutral-500">Live frontend, home-PC backend + n8n</span>
+          </div>
+          <div class="mt-6 border-t border-black/10 pt-6">
+            <p class="text-xs sm:text-sm text-neutral-500 leading-relaxed max-w-3xl">Live frontend, home-PC backend + n8n. If the PC or funnel is off, login and screening fail with a message, which is expected and not broken. The screenshots above show the full operational flow. The screening webhook is intentionally open (spam ROI is near zero, and results wipe fresh by design), while the n8n editor is locked down behind path restriction.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">For those of you unable to read this data from technical standpoint, here is the conclusion:</h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>1. I got a hiring test once: a simple uploader with a smart back room. Instead of throwing it away, I rebuilt the front room properly.</p>
+            <p>2. One login now opens all three of my apps. The third one only added a small profile door. Nothing was rebuilt twice.</p>
+            <p>3. Your CVs get read inside your own browser, scored in seconds, and the score table gets wiped fresh after every run. Nothing piles up anywhere.</p>
+            <p>4. The page is public but the engines sleep in my home computer. When it is off, the page tells you honestly. The pictures above are the proof, so you do not have to take my word for it.</p>
+            <p>5. Everything that broke along the way is written on this same page. You are smart enough to see the full story, and that is exactly the point.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Architectural Decisions and Engineering Tradeoffs</h2>
+        <div class="mt-12 space-y-12">
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Third Customer, Same Key</span></div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">EXP 011 produced a single unified auth backend on port 7002, EXP 012 connected the second customer, and EXP 013 proves customer number three. The CV screening portal calls the exact same <code class="code-inline">/api/login</code> and <code class="code-inline">/api/me</code> endpoints. It isolates its token under a distinct key (<code class="code-inline">cv.token</code>) in local storage, yet the authentication lifecycle and verification logic remain completely identical.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Mandatory authentication serves as the platform gate. Stale tokens are detected immediately and redirected to the login view. We also introduced an additive upgrade to the backend by adding a profile endpoint at <code class="code-inline">PUT /api/me</code>. We made a safe snapshot first, confirmed 401 unauthenticated, 409 duplicate email, and 422 validation guards, and touched zero legacy files. This third app proves that a single well-architected backend can serve diverse client applications without endless rewrites.</p>
+            </div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Browser Reads, n8n Thinks</span></div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">Instead of uploading bulky binary PDF files to a remote server, the application parses documents entirely within the user browser using pdf.js. Our five sample resumes (spanning 2, 2, 1, 2, and 1 pages) yield clean text payloads between 2780 and 7523 characters. If one file in a batch is unreadable, defensive parsing keeps the remaining files intact rather than terminating the run.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">The browser bundles extracted text into a structured JSON array and dispatches it to n8n over our public webhook. The workflow evaluates candidates across three concurrent evaluation tracks, calculates weighted scores (50% skills, 20% experience, 30% education), applies an explicit threshold of 65 points, and returns final rankings. The database executes a clean TRUNCATE statement after each execution, meaning results wipe fresh by design rather than accumulating lingering candidate data.</p>
+            </div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Transparent Pipeline</span></div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">User interfaces should communicate real operational progress instead of spinning indeterminate loading wheels. The progress view mirrors the actual sequence of the twenty-four node n8n workflow across seven distinct visual steps. Step one dispatches the HTTP payload and step seven unpacks the response, while the middle steps reflect pipeline scoring tracks and keyword extractions.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">For mobile devices, rankings render as vertical stacked cards rather than clipped horizontal tables. Following natural human reading flow, results are shown first and download actions are positioned below the final rankings. Users inspect their evaluated scores before deciding to export structured JSON or CSV data.</p>
+            </div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Words Are Interface</span></div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">Internal development terminology has no place in customer-facing tools. We audited the entire codebase to eliminate prototype jargon like scaffold, museum, and portal, replacing them with clear professional language. Cards utilize floating elevation styles with crisp ink borders and clear contrast.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Button hover states feature bold red backgrounds with clean white text, providing distinct tactile feedback across both light and dark themes. We also removed awkward character accents so keywords remain easily searchable and effortless to type.</p>
+            </div>
+          </div>
+
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3"><span class="detail-label">Doors Rather Than Servers</span></div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">Connecting static web pages to local backend services requires disciplined network boundaries. Our Tailscale Funnel on port 10000 uses path restriction configured specifically for <code class="code-inline">/webhook</code>. Root requests to the server return a clean 404 response, keeping the n8n administrative editor hidden from the internet while the webhook receives incoming arrays reliably.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Security hardening scales with real threat severity. Because the screening endpoint is stateless, operates without stored history, and returns evaluations exclusively for submitted payloads, attacker return on investment is virtually zero. Leaving the webhook open is a documented architectural decision backed by threat modeling, avoiding unnecessary layers of enterprise complexity on a personal portfolio system.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Evidence Log</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Standalone Evidence Log: Terminal Receipts and Verification</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">Every technical claim in this article is backed by verifiable command line outputs. Private authentication secrets, passwords, and personal identifiers have been replaced with dummy values, while raw status codes and payload structures remain intact.</p>
+
+        <div class="mt-12 space-y-10">
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E1. Funnel Path Restriction Receipt</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">404 Root / 200 Webhook</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Checking that the n8n administrative editor is completely unreachable from the public internet while the screening webhook answers incoming calls.</p>
+            <pre class="code-block mt-4">curl -s -o /dev/null -w "%{http_code}" https://aispec.tail06293c.ts.net:10000/
+404
+
+curl -s -X POST https://aispec.tail06293c.ts.net:10000/webhook/upload-cv -H "Content-Type: application/json" -d "[]"
+HTTP: 200 OK (size: 0)</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: Root path yields HTTP 404 protecting the editor, while the webhook endpoint responds faithfully with HTTP 200.</p>
+          </div>
+
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E2. End-to-End Pipeline Scoring Probe</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">200 OK Live Ranking</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Dispatching a test candidate payload through the public tunnel to verify full workflow execution across n8n scoring tracks.</p>
+            <pre class="code-block mt-4">POST /webhook/upload-cv
+[{"id_cv":"cv_9","posisi":"Junior Architect","cv_text":"[SAMPLE RESUME TEXT]"}]
+
+Response:
+[
+  {
+    "id_cv": "cv_9",
+    "posisi": "Junior Architect",
+    "total_score": 40,
+    "status": "Tidak Lolos",
+    "rank": 1
+  }
+]</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: The scoring engine computes rule points, determines threshold outcome, and returns rank one without saving residual state.</p>
+          </div>
+
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E3. CORS Preflight Verification</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">Allowlist Enforced</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Verifying that cross-origin preflight requests echo allowed origins while unauthorized domains are rejected.</p>
+            <pre class="code-block mt-4">curl -s -I -X OPTIONS https://aispec.tail06293c.ts.net/api/login \
+  -H "Origin: https://robbyaliasaakbar.github.io" \
+  -H "Access-Control-Request-Method: POST"
+-> HTTP/1.1 204 No Content
+-> Access-Control-Allow-Origin: https://robbyaliasaakbar.github.io
+
+curl -s -I -X OPTIONS https://aispec.tail06293c.ts.net/api/login \
+  -H "Origin: https://evil.example.com"
+-> HTTP/1.1 204 No Content
+-> (Access-Control-Allow-Origin header is omitted, browser blocks request)</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: The GitHub Pages domain is explicitly permitted, while untrusted origins are safely denied access.</p>
+          </div>
+
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E4. Production Vite Compilation Receipt</p>
+              <span class="text-xs font-mono text-neutral-500">38 Modules Compiled</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Compilation log showing public tunnel URLs baked into the static bundle during build time.</p>
+            <pre class="code-block mt-4">vite v6.2.0 building for production...
+transforming (38) src/App.jsx
+38 modules transformed.
+dist/index.html                   1.63 kB
+dist/assets/index-BTmkcJnm.js    158.20 kB
+
+Grep verification in shipped bundle:
+grep "https://aispec.tail06293c.ts.net:10000/webhook/upload-cv" dist/assets/*.js -> MATCH
+grep "https://aispec.tail06293c.ts.net" dist/assets/*.js -> MATCH
+grep "localhost" dist/assets/*.js -> 0 occurrences in api constants</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: The production bundle contains zero local machine addresses, enabling remote visitors to connect directly to public tunnels.</p>
+          </div>
+
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E5. Database Cleanliness and Additive Upgrade</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">Integrity Verified</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Automated end-to-end registration hygiene test with immediate purge of test credentials.</p>
+            <pre class="code-block mt-4">Test account registered -> Gmail OTP delivered -> verification successful -> session issued.
+Cleanup executed: users -1, sessions -2, otps -1
+Active users remaining: 5 (admin and established accounts)
+Orphan records: 0
+Database check: PRAGMA integrity_check -> ok
+Snapshot: auth.db.bak-20260915-profile</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: Database integrity checks pass with zero orphaned sessions, and user records remain completely clean.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Failure Log</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">All 27 Failures Documented Honestly</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">Genuine engineering credibility is defined by how bugs are diagnosed and resolved. Here are all twenty-seven real issues encountered during development, divided into five major incident deep dives and twenty-two concise engineering takeaways.</p>
+
+        <div class="mt-12">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="font-display font-bold text-xs tracking-[0.18em] uppercase text-accent">Tier 1 Incidents</span>
+            <span class="text-xs text-neutral-400">Five Deep Dive Case Studies</span>
+          </div>
+
+          <div class="space-y-8">
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">1. Administrative Editor Exposed to the Internet</h3>
+                <span class="text-xs font-mono text-accent font-semibold">Security Perimeter Incident (#16, #18)</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> After enabling Tailscale Funnel on port 10000, testing the root path from outside returned HTTP 200 alongside the n8n administrative setup screen, exposing the workflow canvas to the public internet.</p>
+                <p><strong>Diagnosis:</strong> Mounting the entire local port 5678 forwarded all paths indiscriminately. While the webhook endpoint answered properly, the administrative editor was completely unprotected.</p>
+                <p><strong>Fix:</strong> We halted deployment immediately and reconfigured the tunnel using the path restriction argument set specifically to /webhook. Root requests now return HTTP 404, while the webhook endpoint responds reliably.</p>
+                <p><strong>Lesson:</strong> Every public gateway must be validated from two sides: confirm that the desired endpoint responds, and verify that the administrative interface remains hidden.</p>
+              </div>
+            </div>
+
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">2. False Diagnosis of Fragile Tunnel Infrastructure</h3>
+                <span class="text-xs font-mono text-accent font-semibold">Verification Fallacy (#25)</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> The assistant claimed the auth funnel was running in a foreground terminal that would drop upon window closure, and claimed reboot persistence was broken.</p>
+                <p><strong>Diagnosis:</strong> Process inspection revealed the tunnel was running under a systemd user session with no controlling terminal. The assistant had queried system-level units rather than user units. Daemon-held configurations handle tunnel routing independently of CLI processes.</p>
+                <p><strong>Fix:</strong> The erroneous claim was retracted, and the unnecessary backlog of proposed service scripts was discarded. The local backend setup operates as an intentional design decision.</p>
+                <p><strong>Lesson:</strong> Inspect user-level systemd units before claiming services do not exist. Declaring failure modes without verification produces fictional problems.</p>
+              </div>
+            </div>
+
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">3. Four-Node Security Guard Rejected by Owner Judgment</h3>
+                <span class="text-xs font-mono text-accent font-semibold">Architectural Overengineering (#22, #24, #27)</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> The assistant designed a complex four-node token authentication chain inside the live n8n canvas to protect the screening webhook, reporting changes were applied.</p>
+                <p><strong>Diagnosis:</strong> Threat modeling proved the webhook endpoint is stateless, results wipe fresh on every run, and malicious callers only receive their own submitted data. Adding multi-node token validation solved an enterprise problem on a portfolio project while adding unnecessary complexity. Furthermore, the tool call had only modified an unpersisted draft.</p>
+                <p><strong>Fix:</strong> The owner formally rejected the overengineered security chain. The webhook remains intentionally open with documented threat boundaries, and the live workflow canvas was kept pristine.</p>
+                <p><strong>Lesson:</strong> Security measures must scale with actual threat severity. A good engineer locks doors to the size of the danger, and saying no is a legitimate engineering choice.</p>
+              </div>
+            </div>
+
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">4. Fabricated No-Login Rule and Domain Encroachment</h3>
+                <span class="text-xs font-mono text-accent font-semibold">Specification Drift (#8, #23)</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> The assistant introduced a banner stating no login was required for screening, assuming the original proof of concept flow should continue automatically.</p>
+                <p><strong>Diagnosis:</strong> Access boundaries represent strategic product decisions reserved for the system owner. The core goal of Experiment 013 was proving shared backend authentication across a third platform client, making mandatory login essential.</p>
+                <p><strong>Fix:</strong> The interface and client guards were rewritten to require authentication before accessing the application, and the division between owner decisions and coding implementation was reaffirmed.</p>
+                <p><strong>Lesson:</strong> Access controls must be confirmed directly with the owner rather than inherited blindly from early prototypes.</p>
+              </div>
+            </div>
+
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">5. Hot Module Replacement Split State During Navigation Rename</h3>
+                <span class="text-xs font-mono text-accent font-semibold">Development Runtime Trap (#3, #4)</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> Renaming navigation keys caused the browser to display the settings screen whenever the home button was clicked, even though disk files appeared correct.</p>
+                <p><strong>Diagnosis:</strong> Rapid sequential edits overwhelmed Vite hot module replacement. The development server served a hybrid module graph mixing new state keys with legacy event handlers.</p>
+                <p><strong>Fix:</strong> The development process was terminated, the server was restarted cleanly, and a fresh browser tab was opened to clear cached bundles.</p>
+                <p><strong>Lesson:</strong> Structural changes to application keys require a clean server restart and fresh browser sessions rather than relying on live hot reloading.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-16">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="font-display font-bold text-xs tracking-[0.18em] uppercase text-neutral-500">Tier 2 Log</span>
+            <span class="text-xs text-neutral-400">22 Concise Engineering Lessons</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="0">
+              <p class="font-display font-bold text-xs text-ink">6. Identical Scaffold Mirroring (##0)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Preserved original proof of concept files intact via copy-never-move conventions so legacy technical tests remain untouched.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="30">
+              <p class="font-display font-bold text-xs text-ink">7. Zombie Vite Child Processes (##1)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Killing parent shell processes left child Vite instances running on the target port. Always verify socket tables before launching dev servers.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="60">
+              <p class="font-display font-bold text-xs text-ink">8. Internal Prototype Vocabulary in Interface (##2)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Draft notes like scaffold and museum leaked into user headings. We audited all strings to ensure clean customer-facing wording.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="90">
+              <p class="font-display font-bold text-xs text-ink">9. Unspoken Server Restart Instructions (##4)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Failing to inform the owner that structural edits required restarting dev servers caused confusion. Operational instructions must accompany edits.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="0">
+              <p class="font-display font-bold text-xs text-ink">10. Awkward Accent Characters Impaired Readability (##5)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Using accented characters made words difficult to type and search. Professional styling favors clean typography over decorative accents.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="30">
+              <p class="font-display font-bold text-xs text-ink">11. Inverted Hover States on Buttons (##6)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">An ambiguous visual instruction led to styling button borders instead of backgrounds. Clarifying visual expectations early prevents repeated revisions.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="60">
+              <p class="font-display font-bold text-xs text-ink">12. Download Buttons Placed Above Results (##7)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Placing export buttons above the ranking table disrupted reading order. Placing actions below data lets users review results before exporting.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="90">
+              <p class="font-display font-bold text-xs text-ink">13. Premature Styling on Ambiguous Feedback (##9)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Restyling forms without clarifying what was basic resulted in wasted effort. Short feedback requires a clarifying question before writing code.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="0">
+              <p class="font-display font-bold text-xs text-ink">14. Searching Client HTML for React Elements (##10)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Attempting to grep compiled component strings from empty root HTML shells failed. SPA verification requires inspecting bundled JavaScript assets.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="30">
+              <p class="font-display font-bold text-xs text-ink">15. Identical String Replacement Failure (##11)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Submitting identical target and replacement strings caused file edit tool errors. Always inspect tool echoes to catch failed edits immediately.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="60">
+              <p class="font-display font-bold text-xs text-ink">16. Stale Browser Token Lookups (##12)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Residual tokens from earlier sessions mimicked unexpected logins. Testing authentication flows requires clearing browser storage between runs.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="90">
+              <p class="font-display font-bold text-xs text-ink">17. Missing Host Command Line Utilities (##13)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Assuming sqlite3 and php were installed locally produced command errors. Inspect available utilities beforehand and use reliable alternatives like python3.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="0">
+              <p class="font-display font-bold text-xs text-ink">18. End-to-End Test Suite Hygiene (##14)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Database writes during testing must include cleanup routines that remove test rows and confirm zero orphaned sessions remain.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="30">
+              <p class="font-display font-bold text-xs text-ink">19. Build Failure on Unread Tool Echoes (##15)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Skipping a failed export edit caused compiler errors during build. Always verify output from each edit step before triggering production builds.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="60">
+              <p class="font-display font-bold text-xs text-ink">20. Docker Host Network Conflated with Native (##17)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Mistaking dockerized host-network containers for native host processes led to incorrect reports. Check compose manifests rather than process lists.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="90">
+              <p class="font-display font-bold text-xs text-ink">21. Vanishing Postgres Table Explained by Design (##19)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Searching for candidate tables locally returned empty sets because the workflow executes TRUNCATE after scoring, keeping runs fresh by design.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="0">
+              <p class="font-display font-bold text-xs text-ink">22. Localhost Dist Blocked by CORS via Funnel (##21)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Querying the public tunnel domain from localhost triggered browser CORS blocks. Verifying production behavior requires testing from allowed origins.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="30">
+              <p class="font-display font-bold text-xs text-ink">23. Misleading Backend Error Notifications (##21)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">The interface showed backend down alerts when requests were blocked by CORS headers. Error messages should distinguish network failures from access limits.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="60">
+              <p class="font-display font-bold text-xs text-ink">24. Applied Tool Echo Differed from Persisted Canvas (##22)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Tool output reported nodes added while the active workflow canvas remained unchanged. Verify state by reading remote resources rather than tool echoes.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="90">
+              <p class="font-display font-bold text-xs text-ink">25. Preserving Production Build Entry Templates (##20)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Building from a root HTML artifact instead of the source template produced an empty bundle. Treat templates as source and root HTML as generated output.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="0">
+              <p class="font-display font-bold text-xs text-ink">26. Mobile Smoke Test Verification (##26)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Conducting real device smoke tests across public connections verified that authentication, extraction, and ranking operate smoothly in the wild.</p>
+            </div>
+            <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="30">
+              <p class="font-display font-bold text-xs text-ink">27. Assistant Solution Stacking Anti-Pattern (##27)</p>
+              <p class="mt-2 text-xs text-neutral-600 leading-relaxed">Adding unrequested tasks and layers forced the owner to unravel unnecessary complexity. Good assistants are measured by problems they avoid creating.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Frontend Code</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">In-Browser PDF Parsing and Webhook Dispatcher</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">The frontend coordinates PDF text extraction and dispatches structured JSON payloads to the scoring engine. Below are the key implementations.</p>
+
+        <div class="mt-8 space-y-6" data-reveal="150">
+          <div>
+            <p class="font-mono text-sm text-neutral-500">In-Browser Text Extraction via pdf.js - src/pdf.js (essence)</p>
+            <pre class="code-block mt-4">export async function extractTextFromPdf(file) {
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  let fullText = '';
+  for (let i = 1; i &lt;= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    const strings = content.items.map(item => item.str);
+    fullText += strings.join(' ') + '\n';
+  }
+  return {
+    numPages: pdf.numPages,
+    charCount: fullText.length,
+    text: fullText.trim()
+  };
+}</pre>
+          </div>
+
+          <div>
+            <p class="font-mono text-sm text-neutral-500">Dispatching Clean Payloads to n8n Webhook - src/n8n.js (essence)</p>
+            <pre class="code-block mt-4">const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL;
+
+export async function sendCvBatchToScreening(cvPayloadList) {
+  const response = await fetch(N8N_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(cvPayloadList)
+  });
+  if (!response.ok) {
+    throw new Error(`Screening request failed with status ${response.status}`);
+  }
+  return response.json();
+}</pre>
+          </div>
+
+          <div>
+            <p class="font-mono text-sm text-neutral-500">Additive User Profile Update - src/auth.js (essence)</p>
+            <pre class="code-block mt-4">export async function apiUpdateProfile(payload) {
+  const token = localStorage.getItem('cv.token');
+  const response = await fetch(`${AUTH_URL}/api/me`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(payload)
+  });
+  return response.json();
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Networking Architecture</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Two-Door Network: Path-Restricted Webhook and Shared Auth</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">Connecting a static client application on GitHub Pages to local containers requires strict network controls. Tailscale Funnel creates public HTTPS endpoints without exposing internal tools.</p>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6" data-reveal="150">
+          <div class="border border-black/10 rounded-2xl p-6 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-accent">Door 1: Shared Authentication Gateway</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">Public URL: <code class="code-inline">https://aispec.tail06293c.ts.net</code></p>
+            <p class="mt-2 text-sm text-neutral-700 leading-relaxed">Internal Target: Docker container on port 7002 (PHP auth engine from EXP 011).</p>
+            <p class="mt-2 text-xs text-neutral-500 leading-relaxed">Handles account logins, registration with Gmail OTP verification, password updates, and profile edits across all three client applications.</p>
+          </div>
+
+          <div class="border border-black/10 rounded-2xl p-6 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-accent">Door 2: Path-Restricted Screening Webhook</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">Public URL: <code class="code-inline">https://aispec.tail06293c.ts.net:10000/webhook/upload-cv</code></p>
+            <p class="mt-2 text-sm text-neutral-700 leading-relaxed">Internal Target: Docker container on port 5678 (n8n execution engine).</p>
+            <p class="mt-2 text-xs text-neutral-500 leading-relaxed">Path restricted via tunnel arguments. The root path returns HTTP 404 to hide the n8n administrative editor, while the webhook endpoint evaluates candidate batches.</p>
+          </div>
+        </div>
+
+        <blockquote class="quote-block mt-8 text-sm sm:text-base text-neutral-700 leading-relaxed border-black/20 bg-paper rounded-2xl p-6" data-reveal>Both public gateways terminate encrypted TLS connections at the machine boundary. Static web pages download into the visitor browser and communicate with both endpoints without requiring intermediate cloud servers.</blockquote>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper" open>
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why does screening require login when the original test did not?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">The test proved the engine. The platform proves one account serves many apps. Login ties screenings to people, and the same backend serves all three apps with zero re-code.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Where do my CVs go? Is anything stored?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Text is extracted in your browser, scored by the workflow, then the result table is wiped fresh every run by design. Downloads (JSON/CSV) are yours to keep. 5 sample CVs, 2780 to 7523 chars each, never leave your browser as files.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why is the screening webhook open? Is that not a hole?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Measured decision, documented on-page: stateless endpoint, self-wiping results, near-zero attacker ROI (a spammer only scores their own junk). The n8n editor itself answers 404 on the public door. Hardening scales with threat, not with fear.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Too good to be true? 27 failures says otherwise - which one hurt most?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Exposing the n8n editor to the internet during go-live. Full stop, documented with curl receipts. Also: a workflow edit that never persisted while the tool said saved. Both are on this page with evidence.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why does it fail when your PC is off?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">No VPS by decision, home PC plus secure tunnels (:443 auth, :10000 screening). Off means doors closed and the page says so instead of pretending. Same honesty as EXP 010/011/012.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why React for the portal but rule-code instead of AI for scoring?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">React earns its place (upload queue, live pipeline view, auth, settings in one state tree). Scoring stays rule-based 50-20-30 so every point is explainable. AI is used where it helps, not where it impresses.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live Status</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Live Status - Live Frontend, Home-PC Backend + n8n</h2>
+        <div class="mt-8 grid sm:grid-cols-2 gap-4" data-reveal="150">
+          <div class="border border-emerald-200 rounded-2xl p-6 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-emerald-700">&#9989; What works now</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>Live React application hosted on GitHub Pages</li>
+              <li>In-browser PDF text extraction via pdf.js with defensive parsing</li>
+              <li>Realtime seven-step visual pipeline reflecting actual n8n execution</li>
+              <li>Candidate ranking and evaluation with CSV and JSON exports</li>
+              <li>Shared authentication login reusing EXP 011 backend on port 7002</li>
+              <li>Additive profile management via PUT /api/me and password reset flows</li>
+              <li>Two Tailscale Funnel doors with verified path restriction on port 10000</li>
+            </ul>
+          </div>
+          <div class="border border-amber-300 bg-amber-50/50 rounded-2xl p-6">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-amber-700">&#128679; What isn't production yet</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>Not running on a 24/7 cloud server infrastructure</li>
+              <li>Backend relies on personal computer remaining powered on</li>
+              <li>Screening webhook remains intentionally open by threat assessment</li>
+              <li>No historical candidate results stored due to self-wiping TRUNCATE design</li>
+              <li>Production hardening and service scaling reserved for a future milestone</li>
+            </ul>
+          </div>
+        </div>
+        <blockquote class="quote-block mt-8 text-sm sm:text-base text-neutral-600 leading-relaxed border-amber-300 bg-amber-50 rounded-r-2xl p-6" data-reveal>Frontend live 24/7 on GitHub Pages. Backend + n8n run on my personal PC (funnels :443 + :10000). Off -> login/screening fails with a message, expected. Screenshots + curl logs show how it works.</blockquote>
+      </div>
+    </section>
+
+    <section class="py-16 border-t border-black/10 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="max-w-3xl" data-reveal>
+          <p class="eyebrow">Disclaimer</p>
+          <h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">Disclaimer - Live Frontend, Local Backend + n8n, Not Production-Hardened</h2>
+          <blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">Validated with the exact same Tiel-Coder-35B model through llama.cpp-server (inference flags in EXP 001). Replica CVs, no real applicant data. OTP/token/passwords never shown.</blockquote>
+          <p class="mt-6 text-sm text-neutral-700 leading-relaxed"><strong>POC:</strong> <a class="underline hover:text-accent" href="exp007.html">EXP 007 (the raw POC)</a> &middot; <strong>First UI:</strong> <a class="underline hover:text-accent" href="exp010.html">EXP 010 (Job Tracker)</a> &middot; <strong>Shared backend:</strong> <a class="underline hover:text-accent" href="exp011.html">EXP 011 (:7002)</a> &middot; <strong>Second customer:</strong> <a class="underline hover:text-accent" href="exp012.html">EXP 012 (/miniLeads/)</a> &middot; <strong>This:</strong> EXP 013 (<a class="underline hover:text-accent" href="https://robbyaliasaakbar.github.io/cv_screening/" target="_blank" rel="noopener">/cv_screening/</a>) &middot; <strong>Machine:</strong> <a class="underline hover:text-accent" href="exp001.html">EXP 001</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal>
+          <a href="experiments-list.html" class="arrow-link font-display text-sm uppercase"><span aria-hidden="true">&larr;</span> Back to Experiments</a>
+          <a href="contact.html" class="arrow-link font-display text-sm uppercase">Have a problem worth exploring? <span aria-hidden="true">-&gt;</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="bg-dark-section text-white"><div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8"><div class="grid gap-12 md:grid-cols-3"><div><p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p><p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">AI Systems Builder &amp; Experimenter</p><p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">Exploring AI systems, local LLMs, automation workflows, and practical tools that actually work in real business operations.<br>Building what matters, and checking whether AI is truly useful in everyday work.</p></div><div class="md:justify-self-center"><p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p><ul class="mt-5 space-y-3 text-sm"><li><a href="/" class="footer-link">Home</a></li><li><a href="profile.html" class="footer-link">Profile</a></li><li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li><li><a href="contact.html" class="footer-link">Contact</a></li></ul></div><div class="md:justify-self-end"><p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p><ul class="mt-5 space-y-3 text-sm"><li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li><li><a href="https://www.reddit.com/user/Full_Director87/" target="_blank" rel="noopener" class="footer-link">Reddit</a></li><li><a href="https://www.instagram.com/ybboraa/" target="_blank" rel="noopener" class="footer-link">Instagram</a></li><li><a href="mailto:ibborarts@gmail.com" class="footer-link">Email</a></li><li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">WhatsApp</a></li></ul></div></div><div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40"><p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p><p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p></div></div></footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

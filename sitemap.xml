@@ -29,7 +29,7 @@
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/experiments-list.html</loc>
-    <lastmod>2026-09-14</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -314,6 +314,72 @@
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/setting-page-dark.webp</image:loc>
       <image:title>Experiment 012 — Settings page dark mode</image:title>
       <image:caption>Account details and appearance picker in dark mode</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://robbyaliasaakbar.github.io/exp013.html</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/homepage-light.webp</image:loc>
+      <image:title>Experiment 013 — Hero and upload queue light mode</image:title>
+      <image:caption>CV screening hero and upload queue in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/homepage-dark.webp</image:loc>
+      <image:title>Experiment 013 — Hero and upload queue dark mode</image:title>
+      <image:caption>CV screening hero and upload queue in dark mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/extracting-pdf-to-json-light.webp</image:loc>
+      <image:title>Experiment 013 — PDF text extraction to JSON light mode</image:title>
+      <image:caption>In-browser PDF extraction to JSON in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/extracting-pdf-to-json-dark.webp</image:loc>
+      <image:title>Experiment 013 — PDF text extraction to JSON dark mode</image:title>
+      <image:caption>In-browser PDF extraction to JSON in dark mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/realtime-visual-progress-light.webp</image:loc>
+      <image:title>Experiment 013 — Realtime visual pipeline progress light mode</image:title>
+      <image:caption>Seven-step visual pipeline progress in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/realtime-visual-progress-dark.webp</image:loc>
+      <image:title>Experiment 013 — Realtime visual pipeline progress dark mode</image:title>
+      <image:caption>Seven-step visual pipeline progress in dark mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/login-light.webp</image:loc>
+      <image:title>Experiment 013 — Shared auth login light mode</image:title>
+      <image:caption>Shared auth login reusing EXP 011 backend in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/login-dark.webp</image:loc>
+      <image:title>Experiment 013 — Shared auth login dark mode</image:title>
+      <image:caption>Shared auth login in dark mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/register-light.webp</image:loc>
+      <image:title>Experiment 013 — User registration light mode</image:title>
+      <image:caption>User registration and Gmail OTP verification in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/register-dark.webp</image:loc>
+      <image:title>Experiment 013 — User registration dark mode</image:title>
+      <image:caption>User registration and Gmail OTP verification in dark mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/settings-light.webp</image:loc>
+      <image:title>Experiment 013 — Settings and profile management light mode</image:title>
+      <image:caption>Profile editing and appearance settings in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/settings-dark.webp</image:loc>
+      <image:title>Experiment 013 — Settings and profile management dark mode</image:title>
+      <image:caption>Profile editing and appearance settings in dark mode</image:caption>
     </image:image>
   </url>
   <url>
