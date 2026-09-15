@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV Screening Platform — Upload, Extract & Rank 1–5 CVs</title>
+  <meta name="description" content="Upload 1–5 CV PDFs, extract text automatically and receive a ranked shortlist. Fast, structured, review-ready.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- pdf.js v2 (stable) — text extraction runs in the browser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script>
+    // Warna HEX paten (terbukti jalan di browser). Dark mode pake class dark: eksplisit.
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { ink: '#0C0C0C', paper: '#FFFFFF', accent: '#D70000' },
+          fontFamily: { display: ['Manrope', 'sans-serif'], body: ['Inter', 'sans-serif'] }
+        }
+      }
+    };
+  </script>
+  <script type="module" crossorigin src="./assets/index-BTmkcJnm.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-B1McAiwZ.css">
+</head>
+<body class="bg-paper dark:bg-[#0e0e10] text-ink dark:text-[#ededed] font-body antialiased">
+  <div id="root"></div>
+  <!-- TEMPLATE: file ini sumber kebenaran. Jangan build dari index.html hasil copy. -->
+</body>
+</html>

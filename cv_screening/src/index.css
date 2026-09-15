@@ -1,0 +1,18 @@
+/* Simple styles: copy pola miniLeads biar langsung kenal. */
+:root { color-scheme: light; }
+.dark { color-scheme: dark; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, sans-serif; background-color: #FFFFFF; color: #0C0C0C; -webkit-font-smoothing: antialiased; }
+h1, h2, .font-display { font-family: 'Manrope', 'Inter', sans-serif; }
+::selection { background-color: #D70000; color: #fff; }
+.eyebrow { display: inline-flex; align-items: center; gap: .625rem; font-family: 'Manrope', sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: #D70000; }
+.bg-grid { background-image: linear-gradient(rgba(12,12,12,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(12,12,12,.045) 1px, transparent 1px); background-size: 56px 56px; pointer-events: none; }
+.dark .bg-grid { background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px); }
+@media (max-width: 640px) { input, select { font-size: 16px !important; } }
+
+/* Floating cards: deep static shadow + firm lift on hover. */
+.card-float { background-color: #fff; border-color: #0C0C0C; box-shadow: 0 1px 3px rgba(12,12,12,.12), 0 20px 45px -12px rgba(12,12,12,.25); transition: transform .3s ease, box-shadow .3s ease; }
+.card-float:hover { transform: translateY(-4px); box-shadow: 0 4px 8px rgba(12,12,12,.10), 0 32px 64px -12px rgba(12,12,12,.35); }
+.dark .card-float { background-color: #17171a; border-color: rgba(255,255,255,.14); box-shadow: 0 2px 6px rgba(0,0,0,.5), 0 24px 55px -12px rgba(0,0,0,.75); }
+.dark .card-float:hover { box-shadow: 0 4px 10px rgba(0,0,0,.5), 0 36px 70px -12px rgba(0,0,0,.85); }
+@media (prefers-reduced-motion: reduce) { .card-float, .card-float:hover { transform: none; } }
