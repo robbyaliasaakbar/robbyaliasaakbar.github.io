@@ -1,0 +1,1153 @@
+{
+  "name": "Technical Test",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "upload-cv",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "f81477cb-466c-4cf8-b674-252849e9e887",
+      "name": "Webhook Upload CV",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        64,
+        0
+      ],
+      "webhookId": "10baa5bf-b792-4a3c-be40-32ce5a1098c6"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first=$input.first().json; const body=first.body??first; let arr=Array.isArray(body)?body:(Array.isArray(body.data)?body.data:(body.body&&Array.isArray(body.body)?body.body:[body])); arr=arr.filter(o=>o&&typeof o==='object').slice(0,5); return arr.map((item,idx)=>{ const text=(item.text||item.isi_cv||'').toString(); const filename=item.filename||item.nama_file_cv||`CV_${idx+1}.pdf`; let nama=filename.replace(/\\.pdf$/i,''); if(text){const fl=text.split('\\n').map(s=>s.trim()).find(s=>s.length>3&&s.length<60); if(fl) nama=fl.slice(0,60);} return {json:{id_cv:item.id||item.id_cv||`cv_${idx+1}`,nama_file_cv:filename,nama_pengirim:nama,isi_cv:text,size_kb:item.size_kb||0,page_count:item.page_count||0,uploaded_at:item.uploaded_at||new Date().toISOString(),raw:item}};});"
+      },
+      "id": "45d726d1-59fc-488b-ae29-2dc194b9c5da",
+      "name": "Code Extractor",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        288,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const posA=['architect','architecture','s1 arsitektur','junior architect','autocad','revit','sketchup','lumion','building code','project management','site supervisor','design','planning']; const posB=['drafter','3d visualization','3d visualisation','enscape','d5 render','shop drawing','as built','as-built','vray','drafting','technical drawing','quality control','autocad','sketchup','lumion']; const posC=['interior','interior designer','interior architect','furniture','lighting','rendering','photoshop','illustrator','v-ray','twinmotion']; return $input.all().map(item=>{ const j=item.json; const txt=(j.isi_cv||'').toLowerCase(); const count=arr=>arr.filter(k=>txt.includes(k)).length; const a=count(posA), b=count(posB), c=count(posC); let posisi='Posisi A'; let max=a; let keyword_match=posA.filter(k=>txt.includes(k)); if(b>max){max=b; posisi='Posisi B'; keyword_match=posB.filter(k=>txt.includes(k));} if(c>max){max=c; posisi='Posisi C'; keyword_match=posC.filter(k=>txt.includes(k));} if(a===b && a===c && a>0) {posisi='Posisi A'; keyword_match=posA.filter(k=>txt.includes(k)); max=a;} return {json:{...j,posisi,keyword_match,keyword_score:max,keyword_detail:{posA:a,posB:b,posC:c}}};});"
+      },
+      "id": "a8c9f9d1-0afb-455f-bc72-bc50a92a1877",
+      "name": "Code Keyword Router",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        512,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "id_cv",
+              "value": "={{ $json.id_cv }}",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "nama_file_cv",
+              "value": "={{ $json.nama_file_cv }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "nama_pengirim",
+              "value": "={{ $json.nama_pengirim }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "isi_cv",
+              "value": "={{ $json.isi_cv }}",
+              "type": "string"
+            },
+            {
+              "id": "5",
+              "name": "posisi",
+              "value": "={{ $json.posisi }}",
+              "type": "string"
+            },
+            {
+              "id": "6",
+              "name": "keyword_match",
+              "value": "={{ $json.keyword_match }}",
+              "type": "array"
+            },
+            {
+              "id": "7",
+              "name": "keyword_score",
+              "value": "={{ $json.keyword_score }}",
+              "type": "number"
+            },
+            {
+              "id": "8",
+              "name": "keyword_detail",
+              "value": "={{ $json.keyword_detail }}",
+              "type": "object"
+            },
+            {
+              "id": "9",
+              "name": "size_kb",
+              "value": "={{ $json.size_kb }}",
+              "type": "number"
+            },
+            {
+              "id": "10",
+              "name": "page_count",
+              "value": "={{ $json.page_count }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d3c70fd0-ba6e-4c38-b503-e6d6a48ed891",
+      "name": "Edit Fields Rapihin",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        736,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.posisi }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "Posisi A",
+                    "id": "e724482a-73ec-490d-9af9-5cd4eccbe660"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Posisi A"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.posisi }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "Posisi B",
+                    "id": "524d7de2-3fb3-45d0-bf30-75b0be7bed11"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Posisi B"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.posisi }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "rightValue": "Posisi C",
+                    "id": "a73cb5f0-43d0-4c9e-b45f-d642df1b60df"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Posisi C"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "allMatchingOutputs": false
+        }
+      },
+      "id": "943518d7-c936-45fa-ace1-9319776aae5f",
+      "name": "Switch Posisi",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        992,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// 1 CV per 1 CV - clean\nconst j = $input.item.json;\nreturn { json: { ...j } };\n"
+      },
+      "id": "105d6431-7676-4ff0-9b74-7a0127263c70",
+      "name": "Code Pemecah Jalur",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1296,
+        -176
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Normalisasi 1 CV per 1 - hanya 4 field\nconst j = $input.item.json;\nlet txt = (j.isi_cv || '').toString();\ntxt = txt.replace(/\\r/g, '').replace(/\\n{3,}/g, '\\n\\n').replace(/\\t/g, ' ').replace(/\\s{2,}/g, ' ').trim();\nreturn {\n  json: {\n    id_cv: j.id_cv,\n    nama_file: j.nama_file_cv,\n    isi_cv: j.isi_cv,\n    isi_cv_normalize: txt\n  }\n};\n"
+      },
+      "id": "e4a2648b-0cb8-4711-ab3f-f0e4eed2dc81",
+      "name": "Code Normalisasi",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1504,
+        -176
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2cdb319f-8241-442b-ac86-73ef45ea423a",
+              "name": "id_cv",
+              "value": "={{ $json.id_cv }}",
+              "type": "string"
+            },
+            {
+              "id": "b3c15038-6b21-42b3-83ff-e680c58809d5",
+              "name": "nama_file_cv",
+              "value": "={{ $json.nama_file }}",
+              "type": "string"
+            },
+            {
+              "id": "d631868a-b54d-4e3c-a42a-53b2c01dbf3d",
+              "name": "isi_cv",
+              "value": "={{ $json.isi_cv_normalize }}",
+              "type": "string"
+            },
+            {
+              "id": "9687605b-df21-4ef3-a665-a0bd8e4a921e",
+              "name": "posisi",
+              "value": "={{ $json.posisi }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1696,
+        -176
+      ],
+      "id": "5117216a-b0fd-4f3b-a267-d9344cf32ad8",
+      "name": "Edit Fields",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Hitung 1 CV per 1 - 6 field output\nconst j = $input.item.json;\nconst txt = (j.isi_cv || '').toLowerCase();\nlet posisi = j.posisi || 'Junior Architect';\nlet skills = [];\nif (posisi === 'Junior Architect' || posisi === 'Posisi A') skills = ['autocad','revit','sketchup','lumion','building code','project management','site supervisor','design','planning','architect'];\nelse if (posisi === 'Drafter & 3D Visualization' || posisi === 'Posisi B') skills = ['autocad','sketchup','enscape','d5 render','vray','drafting','technical drawing','shop drawing','as built','drafter','lumion'];\nelse if (posisi === 'Interior Designer' || posisi === 'Posisi C') skills = ['interior','furniture','lighting','rendering','photoshop','illustrator','v-ray','twinmotion','lumion','enscape'];\nelse skills = ['autocad','revit','sketchup','lumion'];\nlet keahlianList = [...new Set(skills.filter(s => txt.includes(s)))];\nif (j.keyword_match) keahlianList = [...new Set([...keahlianList, ...j.keyword_match])];\nconst keahlianCount = Math.min(keahlianList.length, 10);\nconst skillScore = (keahlianCount / 10) * 50;\nconst eduKeywords = ['s1 arsitektur','sarjana arsitektur','bachelor of architecture','smk','smkn','master','magister','universitas','institute of technology'];\nlet edukasiList = eduKeywords.filter(k => txt.includes(k));\nif (edukasiList.length === 0 && txt.includes('pendidikan')) edukasiList = ['pendidikan'];\nconst edukasiCount = Math.min(edukasiList.length, 4);\nconst eduScore = (edukasiCount / 4) * 20;\nlet expTahun = 0;\nconst expMatches = txt.match(/(\\d+)\\s*(tahun|year)/g);\nif (expMatches) expMatches.forEach(m=>{ const n=parseInt(m); if(!isNaN(n)) expTahun=Math.max(expTahun,n); });\nif (expTahun===0 && txt.includes('10 years')) expTahun=10;\nif (expTahun===0 && txt.includes('5 tahun')) expTahun=5;\nconst expCount=Math.min(expTahun,6);\nconst expScore=(expCount/6)*30;\nconst total=Math.round(skillScore+eduScore+expScore);\nconst status=total>=65?'Lolos':'Tidak Lolos';\nconst alasan=status==='Lolos'?`Lolos ${total}% utk ${posisi}`:`Tidak Lolos ${total}% utk ${posisi}`;\nreturn { json: { id_cv: j.id_cv, nama_file: j.nama_file || j.nama_file_cv, total_score: total, posisi, status, alasan } };\n"
+      },
+      "id": "a71ba0e1-8adb-406e-9119-94e43c69f642",
+      "name": "Code Hitung Persentase",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1888,
+        -176
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ea739e46-c5d2-42a9-9fd9-2b92ea7cb112",
+              "name": "id_cv",
+              "value": "={{ $json.id_cv }}",
+              "type": "string"
+            },
+            {
+              "id": "87e5a308-6443-4101-ac59-652a3087942c",
+              "name": "nama_file",
+              "value": "={{ $json.nama_file }}",
+              "type": "string"
+            },
+            {
+              "id": "9d6da6b3-69e0-487a-b7dc-3bb4ebb69973",
+              "name": "total_score",
+              "value": "={{ $json.total_score }}",
+              "type": "number"
+            },
+            {
+              "id": "59481184-b8cd-414f-b5e7-782c1e38f049",
+              "name": "status",
+              "value": "={{ $json.status }}",
+              "type": "string"
+            },
+            {
+              "id": "43da3d9c-6fbc-4200-a6d1-3d6fcf192e04",
+              "name": "posisi",
+              "value": "={{ $json.posisi }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2096,
+        -176
+      ],
+      "id": "cd02d9d4-eb53-451d-86bd-00fb58ce0f79",
+      "name": "ekstrak data penting",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// 1 CV per 1 - B\nconst j = $input.item.json;\nreturn { json: { ...j } };\n"
+      },
+      "id": "ba06749d-baa9-48c5-b605-609bdc6b7dd8",
+      "name": "Code Pemecah B",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1296,
+        -16
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Normalisasi B\nconst j = $input.item.json;\nlet txt = (j.isi_cv || '').toString();\ntxt = txt.replace(/\\r/g, '').replace(/\\n{3,}/g, '\\n\\n').replace(/\\t/g, ' ').replace(/\\s{2,}/g, ' ').trim();\nlet posisiReal = 'Drafter & 3D Visualization';\nreturn { json: { id_cv: j.id_cv, nama_file: j.nama_file_cv, isi_cv: j.isi_cv, isi_cv_normalize: txt, posisi: posisiReal } };\n"
+      },
+      "id": "63c698b7-2a3f-43c3-bb81-6b1e96f3f655",
+      "name": "Code Normalisasi B",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1504,
+        -16
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "id_cv",
+              "value": "={{ $json.id_cv }}",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "nama_file",
+              "value": "={{ $json.nama_file }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "isi_cv",
+              "value": "={{ $json.isi_cv_normalize }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "posisi",
+              "value": "={{ $json.posisi }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ae064e5c-f328-49f9-9e4e-ddb837133bc6",
+      "name": "Edit Fields B",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1696,
+        -16
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Hitung B - sama 50-20-30\nconst j = $input.item.json;\nconst txt = (j.isi_cv || '').toLowerCase();\nlet posisi = j.posisi || 'Drafter & 3D Visualization';\nlet skills = ['autocad','sketchup','enscape','d5 render','vray','drafting','technical drawing','shop drawing','as built','drafter','lumion'];\nlet keahlianList = [...new Set(skills.filter(s => txt.includes(s)))];\nconst keahlianCount = Math.min(keahlianList.length, 10);\nconst skillScore = (keahlianCount / 10) * 50;\nconst eduKeywords = ['s1 arsitektur','sarjana arsitektur','bachelor of architecture','smk','smkn','master','magister','universitas','institute of technology'];\nlet edukasiList = eduKeywords.filter(k => txt.includes(k));\nif (edukasiList.length === 0 && txt.includes('pendidikan')) edukasiList = ['pendidikan'];\nconst edukasiCount = Math.min(edukasiList.length, 4);\nconst eduScore = (edukasiCount / 4) * 20;\nlet expTahun = 0;\nconst expMatches = txt.match(/(\\d+)\\s*(tahun|year)/g);\nif (expMatches) expMatches.forEach(m=>{ const n=parseInt(m); if(!isNaN(n)) expTahun=Math.max(expTahun,n); });\nif (expTahun===0 && txt.includes('10 years')) expTahun=10;\nconst expCount=Math.min(expTahun,6);\nconst expScore=(expCount/6)*30;\nconst total=Math.round(skillScore+eduScore+expScore);\nconst status=total>=65?'Lolos':'Tidak Lolos';\nreturn { json: { id_cv:j.id_cv, nama_file:j.nama_file, total_score:total, posisi, status, alasan: status==='Lolos'?`Lolos ${total}% utk ${posisi}`:`Tidak Lolos ${total}% utk ${posisi}` } };\n"
+      },
+      "id": "678c3bb7-eecb-4744-ba0c-b89dca122246",
+      "name": "Code Hitung B",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1888,
+        -16
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// 1 CV per 1 - C\nconst j = $input.item.json;\nreturn { json: { ...j } };\n"
+      },
+      "id": "ab3c05a1-7c8e-4787-b24c-8d49a243ac81",
+      "name": "Code Pemecah C",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1296,
+        160
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Normalisasi C\nconst j = $input.item.json;\nlet txt = (j.isi_cv || '').toString();\ntxt = txt.replace(/\\r/g, '').replace(/\\n{3,}/g, '\\n\\n').replace(/\\t/g, ' ').replace(/\\s{2,}/g, ' ').trim();\nlet posisiReal = 'Interior Designer';\nreturn { json: { id_cv: j.id_cv, nama_file: j.nama_file_cv, isi_cv: j.isi_cv, isi_cv_normalize: txt, posisi: posisiReal } };\n"
+      },
+      "id": "27c1d59f-ae2b-445d-9825-8625d2227193",
+      "name": "Code Normalisasi C",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1504,
+        160
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1",
+              "name": "id_cv",
+              "value": "={{ $json.id_cv }}",
+              "type": "string"
+            },
+            {
+              "id": "2",
+              "name": "nama_file",
+              "value": "={{ $json.nama_file }}",
+              "type": "string"
+            },
+            {
+              "id": "3",
+              "name": "isi_cv",
+              "value": "={{ $json.isi_cv_normalize }}",
+              "type": "string"
+            },
+            {
+              "id": "4",
+              "name": "posisi",
+              "value": "={{ $json.posisi }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "aeb55fec-8aba-46f7-bceb-727a1a9ebd5f",
+      "name": "Edit Fields C",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1696,
+        160
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Hitung C\nconst j = $input.item.json;\nconst txt = (j.isi_cv || '').toLowerCase();\nlet posisi = j.posisi || 'Interior Designer';\nlet skills = ['interior','furniture','lighting','rendering','photoshop','illustrator','v-ray','twinmotion','lumion','enscape'];\nlet keahlianList = [...new Set(skills.filter(s => txt.includes(s)))];\nconst keahlianCount = Math.min(keahlianList.length, 10);\nconst skillScore = (keahlianCount / 10) * 50;\nconst eduKeywords = ['s1 arsitektur','sarjana arsitektur','bachelor of architecture','smk','smkn','master','magister','universitas','institute of technology'];\nlet edukasiList = eduKeywords.filter(k => txt.includes(k));\nif (edukasiList.length === 0 && txt.includes('pendidikan')) edukasiList = ['pendidikan'];\nconst edukasiCount = Math.min(edukasiList.length, 4);\nconst eduScore = (edukasiCount / 4) * 20;\nlet expTahun = 0;\nconst expMatches = txt.match(/(\\d+)\\s*(tahun|year)/g);\nif (expMatches) expMatches.forEach(m=>{ const n=parseInt(m); if(!isNaN(n)) expTahun=Math.max(expTahun,n); });\nif (expTahun===0 && txt.includes('10 years')) expTahun=10;\nconst expCount=Math.min(expTahun,6);\nconst expScore=(expCount/6)*30;\nconst total=Math.round(skillScore+eduScore+expScore);\nconst status=total>=65?'Lolos':'Tidak Lolos';\nreturn { json: { id_cv:j.id_cv, nama_file:j.nama_file, total_score:total, posisi, status, alasan: status==='Lolos'?`Lolos ${total}% utk ${posisi}`:`Tidak Lolos ${total}% utk ${posisi}` } };\n"
+      },
+      "id": "7be750ea-478d-4448-b816-c9b541fd2990",
+      "name": "Code Hitung C",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1888,
+        160
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ea739e46-c5d2-42a9-9fd9-2b92ea7cb112",
+              "name": "id_cv",
+              "value": "={{ $json.id_cv }}",
+              "type": "string"
+            },
+            {
+              "id": "87e5a308-6443-4101-ac59-652a3087942c",
+              "name": "nama_file",
+              "value": "={{ $json.nama_file }}",
+              "type": "string"
+            },
+            {
+              "id": "9d6da6b3-69e0-487a-b7dc-3bb4ebb69973",
+              "name": "total_score",
+              "value": "={{ $json.total_score }}",
+              "type": "number"
+            },
+            {
+              "id": "59481184-b8cd-414f-b5e7-782c1e38f049",
+              "name": "status",
+              "value": "={{ $json.status }}",
+              "type": "string"
+            },
+            {
+              "id": "050752aa-e85d-4f79-a24e-acbb90585563",
+              "name": "posisi",
+              "value": "={{ $json.posisi }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2096,
+        -16
+      ],
+      "id": "52f42937-1c3e-4a14-be4a-dd3a46264e9d",
+      "name": "ekstrak data penting B",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ea739e46-c5d2-42a9-9fd9-2b92ea7cb112",
+              "name": "id_cv",
+              "value": "={{ $json.id_cv }}",
+              "type": "string"
+            },
+            {
+              "id": "87e5a308-6443-4101-ac59-652a3087942c",
+              "name": "nama_file",
+              "value": "={{ $json.nama_file }}",
+              "type": "string"
+            },
+            {
+              "id": "9d6da6b3-69e0-487a-b7dc-3bb4ebb69973",
+              "name": "total_score",
+              "value": "={{ $json.total_score }}",
+              "type": "number"
+            },
+            {
+              "id": "59481184-b8cd-414f-b5e7-782c1e38f049",
+              "name": "status",
+              "value": "={{ $json.status }}",
+              "type": "string"
+            },
+            {
+              "id": "fc04c0a5-e11a-48ff-8fc1-8c846c6d3c4b",
+              "name": "posisi",
+              "value": "={{ $json.posisi }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2096,
+        160
+      ],
+      "id": "f1287e42-1d35-4775-ac42-3c2f85b96f88",
+      "name": "ekstrak data penting C",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "id": "5c829454-a0ad-449a-b392-319a131a7cbf",
+      "name": "Merge Gabungan",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2336,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Ranking gabungan 5 CV - sort desc total_score\nconst all = $input.all().map(i => i.json);\n\nall.sort((a, b) => (b.total_score || 0) - (a.total_score || 0));\n\nconst ranking = all.map((c, idx) => ({\n  rank: idx + 1,\n  ...c\n}));\n\nreturn ranking.map(c => ({\n  json: c\n}));"
+      },
+      "id": "d5efe242-00cb-4a11-9f0a-48132eaf36cc",
+      "name": "Code Ranking",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2544,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "schema": {
+          "__rl": true,
+          "value": "database_recruitment",
+          "mode": "list",
+          "cachedResultName": "database_recruitment"
+        },
+        "table": {
+          "__rl": true,
+          "value": "cv_ranking",
+          "mode": "list",
+          "cachedResultName": "cv_ranking"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id_cv": "={{ $json.id_cv }}",
+            "nama_file": "={{ $json.nama_file }}",
+            "posisi": "={{ $json.posisi }}",
+            "total_score": "={{ $json.total_score }}",
+            "status": "={{ $json.status }}",
+            "rank": "={{ $json.rank }}"
+          },
+          "matchingColumns": [
+            "id_cv"
+          ],
+          "schema": [
+            {
+              "id": "id_cv",
+              "displayName": "id_cv",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "nama_file",
+              "displayName": "nama_file",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "posisi",
+              "displayName": "posisi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "total_score",
+              "displayName": "total_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": false
+            },
+            {
+              "id": "rank",
+              "displayName": "rank",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2736,
+        -16
+      ],
+      "id": "a87457d7-2003-49fc-92e4-866377c1c3e9",
+      "name": "database",
+      "credentials": {
+        "postgres": {
+          "id": "uvDAkXb3wOoMylgl",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "id": "88147a37-f61d-4fc3-a36a-5759a1a8b3f5",
+      "name": "Respond Ranking",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2944,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "TRUNCATE TABLE database_recruitment.cv_ranking;",
+        "options": {}
+      },
+      "id": "859ab53d-d4b7-4197-ba0e-62aa563954e1",
+      "name": "Postgres Clean",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3136,
+        -16
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "uvDAkXb3wOoMylgl",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:7002/api/me",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json.headers.authorization }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          },
+          "timeout": 5000
+        }
+      },
+      "id": "99d3fe7e-68da-458f-ac0b-8bc4a0054daa",
+      "name": "Guard Cek Token",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        64,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cek1",
+              "leftValue": "={{ $json.statusCode }}",
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              },
+              "rightValue": 200
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e072a3e6-e755-454c-af34-965385b181ad",
+      "name": "Token Sah?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        288,
+        256
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook Upload CV": {
+      "main": [
+        [
+          {
+            "node": "Code Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Extractor": {
+      "main": [
+        [
+          {
+            "node": "Code Keyword Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Keyword Router": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields Rapihin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields Rapihin": {
+      "main": [
+        [
+          {
+            "node": "Switch Posisi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Posisi": {
+      "main": [
+        [
+          {
+            "node": "Code Pemecah Jalur",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code Pemecah B",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code Pemecah C",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Pemecah Jalur": {
+      "main": [
+        [
+          {
+            "node": "Code Normalisasi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Normalisasi": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code Hitung Persentase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Hitung Persentase": {
+      "main": [
+        [
+          {
+            "node": "ekstrak data penting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Pemecah B": {
+      "main": [
+        [
+          {
+            "node": "Code Normalisasi B",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Normalisasi B": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields B",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields B": {
+      "main": [
+        [
+          {
+            "node": "Code Hitung B",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Pemecah C": {
+      "main": [
+        [
+          {
+            "node": "Code Normalisasi C",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Normalisasi C": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields C",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields C": {
+      "main": [
+        [
+          {
+            "node": "Code Hitung C",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Hitung B": {
+      "main": [
+        [
+          {
+            "node": "ekstrak data penting B",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Hitung C": {
+      "main": [
+        [
+          {
+            "node": "ekstrak data penting C",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Gabungan": {
+      "main": [
+        [
+          {
+            "node": "Code Ranking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ekstrak data penting": {
+      "main": [
+        [
+          {
+            "node": "Merge Gabungan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ekstrak data penting B": {
+      "main": [
+        [
+          {
+            "node": "Merge Gabungan",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "ekstrak data penting C": {
+      "main": [
+        [
+          {
+            "node": "Merge Gabungan",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Code Ranking": {
+      "main": [
+        [
+          {
+            "node": "database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "database": {
+      "main": [
+        [
+          {
+            "node": "Respond Ranking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond Ranking": {
+      "main": [
+        [
+          {
+            "node": "Postgres Clean",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "3d7de499-1733-4223-a6d0-de416f24dbeb",
+  "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp",
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1fbacc71a1596a50dcdfc38a054ce588145d7352a7702ee157c88ea64a10a790"
+  },
+  "nodeGroups": [],
+  "id": "v1lQYQUZndoeoR6w",
+  "tags": []
+}
