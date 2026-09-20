@@ -41,7 +41,7 @@
   <meta property="og:image:alt" content="Screenshot of Experiment 001 — 35B MoE model running on 12GB VRAM">
   <meta property="og:image:type" content="image/webp">
   <meta property="article:published_time" content="2025-08-30T00:00:00+07:00">
-  <meta property="article:modified_time" content="2026-09-01T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-20T00:00:00+07:00">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Experiment 001 — The 35B MoE model runs on 12GB of VRAM">
   <meta name="twitter:description" content="Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.">
@@ -58,7 +58,7 @@
         "image": "https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp",
         "url": "https://robbyaliasaakbar.github.io/exp001.html",
         "datePublished": "2025-08-30",
-        "dateModified": "2026-09-01",
+        "dateModified": "2026-09-20",
         "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp001.html" },
         "inLanguage": "en-US",
         "articleSection": "Experiments",
@@ -137,7 +137,7 @@
       {
         "@type": "Question",
         "name": "Can a 35B MoE model really run on 12GB VRAM?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes — with IQ4_NL quantization, native ROCm, and --n-cpu-moe 26, it runs stable at up to 28 tok/s decode and 581 tok/s prefill without out-of-memory on RX 6700 XT 12GB." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, with IQ4_NL quantization, native ROCm, and --n-cpu-moe 26, it runs stable at up to 28 tok/s decode and 581 tok/s prefill without running out of memory on RX 6700 XT 12GB." }
       },
       {
         "@type": "Question",
@@ -147,7 +147,7 @@
       {
         "@type": "Question",
         "name": "Should I copy your llama.cpp config directly?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. The config is tuned for i5-11400F + RX 6700 XT. You must re-test n-cpu-moe, threads and batch sizes on your hardware." }
+        "acceptedAnswer": { "@type": "Answer", "text": "No. The config is tuned for i5-11400F + RX 6700 XT. You must retest n-cpu-moe, threads and batch sizes on your hardware." }
       }
     ]
   }
@@ -611,7 +611,7 @@
         </div>
 
         <blockquote class="quote-block mt-10 text-sm sm:text-base text-ink leading-relaxed max-w-3xl" data-reveal>
-          Do not copy this configuration blindly; it must be adjusted to suit the specific
+          Do not copy this configuration blindly. It must be adjusted to suit the specific
           characteristics of your model and hardware. This configuration serves only as a
           reference, as my choices were based on specific reasons that I will explain below.
         </blockquote>
@@ -631,7 +631,7 @@
             <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
               I chose <code class="code-inline">--threads 4</code> because testing showed this to
               be my "sweet spot." This setting configures CPU threads to assist with token
-              generation; the optimal value cannot simply be guessed but must be determined
+              generation, the optimal value cannot simply be guessed but must be determined
               through testing based on your CPU's thread count. I happen to use an i5-11400F
               (6 cores, 12 threads), and 4 threads worked best for me.
             </p>
@@ -642,9 +642,9 @@
             <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
               I chose <code class="code-inline">--threads-batch 4</code> because my tests showed
               that higher values increased prefill latency. This happens because too many CPU
-              threads get involved in the prefill process—a task that should ideally rely more on
+              threads get involved in the prefill process. This task should ideally rely more on
               the GPU to maintain reasonable speeds. However, using fewer threads isn't always
-              faster either; bottlenecks can occur because parts of the model's "expert layers"
+              faster either. Bottlenecks can occur because parts of the model's "expert layers"
               are offloaded to the CPU. Also, monitor the GPU junction temperature: if prefill
               feels fast but the junction temperature is high, increase this value.
             </p>
@@ -654,7 +654,7 @@
             <span class="font-display font-extrabold text-accent shrink-0">4.</span>
             <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
               I chose <code class="code-inline">--n-cpu-moe 26</code> to offload 26 experts to the
-              CPU for optimal performance on my hardware. This value isn't universal; it varies
+              CPU for optimal performance on my hardware. This value isn't universal. It varies
               depending on the specific model and its quantization.
             </p>
           </li>
@@ -665,8 +665,8 @@
               Regarding <code class="code-inline">batch</code> and
               <code class="code-inline">ubatch</code>: these values shouldn't be chosen
               arbitrarily, as they affect compatibility with kernels and the inference engine.
-              Higher numbers don't necessarily yield faster results; in fact, they often lead to
-              anomalies—such as unreasonable GPU junction temperatures or even slower prefill speeds.
+              Higher numbers don't necessarily yield faster results. In fact, they often lead to
+              anomalies, such as unreasonable GPU junction temperatures or even slower prefill speeds.
             </p>
           </li>
 
@@ -717,7 +717,7 @@
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              Yes — with the right quantization (IQ4_NL), native ROCm backend, and careful layer placement using <code class="code-inline">--n-cpu-moe 26</code>, it runs stable at up to 28 tok/s decode and 581 tok/s prefill without ever hitting out-of-memory.
+              Yes, with the right quantization (IQ4_NL), native ROCm backend, and careful layer placement using <code class="code-inline">--n-cpu-moe 26</code>, it runs stable at up to 28 tok/s decode and 581 tok/s prefill without ever running out of memory.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
@@ -726,7 +726,7 @@
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              Not VRAM size but KV-cache and thread scheduling. Using <code class="code-inline">--threads 4</code> and <code class="code-inline">--no-kv-unified</code> for single-user kept junction thermal at max 85°C and made 128K context stable.
+              Not VRAM size but KV-cache and thread scheduling. Using <code class="code-inline">--threads 4</code> and <code class="code-inline">--no-kv-unified</code> for a single user kept junction thermal at max 85°C and made 128K context stable.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
@@ -735,7 +735,7 @@
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              No. The config is a reference tuned for i5-11400F + RX 6700 XT. You must re-test <code class="code-inline">--n-cpu-moe</code>, <code class="code-inline">--threads</code>, and batch sizes on your own hardware.
+              No. The config is a reference tuned for i5-11400F + RX 6700 XT. You must retest <code class="code-inline">--n-cpu-moe</code>, <code class="code-inline">--threads</code>, and batch sizes on your own hardware.
             </p>
           </details>
         </div>
