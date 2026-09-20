@@ -41,7 +41,7 @@
   <meta property="og:image:alt" content="Screenshot of Experiment 002 — prefill speed on long context inference up to 256K">
   <meta property="og:image:type" content="image/webp">
   <meta property="article:published_time" content="2025-08-30T00:00:00+07:00">
-  <meta property="article:modified_time" content="2026-09-01T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-20T00:00:00+07:00">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Experiment 002 — Prefill speed on long context inference">
   <meta name="twitter:description" content="How can open-source LLMs achieve acceptable and reasonable prompt processing (prefill) speeds when the total context reaches 250K+ tokens?">
@@ -58,7 +58,7 @@
         "image": "https://robbyaliasaakbar.github.io/images/experiments002/experiment002.webp",
         "url": "https://robbyaliasaakbar.github.io/exp002.html",
         "datePublished": "2025-08-30",
-        "dateModified": "2026-09-01",
+        "dateModified": "2026-09-20",
         "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp002.html" },
         "inLanguage": "en-US",
         "articleSection": "Experiments",
@@ -417,10 +417,10 @@
               <span class="detail-label">Failure and New Iteration</span>
             </div>
             <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
-              With the previous (pre-optimization) configuration, an Out-of-Memory (OOM) error
-              occurred when the context window reached 110K; however, I required a larger 256K
+              With the previous (pre-optimization) configuration, an out-of-memory (OOM) error
+              occurred when the context window reached 110K. However, I required a larger 256K
               context window for research purposes. This necessitated finding an optimal
-              configuration—one that balances prefill and decode speeds reasonably, avoids OOM
+              configuration, one that balances prefill and decode speeds reasonably, avoids OOM
               errors, and maintains KV cache quality (which impacts model memory usage) during
               inference.
             </p>
@@ -449,7 +449,7 @@
               <div class="lg:col-span-9">
                 <p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-6">
                   Based on the configuration optimization results, I obtained these
-                  figures—without compromising model memory quality, reducing the context window
+                  figures, without compromising model memory quality, reducing the context window
                   size, or drastically altering prefill and decode speeds.
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -487,7 +487,7 @@
             <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
               Long-context inference can be run up to 256K on consumer hardware with the right
               optimizations. I have not tested beyond that limit, as the model's base
-              specifications—based on data from the developer (Google DeepMind)—indicate a maximum
+              specifications, based on data from the developer (Google DeepMind), indicate a maximum
               context length of 262,144. Therefore, I did not test it outside the provided
               official specifications.
             </p>
@@ -566,7 +566,7 @@
         </div>
 
         <blockquote class="quote-block mt-10 text-sm sm:text-base text-ink leading-relaxed max-w-3xl" data-reveal>
-          Do not copy this configuration blindly; it must be adjusted to suit the specific
+          Do not copy this configuration blindly. It must be adjusted to suit the specific
           characteristics of your model and hardware. This configuration serves only as a
           reference, as my choices were based on specific reasons that I will explain below.
         </blockquote>
@@ -586,7 +586,7 @@
             <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
               I chose <code class="code-inline">--threads 4</code> because testing showed this to
               be my "sweet spot." This setting configures CPU threads to assist with token
-              generation; the optimal value cannot simply be guessed but must be determined
+              generation, the optimal value cannot simply be guessed but must be determined
               through testing based on your CPU's thread count. I happen to use an i5-11400F
               (6 cores, 12 threads), and 4 threads worked best for me.
             </p>
@@ -597,9 +597,9 @@
             <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
               I chose <code class="code-inline">--threads-batch 4</code> because my tests showed
               that higher values increased prefill latency. This happens because too many CPU
-              threads get involved in the prefill process—a task that should ideally rely more on
+              threads get involved in the prefill process. This task should ideally rely more on
               the GPU to maintain reasonable speeds. However, using fewer threads isn't always
-              faster either; bottlenecks can occur because parts of the model's "expert layers"
+              faster either. Bottlenecks can occur because parts of the model's "expert layers"
               are offloaded to the CPU. Also, monitor the GPU junction temperature: if prefill
               feels fast but the junction temperature is high, increase this value.
             </p>
@@ -609,7 +609,7 @@
             <span class="font-display font-extrabold text-accent shrink-0">4.</span>
             <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
               I chose <code class="code-inline">--n-cpu-moe 23</code> to offload 23 experts to the
-              CPU for optimal performance on my hardware. This value isn't universal; it varies
+              CPU for optimal performance on my hardware. This value isn't universal. It varies
               depending on the specific model and its quantization.
             </p>
           </li>
@@ -620,8 +620,8 @@
               Regarding <code class="code-inline">batch</code> and
               <code class="code-inline">ubatch</code>: these values shouldn't be chosen
               arbitrarily, as they affect compatibility with kernels and the inference engine.
-              Higher numbers don't necessarily yield faster results; in fact, they often lead to
-              anomalies—such as unreasonable GPU junction temperatures or even slower prefill speeds.
+              Higher numbers don't necessarily yield faster results. In fact, they often lead to
+              anomalies, such as unreasonable GPU junction temperatures or even slower prefill speeds.
             </p>
           </li>
 
@@ -681,7 +681,7 @@
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              64K is the sweet spot — good balance of capability vs speed. Beyond 64K you pay steep prefill and KV-cache costs. Use truncation or retrieval for larger docs.
+              64K is the sweet spot, good balance of capability vs speed. Beyond 64K you pay steep prefill and KV-cache costs. Use truncation or retrieval for larger docs.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
@@ -690,7 +690,7 @@
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              Yes — at 110K with the old config. After lowering --n-cpu-moe to 23 and tuning --threads-batch, it became stable up to 251K (tested limit 262144).
+              Yes, at 110K with the old config. After lowering --n-cpu-moe to 23 and tuning --threads-batch, it became stable up to 251K (tested limit 262144).
             </p>
           </details>
         </div>
