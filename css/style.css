@@ -212,8 +212,18 @@ body {
   text-transform: uppercase;
 }
 
-/* STABLE & LIVE — solid black, white pulse dot */
-.status-badge.status-stable,
+/* STABLE — solid black, bright stable green text + dot (same exact green) */
+.status-badge.status-stable {
+  background-color: var(--ink);
+  color: #4ADE80;
+}
+
+.status-badge.status-stable .status-dot {
+  background-color: #4ADE80;
+  animation-name: status-pulse-green;
+}
+
+/* LIVE — solid black, white pulse dot */
 .status-badge.status-live {
   background-color: var(--ink);
   color: #FFFFFF;
@@ -272,24 +282,29 @@ body {
   50%      { opacity: .6; box-shadow: 0 0 0 4px rgba(215, 0, 0, 0); }
 }
 
-/* Experiment card */
+@keyframes status-pulse-green {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, .45); }
+  50%      { opacity: .6; box-shadow: 0 0 0 4px rgba(74, 222, 128, 0); }
+}
+
+/* Experiment card — fast, responsive hover */
 .exp-card {
-  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  transition: transform .18s ease-out, box-shadow .18s ease-out, border-color .18s ease-out;
 }
 
 .exp-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   border-color: var(--ink);
-  box-shadow: 0 20px 40px -18px rgba(12, 12, 12, .25);
+  box-shadow: 0 12px 24px -14px rgba(12, 12, 12, .28);
 }
 
 .exp-card:hover .exp-card-arrow {
-  transform: translateX(6px);
+  transform: translateX(4px);
   color: var(--accent);
 }
 
 .exp-card-arrow {
-  transition: transform .3s ease, color .3s ease;
+  transition: transform .18s ease-out, color .18s ease-out;
 }
 
 /* Arrow link (e.g. "View Experiments List ->") */

@@ -62,6 +62,14 @@
             }
             el.classList.add('revealed');
             io.unobserve(el);
+            // Clear reveal delay after animation so hover stays snappy.
+            // Without this, inline transition-delay leaks into :hover and makes cards feel heavy.
+            var wait = (!isNaN(delay) && delay > 0 ? delay : 0) + 800;
+            (function (target) {
+              setTimeout(function () {
+                target.style.transitionDelay = '0ms';
+              }, wait);
+            })(el);
           }
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
