@@ -56,20 +56,23 @@
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             var el = entry.target;
-            var delay = parseInt(el.getAttribute('data-reveal'), 10);
-            if (!isNaN(delay) && delay > 0) {
-              el.style.transitionDelay = delay + 'ms';
-            }
-            el.classList.add('revealed');
             io.unobserve(el);
-            // Clear reveal delay after animation so hover stays snappy.
-            // Without this, inline transition-delay leaks into :hover and makes cards feel heavy.
-            var wait = (!isNaN(delay) && delay > 0 ? delay : 0) + 800;
-            (function (target) {
+            // Robust: jangan pakai inline transition-delay di elemen yang sama yang punya :hover.
+            // Inline delay bocor ke hover transform dan bikin .exp-card berasa berat/delay.
+            // Stagger entrance via setTimeout add .revealed, hover delay tetap 0ms jadi seamless.
+            if (el.style.transitionDelay) {
+              el.style.transitionDelay = '';
+            }
+            var raw = el.getAttribute('data-reveal');
+            var delay = parseInt(raw, 10);
+            if (isNaN(delay) || delay < 0) { delay = 0; }
+            // Cap stagger biar list panjang tetap snappy (maks 600ms)
+            if (delay > 600) { delay = 600; }
+            (function (target, d) {
               setTimeout(function () {
-                target.style.transitionDelay = '0ms';
-              }, wait);
-            })(el);
+                target.classList.add('revealed');
+              }, d);
+            })(el, delay);
           }
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });

@@ -290,6 +290,7 @@ body {
 /* Experiment card — fast, responsive hover */
 .exp-card {
   transition: transform .18s ease-out, box-shadow .18s ease-out, border-color .18s ease-out;
+  transition-delay: 0ms;
 }
 
 .exp-card:hover {
@@ -305,6 +306,7 @@ body {
 
 .exp-card-arrow {
   transition: transform .18s ease-out, color .18s ease-out;
+  transition-delay: 0ms;
 }
 
 /* Arrow link (e.g. "View Experiments List ->") */
