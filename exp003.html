@@ -41,7 +41,7 @@
   <meta property="og:image:alt" content="Screenshot of Experiment 003 — automation agent workflow for business research">
   <meta property="og:image:type" content="image/webp">
   <meta property="article:published_time" content="2025-08-30T00:00:00+07:00">
-  <meta property="article:modified_time" content="2026-09-01T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-21T00:00:00+07:00">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Experiment 003 — Automation agent workflow for business research">
   <meta name="twitter:description" content="What does it actually take to optimally use AI as an autonomous research assistant? Is it just the model? As it turns out, no.">
@@ -58,11 +58,11 @@
         "image": "https://robbyaliasaakbar.github.io/images/experiments003/experiment003.webp",
         "url": "https://robbyaliasaakbar.github.io/exp003.html",
         "datePublished": "2025-08-30",
-        "dateModified": "2026-09-01",
+        "dateModified": "2026-09-21",
         "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp003.html" },
         "inLanguage": "en-US",
         "articleSection": "Experiments",
-        "keywords": ["AI agent", "automation workflow", "MCP", "RAG", "business research", "n8n", "Ollama"],
+        "keywords": ["AI agent", "automation workflow", "MCP", "RAG", "business research", "n8n", "llama.cpp"],
         "author": {
           "@type": "Person",
           "name": "Robby Aliasa Akbar",
@@ -142,12 +142,12 @@
       {
         "@type": "Question",
         "name": "What made the final workflow hit 99% tool success?",
-        "acceptedAnswer": { "@type": "Answer", "text": "The full chain MCP+RAG+KVCM+LP+DSP+FTD - each added 5-15% quality." }
+        "acceptedAnswer": { "@type": "Answer", "text": "The full chain MCP+RAG+KVCM+LP+DSP+FTD, each added 5-15% quality." }
       },
       {
         "@type": "Question",
         "name": "How long does one research run take?",
-        "acceptedAnswer": { "@type": "Answer", "text": "About 51 minutes for 33 tool calls locally on Gemma 26B via Ollama." }
+        "acceptedAnswer": { "@type": "Answer", "text": "About 51 minutes for 33 tool calls locally on Gemma 26B via llama.cpp." }
       }
     ]
   }
@@ -242,7 +242,7 @@
 
           <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
             <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">MCP Tools</p>
-            <p class="mt-2 text-sm font-medium leading-snug">Scrapling</p>
+            <p class="mt-2 text-sm font-medium leading-snug"><a href="https://github.com/d4vinci/Scrapling" target="_blank" rel="noopener" class="underline decoration-accent decoration-2 underline-offset-2 hover:text-accent transition-colors">Scrapling</a> <span class="text-neutral-400 font-normal">(MCP)</span></p>
           </div>
 
           <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
@@ -267,7 +267,7 @@
 
           <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
             <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Inference Engine</p>
-            <p class="mt-2 text-sm font-medium leading-snug">Ollama</p>
+            <p class="mt-2 text-sm font-medium leading-snug">llama.cpp</p>
           </div>
 
           <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
@@ -347,7 +347,7 @@
 
             <div class="border border-black/10 rounded-xl p-5">
               <dt class="font-display font-extrabold text-sm text-accent">MCP</dt>
-              <dd class="mt-1 text-sm text-neutral-600 leading-relaxed">External MCP tools</dd>
+              <dd class="mt-1 text-sm text-neutral-600 leading-relaxed">External MCP tools via <a href="https://github.com/d4vinci/Scrapling" target="_blank" rel="noopener" class="underline decoration-accent decoration-2 underline-offset-2 hover:text-accent transition-colors">Scrapling</a> for browsing and fetching</dd>
             </div>
 
             <div class="border border-black/10 rounded-xl p-5">
@@ -372,10 +372,81 @@
 
             <div class="border border-black/10 rounded-xl p-5">
               <dt class="font-display font-extrabold text-sm text-accent">FTD</dt>
-              <dd class="mt-1 text-sm text-neutral-600 leading-relaxed">Fine Tuning Domain</dd>
+              <dd class="mt-1 text-sm text-neutral-600 leading-relaxed">Fine-Tuning Domain</dd>
             </div>
 
           </dl>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= HOW I SCORE ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Method</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">How I Score</h2>
+        <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-3xl" data-reveal="150">
+          This chart is not feeling-feeling. I run it 22 times, same result every time.
+          Points like football table. Win 3 pts, draw 1 pt, lose 0 pts. Failed gets nothing.
+        </p>
+
+        <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4" data-reveal="200">
+          <div class="border border-black/10 rounded-xl p-5 bg-paper">
+            <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">1. Target ID — 25%</p>
+            <p class="mt-2 font-display font-extrabold text-lg leading-tight">6 <span class="text-xs font-semibold text-neutral-500">pts max</span></p>
+            <p class="mt-2 text-sm text-neutral-600 leading-relaxed">Example 2 targets x 3 pts. Did LLM catch what you asked? Partial catch = partial pts, that is why chart has decimals.</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5 bg-paper">
+            <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">2. To-do List — 25%</p>
+            <p class="mt-2 font-display font-extrabold text-lg leading-tight">18 <span class="text-xs font-semibold text-neutral-500">pts max</span></p>
+            <p class="mt-2 text-sm text-neutral-600 leading-relaxed">Example 6 todos x 3 pts. Max follows your list. 5 todos = 15 pts max = 100%.</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5 bg-paper">
+            <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">3. Tool Calls — 25%</p>
+            <p class="mt-2 font-display font-extrabold text-lg leading-tight">99 <span class="text-xs font-semibold text-neutral-500">pts max</span></p>
+            <p class="mt-2 text-sm text-neutral-600 leading-relaxed">Example 33 calls x 3 pts. Success 3, fallback 1, failed 0.</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5 bg-paper">
+            <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">4. Output — 25%</p>
+            <p class="mt-2 font-display font-extrabold text-lg leading-tight">6 <span class="text-xs font-semibold text-neutral-500">pts max</span></p>
+            <p class="mt-2 text-sm text-neutral-600 leading-relaxed">Source 3 pts (50%) + Synthesis 3 pts (50%). Source perfect 30 pts = 3 pts output.</p>
+          </div>
+        </div>
+
+        <div class="mt-8 grid lg:grid-cols-2 gap-4" data-reveal="250">
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-neutral-400">Points</p>
+            <ul class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+              <li><span class="font-display font-extrabold text-accent">3 pts</span> — success. Did it right first try.</li>
+              <li><span class="font-display font-extrabold text-accent">1 pt</span> — fallback. Got rejected by security guard. Bot detected or hard source, blocked. LLM does not cry, it finds another door, another web that can be fetched.</li>
+              <li><span class="font-display font-extrabold text-accent">0 pts</span> — failed or skipped. No point at all.</li>
+            </ul>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Final = 0.25 x (target% + todo% + tool% + output%). That is why you see decimals, not stuck at 25% steps.</p>
+          </div>
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-neutral-400">Source (50% of Output)</p>
+            <ul class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+              <li><span class="font-display font-extrabold">Official 3 pts</span> — direct source. Example: RX 6700 XT specs from AMD, no other source.</li>
+              <li><span class="font-display font-extrabold">Secondary 2 pts</span> — credible tester. Example: TechPowerUp, Versus, YouTube benchmark with real data.</li>
+              <li><span class="font-display font-extrabold">Third 1 pt</span> — community. Example: forum, Reddit, user report.</li>
+              <li><span class="font-display font-extrabold">Unclear 0 pts</span> — no competence, data questionable.</li>
+            </ul>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Example 10 sources perfect = 30 pts = 100% source = 3 pts output. Mixed sources = combined, not max, not average. Synthesis (other 50%) is coherence, judged by you. You know what is realistic to adapt.</p>
+          </div>
+        </div>
+
+        <div class="mt-4 border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="300">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-neutral-400">Worked Example — Why 99%</p>
+          <p class="mt-4 text-sm text-neutral-700 leading-relaxed">Real run, brand X services research. Target: find services at brand X, list what I do not have, tell if each can be adapted to my business.</p>
+          <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+            <li>Target 6/6 = 100% → 25.00</li>
+            <li>To-do 18/18 = 100% → 25.00. List: identify brand, find services, identify services, find my business detail, compare services, identify what can be adapted.</li>
+            <li>Tool 97/99 = 97.98% → 24.49. Detail: 32 success (96 pts) + 1 fallback (1 pt). One source blocked as bot, LLM found another fetchable web.</li>
+            <li>Output 5.8/6 = 96.67% → 24.17. Detail: source 28/30 (8 official + 2 secondary) = 2.8 pts + synthesis 3/3 coherent = 3.0 pts.</li>
+          </ul>
+          <p class="mt-4 text-sm font-semibold text-ink leading-relaxed">Total = 0.25 x (100 + 100 + 97.98 + 96.67) = 98.66% → shown as ~99% on chart.</p>
         </div>
 
       </div>
@@ -404,6 +475,7 @@
             <p>The important takeaway is that AI capability doesn't come from the model alone.
                It comes from how the entire system is designed around it.</p>
             <p>A model is the engine. The real capability comes from the machine built around it.</p>
+            <p>Who judges coherence is you, not a stranger. You know your business detail and what you asked to research.</p>
           </div>
         </div>
 
@@ -439,8 +511,8 @@
               When conducting research, we humans require an understanding of the business domain
               and the necessary tools such as business documentation or prior work experience (for
               foundational knowledge) and web browsers (as the operational tool). Yet, it goes
-              beyond that; we must be able to interact with website elements, take research notes,
-              and synthesize the findings. The same applies to LLMs; my reasoning leads to the
+              beyond that. We must be able to interact with website elements, take research notes,
+              and synthesize the findings. The same applies to LLMs. My reasoning leads to the
               conclusion that AI requires tools, business documents, and an iterative process
               regarding the specific business being researched.
             </p>
@@ -452,10 +524,13 @@
               <span class="detail-label">Experiment</span>
             </div>
             <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
-              I provide comprehensive business documentation known as RAG in the world of LLMs
-              along with the right tools. I then build an integrated system that combines RAG,
-              external MCP tools (for browsing and data fetching/web scraping used by the LLMs),
-              and a notes function.
+              RAG means Retrieval-Augmented Generation. Big word, simple idea. For normal people
+              like me, RAG is like holy book for LLM. No holy book, LLM talks nonsense. Internal RAG
+              is your company SOP, your own holy book. External RAG is extra holy book from the
+              internet. I am not a CS kid, I am self-taught, so this is how I understand it.
+              I provide comprehensive business documentation as internal RAG along with the right
+              tools. I then build an integrated system that combines RAG, external MCP tools
+              (for browsing and data fetching/web scraping used by the LLMs), and a notes function.
             </p>
           </div>
 
@@ -508,7 +583,7 @@
                   various aspects such as token usage, the number of tool calls made per request,
                   and the number of URLs or websites accessed before the final output is
                   generated. I have also included charts illustrating how the overall system
-                  configuration optimizes results; for instance, comparing the model's coherence
+                  configuration optimizes results. For instance, comparing the model's coherence
                   when using only RAG and tools versus the performance gains achieved by adding
                   KV cache management optimization, and so on.
                 </p>
@@ -546,8 +621,12 @@
             </div>
             <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
               Only after everything is optimized as a unified whole can truly optimal results be
-              realized. The output is spot on — adhering to instructions and incorporating self
-              correction, all achieved with just a single request.
+              realized. The output is spot on, adhering to instructions and incorporating self-correction,
+              all achieved with just a single request. Spot on or not, you are the judge. You know
+              your business. Good prompt (specific): find detail services at brand X, list what I do
+              not have, and tell me if each detail can be adapted to my business or not. Bad prompt
+              (generic): find my competitors and tell me their weaknesses. That is too generic and
+              invites contradictory instructions. Generic in, generic out. That is user error, not model error.
             </p>
           </div>
 
@@ -561,7 +640,7 @@
               sophistication" or "it turns out the model isn't that good." That mindset is
               actually flawed because it relies on a perspective limited to a single environment.
               In contrast, when looking at current AI applications such as ChatGPT, Claude,
-              Gemini, Qwen Studio, and others — engineers don't focus solely on the "model"
+              Gemini, Qwen Studio, and others, engineers don't focus solely on the "model"
               itself, they consider the entire operational infrastructure, recognizing that the
               model is just one of many components requiring optimization.
             </p>
@@ -596,7 +675,7 @@
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              At 33 tool calls the model lost short-term memory — coherence dropped to 58%. Adding KV-cache management and deterministic system prompt brought it to 87-99%.
+              At 33 tool calls the model lost short-term memory, coherence dropped to 58%. Adding KV-cache management and deterministic system prompt brought it to 87-99%.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
@@ -605,7 +684,7 @@
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              The full chain: MCP + RAG + KVCM + Layer Placement + Deterministic Prompt + Fine Tuning Domain. Each added 5-15% quality.
+              The full chain: MCP + RAG + KVCM + Layer Placement + Deterministic Prompt + Fine-Tuning Domain. Each added 5-15% quality in final weight. See How I Score above for pts (3/1/0) and 22 identical runs.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
@@ -614,7 +693,7 @@
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              About 51 minutes for 33 tool calls on consumer hardware (Gemma 26B via Ollama, local) — slower than frontier API but with self-correction active and fully local.
+              About 51 minutes for 33 tool calls on consumer hardware (Gemma 26B via llama.cpp, local), slower than frontier API but with self-correction active and fully local.
             </p>
           </details>
         </div>
