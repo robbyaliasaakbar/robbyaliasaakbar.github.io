@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Experiment 004 — Creating digital employees with the help of open-source LLMs — Robby Aliasa Akbar</title>
-  <meta name="description" content="Can 5 business functions — customer service, admin, ads, analytics & finance — be run with only workflows and open-source LLMs? A practical n8n case study.">
+  <title>Experiment 004. Creating digital employees with the help of open source LLMs. Robby Aliasa Akbar</title>
+  <meta name="description" content="Can 5 business functions like customer service, admin, ads, analytics and finance be run with only workflows and open source LLMs. A practical n8n case study.">
   <link rel="icon" type="image/webp" href="images/logo.webp">
   <link rel="preconnect" href="https://www.googletagmanager.com">
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -33,36 +33,36 @@
   <meta property="og:site_name" content="Robby Aliasa Akbar">
   <meta property="og:locale" content="en_US">
   <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp004.html">
-  <meta property="og:title" content="Experiment 004 — Creating digital employees with the help of open-source LLMs">
-  <meta property="og:description" content="Can 5 business functions — customer service, admin, ads, analytics & finance — be run with only workflows and open-source LLMs? A practical n8n case study.">
+  <meta property="og:title" content="Experiment 004. Creating digital employees with the help of open source LLMs">
+  <meta property="og:description" content="Can 5 business functions like customer service, admin, ads, analytics and finance be run with only workflows and open source LLMs. A practical n8n case study.">
   <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments004/exp004-1.webp">
   <meta property="og:image:width" content="1440">
   <meta property="og:image:height" content="878">
-  <meta property="og:image:alt" content="Screenshot of Experiment 004 — digital employees workflow with n8n and open-source LLMs">
+  <meta property="og:image:alt" content="Screenshot of Experiment 004. Digital employees workflow with n8n and open source LLMs">
   <meta property="og:image:type" content="image/webp">
   <meta property="article:published_time" content="2025-08-30T00:00:00+07:00">
-  <meta property="article:modified_time" content="2026-09-01T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-22T00:00:00+07:00">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Experiment 004 — Creating digital employees with open-source LLMs">
-  <meta name="twitter:description" content="Can 5 business functions be run with only workflows and open-source LLMs? A practical n8n case study on digital employees.">
+  <meta name="twitter:title" content="Experiment 004. Creating digital employees with open source LLMs">
+  <meta name="twitter:description" content="Can 5 business functions be run with only workflows and open source LLMs. A practical n8n case study on digital employees.">
   <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments004/exp004-1.webp">
-  <meta name="twitter:image:alt" content="Screenshot of Experiment 004 — digital employees workflow with n8n and open-source LLMs">
+  <meta name="twitter:image:alt" content="Screenshot of Experiment 004. Digital employees workflow with n8n and open source LLMs">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Article",
-        "headline": "Creating digital employees with the help of open-source LLMs",
-        "description": "Can 5 business functions — customer service, admin, ads, analytics & finance — be run with only workflows and open-source LLMs? A practical n8n case study.",
+        "headline": "Creating digital employees with the help of open source LLMs",
+        "description": "Can 5 business functions like customer service, admin, ads, analytics and finance be run with only workflows and open source LLMs. A practical n8n case study.",
         "image": "https://robbyaliasaakbar.github.io/images/experiments004/exp004-1.webp",
         "url": "https://robbyaliasaakbar.github.io/exp004.html",
         "datePublished": "2025-08-30",
-        "dateModified": "2026-09-01",
+        "dateModified": "2026-09-22",
         "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp004.html" },
         "inLanguage": "en-US",
         "articleSection": "Experiments",
-        "keywords": ["digital employees", "n8n", "open-source LLM", "automation", "customer service AI", "deterministic workflow"],
+        "keywords": ["digital employees", "n8n", "open source LLM", "automation", "customer service AI", "deterministic workflow"],
         "author": {
           "@type": "Person",
           "name": "Robby Aliasa Akbar",
@@ -136,38 +136,48 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Why did AI-first fail so badly?",
-        "acceptedAnswer": { "@type": "Answer", "text": "AI hallucinated at cost estimation, coverage and payment verification, became unpredictable and hard to debug with hundreds of failures." }
+        "name": "Why did AI first fail so badly?",
+        "acceptedAnswer": { "@type": "Answer", "text": "AI hallucinated at cost estimation plus coverage validation plus payment verification and became unpredictable with hundreds of tests failing. Hard to debug." }
       },
       {
         "@type": "Question",
-        "name": "What is deterministic-first?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Use AI only for 4 of 266 nodes (keyword parsing with Qwen 1.5B). Rest is JS, HTTP, Postgres for 0 hallucinations and 100% effectiveness." }
+        "name": "What is deterministic first?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Clean first. Then Qwen 1.5B extracts 1 to 3 keywords at 4 points with temp 0 and top p 0.1. Then JS plus Postgres decides. Only 4 of 266 nodes. Unknown means ask. Never guess." }
       },
       {
         "@type": "Question",
         "name": "Can a beginner build this?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Start with AI parsing + templates. Full system is 3 workflows 266 nodes but pattern scales." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Start small with AI parsing plus reply templates. Full system is 3 workflows with 266 nodes. See exp001 and exp002 first. Develop it yourself. Portfolio not tutorial." }
       },
       {
         "@type": "Question",
-        "name": "Can this really handle the work of 9–10 people?",
-        "acceptedAnswer": { "@type": "Answer", "text": "It handles the repetitive, rule-based workload — 4–5 admin sales operational, 2–3 customer service, 1 data analyst, 1 ads specialist, and 1 finance role — not strategic decisions. Those still need human judgment." }
+        "name": "Can this really handle the work of 9 to 10 people?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It handles the repeat rule based workload with 4 to 5 admin sales operational plus 2 to 3 customer service plus 1 data analyst plus 1 ads specialist plus 1 finance role. Not strategic decisions. Those still need human judgment." }
       },
       {
         "@type": "Question",
-        "name": "Is the >Rp 50 million saving guaranteed?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No — it's my own estimation using UMR Bekasi Regency 2025 for 9–10 headcount. Actual saving depends on salary structure and business scale." }
+        "name": "Is the more than Rp 50 million saving guaranteed?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. It is my own estimation using Bekasi minimum simplified to Rp 5jt times 9 to 10 plus allowances. I run at about 564k with 400k electricity plus about 164k gateway. Your numbers will differ." }
       },
       {
         "@type": "Question",
-        "name": "Do I need expensive hardware to run this 24/7?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. I run it on modest hardware — Intel Core i5-11400F, 16GB DDR4, Radeon RX 6700 XT, Ubuntu 26.04, with Ollama and Qwen 1.5B. For 24/7, small increments like 32GB RAM, UPS and backup are enough." }
+        "name": "Do I need expensive hardware to run this every day?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Same Intel Core i5-11400F with 16GB plus 6700XT for Ornith 35B for dev plus Qwen 1.5B for runtime concurrently with exp001 and exp002 learnings. For daily run use auto start plus health checks plus 1 to 2 hours rest plus human fallback." }
       },
       {
         "@type": "Question",
         "name": "Will automating cut demand? What about inputs the system misses?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Demand stayed flat in my experiment. Inputs the system couldn't detect are saved to my private database and used for market research and promo decisions." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Flat stable means orders and revenue stable with small lift. Same as human run peers. Missed inputs saved to private database for 2 week iteration plus market research plus promos." }
+      },
+      {
+        "@type": "Question",
+        "name": "How is payment verified without storing sensitive data?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Unique virtual numbers plus QR codes per transaction with 3 minute window. New code if expired. Status check plus webhook. Never screenshot. With Tailscale Funnel. Personal history wiped. Order notes kept. Fee Rp 574 flat per transaction." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is WhatsApp ban risk hidden? What if the system is down?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Unofficial tools can be banned by Meta. Mitigated with isolated funnel plus typing pauses plus throttled randomized broadcast max 20 plus spare numbers. Ollama auto start plus n8n always restart plus scheduled rest plus human fallback. Best practice is official Meta API." }
       }
     ]
   }
@@ -243,12 +253,12 @@
           </div>
 
           <h1 class="mt-8 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">
-            Creating digital employees with the help of open-source LLMs.
+            Creating digital employees with the help of open source LLMs.
           </h1>
 
           <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">
             Is it possible to set up customer service, operational admin, ads specialist, data
-            analyst, and finance functions using only workflows and open-source LLMs, given
+            analyst, and finance functions using only workflows and open source LLMs, given
             adequate hardware and reasonable resource usage?
           </p>
 
@@ -262,7 +272,9 @@
 
         <p class="eyebrow" data-reveal>System Requirements</p>
 
-        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4">
+        <p class="mt-8 font-display font-bold text-sm tracking-tight" data-reveal>Runtime. What serves customers every day.</p>
+
+        <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
 
           <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
             <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">CPU</p>
@@ -285,28 +297,40 @@
           </div>
 
           <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
-            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">The Model That Help Me</p>
-            <p class="mt-2 text-sm font-medium leading-snug break-all">ORNITH-1.0-25B-A3B-IQ4_NL-GGUF</p>
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Inference Engine Runtime</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Ollama</p>
           </div>
 
           <div class="border border-black/10 rounded-xl p-5" data-reveal="200">
-            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Inference Engine</p>
-            <p class="mt-2 text-sm font-medium leading-snug">Llama.cpp &amp; Ollama</p>
-          </div>
-
-          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
             <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Frontend UI</p>
             <p class="mt-2 text-sm font-medium leading-snug">Open WebUI &amp; n8n</p>
           </div>
 
-          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
             <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model For Parsing</p>
-            <p class="mt-2 text-sm font-medium leading-snug break-all">Qwen2.5-1.5B-Instruct-Q8_0-GGUF</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">qwen-2.5-1.5B-instruct-Q8_0.GGUF</p>
           </div>
 
-          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
             <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Status</p>
             <p class="mt-2 text-sm font-medium leading-snug">STABLE</p>
+          </div>
+
+        </div>
+
+        <p class="mt-10 font-display font-bold text-sm tracking-tight" data-reveal>Dev Tools. What helped me build it.</p>
+        <p class="mt-2 text-sm text-neutral-600 leading-relaxed max-w-3xl" data-reveal="40">Not part of 266 nodes. Concurrent execution on the same machine uses learnings from <a href="exp001.html" class="underline hover:text-accent">exp001</a> and <a href="exp002.html" class="underline hover:text-accent">exp002</a>. Develop it yourself.</p>
+
+        <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Dev Model</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">ORNITH-1.0-35B-A3B-IQ4_NL-GGUF</p>
+          </div>
+
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Dev Engine</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Llama.cpp and opencode plus MCP n8n</p>
           </div>
 
         </div>
@@ -323,7 +347,7 @@
           <figure data-reveal="0">
             <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm h-full">
               <img src="images/experiments004/exp004-1.webp"
-                   alt="Screenshot 1 of Experiment 004 — digital employees workflow overview with 266 nodes"
+                   alt="Screenshot 1 of Experiment 004. Digital employees workflow overview with 266 nodes"
                    loading="lazy" decoding="async"
                    width="1440" height="878"
                    class="w-full h-auto">
@@ -332,7 +356,7 @@
           <figure data-reveal="120">
             <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm h-full">
               <img src="images/experiments004/exp004-2.webp"
-                   alt="Screenshot 2 of Experiment 004 — deterministic workflow details for customer service"
+                   alt="Screenshot 2 of Experiment 004. Deterministic workflow details for customer service"
                    loading="lazy" decoding="async"
                    width="1258" height="804"
                    class="w-full h-auto">
@@ -341,7 +365,7 @@
           <figure data-reveal="240">
             <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm h-full">
               <img src="images/experiments004/exp004-3.webp"
-                   alt="Screenshot 3 of Experiment 004 — payment gateway and admin workflow integration"
+                   alt="Screenshot 3 of Experiment 004. Payment gateway and admin workflow integration"
                    loading="lazy" decoding="async"
                    width="1265" height="797"
                    class="w-full h-auto">
@@ -360,7 +384,7 @@
 
         <div class="mt-8" data-reveal="100">
           <h2 class="font-display font-bold text-xl sm:text-2xl tracking-tight">
-            AI-First vs Deterministic-First
+            AI First vs Deterministic First
           </h2>
           <p class="mt-2 text-sm text-neutral-600">
             A comparison of methodologies that determined the success of this experiment.
@@ -381,7 +405,7 @@
             <div class="h-6 sm:h-8 rounded-full"
                  style="background: linear-gradient(90deg, #D70000 0%, #E85D00 30%, #C7A400 60%, #4CA64C 85%, #2E8B2E 100%);"
                  role="img"
-                 aria-label="Comparison scale 0 to 100 percent: AI-First fails (red, low), Deterministic-First succeeds (green, high)"></div>
+                                   aria-label="Comparison scale 0 to 100 percent. AI First fails with low score. Deterministic First succeeds with high score">></div>
 
             <!-- Position markers -->
             <span class="absolute top-1/2 -translate-y-1/2 block w-3 h-3 rounded-full bg-white border-2 border-[#D70000] shadow" style="left:12%;"
@@ -393,11 +417,11 @@
           <!-- State labels with position read-out -->
           <div class="mt-4 flex items-start justify-between gap-6">
             <div class="text-left max-w-[45%]">
-              <p class="font-display font-extrabold text-sm sm:text-base uppercase tracking-[0.08em] text-accent">AI-First</p>
+              <p class="font-display font-extrabold text-sm sm:text-base uppercase tracking-[0.08em] text-accent">AI First</p>
               <p class="mt-1 text-xs sm:text-sm text-neutral-500 leading-relaxed">AI applied to every node to shorten the journey.</p>
             </div>
             <div class="text-right max-w-[45%]">
-              <p class="font-display font-extrabold text-sm sm:text-base uppercase tracking-[0.08em] text-[#2E8B2E]">Deterministic-First</p>
+              <p class="font-display font-extrabold text-sm sm:text-base uppercase tracking-[0.08em] text-[#2E8B2E]">Deterministic First</p>
               <p class="mt-1 text-xs sm:text-sm text-neutral-500 leading-relaxed">AI reserved only where it is truly the right fit.</p>
             </div>
           </div>
@@ -408,7 +432,7 @@
             <!-- AI-First (failed) -->
             <div class="border border-[#D70000]/20 rounded-2xl p-6 bg-[#FFF7F7]">
               <div class="flex items-center justify-between">
-                <p class="font-display font-extrabold text-sm sm:text-base uppercase tracking-[0.08em] text-accent">AI-First</p>
+                <p class="font-display font-extrabold text-sm sm:text-base uppercase tracking-[0.08em] text-accent">AI First</p>
                 <span class="status-badge status-failed"><span class="status-dot"></span>Failed</span>
               </div>
               <ul class="mt-6 space-y-3 text-sm text-neutral-700 leading-relaxed">
@@ -434,7 +458,7 @@
             <!-- Deterministic-First (stable) -->
             <div class="border border-[#2E8B2E]/25 rounded-2xl p-6 bg-[#F3FAF3]">
               <div class="flex items-center justify-between">
-                <p class="font-display font-extrabold text-sm sm:text-base uppercase tracking-[0.08em] text-[#2E8B2E]">Deterministic-First</p>
+                <p class="font-display font-extrabold text-sm sm:text-base uppercase tracking-[0.08em] text-[#2E8B2E]">Deterministic First</p>
                 <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
               </div>
               <ul class="mt-6 space-y-3 text-sm text-neutral-700 leading-relaxed">
@@ -467,24 +491,24 @@
             Performance Polygon
           </h3>
           <p class="mt-2 text-sm text-neutral-600">
-            Relative scores across six quality dimensions from this experiment's evidence.
-            Deterministic-First holds nearly a full polygon; AI-First collapses toward the center.
+            Relative scores across six quality dimensions from this experiment evidence.
+            Deterministic First holds nearly a full polygon. AI First collapses toward the center.
           </p>
 
           <!-- Legend -->
           <div class="mt-6 flex flex-wrap items-center gap-6 text-sm">
             <span class="inline-flex items-center gap-2">
               <span class="w-3 h-3 rounded-full bg-accent"></span>
-              <span class="font-display font-bold text-xs tracking-[0.14em] uppercase text-accent">AI-First</span>
+              <span class="font-display font-bold text-xs tracking-[0.14em] uppercase text-accent">AI First</span>
             </span>
             <span class="inline-flex items-center gap-2">
               <span class="w-3 h-3 rounded-full bg-[#2E8B2E]"></span>
-              <span class="font-display font-bold text-xs tracking-[0.14em] uppercase text-[#2E8B2E]">Deterministic-First</span>
+              <span class="font-display font-bold text-xs tracking-[0.14em] uppercase text-[#2E8B2E]">Deterministic First</span>
             </span>
           </div>
 
           <div class="mt-6 mx-auto max-w-xl" data-chart="radar"
-               data-data='{"max":100,"axes":["Hallucination-Free","Task Completion","Effectiveness","Debuggability","Mitigation Ease","System Stability"],"series":[{"label":"AI-First","values":[10,20,25,15,20,15],"color":"#D70000"},{"label":"Deterministic-First","values":[100,100,100,100,100,95],"color":"#2E8B2E"}]}'></div>
+               data-data='{"max":100,"axes":["Hallucination Free","Task Completion","Effectiveness","Debuggability","Mitigation Ease","System Stability"],"series":[{"label":"AI First","values":[10,20,25,15,20,15],"color":"#D70000"},{"label":"Deterministic First","values":[100,100,100,100,100,95],"color":"#2E8B2E"}]}'></div>
 
           <p class="mt-4 text-xs text-neutral-500 leading-relaxed">
             Scores are qualitative ratings derived from the evidence reported in this experiment:
@@ -504,22 +528,64 @@
             For those unable to interpret the data from a technical standpoint, here is the conclusion:
           </h2>
           <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
-            <p>This experiment was not designed merely as a theoretical exercise — it is a real-world implementation that I have actively deployed. ✨</p>
-            <p>Initially, I relied entirely on AI and it failed badly — hallucinations at cost estimation, coverage and payment verification, unpredictable and hard to debug with hundreds of tests.</p>
-            <p>I switched to deterministic-first: I let AI write JavaScript for deterministic output, and used AI only for keyword detection (4 of 266 n8n nodes with Qwen 1.5B). The rest is standard n8n — JavaScript, HTTP Request, Postgres — 0 hallucinations, 100% effectiveness, easy to debug.</p>
-            <p>In practice, this now handles the repetitive workload of 9–10 roles I actually needed: 4–5 admin sales operational, 2–3 customer service, 1 data analyst (failed inputs saved to my DB for market research, not guessing), 1 ads specialist (Evolution API sends conversions to Meta &amp; Google in real time), and 1 finance — for rule-based tasks, not strategic decisions. 🤝</p>
-            <p>What that means for cost: hiring 9–10 people in Bekasi Regency would be &gt;Rp 50M/month by my own estimation — now I only spend electricity + hardware maintenance. As my own calculation, not a guarantee for every business. 💰</p>
-            <p>It already runs on modest hardware (I5 11400F, 16GB, 6700 XT, Ollama + Qwen 1.5B) — stable for this experiment. For 24/7 with less distraction, small increments like 32GB RAM, UPS, and backup are enough. Reliability matters more than specs. 🛡️</p>
-            <p>Demand didn't drop — it stayed flat. What improved was efficiency: available 24/7, consistent execution, lower recurring overhead, and every undetected input becomes data for future upgrades. 🎯</p>
-            <p>The system is currently running stably and will undergo continuous upgrades to meet evolving business needs.</p>
+            <p>Think of my business like a small food stall. Every day there are customers asking where we deliver, what they want to wash, when we can come, and what their house number is. This system is the stall assistant that never sleeps. It is live and I update it every 2 weeks from real notes.</p>
+            <p>At first I gave all the keys to a smart intern and told him to guess everything. He guessed the price. He guessed the area. He even guessed if people already paid. He was confident but often wrong. That was the AI first phase. Hundreds of tries failed.</p>
+            <p>Then I changed the job. The intern now only shouts short keywords. Like Jakarta. Like sofa. Like today at 2. Like number 11. That is all. The boss which is my hardcoded rules plus my database decides the price and the schedule and the reply. If the shout is unclear, we simply ask again. No guessing.</p>
+            <p>I tested it like a stall owner tests a new helper. First I tried 40 to 50 tricky customers myself. Then my staff tried to trick it. Then my non technical friends tried their own weird requests. It took 4 days to call it ready. Total hundreds of chats with the same steady answers. It still runs today.</p>
+            <p>In daily work it covers the boring repeat jobs of 9 to 10 people in 5 spots. Like 4 to 5 admin sellers from first chat to closing. Like 2 to 3 customer service for complaints. Like 1 ads helper that sends leads to Meta and Google. Like 1 data note taker that saves failed inputs for research. Like 1 finance helper for invoices linked to my exp006. Smart decisions stay with humans.</p>
+            <p>About money. This is estimation, not promise. Paying 9 to 10 people with Bekasi minimum simplified to 5 million each plus allowances easily passes 50 million a month. I run at about 564 thousand a month. It is plus 400 thousand electricity measured at home plus about 164 thousand gateway fees. The fee is 574 flat per paid transaction times about 11 a day times 26 work days. Hardware is already owned. Internet uses the existing home line. Maintenance is a few hours a week by one person.</p>
+            <p>About payment. Each deal gets its own unique virtual number or QR code. It lives for 3 minutes and we make a new one if it expires. We only wait for a succeed status. We never guess from transfer screenshots. The webhook road uses Tailscale Funnel so there is no direct public IP. History with personal data is wiped. Only order notes stay for finance. Gateway name is hidden on purpose and you can swap it with any licensed one.</p>
+            <p>About crowd. Orders did not drop. Revenue is stable. There is a small lift but nothing crazy. Same as similar stalls run by humans. What clearly changed is spending and how easy it is to scale and maintain. The machine is modest. For daily run I use auto start, periodic health checks, scheduled rest of 1 to 2 hours at quiet time, spare WhatsApp numbers, and a human backup when the machine rests. Unofficial WhatsApp tools carry ban risk from Meta. Best practice remains the official Meta API.</p>
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- ================= EXPERIMENT DETAILS ================= -->
+    <!-- ================= RELIABILITY AND RISK. READ FIRST ================= -->
     <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+
+        <p class="eyebrow" data-reveal>Reliability and Risk</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight max-w-3xl" data-reveal="100">
+          Important to read before the details
+        </h2>
+        <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-3xl" data-reveal="150">
+          If you skip this part, the rest of the page will look like magic. It is not magic. It is maintenance plus fallback.
+        </p>
+
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Private Road</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              Webhooks use Tailscale Funnel. Public yes but with no direct public IP. The private callback road is separated from the public customer pages. History with personal data is wiped after the JSON reaches the trigger. Only order notes stay for finance.
+            </p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">WhatsApp Numbers Can Be Banned</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              All unofficial WhatsApp tools carry the same ban risk from Meta if detected. I do not hide this. I keep 1 to 2 spare WhatsApp numbers ready. I use a separate funnel, human like typing pauses, throttled broadcast a few times a week with max 20 contacts per batch and randomized pattern. Best practice remains the official Meta API.
+            </p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Machine Needs Rest Plus Human Backup</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+              Ollama auto starts with system service. n8n runs in Docker with always restart. Health is checked with periodic terminal checks. This is not workstation hardware with no ECC memory. So I rest the PC 1 to 2 hours at quiet time to keep it durable. When the system rests or stops, a human takes over. That is the human in the loop fallback.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 border border-black/10 rounded-xl p-6 bg-paper" data-reveal="120">
+          <blockquote class="quote-block text-sm sm:text-base text-neutral-700 leading-relaxed !my-0">
+            Read this first. If the machine needs sleep, the human stays awake. That is how the stall stays open.
+          </blockquote>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= EXPERIMENT DETAILS ================= -->
+    <section class="py-20 bg-paper">
       <div class="mx-auto max-w-6xl px-6 lg:px-8">
 
         <p class="eyebrow" data-reveal>Experiment Details</p>
@@ -568,15 +634,15 @@
               <li class="flex gap-4">
                 <span class="font-display font-extrabold text-accent shrink-0">1.</span>
                 <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
-                  Since this is a service business operating on a home-service model, it is
-                  essential to define the service coverage area; based on current operations, this
-                  is determined at the sub-district level.
+                  Since this is a service business operating on a home service model, it is
+                  essential to define the service coverage area. Based on current operations, this
+                  is determined at the sub district level.
                 </p>
               </li>
               <li class="flex gap-4">
                 <span class="font-display font-extrabold text-accent shrink-0">2.</span>
                 <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
-                  Since this is a service business with pre-set prices, I need a system capable of
+                  Since this is a service business with preset prices, I need a system capable of
                   interpreting or normalizing customer language.
                 </p>
               </li>
@@ -621,7 +687,7 @@
                 <span class="font-display font-extrabold text-accent shrink-0">8.</span>
                 <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
                   I need a payment gateway that can be integrated with my system so that every
-                  payment can be verified in real-time.
+                  payment can be verified in real time.
                 </p>
               </li>
             </ol>
@@ -647,9 +713,9 @@
                 <li class="flex gap-4">
                   <span class="font-display font-extrabold text-accent shrink-0">2.</span>
                   <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
-                    An open-source API for WhatsApp that allows my n8n instance to connect via
-                    "webhook" and "HTTP request" nodes; I chose EVOLUTION API because it is an
-                    open-source API that provides exactly what I need.
+                    An open source API for WhatsApp that allows my n8n instance to connect with
+                    webhook and HTTP request nodes. I chose EVOLUTION API because it is an
+                    open source API that provides exactly what I need.
                   </p>
                 </li>
                 <li class="flex gap-4">
@@ -663,8 +729,8 @@
                 <li class="flex gap-4">
                   <span class="font-display font-extrabold text-accent shrink-0">4.</span>
                   <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
-                    A small LLM model tasked with parsing "keywords," and I chose
-                    qwen2.5-1.5B-instruct-Q8_0-GGUF.
+                    A small LLM model tasked with parsing keywords, and I chose
+                    qwen-2.5-1.5B-instruct-Q8_0.GGUF.
                   </p>
                 </li>
                 <li class="flex gap-4">
@@ -677,10 +743,7 @@
                 <li class="flex gap-4">
                   <span class="font-display font-extrabold text-accent shrink-0">6.</span>
                   <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
-                    A payment gateway that can integrate with my n8n setup. I cannot disclose the
-                    specific tool yet due to considerations regarding its credibility and legal
-                    implications. However, for those following this experiment, you can connect
-                    existing payment gateways using the HTTP Request node in n8n.
+                    A payment gateway adapter reachable with status check plus webhook verification. I use a private internal adapter. Name is withheld for privacy. You can swap it with any licensed gateway such as Midtrans or Xendit or DOKU. It issues unique virtual numbers plus QR codes per transaction and returns a succeed status. No customer data entry. No screenshot guessing. See Cost and Reliability sections for fees and safeguards. Invoicing links to my <a href="exp006.html" class="underline hover:text-accent">exp006</a> invoice generator.
                   </p>
                 </li>
               </ol>
@@ -717,15 +780,15 @@
               <li class="flex gap-4">
                 <span class="font-display font-extrabold text-accent shrink-0">2.</span>
                 <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
-                  The system has become unpredictable; it is difficult for me to determine which
-                  parts actually require mitigation, which are erroneous, and which are broken —
-                  it is simply too complex.
+                  The system has become unpredictable. It is difficult for me to determine which
+                  parts actually require mitigation, which are erroneous, and which are broken.
+                  It is simply too complex.
                 </p>
               </li>
               <li class="flex gap-4">
                 <span class="font-display font-extrabold text-accent shrink-0">3.</span>
                 <p class="text-sm sm:text-base text-neutral-700 leading-relaxed">
-                  The payment gateway — and this is the most crucial point — its AI consistently
+                  The payment gateway, and this is the most crucial point, its AI consistently
                   fails to identify whether the payment has actually been made or not.
                 </p>
               </li>
@@ -738,10 +801,10 @@
               <span class="detail-label">Iteration</span>
             </div>
             <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
-              Reflecting on the failures I've experienced, I've come to realize that the answer
-              isn't always simply "using a more capable AI to build the system and shorten the
-              journey." Those setbacks led me to shift my approach from "AI-first" to
-              "deterministic-first," reserving AI only for instances where it is truly the right fit.
+              Reflecting on the failures I have experienced, I have come to realize that the answer
+              is not always simply using a more capable AI to build the system and shorten the
+              journey. Those setbacks led me to shift my approach from AI first to
+              deterministic first. I now reserve AI only for moments where it is truly the right fit.
             </p>
           </div>
 
@@ -752,9 +815,15 @@
                 <span class="detail-label">Evidence</span>
               </div>
               <div class="lg:col-span-9">
-                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-6">
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-4">
                   These are the figures I obtained after changing my approach. (You can look at
                   the screenshot I provided above)
+                </p>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-4">
+                  How tested. 40 to 50 tricky scenarios by me. Then staff testing with their own ideas. Then non technical friends testing theirs. 4 days to fully tested. Hundreds of chats total with identical outputs. Decoding locked at temp 0 and top p 0.1 with greedy sampling. One bubble with up to 5 intents is split by hardcoded logic and parsed in parallel. No exact lab count. Layered validation before public deploy. Stable since.
+                </p>
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-6">
+                  How guarded. Regex cleans before the model. JS plus Postgres checks after the model. Unknown means ask the customer. Never guess.
                 </p>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
 
@@ -795,9 +864,52 @@
 
                   <div class="stat-tile border border-black/10 rounded-xl p-5 bg-paper">
                     <p class="text-[0.62rem] font-display font-bold tracking-[0.14em] uppercase text-neutral-400">Easy to Debug</p>
-                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">Yes — 100%</p>
+                    <p class="mt-2 font-display font-extrabold text-lg leading-tight">Yes. 100%</p>
                   </div>
 
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- KEYWORD PARSING. 4 POINTS -->
+          <div data-reveal>
+            <div class="grid lg:grid-cols-12 gap-4 lg:gap-10">
+              <div class="lg:col-span-3">
+                <span class="detail-label">Keyword Parsing</span>
+              </div>
+              <div class="lg:col-span-9">
+                <p class="text-sm sm:text-base text-neutral-700 leading-relaxed mb-2">
+                  The model only extracts short keywords. Decisions happen after, with hardcoded rules. Indonesian examples below are kept original.
+                </p>
+                <p class="text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 mb-6">
+                  Decoding locked at temp 0 and top p 0.1 with greedy sampling. Clean before. Check after. Unknown means ask.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="border border-black/10 rounded-xl p-6 bg-paper">
+                    <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">A. Location</p>
+                    <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+                      Input <code>aku dijakarta kak</code> becomes <code>jakarta</code>. More examples <code>cikarang</code> becomes <code>cikarang</code> and <code>BSD</code> becomes <code>BSD</code>. Cleaned before the model. Then code checks province to village level. Then database checks coverage. Then template reply is prepared.
+                    </p>
+                  </div>
+                  <div class="border border-black/10 rounded-xl p-6 bg-paper">
+                    <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">B. Item</p>
+                    <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+                      Input <code>saya mau cuci kasur ukuran 180 2 pcs</code> becomes <code>kasur, 180, 2 pcs</code>. Then hardcoded price estimate follows. Input <code>saya mau cuci sofa</code> becomes <code>sofa, ukuran unknown, qty unknown</code>. Then we ask details first. No model after this point.
+                    </p>
+                  </div>
+                  <div class="border border-black/10 rounded-xl p-6 bg-paper">
+                    <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">C. Schedule</p>
+                    <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+                      Input <code>saya mau hari ini jam 2 siang</code> becomes <code>hari ini, jam 2 siang</code>. Then hardcoded scheduler follows.
+                    </p>
+                  </div>
+                  <div class="border border-black/10 rounded-xl p-6 bg-paper">
+                    <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">D. House Number</p>
+                    <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
+                      Input <code>griya asri 2 blok e5 nomor 11</code> becomes <code>11</code>. If unreadable it becomes <code>unknown</code>. Then we ask again so the field team never gets lost.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -811,8 +923,8 @@
             <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
               The results I achieved are the product of hundreds of tests and dozens of iterations
               and methodological adjustments. The outcome is a system that is easy to debug and
-              mitigate; customer inputs not detected by the system are captured in the database to
-              inform upgrades, anomalous inputs are logged for market research, and so on.
+              mitigate. Customer inputs not detected by the system are captured in the database to
+              inform upgrades, anomalous inputs are logged for market research, and failed inputs are kept as research data for the 2 week iteration cycle.
             </p>
           </div>
 
@@ -824,9 +936,9 @@
             <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
               AI is powerful, but its true value lies in using it at the right time, leveraging
               its strengths, and most importantly knowing how to use it effectively. Through my
-              own experiences with failure, I've learned that AI can be a highly effective tool
-              for running a business like the one I'm currently building without requiring massive
-              resources, provided we understand how to use it and identify the right approaches.
+              own experiences with failure, I have learned that AI can be a highly effective tool
+              for running a business like the one I am currently building without requiring massive
+              resources, provided we understand how to use it and identify the right approaches. Portfolio not tutorial. Concurrent learnings from exp001 and exp002 are referenced. Develop it yourself.
             </p>
           </div>
 
@@ -836,10 +948,9 @@
               <span class="detail-label">Practical Implication</span>
             </div>
             <p class="lg:col-span-9 text-base text-neutral-700 leading-relaxed">
-              This is not a simple task, nor is it something a beginner can do "easily." If you
+              This is not a simple task, nor is it something a beginner can do easily. If you
               want to build something like this, start by creating a system where the AI parses
-              keywords and generates simple reply templates — from there, you will likely feel
-              challenged and want to take it further.
+              keywords and generates simple reply templates. Start with keyword parsing plus templates. Then expand to parallel splitter plus deterministic checks.
             </p>
           </div>
 
@@ -851,49 +962,49 @@
     <!-- ================= BUSINESS IMPACT — IN PRACTICE (NEW) ================= -->
     <section class="py-20">
       <div class="mx-auto max-w-6xl px-6 lg:px-8">
-        <p class="eyebrow" data-reveal>Business Impact — What I Actually Needed To Cover</p>
+        <p class="eyebrow" data-reveal>Business Impact. What I Actually Needed To Cover</p>
         <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight max-w-3xl" data-reveal="100">
-          In practice, this system handles the repetitive workload of 9–10 roles.
+          In practice, this system handles the repetitive workload of 9 to 10 roles.
         </h2>
         <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-3xl" data-reveal="150">
-          Not replacing people entirely, but covering the rule-based, repetitive parts of 5 vacant functions I struggled to fill. Based on what I actually built and tested.
+          Not replacing people entirely. It covers the repeat and routine parts of 5 vacant functions I struggled to fill. Based on what I actually built and tested.
         </p>
 
         <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="0">
-            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">4–5 × Admin Sales Operational</p>
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">4 to 5 Admin Sales Operational</p>
             <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
-              Handling WhatsApp from first chat to closing, checking sub-district coverage, and normalizing customer language against the price list.
+              Handling WhatsApp from first chat to closing, checking sub district coverage, and normalizing customer language against the price list.
             </p>
           </div>
           <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="40">
-            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">2–3 × Customer Service</p>
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">2 to 3 Customer Service</p>
             <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
-              Handling complaints and providing solutions — without shift limitations or waiting for the next working hour.
+              Handling complaints and providing solutions without shift limits or waiting for the next working hour.
             </p>
           </div>
           <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="80">
-            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">1 × Data Analyst</p>
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">1 Data Analyst</p>
             <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
-              Inputs that fail to enter the main flow are saved to my private database. When I need market research, a new service, or a promo amount — I just look at the data instead of guessing.
+              Inputs that fail to enter the main flow are saved to my private database. When I need market research, a new service, or a promo amount, I just look at the data instead of guessing.
             </p>
           </div>
           <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="120">
-            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">1 × Ads Specialist</p>
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">1 Ads Specialist</p>
             <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
-              Evolution API sends conversion payloads to Meta CAPI and Google in real time via n8n HTTP Request, so custom audiences can grow on their own without paying an agency just to optimize.
+              Evolution API sends conversion payloads to Meta CAPI and Google in real time with n8n HTTP Request, so custom audiences can grow on their own without paying an agency just to optimize.
             </p>
           </div>
           <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="160">
-            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">1 × Finance</p>
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">1 Finance</p>
             <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
-              Tracking who has paid and who hasn't, and generating financial and tax reports when needed — integrated with the payment gateway verification.
+              Tracking who has paid and who has not, and generating financial and tax reports when needed with payment gateway verification. Invoicing links to <a href="exp006.html" class="underline hover:text-accent">exp006</a> invoice generator.
             </p>
           </div>
         </div>
 
         <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal="200">
-          Note: This is about repetitive, rule-based tasks. Strategic and creative decisions still need human judgment.
+          Note: This is about repeat rule based tasks designed to REPLACE those repeat roles. Strategic and creative decisions still need human judgment.
         </p>
       </div>
     </section>
@@ -903,9 +1014,9 @@
     <!-- ================= COST IMPLICATION (NEW) ================= -->
     <section class="py-20 bg-neutral-50">
       <div class="mx-auto max-w-6xl px-6 lg:px-8">
-        <p class="eyebrow" data-reveal>Cost Implication — An Estimation</p>
+        <p class="eyebrow" data-reveal>Cost Implication. An Estimation</p>
         <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight max-w-3xl" data-reveal="100">
-          What 9–10 people would have cost — and what I actually spend now.
+          What 9 to 10 people would have cost and what I actually spend now.
         </h2>
         <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-3xl" data-reveal="150">
           I calculated this using UMR Bekasi Regency as a reference. This is an estimation to illustrate the operational implication, not a guaranteed saving for every business.
@@ -915,14 +1026,15 @@
           <!-- Left: Human cost -->
           <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
             <div class="flex items-center justify-between">
-              <p class="font-display font-bold text-xs tracking-[0.14em] uppercase text-neutral-500">If I hired 9–10 people</p>
+              <p class="font-display font-bold text-xs tracking-[0.14em] uppercase text-neutral-500">If I hired 9 to 10 people</p>
               <span class="inline-flex items-center rounded-full bg-neutral-100 px-3 py-1 text-[0.65rem] font-bold tracking-[0.12em] uppercase text-neutral-600">Recurring</span>
             </div>
             <p class="mt-4 font-display font-extrabold text-2xl tracking-tight">>Rp 50,000,000 <span class="text-sm font-semibold text-neutral-500">/ month</span></p>
             <ul class="mt-6 space-y-2.5 text-sm text-neutral-600 leading-relaxed">
-              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Salary — UMR Bekasi Regency × 9–10</span></li>
-              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>THR, allowances &amp; training</span></li>
-              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Management overhead &amp; limited working hours</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Salary. UMR Bekasi Regency times 9 to 10</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>THR, allowances and training</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Management overhead and limited working hours</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Office rent plus leave plus turnover drama. Benchmark Bekasi minimum simplified to Rp 5jt per person. Estimation not guarantee.</span></li>
             </ul>
           </div>
 
@@ -932,11 +1044,14 @@
               <p class="font-display font-bold text-xs tracking-[0.14em] uppercase text-[#2E8B2E]">What I run now</p>
               <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
             </div>
-            <p class="mt-4 font-display font-extrabold text-2xl tracking-tight">Electricity <span class="text-neutral-400 font-bold">+</span> Maintenance</p>
+            <p class="mt-4 font-display font-extrabold text-2xl tracking-tight">About Rp 564.000 <span class="text-sm font-semibold text-neutral-500">/ month</span></p>
+            <p class="mt-1 text-xs text-neutral-500">Cash out measured</p>
             <ul class="mt-6 space-y-2.5 text-sm text-neutral-700 leading-relaxed">
-              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E8B2E] shrink-0"></span><span>Electricity for modest hardware</span></li>
-              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E8B2E] shrink-0"></span><span>Hardware maintenance</span></li>
-              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E8B2E] shrink-0"></span><span>Postgres + Evolution API + Qwen 1.5B via Ollama</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E8B2E] shrink-0"></span><span>Electricity plus Rp 400k per month. Measured at home. 24 per 7 existing PC.</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E8B2E] shrink-0"></span><span>Gateway about Rp 164k per month. Rp 574 flat times about 11 paid per day times 26 work days.</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E8B2E] shrink-0"></span><span>Hardware owned. Internet existing. No server rent. Build cost excluded as sunk CAPEX.</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E8B2E] shrink-0"></span><span>Maintenance a few hours a week by 1 person for logs plus failed input iteration.</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E8B2E] shrink-0"></span><span>Postgres plus Evolution API plus qwen model with Ollama. Full file name in System Requirements.</span></li>
             </ul>
           </div>
         </div>
@@ -947,7 +1062,7 @@
           <div class="mt-6 space-y-5">
             <div>
               <div class="flex items-center justify-between text-xs">
-                <span class="font-medium text-neutral-700">Human team (9–10 people)</span>
+                <span class="font-medium text-neutral-700">Human team (9 to 10 people)</span>
                 <span class="font-display font-bold text-neutral-500">>Rp 50M</span>
               </div>
               <div class="mt-2 h-3 rounded-full bg-neutral-100 overflow-hidden">
@@ -957,15 +1072,15 @@
             <div>
               <div class="flex items-center justify-between text-xs">
                 <span class="font-medium text-neutral-700">Digital system (this experiment)</span>
-                <span class="font-display font-bold text-[#2E8B2E]">Electricity + Maintenance</span>
+                <span class="font-display font-bold text-[#2E8B2E]">About Rp 564k. About 1.1 percent</span>
               </div>
               <div class="mt-2 h-3 rounded-full bg-neutral-100 overflow-hidden">
-                <div class="h-full rounded-full bg-[#2E8B2E]" style="width: 12%"></div>
+                <div class="h-full rounded-full bg-[#2E8B2E]" style="width: 2%"></div>
               </div>
             </div>
           </div>
           <p class="mt-6 text-xs text-neutral-500 leading-relaxed">
-            *Estimation based on UMR Bekasi Regency 2025. Actual numbers depend on headcount, salary structure, and business type. I share this as my own calculation from this experiment.
+            *Estimation uses Bekasi minimum simplified to Rp 5jt per person for 9 to 10 headcount. System OPEX measured as plus 400k electricity plus about 164k gateway fees. Build and research is sunk CAPEX excluded. Your numbers will differ. Owner mentality means business keeps running and takes profit.
           </p>
         </div>
       </div>
@@ -974,47 +1089,49 @@
     <!-- ================= HARDWARE REALITY (NEW) ================= -->
     <section class="py-20">
       <div class="mx-auto max-w-6xl px-6 lg:px-8">
-        <p class="eyebrow" data-reveal>Hardware &amp; Reliability — What I Learned</p>
+        <p class="eyebrow" data-reveal>Hardware and Reliability. What I Learned</p>
         <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight max-w-3xl" data-reveal="100">
-          It already runs on modest hardware. For 24/7, reliability matters more than specs.
+          Same machine for build and run. Rested on schedule. Checked periodically. With human fallback.
         </h2>
         <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-3xl" data-reveal="150">
-          This is the spec I actually use. It works. But if you want to run it 24/7 with more peace of mind and minimal distraction, a small increment helps.
+          This is the spec I actually use. Details on risk are in the Reliability section above. Concurrency uses learnings from <a href="exp001.html" class="underline hover:text-accent">exp001</a> and <a href="exp002.html" class="underline hover:text-accent">exp002</a>. Develop it yourself.
         </p>
 
         <div class="mt-10 grid md:grid-cols-2 gap-6">
           <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
-            <p class="font-display font-bold text-xs tracking-[0.14em] uppercase text-neutral-500">Current — What I run today</p>
+            <p class="font-display font-bold text-xs tracking-[0.14em] uppercase text-neutral-500">Current. What I run today</p>
             <p class="mt-2 text-xs text-neutral-400">Stable for this experiment</p>
             <ul class="mt-6 space-y-3 text-sm text-neutral-700 leading-relaxed">
               <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">CPU</span><span class="font-medium">Intel Core i5-11400F</span></li>
               <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">RAM</span><span class="font-medium">16GB DDR4 3200 MT/s</span></li>
               <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">GPU</span><span class="font-medium">RX 6700 XT</span></li>
               <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">OS</span><span class="font-medium">Ubuntu 26.04 LTS</span></li>
-              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">Inference</span><span class="font-medium">Llama.cpp &amp; Ollama</span></li>
-              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">Model</span><span class="font-medium break-all">Qwen2.5-1.5B-Instruct-Q8_0</span></li>
+              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">Inference runtime</span><span class="font-medium">Ollama</span></li>
+              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">Runtime model</span><span class="font-medium break-all">qwen-2.5-1.5B-instruct-Q8_0.GGUF</span></li>
+              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">Dev model</span><span class="font-medium break-all">ORNITH-1.0-35B-A3B</span></li>
+              <li class="flex justify-between gap-4 border-b border-black/5 pb-3"><span class="text-neutral-500">Dev engine</span><span class="font-medium">Llama.cpp and opencode plus MCP n8n</span></li>
               <li class="flex justify-between gap-4"><span class="text-neutral-500">Frontend</span><span class="font-medium">Open WebUI &amp; n8n</span></li>
             </ul>
           </div>
 
           <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-neutral-50" data-reveal="80">
-            <p class="font-display font-bold text-xs tracking-[0.14em] uppercase text-neutral-500">If you want 24/7 with less distraction</p>
-            <p class="mt-2 text-xs text-neutral-400">Not about being high-end — about being reliable</p>
+            <p class="font-display font-bold text-xs tracking-[0.14em] uppercase text-neutral-500">If you want 24 per 7 with less distraction</p>
+            <p class="mt-2 text-xs text-neutral-400">Not about being high end. About being reliable</p>
             <ul class="mt-6 space-y-3 text-sm text-neutral-700 leading-relaxed">
-              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Consider 32GB RAM — smoother when multiple workflows run</span></li>
-              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>NVMe with regular backup — faster recovery</span></li>
-              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>UPS + stable internet — avoids interruptions</span></li>
-              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Auto-restart for Ollama — restarts itself when needed</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Ollama auto run with system service. n8n with Docker always restart. Health with periodic terminal checks.</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Scheduled rest 1 to 2 hours at quiet hours. Non ECC memory lasts longer with rest.</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>NVMe backup plus UPS plus stable internet.</span></li>
+              <li class="flex gap-2.5"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-neutral-400 shrink-0"></span><span>Human in the loop fallback when system is down for rest or maintenance.</span></li>
             </ul>
             <p class="mt-6 text-xs text-neutral-500 leading-relaxed bg-white border border-black/5 rounded-xl p-4">
-              Small incremental cost, big reliability gain. You don't need a beast — you need a system you can leave running without checking every hour.
+              Small incremental cost, big reliability gain. You do not need a beast. You need a system you can leave running without checking every hour.
             </p>
           </div>
         </div>
 
         <div class="mt-8 border border-black/10 rounded-xl p-6 bg-paper" data-reveal="160">
           <blockquote class="quote-block text-sm sm:text-base text-neutral-700 leading-relaxed !border-l-accent !my-0">
-            The constraint was never “can it run?” but “can it be relied on without distraction?” — that's what I learned after hundreds of tests.
+            The question was never can it run. The question is can it rest and recover and hand over to human without drama.
           </blockquote>
         </div>
       </div>
@@ -1023,19 +1140,19 @@
     <!-- ================= OPERATIONAL EFFICIENCY (NEW) ================= -->
     <section class="py-20 bg-neutral-50">
       <div class="mx-auto max-w-6xl px-6 lg:px-8">
-        <p class="eyebrow" data-reveal>Operational Efficiency — What Changed</p>
+        <p class="eyebrow" data-reveal>Operational Efficiency. What Changed</p>
         <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight max-w-3xl" data-reveal="100">
           Demand stayed flat. What changed was the efficiency.
         </h2>
         <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed max-w-3xl" data-reveal="150">
-          I didn't cut demand. I cut the most expensive part of the operation — repetitive work with its inherent limitations — and kept the service running.
+          I did not cut demand. I cut the most expensive part of the operation which is repeat work with human limits, and kept the service running. Orders stable. Revenue stable. Small lift but nothing crazy. Same as human run peers.
         </p>
 
         <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="0">
-            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Available 24/7</p>
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Available 24 per 7</p>
             <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
-              No shift constraints. The system responds whether it's 2 PM or 2 AM.
+              No shift limits. The system responds whether it is 2 PM or 2 AM.
             </p>
           </div>
           <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="40">
@@ -1053,14 +1170,14 @@
           <div class="border border-black/10 rounded-xl p-6 bg-paper" data-reveal="120">
             <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Failed Inputs Become Data</p>
             <p class="mt-3 text-sm text-neutral-700 leading-relaxed">
-              Every input the system couldn't detect is saved to the database. I use it for market research, new services, and promo decisions — no more guessing.
+              Every input the system could not detect is saved to the database. I use it for market research, new services, and promo decisions with no more guessing.
             </p>
           </div>
         </div>
 
         <div class="mt-8 border border-black/10 rounded-xl p-6 sm:p-8 bg-paper" data-reveal="160">
           <blockquote class="quote-block text-sm sm:text-base text-neutral-700 leading-relaxed !my-0">
-            Demand didn't drop — it stayed flat. What improved was how much it costs to serve that demand consistently.
+            Demand did not drop and did not explode. What changed was cost to serve at about Rp 564k lawan more than Rp 50M plus how easily it scales and is maintained.
           </blockquote>
         </div>
       </div>
@@ -1074,20 +1191,20 @@
         <div class="mt-8 space-y-4" data-reveal="150">
           <details class="group border border-black/10 rounded-xl p-6 bg-paper" open>
             <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
-              Why did AI-first fail so badly?
+              Why did AI first fail so badly?
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              AI hallucinated at critical points — cost estimation, coverage validation, payment verification — and became unpredictable with hundreds of tests failing. Hard to debug.
+              AI hallucinated at critical points like cost estimation plus coverage validation plus payment verification and became unpredictable with hundreds of tests failing. Hard to debug.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
             <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
-              What is deterministic-first?
+              What is deterministic first?
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              Use AI only for keyword parsing (4 of 266 n8n nodes with Qwen 1.5B). Everything else is JavaScript, HTTP Request, Postgres — 0 hallucinations, 100% effectiveness, easy to debug.
+              Clean first. Then Qwen 1.5B extracts 1 to 3 keywords at 4 points with temp 0 and top p 0.1. Then JS plus Postgres decides. Only 4 of 266 nodes. One bubble with up to 5 intents split in parallel. Unknown means ask. Never guess.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
@@ -1096,34 +1213,34 @@
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              Start small: AI parsing + reply templates. The full system is 3 workflows, 266 nodes — not beginner-friendly, but the keyword-first pattern scales.
+              Start small with AI parsing plus reply templates. The full system is 3 workflows with 266 nodes. Not beginner friendly but the keyword first pattern scales. See exp001 and exp002 first. Develop it yourself. Portfolio not tutorial.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
             <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
-              Can this really handle the work of 9–10 people?
+              Can this really handle the work of 9 to 10 people?
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              In my case it handles the repetitive, rule-based workload — 4–5 admin sales operational, 2–3 customer service, 1 data analyst, 1 ads specialist, and 1 finance role — not strategic or creative decisions. Those still need human judgment.
+              In my case it handles the repeat rule based workload with 4 to 5 admin sales operational plus 2 to 3 customer service plus 1 data analyst plus 1 ads specialist plus 1 finance role. Not strategic or creative decisions. Those still need human judgment. Invoicing links exp006.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
             <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
-              Is the &gt;Rp 50 million saving guaranteed?
+              Is the more than Rp 50 million saving guaranteed?
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              No — it's my own estimation using UMR Bekasi Regency 2025 for 9–10 headcount. Your actual saving depends on salary structure and business scale. I share it to illustrate the operational implication, not as a promise.
+              No. It is my own estimation using Bekasi minimum simplified to Rp 5jt times 9 to 10 plus allowances. I run at about 564k with 400k electricity plus about 164k gateway. Your numbers will differ.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
             <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
-              Do I need expensive hardware to run this 24/7?
+              Do I need expensive hardware to run this every day?
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              No. I run it on modest hardware — Intel Core i5-11400F, 16GB DDR4, Radeon RX 6700 XT, Ubuntu 26.04, with Ollama and Qwen 1.5B. For 24/7 with less distraction, I recommend small increments like 32GB RAM, NVMe backup, UPS, and auto-restart — not a high-end server.
+              No. Same Intel Core i5-11400F with 16GB plus 6700XT for Ornith 35B for dev plus Qwen 1.5B for runtime concurrently with exp001 and exp002 learnings. For daily run use auto start plus health checks plus 1 to 2 hours rest plus UPS and backup plus human fallback.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
@@ -1132,7 +1249,25 @@
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              In my experiment demand stayed flat. Inputs the system couldn't detect aren't lost — they are saved to my private database and I use them for market research, deciding new services, and setting promo amounts. No more guessing.
+              Flat stable means orders and revenue stable with small lift. Same as human run peers. Missed inputs saved to private database for 2 week iteration plus market research plus promos.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              How is payment verified without storing sensitive data?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              Unique virtual numbers plus QR codes per transaction with 3 minute window. New code if expired. Status check plus webhook. Never screenshot. With Tailscale Funnel. Personal history wiped. Order notes kept. Name withheld. You can swap with licensed gateways. Fee Rp 574 flat per transaction.
+            </p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Is WhatsApp ban risk hidden? What if the system is down?
+              <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
+              No. Unofficial tools can be banned by Meta. Mitigated with isolated funnel plus typing pauses plus throttled randomized broadcast max 20 plus spare numbers. Ollama auto start plus n8n always restart plus scheduled rest plus human fallback. Best practice is official Meta API. Evidence is living and updated every 2 weeks with deeper pages to follow.
             </p>
           </details>
         </div>
