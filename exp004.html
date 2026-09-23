@@ -868,6 +868,15 @@
                   </div>
 
                 </div>
+
+                <div class="mt-6 bg-ink rounded-2xl p-6 sm:p-8">
+                  <blockquote class="quote-block text-white !my-0">
+                    <p class="text-sm sm:text-base leading-relaxed text-white">Zero hallucination happens for one clear reason. The model never thinks through the order and never decides the answer. It only catches one to three short words at each spot with greedy sampling at temp 0 and top p 0.1. That is all it does.</p>
+                    <p class="mt-4 text-sm sm:text-base leading-relaxed text-white">Full effectiveness happens for one clear reason too. Only four nodes in the whole system can call the model through the local Ollama address at <span class="break-all">http://127.0.0.1:11434/v1/chat/completions</span>. Each one lives on its own path. One path catches item name, size, qty from the price list. One path catches city, province, regency, district, village. One path catches day, hour. One path catches house number.</p>
+                    <p class="mt-4 text-sm sm:text-base leading-relaxed text-white">How it runs in practice. First the chat is cleaned and normalized before it ever reaches the model. Second the model catches the short keywords only on its assigned path. Third all the original chat and the model output move forward to code in JavaScript, Postgres, and other checks that decide the reply.</p>
+                    <p class="mt-4 text-sm sm:text-base leading-relaxed text-white">So zero hallucination is not an empty claim and full effectiveness is not an empty claim. There is simply nothing to guess about because unknown means ask again.</p>
+                  </blockquote>
+                </div>
               </div>
             </div>
           </div>
