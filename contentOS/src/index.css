@@ -7,8 +7,34 @@ body { font-family: 'Inter', system-ui, sans-serif; background: #FFFFFF; color: 
 h1,h2,.font-display { font-family: 'Manrope', sans-serif; }
 ::selection { background: #D70000; color: #fff; }
 #site-navbar { background: #0C0C0C; border-bottom: 1px solid rgba(255,255,255,.08); }
+.bg-dark-section { background: #0C0C0C; }
+.dark .bg-dark-section { background: #ededed; }
 .eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: #D70000; }
 .bg-grid { background-image: linear-gradient(rgba(12,12,12,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(12,12,12,.045) 1px, transparent 1px); background-size: 56px 56px; }
 .jt-lift { transition: transform .3s ease, box-shadow .3s ease; }
 .jt-lift:hover { transform: translateY(-3px); }
+
+/* Tombol mencet (tanpa lib). */
+.press { transition: transform .12s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.press:active { transform: scale(.97); }
+
+/* Tombol utama: hover jadi merah + ngangkat (plek miniLeads). */
+.btn-primary { transition: background-color .25s ease, transform .25s ease, box-shadow .25s ease; }
+.btn-primary:hover { background: #D70000 !important; transform: translateY(-2px); box-shadow: 0 12px 24px -10px rgba(215,0,0,.5); }
+
+/* Baris tabel nyala pas hover (tanpa lib). */
+.row-hover tbody tr { transition: background-color .15s ease; }
+.row-hover tbody tr:hover { background: #f8fafc; }
+.dark .row-hover tbody tr:hover { background: #1e1e22; }
+
+/* Skeleton shimmer pas loading (tanpa lib). */
+.shimmer { position: relative; overflow: hidden; background: #e5e5e5; }
+.dark .shimmer { background: #26262b; }
+.shimmer::after { content: ''; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); animation: shimmer 1.2s infinite; }
+.dark .shimmer::after { background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent); }
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+/* Fade 150ms tiap list ganti (tanpa lib animasi). */
+.fade-in { animation: fadeIn .15s ease-in; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @media (max-width: 640px) { input, select, textarea { font-size: 16px !important; } }

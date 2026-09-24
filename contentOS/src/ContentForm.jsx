@@ -59,7 +59,7 @@ export default function ContentForm({ initial, onSubmit, onCancel, busy }) {
       <textarea value={f.storyboard} onChange={(e) => set('storyboard', e.target.value)} placeholder="Storyboard markdown bebas" rows={4} className={inputCls} />
       <div>
         <textarea value={f.caption} onChange={(e) => set('caption', e.target.value)} placeholder="Caption final siap copy" rows={3} className={inputCls} />
-        {f.caption && <button type="button" onClick={() => navigator.clipboard.writeText(f.caption)} className="mt-1 text-xs border rounded-full px-3 py-2 min-h-[44px]">Copy caption</button>}
+        {f.caption && <button type="button" onClick={() => navigator.clipboard.writeText(f.caption)} className="press mt-1 text-xs border border-ink/15 dark:border-white/15 hover:border-black dark:hover:border-white rounded-full px-3 py-2 min-h-[44px]">Copy caption</button>}
       </div>
       <div>
         <input value={f.link_postingan} onChange={(e) => set('link_postingan', e.target.value)} placeholder="https://... (wajib saat posted)" className={inputCls} />
@@ -67,8 +67,8 @@ export default function ContentForm({ initial, onSubmit, onCancel, busy }) {
         {f.status === 'posted' && !f.link_postingan.trim() && !warn && <p className="mt-1 text-sm text-accent">Link wajib diisi saat status posted</p>}
       </div>
       <div className="flex gap-2">
-        <button disabled={busy} className="flex-1 bg-ink dark:bg-[#ededed] text-paper dark:text-[#0e0e10] font-bold text-xs uppercase rounded-xl px-4 py-3 min-h-[44px]">{initial ? 'Update' : 'Simpan'}</button>
-        <button type="button" onClick={onCancel} className="px-4 py-3 min-h-[44px] border rounded-xl text-sm">Batal</button>
+        <button disabled={busy} className="btn-primary flex-1 bg-ink dark:bg-[#ededed] text-paper dark:text-[#0e0e10] font-bold text-xs uppercase rounded-xl px-4 py-3 min-h-[44px] disabled:opacity-40">{initial ? 'Update' : 'Simpan'}</button>
+        <button type="button" onClick={onCancel} className="press px-4 py-3 min-h-[44px] border border-ink/15 dark:border-white/15 hover:border-black dark:hover:border-white rounded-xl text-sm">Batal</button>
       </div>
     </form>
   );
