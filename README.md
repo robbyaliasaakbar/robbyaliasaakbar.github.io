@@ -17,7 +17,7 @@ This repository contains a personal portfolio and applied research site focused 
 
 ## Overview
 
-The site has four core pages and thirteen documented experiments. Core pages present background, work, and contact. Experiment pages present technical case studies with terminal receipts, screenshots in WebP format, and honest failure analysis. Three experiments include live web applications hosted on GitHub Pages with backend services on a home computer.
+The site has four core pages and fourteen documented experiments. Core pages present background, work, and contact. Experiment pages present technical case studies with terminal receipts, screenshots in WebP format, and honest failure analysis. Four experiments include live web applications hosted on GitHub Pages with backend services on a home computer.
 
 The goal is to test whether artificial intelligence is truly useful in everyday work and to publish full evidence for every claim.
 
@@ -27,8 +27,8 @@ Frontend:
 - HTML5 with semantic structure and correct heading hierarchy
 - Tailwind CSS through CDN for portfolio and experiment pages
 - Vanilla JavaScript for portfolio interactions
-- React 18 with Vite 6 for MiniLeads and CV Screening
-- Chart.js for MiniLeads analytics and Job Tracker trends
+- React 18 with Vite 6 for MiniLeads, CV Screening, and ContentOS
+- Chart.js for MiniLeads and ContentOS analytics and Job Tracker trends
 - PDF.js for in browser CV text extraction
 - Custom CSS in css/style.css for shared components
 - Lightweight JavaScript in js/main.js for navigation and reveal effects
@@ -41,6 +41,7 @@ Backend and services:
 - Gmail OTP delivery with opaque 64 hex tokens valid for one hour
 - Job Tracker data API on the same authentication backend
 - MiniLeads data service on port 7005 with Node and Express and SQLite
+- ContentOS data service on port 7010 with Node Express and SQLite in Docker
 - CV Screening scoring with n8n on port 5678 using a 24 node rule based workflow
 - Tailscale Funnel for public HTTPS access to home computer services
 - No native PHP install required because the backend runs in one Docker image
@@ -57,7 +58,7 @@ Infrastructure:
 - profile.html - Background and focus areas
 - contact.html - Contact options and form entry
 - experiments-list.html - Index of all experiments
-- exp001.html to exp013.html - Individual experiment case studies
+- exp001.html to exp014.html - Individual experiment case studies
 - template-exp000.html - Template for future experiments, not indexed
 - 404.html - Custom not found page, not indexed
 - css/style.css - Shared custom styles
@@ -67,6 +68,7 @@ Infrastructure:
 - jobtracker - Live Job Tracker frontend with vanilla JavaScript
 - miniLeads - Live MiniLeads CRM frontend with React and Vite
 - cv_screening - Live CV Screening frontend with React and Vite
+- contentOS - Live ContentOS frontend with React, Vite, and Chart.js
 - robots.txt - Search engine rules
 - sitemap.xml - Full URL and image sitemap
 - humans.txt - Team and site credits
@@ -88,6 +90,7 @@ Infrastructure:
 | 011 | One Authentication Backend for Many Frontends | PHP and SQLite and Docker with six endpoints, Gmail OTP, one hour tokens, CORS and rate limits | exp011.html |
 | 012 | Multi User CRM with Server Side Pagination | React and Vite with 2049 leads, tap to filter charts, CSV import and export, dark mode | exp012.html |
 | 013 | Multi User CV Screening Platform | React and Vite with in browser extraction, seven step pipeline, n8n scoring | exp013.html |
+| 014 | Content Tracking Web App with Server Side Pagination | React and Vite with server pagination, Chart.js tap to filter, shared auth fourth customer, 12 failures documented | exp014.html |
 
 Each experiment page includes system requirements, screenshots, live demo status, evidence log with terminal receipts, failure log, frontend code essence, FAQ, and disclaimer.
 
@@ -98,10 +101,12 @@ Each experiment page includes system requirements, screenshots, live demo status
 | Job Tracker | HTML and Tailwind CDN and Vanilla JS in 4 files | Shared authentication backend with lamaran API | Local 7001 to 7002 | https://aispec.tail06293c.ts.net | jobTracker dot token in local storage |
 | MiniLeads | React 18 and Vite 6 and Chart.js with custom CSS | Shared authentication backend plus Node Express data service with 2049 leads | Local 7006 to 7005 and 7002 | Auth at https://aispec.tail06293c.ts.net and data at https://aispec.tail06293c.ts.net:8443 | crm dot token in local storage |
 | CV Screening | React 18 and Vite 6 and PDF.js with custom CSS | Shared authentication backend plus n8n workflow with 24 nodes | Local 7008 to 7002 and 5678 | Auth at https://aispec.tail06293c.ts.net and webhook at https://aispec.tail06293c.ts.net:10000/webhook/upload-cv | cv dot token in local storage |
+| ContentOS | React 18 and Vite 6 and Chart.js with custom CSS | Shared authentication backend plus Node Express data service on port 7010 with content.db | Local 7011 to 7010 and 7002 | Auth at https://aispec.tail06293c.ts.net and data at https://aispec.tail06293c.ts.net:9443 | content dot token in local storage |
 
 Notes:
-- Authentication uses the same backend for all three apps with zero new authentication code for the second and third app except additive profile update
+- Authentication uses the same backend for all four apps with zero new authentication code for the second, third, and fourth app except additive profile update
 - MiniLeads data service is a separate local service with server side pagination and per user isolation
+- ContentOS data service is an isolated local service with server side pagination, slot reuse IDs, and zero in-system AI
 - CV Screening scoring is stateless with fresh truncate on every run and downloads in JSON and CSV format
 - The n8n editor is hidden with path restriction. Root returns 404 while webhook returns 200
 - Build URLs are baked at Vite build time from production environment files
@@ -130,13 +135,20 @@ CV Screening:
 - Local n8n webhook is set through production config for live scoring
 - Run npm run build for GitHub Pages output with public Funnel URLs
 
+ContentOS:
+- Run npm install once in contentOS, then run npm run dev for local work
+- Local frontend defaults to port 7011 through environment config
+- Local data API defaults to http://localhost:7010
+- Local authentication defaults to http://localhost:7002
+- Run npm run build for GitHub Pages output with public Funnel URLs
+
 ## Deployment
 
 - Push to the main branch of robbyaliasaakbar dot github dot io
 - GitHub Pages publishes static files automatically with no build step for portfolio pages
-- React apps publish from their dist output to miniLeads and cv_screening subfolders
+- React apps publish from their dist output to miniLeads, cv_screening, and contentOS subfolders
 - Backend services stay on the home computer and are exposed with Tailscale Funnel
-- Funnel routes: port 443 to Docker port 7002 for authentication, port 8443 to port 7005 for MiniLeads data, port 10000 with webhook path restriction to port 5678 for n8n
+- Funnel routes: port 443 to Docker port 7002 for authentication, port 8443 to port 7005 for MiniLeads data, port 9443 to Docker port 7010 for ContentOS data, port 10000 with webhook path restriction to port 5678 for n8n
 - If the home computer is off, login and data requests fail with a clear message. This behavior is documented on every live page
 
 ## SEO and Performance

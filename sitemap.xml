@@ -383,6 +383,52 @@
     </image:image>
   </url>
   <url>
+    <loc>https://robbyaliasaakbar.github.io/exp014.html</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/dashboard-light.webp</image:loc>
+      <image:title>Experiment 014 — ContentOS dashboard and analytics light mode</image:title>
+      <image:caption>ContentOS dashboard metrics and server-paginated content table in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/dashboard-dark.webp</image:loc>
+      <image:title>Experiment 014 — ContentOS dashboard and analytics dark mode</image:title>
+      <image:caption>ContentOS dashboard metrics and server-paginated content table in dark mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/form-idea-light.webp</image:loc>
+      <image:title>Experiment 014 — Content creation and edit modal light mode</image:title>
+      <image:caption>Ten-column content drafting modal with URL validation in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/form-idea-dark.webp</image:loc>
+      <image:title>Experiment 014 — Content creation and edit modal dark mode</image:title>
+      <image:caption>Ten-column content drafting modal with URL validation in dark mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/login-light.webp</image:loc>
+      <image:title>Experiment 014 — Shared authentication login light mode</image:title>
+      <image:caption>Shared auth login reusing EXP 011 backend in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/login-dark.webp</image:loc>
+      <image:title>Experiment 014 — Shared authentication login dark mode</image:title>
+      <image:caption>Shared auth login in dark mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/regis-light.webp</image:loc>
+      <image:title>Experiment 014 — Account registration light mode</image:title>
+      <image:caption>Account registration with email OTP verification in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/regis-dark.webp</image:loc>
+      <image:title>Experiment 014 — Account registration dark mode</image:title>
+      <image:caption>Account registration with email OTP verification in dark mode</image:caption>
+    </image:image>
+  </url>
+  <url>
     <loc>https://robbyaliasaakbar.github.io/contact.html</loc>
     <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>

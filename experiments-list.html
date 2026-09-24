@@ -81,7 +81,7 @@
       {
         "@type": "ItemList",
         "name": "Experiments",
-        "numberOfItems": 13,
+        "numberOfItems": 14,
         "itemListElement": [
           {
             "@type": "ListItem",
@@ -186,6 +186,14 @@
             "name": "From Technical Test to Live Multi User CV Screening Platform on One Shared Auth Backend",
             "image": "https://robbyaliasaakbar.github.io/images/experiments013/homepage-light.webp",
             "description": "Can a raw technical test CV screener evolve into a live multi user platform on one shared auth backend, with in browser text extraction, a transparent seven step pipeline, and every single failure kept on record?"
+          },
+          {
+            "@type": "ListItem",
+            "position": 14,
+            "url": "https://robbyaliasaakbar.github.io/exp014.html",
+            "name": "Content Tracking Web App With Server Side Pagination, React + Vite, Live on GitHub Pages",
+            "image": "https://robbyaliasaakbar.github.io/images/experiments014/dashboard-light.webp",
+            "description": "Can a personal content tracker ship live on shared auth while keeping all 12 failures on the page? React + Vite, server side pagination, Chart.js tap to filter, 12 failures documented."
           }
         ]
       }
@@ -370,13 +378,13 @@
         <!-- ================= EXPERIMENT FILTER ================= -->
         <div class="mt-8" data-reveal="100">
           <div id="exp-filter" class="flex flex-wrap gap-3" role="group" aria-label="Filter experiments by category">
-            <button type="button" data-filter="all" aria-pressed="true" class="filter-chip filter-chip-active">All <span class="filter-chip-count">(13)</span></button>
+            <button type="button" data-filter="all" aria-pressed="true" class="filter-chip filter-chip-active">All <span class="filter-chip-count">(14)</span></button>
             <button type="button" data-filter="llm-infra" aria-pressed="false" class="filter-chip">LLM Infra <span class="filter-chip-count">(4)</span></button>
             <button type="button" data-filter="agents-automation" aria-pressed="false" class="filter-chip">Agents &amp; Automation <span class="filter-chip-count">(3)</span></button>
-            <button type="button" data-filter="web-apps" aria-pressed="false" class="filter-chip">Web Apps <span class="filter-chip-count">(5)</span></button>
-            <button type="button" data-filter="auth-platform" aria-pressed="false" class="filter-chip">Auth &amp; Platform <span class="filter-chip-count">(4)</span></button>
+            <button type="button" data-filter="web-apps" aria-pressed="false" class="filter-chip">Web Apps <span class="filter-chip-count">(6)</span></button>
+            <button type="button" data-filter="auth-platform" aria-pressed="false" class="filter-chip">Auth &amp; Platform <span class="filter-chip-count">(5)</span></button>
           </div>
-          <p id="exp-count" class="mt-4 text-sm text-neutral-500" aria-live="polite">Showing 13 of 13 experiments</p>
+          <p id="exp-count" class="mt-4 text-sm text-neutral-500" aria-live="polite">Showing 14 of 14 experiments</p>
         </div>
 
         <div id="exp-grid" class="mt-8 grid md:grid-cols-2 gap-6">
@@ -626,6 +634,26 @@
             </p>
             <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
               Read EXP 013: CV Screening Shared Auth <span aria-hidden="true">-&gt;</span>
+            </span>
+          </a>
+
+          <!-- EXP 014 -->
+          <a href="exp014.html" aria-label="Read EXP 014: Content Tracking Web App, React + Vite by Robby Aliasa Akbar" data-category="web-apps auth-platform" class="exp-card group flex flex-col border border-black/10 rounded-2xl p-8 bg-paper" data-reveal="1300">
+            <div class="flex items-center justify-between">
+              <span class="font-display font-bold text-xs tracking-[0.2em] text-neutral-400">EXP 014</span>
+              <span class="flex flex-wrap justify-end gap-2">
+                <span class="status-badge status-stable"><span class="status-dot"></span>Stable</span>
+                <span class="status-badge status-live"><span class="status-dot"></span>Live</span>
+              </span>
+            </div>
+            <h3 class="mt-6 font-display font-bold text-xl leading-snug">
+              Content Tracking Web App With Server Side Pagination, React + Vite, Live on GitHub Pages.
+            </h3>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed flex-1">
+              Can a personal content tracker ship live on shared auth while keeping all 12 failures on the page? React + Vite, server side pagination, Chart.js tap to filter, 12 failures on record.
+            </p>
+            <span class="exp-card-arrow mt-8 inline-flex items-center gap-2 font-display font-bold text-xs tracking-[0.14em] uppercase">
+              Read EXP 014: Content Tracking Web App <span aria-hidden="true">-&gt;</span>
             </span>
           </a>
 
