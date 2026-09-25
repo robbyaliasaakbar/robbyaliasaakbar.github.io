@@ -37,7 +37,7 @@
   <meta property="og:image:alt" content="Docker backend running on port 7002">
   <meta property="og:image:type" content="image/webp">
   <meta property="article:published_time" content="2026-09-09T00:00:00+07:00">
-  <meta property="article:modified_time" content="2026-09-09T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-25T00:00:00+07:00">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Experiment 011 — One Backend, Many Frontends, Zero Dependencies">
   <meta name="twitter:description" content="PHP 8.3 + SQLite + Docker: 6 auth endpoints, Gmail OTP, 1-hour tokens, CORS + rate limits. Full backend, not just an entrypoint.">
@@ -54,7 +54,7 @@
         "image": "https://robbyaliasaakbar.github.io/images/experiments011/docker-ps.webp",
         "url": "https://robbyaliasaakbar.github.io/exp011.html",
         "datePublished": "2026-09-09",
-        "dateModified": "2026-09-09",
+        "dateModified": "2026-09-25",
         "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp011.html" },
         "inLanguage": "en-US",
         "articleSection": "Experiments",
@@ -151,7 +151,23 @@
       </div>
     </section>
 
-    <section class="pb-20">
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Source Code</p>
+        <div class="mt-8 flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12 lg:justify-between">
+          <div class="max-w-2xl" data-reveal="100">
+            <h2 class="font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight">The backend is public. Read it yourself.</h2>
+            <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed">You get the full source. Router, 8 src modules, Docker setup, plus PRD notes. No secrets inside. <code class="code-inline">.env</code> and the database stay on my local machine.</p>
+            <p class="mt-4 font-mono text-xs text-neutral-500 break-all">github.com/robbyaliasaakbar/reuse-auth-backend-all-my-web.app</p>
+          </div>
+          <div class="shrink-0" data-reveal="150">
+            <a href="https://github.com/robbyaliasaakbar/reuse-auth-backend-all-my-web.app" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">View source on GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-20 pt-20">
       <div class="mx-auto max-w-6xl px-6 lg:px-8">
         <p class="eyebrow" data-reveal>System Requirements</p>
         <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-4">
