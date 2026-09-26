@@ -29,7 +29,7 @@
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/experiments-list.html</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-09-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -384,7 +384,7 @@
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp014.html</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-09-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -426,6 +426,42 @@
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/regis-dark.webp</image:loc>
       <image:title>Experiment 014 — Account registration dark mode</image:title>
       <image:caption>Account registration with email OTP verification in dark mode</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://robbyaliasaakbar.github.io/exp015.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/dashboard-light-app.webp</image:loc>
+      <image:title>Experiment 015 — ContentOS live board light mode</image:title>
+      <image:caption>Live tracker board used by the MCP scribe in light mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/dashboard-dark-app.webp</image:loc>
+      <image:title>Experiment 015 — ContentOS live board dark mode</image:title>
+      <image:caption>Live tracker board used by the MCP scribe in dark mode</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/agent-list.webp</image:loc>
+      <image:title>Experiment 015 — Global agent list with contentos-manager</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/login.webp</image:loc>
+      <image:title>Experiment 015 — Login receipt and empty dashboard</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/mcp-crud1.webp</image:loc>
+      <image:title>Experiment 015 — MCP run part 1 login and create</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/mcp-crud2.webp</image:loc>
+      <image:title>Experiment 015 — MCP run part 2 read back</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/mcp-crud3.webp</image:loc>
+      <image:title>Experiment 015 — MCP run part 3 edit delete clean</image:title>
     </image:image>
   </url>
   <url>

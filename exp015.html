@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 015 - Letting the LLM Into My Own Web App Through an Internal MCP, No Manual Entry - Robby Aliasa Akbar</title>
+  <meta name="description" content="Local MCP with 6 tools plus a primary opencode agent that writes ideas straight into live ContentOS. Planned in EXP 014, now shipped with receipts.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp015.html">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp015.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp015.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp015.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp015.html">
+  <meta property="og:title" content="Experiment 015 - Letting the LLM Into My Own Web App Through an Internal MCP, No Manual Entry">
+  <meta property="og:description" content="Local MCP with 6 tools plus a primary opencode agent that writes ideas straight into live ContentOS. Planned in EXP 014, now shipped with receipts.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments015/dashboard-light-app.webp">
+  <meta property="og:image:width" content="1105">
+  <meta property="og:image:height" content="1061">
+  <meta property="og:image:alt" content="ContentOS live board preview used by the MCP scribe">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-09-26T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-26T00:00:00+07:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 015 - Letting the LLM Into My Own Web App Through an Internal MCP, No Manual Entry">
+  <meta name="twitter:description" content="Local MCP with 6 tools plus a primary opencode agent that writes ideas straight into live ContentOS. Planned in EXP 014, now shipped with receipts.">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments015/dashboard-light-app.webp">
+  <meta name="twitter:image:alt" content="ContentOS live board preview used by the MCP scribe">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Letting the LLM Into My Own Web App Through an Internal MCP, No Manual Entry",
+        "description": "Local MCP with 6 tools plus a primary opencode agent that writes ideas straight into live ContentOS. Planned in EXP 014, now shipped with full terminal receipts and only 2 honest failures.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments015/dashboard-light-app.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp015.html",
+        "datePublished": "2026-09-26",
+        "dateModified": "2026-09-26",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp015.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["local MCP server", "opencode primary agent", "content calendar AI scribe", "shared auth backend", "Node MCP SDK stdio", "Tailscale Funnel reuse"],
+        "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
+        "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
+          { "@type": "ListItem", "position": 3, "name": "Experiment 015", "item": "https://robbyaliasaakbar.github.io/exp015.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why not just type in the app?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Typing stays. The scribe is for locked ideas from chat, it only carries what you approve."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the AI work alone?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. You brainstorm, you lock, it saves. Delete always asks for the id first."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is this a new backend?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Same auth and same data doors as EXP 014. One translator file, zero new servers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where is my password?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nowhere on this page. Login happens in session memory, secrets never land in git or screenshots."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why only six tools?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "List, get, save, remove, dashboard plus login. Enough to carry ideas, small enough to track."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does it fail when your PC is off?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No VPS by decision, home PC plus secure tunnels. Off means honest error, same as EXP 010 through 014."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { ink: '#0C0C0C', paper: '#FFFFFF', accent: '#D70000' }, fontFamily: { display: ['Manrope','sans-serif'], body: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } }
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @media (max-width: 640px) { .detail-label { font-size: 0.6875rem; letter-spacing: 0.16em; } .stat-tile p { word-break: break-word; } }
+    .shot-num { display: inline-flex; align-items: center; justify-content: center; width: 1.75rem; height: 1.75rem; border-radius: 9999px; background: #0C0C0C; color: #fff; font-family: 'Manrope', sans-serif; font-size: 0.75rem; font-weight: 800; }
+  </style>
+</head>
+<body class="bg-paper text-ink font-body antialiased">
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">ROBBY ALIASA AKBAR<span class="text-accent">.</span></a>
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="/" class="nav-link">Home</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="/" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html" class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+  <main>
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 015</li>
+            </ol>
+          </nav>
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal><span aria-hidden="true">&larr;</span> Back to Experiments</a>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 015</p>
+            <span class="status-badge status-live"><span class="status-dot"></span>Live</span>
+            <span class="text-xs font-mono text-neutral-500">Node MCP SDK &middot; opencode primary agent &middot; Shared Auth</span>
+          </div>
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.25] sm:leading-[1.25] lg:leading-[1.25]" data-reveal="200">Letting the LLM Into My Own Web App Through an Internal MCP, No Manual Entry.</h1>
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">Can a self built web app let the LLM in through an internal MCP so ideas land without manual entry?</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="350">
+            <a href="https://robbyaliasaakbar.github.io/contentOS/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Open Live Tracker - /contentOS/</a>
+            <a href="exp014.html" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Planned Door: EXP 014</a>
+          </div>
+          <p class="mt-4 text-xs text-neutral-500 font-mono" data-reveal="360">Muse Spark 1.3 via opencode zen &middot; opencode tools &middot; 7 verified captures &middot; 0 new servers &middot; 26 Sep 2026</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Source Code -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Source Code</p>
+        <div class="mt-8 flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12 lg:justify-between">
+          <div class="max-w-2xl" data-reveal="100">
+            <h2 class="font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight">The translator is public. Prove it yourself.</h2>
+            <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed">You get the full MCP server plus the agent definition. One small translator file, six honest tools, one primary agent. No secrets inside. The tracker it writes to is the same live ContentOS from EXP 014.</p>
+            <p class="mt-4 font-mono text-xs text-neutral-500 break-all">github.com/robbyaliasaakbar/opencode-agents/tree/main/mcp-contentos</p>
+            <p class="mt-1 font-mono text-xs text-neutral-500 break-all">github.com/robbyaliasaakbar/robbyaliasaakbar.github.io/tree/main/contentOS</p>
+          </div>
+          <div class="shrink-0 flex flex-wrap items-center gap-4" data-reveal="150">
+            <a href="https://github.com/robbyaliasaakbar/opencode-agents/tree/main/mcp-contentos" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">View MCP source</a>
+            <a href="https://robbyaliasaakbar.github.io/contentOS/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">View live tracker</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- System Requirements -->
+    <section class="pb-20 pt-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>System Requirements</p>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">MCP Server</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">server.js 182 lines, 6 tools, stdio</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Agent</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">contentos-manager, primary, temp 0.7</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Auth API</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Funnel :443 to :7002, token in memory</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Data API</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Funnel :9443 to :7010 Node Express</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Engine</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Node 22, SDK 1.30.1, zod</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="200">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Muse Spark 1.3 via opencode zen</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="240">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Dev Tools</p>
+            <p class="mt-2 text-sm font-medium leading-snug">opencode session tools</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="280">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">New Servers</p>
+            <p class="mt-2 text-sm font-medium leading-snug">Zero, reuse both funnels</p>
+          </div>
+        </div>
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal>First experiment developed with a hosted model instead of the local coder. The translator runs on the laptop config, the tracker data still lives on the home PC behind the same two encrypted funnels as EXP 014.</p>
+      </div>
+    </section>
+
+    <!-- ================= SCREENSHOTS ================= -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Screenshots</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Terminal Receipts in Order Plus the Live Board</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">Seven captures in strict order. Shots 3, 4, and 5 are one continuous MCP run split for uniform size, read them top to bottom as crud1, crud2, crud3. Board shots show the public admin dummy rows from EXP 014, while MCP receipts use the isolated test account, written openly below.</p>
+
+        <div class="mt-12 space-y-16">
+          <!-- 1. Agent list -->
+          <div data-reveal="0">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">1</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Agent Registered Globally</h3>
+              <span class="text-xs font-mono text-neutral-400">agent-list.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments015/agent-list.webp" alt="Terminal listing global opencode agents with contentos-manager highlighted - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Agent list - contentos-manager.md sits beside the portfolio and n8n agents</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <!-- 2. Login -->
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">2</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Base Door Open Plus Empty Start</h3>
+              <span class="text-xs font-mono text-neutral-400">login.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments015/login.webp" alt="Terminal login receipt plus empty dashboard total zero - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Login - password typed blind, token shown as 8 chars, dashboard total 0</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <!-- 3. CRUD part 1 -->
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">3</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">MCP Run Part 1 of 3 - Login Plus Create</h3>
+              <span class="text-xs font-mono text-neutral-400">mcp-crud1.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments015/mcp-crud1.webp" alt="MCP transcript start with login plus empty dashboard plus created content record - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">CRUD 1 - translator login, dashboard 0, save created content-004</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <!-- 4. CRUD part 2 -->
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">4</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">MCP Run Part 2 of 3 - Read Back</h3>
+              <span class="text-xs font-mono text-neutral-400">mcp-crud2.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments015/mcp-crud2.webp" alt="MCP transcript middle with created record JSON plus read back - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">CRUD 2 - full JSON of content-004 plus get by id</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <!-- 5. CRUD part 3 -->
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">5</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">MCP Run Part 3 of 3 - Edit Plus Delete Plus Clean</h3>
+              <span class="text-xs font-mono text-neutral-400">mcp-crud3.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments015/mcp-crud3.webp" alt="MCP transcript end with updated revision plus deleted record plus clean dashboard - Robby Aliasa Akbar" width="803" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">CRUD 3 - updated to revision, removed, dashboard back to 0</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <!-- 6+7. Board -->
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">6</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Live Board Light Plus Dark</h3>
+              <span class="text-xs font-mono text-neutral-400">dashboard-light-app.webp / dashboard-dark-app.webp</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments015/dashboard-light-app.webp" alt="ContentOS live board in light mode with three admin dummy rows - Robby Aliasa Akbar" width="1105" height="1061" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Board Light - public admin dummy rows 001 to 003</figcaption>
+              </figure>
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments015/dashboard-dark-app.webp" alt="ContentOS live board in dark mode with three admin dummy rows - Robby Aliasa Akbar" width="1105" height="1131" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Board Dark - identical board in dark theme</figcaption>
+              </figure>
+            </div>
+            <p class="mt-4 text-xs text-neutral-500 max-w-4xl mx-auto leading-relaxed">Honest note: board shots show the public admin dummy rows from EXP 014. MCP receipts above use the isolated test account ibborarts with total 0. Two accounts, written openly, no mixing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LIVE DEMO ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live Demo</p>
+        <div class="mt-8 border border-black/10 rounded-2xl p-8 sm:p-12 bg-white" data-reveal="50">
+          <h2 class="font-display font-bold text-2xl sm:text-3xl tracking-tight">No New Web App, Only Receipts</h2>
+          <p class="mt-4 text-base text-neutral-600 leading-relaxed max-w-2xl">The tracker is still /contentOS/ from EXP 014. This experiment proves an AI scribe can login, list, save, edit, and remove through 6 local tools. Try the tracker live, then compare with the terminal shots above.</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a href="https://robbyaliasaakbar.github.io/contentOS/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Open Live Tracker - /contentOS/</a>
+            <span class="text-xs font-mono text-neutral-500">Live tracker, home PC backend</span>
+          </div>
+          <div class="mt-6 border-t border-black/10 pt-6">
+            <p class="text-xs sm:text-sm text-neutral-500 leading-relaxed max-w-3xl">Live tracker, home PC backend. If the computer or tunnel doors are closed, tools fail with an honest message, which is expected and not broken. The captures above document the entire MCP run. Test rows were created and deleted on the same day, the board is clean. Demo uses isolated test records only.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= NON-TECHNICAL SUMMARY ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">For those of you unable to read this data from technical standpoint, here is the conclusion:</h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>1. My content notebook worked but my hands were still the only pen, so I built a small translator that lets AI carry ideas to the shelf</p>
+            <p>2. You lock one idea in chat, the scribe saves it straight to the live tracker, no browser opened</p>
+            <p>3. One login opens the door, the key lives in short memory and dies on restart, zero new passwords written</p>
+            <p>4. Test notes were created and deleted on the same day, the board is clean and the receipts are on this page</p>
+            <p>5. The page is public but the engines sleep in my home computer, when it is off the scribe says so honestly</p>
+            <p>6. Everything that broke is written here, two small stories, and no robot works alone without your lock</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIMENT DETAILS ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Architectural Decisions and Engineering Tradeoffs</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">No new app, no new auth, no autonomous robot. Here are the five decisions that let an LLM write into my own web app through a small internal door.</p>
+
+        <div class="mt-12 space-y-12">
+          <!-- 8a. Translator -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Translator, Not a New Backend</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">MCP server.js, 182 lines</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">The MCP server is a thin translator between AI tools and the exact same REST endpoints the React frontend uses (<code class="code-inline">src/api.js</code> plus <code class="code-inline">src/auth.js</code>). One file holds six tools, an in memory token slot, and the same posted requires link check the form enforces. Because the contract never changed, every frontend rule automatically applies to the AI path too.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Development happened inside <code class="code-inline">opencode</code> with hosted model <code class="code-inline">Muse Spark 1.3 via opencode zen</code>, the first experiment in this portfolio not built with the local coder. The translator itself stays tiny on purpose so a beginner can read it end to end in one sitting.</p>
+            </div>
+          </div>
+
+          <!-- 8b. Six tools -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Six Honest Tools</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">login, list, get, save, remove, dashboard</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed"><code class="code-inline">login</code> runs first and stores the token for the other five. <code class="code-inline">list</code> plus filters checks for similar ideas before writing. <code class="code-inline">get</code> reads one record before editing. <code class="code-inline">save</code> without id creates, with id updates. <code class="code-inline">remove</code> deletes by id after confirmation. <code class="code-inline">dashboard</code> opens and closes every session so start and end totals stay visible.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">The full lifecycle ran live as <code class="code-inline">content-004</code>: created as ide, read back identical, updated to revision with edited caption, deleted, dashboard back to total 0. Six tools proved enough to carry ideas, small enough to audit.</p>
+            </div>
+          </div>
+
+          <!-- 8c. Memory token -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Memory Token, Honest Hours</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">Strict TLS, fail closed</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">The bearer token lives in a process variable after login and dies on restart, so every fresh session starts with an explicit login. Strict certificate checks pass without any insecure flag, and missing tokens answer HTTP 401 immediately. The backend runs on the home PC from morning to evening, off hours produce an honest offline message instead of a blank screen.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Passwords never touch screenshots because entry uses blind input, tokens appear as 8 characters only, and full secrets never land in git or on this page.</p>
+            </div>
+          </div>
+
+          <!-- 8d. Global backup -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Global but Backed Up Safely</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">opencode.jsonc vs example</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">The MCP registers as a local entry in <code class="code-inline">opencode.jsonc</code> with a node command plus the two public funnel URLs, enabled by default, usable from any project folder. That file holds real secrets so it stays ignored by git. The public <code class="code-inline">opencode.jsonc.example</code> carries the same shape with placeholder secrets, safe to push for restores on a new laptop.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">A small gitignore fix narrowed the root package ignore so the MCP package file joins the backup while every node modules folder stays out.</p>
+            </div>
+          </div>
+
+          <!-- 8e. Primary agent -->
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Primary Agent With Manners</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">contentos-manager, primary</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">The <code class="code-inline">contentos-manager</code> agent runs as a primary agent, not a subagent, so it chats directly, brainstorms 3 to 5 ideas per batch, attaches references, and only writes after an explicit lock. Delete always names the id and asks first. Its fourteen permissions mirror the portfolio agent, plus an explicit allow for the contentos tools so the MCP stays on by default.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Work runs in small batches of understand, do, verify, then continue, with exactly one active todo at a time and no next batch before the current one is locked.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EVIDENCE LOG ================= -->
+    <section class="py-20 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Evidence Log</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Standalone Evidence Log: Terminal Receipts and Verification</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">Every claim about the translator and the agent is backed by verifiable command line outputs from 26 Sep 2026. Passwords and full tokens are truncated, raw status codes, JSON structures, and file listings remain exact.</p>
+
+        <div class="mt-12 space-y-10">
+          <!-- E1 -->
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E1. Both Doors Answer With Fail Closed 401</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">401 Both Doors</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Hitting both public funnels without a token proves the services are awake and defensive.</p>
+            <pre class="code-block mt-4">curl -sk -m 15 -o /dev/null -w "AUTH %{http_code}\n" https://aispec.tail06293c.ts.net/api/me
+AUTH 401
+
+curl -sk -m 15 -o /dev/null -w "DATA %{http_code}\n" https://aispec.tail06293c.ts.net:9443/dashboard
+DATA 401</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: both doors reachable in about 0.01 seconds, both demand a token.</p>
+          </div>
+
+          <!-- E2 -->
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E2. Strict Certificates Pass Without Insecure Flags</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">TLS Valid</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Repeating the same probe without skipping certificate checks.</p>
+            <pre class="code-block mt-4">curl -s -m 15 -o /dev/null -w "AUTH_STRICT %{http_code}\n" https://aispec.tail06293c.ts.net/api/me
+AUTH_STRICT 401
+
+curl -s -m 15 -o /dev/null -w "DATA_STRICT %{http_code}\n" https://aispec.tail06293c.ts.net:9443/dashboard
+DATA_STRICT 401</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: certificates valid, Node fetch needs no bypass.</p>
+          </div>
+
+          <!-- E3 -->
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E3. MCP Installs Clean and Agent Registers</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">0 Vulnerabilities</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Installing the translator and confirming the agent appears beside the older agents.</p>
+            <pre class="code-block mt-4">npm install
+added 94 packages, 0 vulnerabilities
+
+node --check server.js &amp;&amp; echo SYNTAX_OK
+SYNTAX_OK
+
+opencode agent list | grep contentos-manager
+contentos-manager (primary)</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: 182 line server plus 83 line agent, both load first try after install.</p>
+          </div>
+
+          <!-- E4 -->
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E4. Full MCP Lifecycle on Isolated Account</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">content-004 Round Trip</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">One MCP run on the isolated test account, created and cleaned the same day.</p>
+            <pre class="code-block mt-4">TOOLS: login, list, get, save, remove, dashboard
+login: Login ok sebagai ibborarts
+dashboard awal: {"total":0}
+save: Tersimpan (created) jadi content-004
+get: content-004 kebaca (IG, reels, ai, ide)
+save: Tersimpan (updated) jadi content-004 (revision)
+remove: content-004 dihapus
+dashboard akhir: {"total":0}</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: write, read, edit, delete verified, board back to clean zero.</p>
+          </div>
+
+          <!-- E5 -->
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E5. Backup Separates Secrets From Shape</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">Git Safe</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Proving the real config stays local while the restorable shape is public.</p>
+            <pre class="code-block mt-4">git status --short
+M .gitignore
+M opencode.jsonc.example
+?? agents/contentos-manager.md
+?? mcp-contentos/
+
+git check-ignore -v opencode.jsonc
+.gitignore:5:opencode.jsonc opencode.jsonc</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: secrets ignored, translator plus agent plus example backed up.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAILURE LOG ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Failure Log</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Both Failures Documented Honestly</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">Only two defects appeared during this build and both were fixed the same day. Written here with cause plus fix plus check, same honesty as the twelve in EXP 014.</p>
+
+        <div class="mt-12">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="font-display font-bold text-xs tracking-[0.18em] uppercase text-accent">Tier 1 Incidents</span>
+            <span class="text-xs text-neutral-400">Two Deep Dive Case Studies</span>
+          </div>
+
+          <div class="space-y-8">
+            <!-- 1. Module not found -->
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">1. Test Script Cannot Find the SDK Outside Its Folder</h3>
+                <span class="text-xs font-mono text-accent font-semibold">Module Resolution Trap</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> The MCP run passed syntax checks yet the throwaway test in the temp folder crashed with a module not found error for the SDK package.</p>
+                <p><strong>Diagnosis:</strong> Modern module resolution looks beside the running file, not at the shell folder, and it ignores the legacy module path variable. The test file sat far from its dependencies.</p>
+                <p><strong>Fix:</strong> Moved the test beside the server file so resolution found the installed packages, verified the full green run, then deleted the throwaway file to keep the folder clean.</p>
+                <p><strong>Lesson:</strong> Run throwaway tests beside their dependencies, then remove them the same day.</p>
+              </div>
+            </div>
+
+            <!-- 2. Gitignore -->
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">2. Global Ignore Rule Hides the New Package File</h3>
+                <span class="text-xs font-mono text-accent font-semibold">Backup Trap</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> The new translator folder showed as untracked but its package file stayed invisible to git, which would have broken restores on a new laptop.</p>
+                <p><strong>Diagnosis:</strong> A bare filename pattern in the ignore file matches at every folder depth, so it swallowed the nested package files along with the root ones.</p>
+                <p><strong>Fix:</strong> Scoped the root ignores with a leading slash so nested package files join the backup while root secrets plus every modules folder stay out.</p>
+                <p><strong>Lesson:</strong> A pattern without a slash hits every level, scope root rules explicitly.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="mt-16">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="font-display font-bold text-xs tracking-[0.18em] uppercase text-neutral-500">Tier 2 Log</span>
+            <span class="text-xs text-neutral-400">No Further Failures</span>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="0">
+            <p class="text-xs text-neutral-600 leading-relaxed">No minor defects beyond the two above. Stated explicitly so the count stays honest at two, not inflated.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MCP CODE ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>MCP Code</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Small Translator, Readable in One Sitting</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">The server mirrors the frontend contract tool for tool. Below are the essence of the login tool that stores the token plus the save tool that creates and updates through one endpoint.</p>
+
+        <div class="mt-8 space-y-6" data-reveal="150">
+          <div>
+            <p class="font-mono text-sm text-neutral-500">Login Tool Stores Token - server.js (essence)</p>
+            <pre class="code-block mt-4">server.tool("login", "Login plus store token", {
+  identifier: z.string(),
+  password: z.string()
+}, async ({ identifier, password }) =&gt; {
+  const r = await fetch(AUTH_URL + "/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ identifier, password })
+  })
+  const j = await r.json()
+  if (!r.ok) return err("identifier or password wrong")
+  savedToken = j.token
+  return ok("Login ok, token stored")
+})</pre>
+          </div>
+
+          <div>
+            <p class="font-mono text-sm text-neutral-500">Save Tool Creates and Updates - server.js (essence)</p>
+            <pre class="code-block mt-4">server.tool("save", "Create or edit content", {
+  id: z.string().optional(),
+  status: z.string().optional(),
+  link_postingan: z.string().optional()
+}, async (f) =&gt; {
+  if (f.status === "posted" &amp;&amp; !f.link_postingan) {
+    return err("Link required for posted")
+  }
+  const r = await fetch(API_URL + "/content/ingest", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...authHeader() },
+    body: JSON.stringify(f)
+  })
+  const j = await r.json()
+  return ok("Stored (" + j.action + ") as " + j.item.id)
+})</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= AGENT NOTES ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Agent Notes</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Primary Agent Definition in One Markdown File</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">The agent file name becomes the agent name. Primary mode keeps it directly chatable, warmer temperature keeps brainstorming lively, explicit tool permission keeps the MCP on by default.</p>
+
+        <div class="mt-8 space-y-6" data-reveal="150">
+          <div>
+            <p class="font-mono text-sm text-neutral-500">Agent Frontmatter - contentos-manager.md (essence)</p>
+            <pre class="code-block mt-4">description: content calendar scribe for ContentOS
+mode: primary
+temperature: 0.7
+permission:
+  read: allow
+  edit: ask
+  bash: ask
+  contentos_*: allow</pre>
+          </div>
+        </div>
+
+        <blockquote class="quote-block mt-8 text-sm sm:text-base text-neutral-700 leading-relaxed border-black/20 bg-paper rounded-2xl p-6" data-reveal>File name becomes agent name. Global folder makes it available in every project. Fourteen permissions mirror the portfolio agent, the last line switches the MCP tools on.</blockquote>
+      </div>
+    </section>
+
+    <!-- ================= NETWORKING ARCHITECTURE ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Networking Architecture</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Same Two Doors, Zero New Servers</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">This experiment adds no infrastructure at all. The translator calls the same two public doors the browser already uses, keeping traffic paths clean and isolated per service.</p>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6" data-reveal="150">
+          <div class="border border-black/10 rounded-2xl p-6 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-accent">Door 1: Shared Authentication Gateway</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">Public URL: <code class="code-inline">https://aispec.tail06293c.ts.net</code></p>
+            <p class="mt-2 text-sm text-neutral-700 leading-relaxed">Internal Target: Docker container on port 7002 (PHP auth engine from EXP 011).</p>
+            <p class="mt-2 text-xs text-neutral-500 leading-relaxed">The login tool posts here, tokens verify here, MCP memory holds the result until restart.</p>
+          </div>
+
+          <div class="border border-black/10 rounded-2xl p-6 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-accent">Door 2: Dedicated ContentOS Data Gateway</p>
+            <p class="mt-3 text-sm text-neutral-700 leading-relaxed">Public URL: <code class="code-inline">https://aispec.tail06293c.ts.net:9443</code></p>
+            <p class="mt-2 text-sm text-neutral-700 leading-relaxed">Internal Target: Docker container on port 7010 (Node Express plus SQLite content.db).</p>
+            <p class="mt-2 text-xs text-neutral-500 leading-relaxed">List, get, save, remove, and dashboard all pass this door with the stored bearer token.</p>
+          </div>
+        </div>
+
+        <blockquote class="quote-block mt-8 text-sm sm:text-base text-neutral-700 leading-relaxed border-black/20 bg-paper rounded-2xl p-6" data-reveal>Both gateways terminate encrypted TLS connections at the machine boundary. The browser and the MCP scribe are two hands reaching through the same doors.</blockquote>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper" open>
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why not just type in the app?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Typing stays. The scribe is for locked ideas from chat, it only carries what you approve.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Does the AI work alone?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">No. You brainstorm, you lock, it saves. Delete always asks for the id first.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Is this a new backend?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">No. Same auth and same data doors as EXP 014. One translator file, zero new servers.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Where is my password?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Nowhere on this page. Login happens in session memory, secrets never land in git or screenshots.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why only six tools?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">List, get, save, remove, dashboard plus login. Enough to carry ideas, small enough to track.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why does it fail when your PC is off?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">No VPS by decision, home PC plus secure tunnels (:443 auth, :9443 data). Off means doors closed and the page says so instead of pretending. Same honesty as EXP 010 through 014.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LIVE STATUS ================= -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live Status</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Live Status - Live Translator, Home-PC Backend</h2>
+        <div class="mt-8 grid sm:grid-cols-2 gap-4" data-reveal="150">
+          <div class="border border-emerald-200 rounded-2xl p-6 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-emerald-700">&#9989; What works now</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>MCP with 6 tools for login, list, get, save, remove, dashboard</li>
+              <li>Full record round trip created, read, updated, deleted live</li>
+              <li>Primary agent global with brainstorming plus direct execution</li>
+              <li>Strict certificate checks plus fail closed 401 responses</li>
+              <li>Backup safe config with secrets ignored and shape public</li>
+              <li>Two honest failures logged with cause plus fix plus check</li>
+            </ul>
+          </div>
+          <div class="border border-amber-300 bg-amber-50/50 rounded-2xl p-6">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-amber-700">&#128679; What isn't production yet</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>Service runs on personal home computer rather than 24/7 cloud VPS</li>
+              <li>Token lives in process memory only, gone on every restart</li>
+              <li>Single file SQLite database without clustering or failover</li>
+              <li>No export tool inside the MCP yet, browser export covers it</li>
+              <li>Long term service hardening reserved for future infrastructure projects</li>
+            </ul>
+          </div>
+        </div>
+        <blockquote class="quote-block mt-8 text-sm sm:text-base text-neutral-600 leading-relaxed border-amber-300 bg-amber-50 rounded-r-2xl p-6" data-reveal>Translator live on my laptop config. Backend runs on my personal PC (funnels :443 + :9443). Off means tools fail with a message, expected. Transcripts plus file listing show how it works.</blockquote>
+      </div>
+    </section>
+
+    <!-- ================= DISCLAIMER ================= -->
+    <section class="py-16 border-t border-black/10 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="max-w-3xl" data-reveal>
+          <p class="eyebrow">Disclaimer</p>
+          <h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">Disclaimer - Local Translator, Local Backend, Not Production-Hardened</h2>
+          <blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">Built with Muse Spark 1.3 via opencode zen inside opencode, the first hosted model claim in this portfolio. Test rows only, board cleaned. Passwords, tokens, and OTP codes are never shown.</blockquote>
+          <p class="mt-6 text-sm text-neutral-700 leading-relaxed"><strong>Shared backend:</strong> <a class="underline hover:text-accent" href="exp011.html">EXP 011 (:7002)</a> &middot; <strong>Tracker:</strong> <a class="underline hover:text-accent" href="exp014.html">EXP 014 (/contentOS/)</a> &middot; <strong>This:</strong> EXP 015 (MCP plus agent)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CLOSING CTA ================= -->
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal>
+          <a href="experiments-list.html" class="arrow-link font-display text-sm uppercase"><span aria-hidden="true">&larr;</span> Back to Experiments</a>
+          <a href="contact.html" class="arrow-link font-display text-sm uppercase">Have a problem worth exploring? <span aria-hidden="true">-&gt;</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-dark-section text-white">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8">
+      <div class="grid gap-12 md:grid-cols-3">
+        <div>
+          <p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p>
+          <p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">Applied AI Systems Builder</p>
+          <p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">Exploring AI systems, local LLMs, automation workflows, and practical tools that actually work in real business operations.<br>Building what matters, and checking whether AI is truly useful in everyday work.</p>
+        </div>
+        <div class="md:justify-self-center">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="/" class="footer-link">Home</a></li>
+            <li><a href="profile.html" class="footer-link">Profile</a></li>
+            <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="md:justify-self-end">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li>
+            <li><a href="https://www.reddit.com/user/Full_Director87/" target="_blank" rel="noopener" class="footer-link">Reddit</a></li>
+            <li><a href="https://www.instagram.com/ybboraa/" target="_blank" rel="noopener" class="footer-link">Instagram</a></li>
+            <li><a href="mailto:ibborarts@gmail.com" class="footer-link">Email</a></li>
+            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p>
+        <p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p>
+      </div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
