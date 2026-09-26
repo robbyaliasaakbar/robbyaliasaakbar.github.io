@@ -17,7 +17,7 @@ This repository contains a personal portfolio and applied research site focused 
 
 ## Overview
 
-The site has four core pages and fourteen documented experiments. Core pages present background, work, and contact. Experiment pages present technical case studies with terminal receipts, screenshots in WebP format, and honest failure analysis. Four experiments include live web applications hosted on GitHub Pages with backend services on a home computer.
+The site has four core pages and fifteen documented experiments. Core pages present background, work, and contact. Experiment pages present technical case studies with terminal receipts, screenshots in WebP format, and honest failure analysis. Four experiments include live web applications hosted on GitHub Pages with backend services on a home computer. One experiment adds a local MCP translator so an LLM can write into the live tracker without a browser.
 
 The goal is to test whether artificial intelligence is truly useful in everyday work and to publish full evidence for every claim.
 
@@ -42,6 +42,7 @@ Backend and services:
 - Job Tracker data API on the same authentication backend
 - MiniLeads data service on port 7005 with Node and Express and SQLite
 - ContentOS data service on port 7010 with Node Express and SQLite in Docker
+- Internal MCP translator on the laptop with Node MCP SDK and 6 tools over stdio, reusing the same auth and data doors with zero new servers
 - CV Screening scoring with n8n on port 5678 using a 24 node rule based workflow
 - Tailscale Funnel for public HTTPS access to home computer services
 - No native PHP install required because the backend runs in one Docker image
@@ -58,7 +59,7 @@ Infrastructure:
 - profile.html - Background and focus areas
 - contact.html - Contact options and form entry
 - experiments-list.html - Index of all experiments
-- exp001.html to exp014.html - Individual experiment case studies
+- exp001.html to exp015.html - Individual experiment case studies
 - template-exp000.html - Template for future experiments, not indexed
 - 404.html - Custom not found page, not indexed
 - css/style.css - Shared custom styles
@@ -91,6 +92,7 @@ Infrastructure:
 | 012 | Multi User CRM with Server Side Pagination | React and Vite with 2049 leads, tap to filter charts, CSV import and export, dark mode | exp012.html |
 | 013 | Multi User CV Screening Platform | React and Vite with in browser extraction, seven step pipeline, n8n scoring | exp013.html |
 | 014 | Content Tracking Web App with Server Side Pagination | React and Vite with server pagination, Chart.js tap to filter, shared auth fourth customer, 12 failures documented | exp014.html |
+| 015 | Internal MCP Door for My Own Web App with No Manual Entry | Local MCP translator with 6 tools plus primary opencode agent writing into live ContentOS, 2 failures documented | exp015.html |
 
 Each experiment page includes system requirements, screenshots, live demo status, evidence log with terminal receipts, failure log, frontend code essence, FAQ, and disclaimer.
 
