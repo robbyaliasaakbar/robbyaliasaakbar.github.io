@@ -1,0 +1,27 @@
+/* Design token Jobtracker — minimal tegas (LOCK ketat 3 warna).
+   Base: Paper #FFFFFF · Ink #0C0C0C · Signal #D70000.
+   Turunan = opacity Ink di atas Paper, bukan hue baru.
+   Status lama dipertahankan sementara untuk SampleLedger. */
+
+@theme {
+  /* Warna — ketat 3 + opacity */
+  --color-paper: #ffffff; /* dasar putih */
+  --color-paper-raised: rgba(12, 12, 12, 0.04); /* Ink 4% — bg input tipis */
+  --color-ink: #0c0c0c; /* hitam utama */
+  --color-rule: rgba(12, 12, 12, 0.12); /* Ink 12% — border/divider */
+  --color-stamp: #d70000; /* merah website — hemat */
+  --color-graphite: rgba(12, 12, 12, 0.65); /* Ink 65% — teks sekunder, AA */
+  --color-ochre: #a9741c; /* status: interview HR — TETAP dulu */
+  --color-steel: #37627e; /* status: technical test — TETAP dulu */
+  --color-plum: #7c4b63; /* status: interview user — TETAP dulu */
+  --color-moss: #3e6b4e; /* status: diterima — TETAP dulu, login sukses pakai Ink */
+  --color-faded: rgba(12, 12, 12, 0.45); /* Ink 45% — placeholder saja */
+
+  /* Huruf — selaras website utama */
+  --font-display: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Inter", ui-monospace, monospace;
+
+  /* Radius: tegas tapi modern — hierarki, bukan 2px cetakan */
+  --radius-sharp: 8px;
+}
