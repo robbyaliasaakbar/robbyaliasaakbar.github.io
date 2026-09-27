@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://robbyaliasaakbar.github.io/</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -29,7 +29,7 @@
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/experiments-list.html</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -218,7 +218,7 @@
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp010.html</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-09-27</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -462,6 +462,45 @@
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/mcp-crud3.webp</image:loc>
       <image:title>Experiment 015 — MCP run part 3 edit delete clean</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://robbyaliasaakbar.github.io/exp016.html</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/dashboard.webp</image:loc>
+      <image:title>Experiment 016 — JobTracker dashboard with pipeline strip bar donut and ledger</image:title>
+      <image:caption>Daily driver 3 lamaran plus bar plus donut in sync</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/login-session.webp</image:loc>
+      <image:title>Experiment 016 — Login session with sample ledger panel</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/added-lamaran-form.webp</image:loc>
+      <image:title>Experiment 016 — Add lamaran modal solid white plus red shadow</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/mobile-version.webp</image:loc>
+      <image:title>Experiment 016 — Mobile cards with pipeline charts and stacked rows</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/terminal-door.webp</image:loc>
+      <image:title>Experiment 016 — Caddy one door routing and health checks</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/terminal-contract.webp</image:loc>
+      <image:title>Experiment 016 — Seven status enum and fail closed token rejection</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/lint-backend.webp</image:loc>
+      <image:title>Experiment 016 — Backend lint clean and sixteen tests green</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/lint-frontend.webp</image:loc>
+      <image:title>Experiment 016 — Frontend lint test build green relative assets</image:title>
     </image:image>
   </url>
   <url>

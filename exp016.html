@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 016 - From Static Tracker to Enterprise System JobTracker EXP010 Rebuilt on a Home PC Without VPS Bills - Robby Aliasa Akbar</title>
+  <meta name="description" content="Massive JobTracker upgrade from EXP010 static app to enterprise standards on a home private server at zero cost, with honest tradeoffs. React + Express + Postgres + Caddy one door + CI green.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp016.html">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp016.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp016.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp016.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp016.html">
+  <meta property="og:title" content="Experiment 016 - From Static Tracker to Enterprise System JobTracker EXP010 Rebuilt on a Home PC Without VPS Bills">
+  <meta property="og:description" content="Massive JobTracker upgrade from EXP010 static app to enterprise standards on a home private server at zero cost, with honest tradeoffs. React + Express + Postgres + Caddy one door + CI green.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments016/dashboard.webp">
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="500">
+  <meta property="og:image:alt" content="JobTracker dashboard with pipeline strip bar chart donut and ledger table">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-09-27T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-27T00:00:00+07:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 016 - From Static Tracker to Enterprise System JobTracker EXP010 Rebuilt on a Home PC Without VPS Bills">
+  <meta name="twitter:description" content="Massive JobTracker upgrade from EXP010 static app to enterprise standards on a home private server at zero cost, with honest tradeoffs. React + Express + Postgres + Caddy one door + CI green.">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments016/dashboard.webp">
+  <meta name="twitter:image:alt" content="JobTracker dashboard with pipeline strip bar chart donut and ledger table">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "From Static Tracker to Enterprise System JobTracker EXP010 Rebuilt on a Home PC Without VPS Bills",
+        "description": "Massive JobTracker upgrade from EXP010 static app to enterprise standards on a home private server at zero cost, with honest tradeoffs. React plus Express plus Postgres plus Caddy one door plus CI green.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments016/dashboard.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp016.html",
+        "datePublished": "2026-09-27",
+        "dateModified": "2026-09-27",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp016.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["job tracker v2", "React Vite GitHub Pages", "Express Postgres", "Knex migrate", "Caddy one door", "Tailscale Funnel", "shared auth frozen", "GitHub Actions CI"],
+        "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
+        "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
+          { "@type": "ListItem", "position": 3, "name": "Experiment 016", "item": "https://robbyaliasaakbar.github.io/exp016.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Is this a new login?", "acceptedAnswer": { "@type": "Answer", "text": "No. Same shared auth as EXP 011. Old notes still open with the same key." } },
+          { "@type": "Question", "name": "Did my old data move?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Read only copy, counts match plus five samples, old file kept seven days." } },
+          { "@type": "Question", "name": "Why one door?", "acceptedAnswer": { "@type": "Answer", "text": "Browser remembers one address. Data goes one way, auth goes another, health says ok." } },
+          { "@type": "Question", "name": "Why does it sleep at night?", "acceptedAnswer": { "@type": "Answer", "text": "Home PC by decision, no VPS bill. Off means honest card, data stays safe." } },
+          { "@type": "Question", "name": "Why Postgres?", "acceptedAnswer": { "@type": "Answer", "text": "Real relations plus safe concurrent plus VPS ready, reuse container, zero cost." } },
+          { "@type": "Question", "name": "Why so many failures?", "acceptedAnswer": { "@type": "Answer", "text": "Eighteen on record. Three found before live, one on live, all fixed with receipts." } }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { ink: '#0C0C0C', paper: '#FFFFFF', accent: '#D70000' }, fontFamily: { display: ['Manrope','sans-serif'], body: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } }
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @media (max-width: 640px) { .detail-label { font-size: 0.6875rem; letter-spacing: 0.16em; } .stat-tile p { word-break: break-word; } }
+    .shot-num { display: inline-flex; align-items: center; justify-content: center; width: 1.75rem; height: 1.75rem; border-radius: 9999px; background: #0C0C0C; color: #fff; font-family: 'Manrope', sans-serif; font-size: 0.75rem; font-weight: 800; }
+  </style>
+</head>
+<body class="bg-paper text-ink font-body antialiased">
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">ROBBY ALIASA AKBAR<span class="text-accent">.</span></a>
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="/" class="nav-link">Home</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="/" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html" class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+  <main>
+    <!-- Hero Section 1 -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 016</li>
+            </ol>
+          </nav>
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal><span aria-hidden="true">&larr;</span> Back to Experiments</a>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 016</p>
+            <span class="status-badge status-live"><span class="status-dot"></span>Live</span>
+            <span class="text-xs font-mono text-neutral-500">React plus Express plus Postgres plus Caddy one door plus CI green</span>
+          </div>
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.25] sm:leading-[1.25] lg:leading-[1.25]" data-reveal="200">From Static Tracker to Enterprise System JobTracker EXP010 Rebuilt on a Home PC Without VPS Bills.</h1>
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">Can a static tracker be rebuilt to enterprise standards on a home private server with honest tradeoffs?</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="350">
+            <a href="https://robbyaliasaakbar.github.io/jobtracker/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Open Live App - /jobtracker/</a>
+            <a href="exp011.html" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Shared Backend: EXP 011</a>
+          </div>
+          <p class="mt-4 text-xs text-neutral-500 font-mono" data-reveal="360">mimo v2.6 flash via cline cli &middot; React plus Express plus Postgres plus Caddy &middot; 8 verified captures &middot; 0 VPS bill &middot; 27 Sep 2026</p>
+          <div class="mt-6 rounded-2xl border border-black/10 bg-neutral-50 p-5" data-reveal="380">
+            <p class="text-xs text-neutral-600 leading-relaxed">Login in this app uses the SAME shared auth backend as EXP 011 plus 012 plus 013 plus 014 plus 015. Not a copy. Token key jobTracker.token. Backend detail stays in <a href="exp011.html" class="underline hover:text-accent">EXP 011</a>, link it. This backend only reads auth via GET /api/me, never writes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Source Code plek 015 -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Source Code</p>
+        <div class="mt-8 flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12 lg:justify-between">
+          <div class="max-w-2xl" data-reveal="100">
+            <h2 class="font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight">The source code is public. Prove it yourself.</h2>
+            <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed">You get the full frontend. React plus Vite, ledger board, bar and donut tap to filter, plus table to cards. No secrets inside. The data API lives in its own repo with its own README.</p>
+            <p class="mt-4 font-mono text-xs text-neutral-500 break-all">github.com/robbyaliasaakbar/robbyaliasaakbar.github.io/tree/main/jobtracker</p>
+            <p class="mt-1 font-mono text-xs text-neutral-500 break-all">github.com/robbyaliasaakbar/backend-api-services-jobtracker</p>
+            <p class="mt-4 text-xs text-neutral-500 leading-relaxed">Receipts live in both READMEs, no secrets inside. <a href="https://github.com/robbyaliasaakbar/robbyaliasaakbar.github.io/blob/main/jobtracker/README.md" target="_blank" rel="noopener" class="underline hover:text-accent">Frontend README</a> plus <a href="https://github.com/robbyaliasaakbar/backend-api-services-jobtracker/blob/main/README.md" target="_blank" rel="noopener" class="underline hover:text-accent">Backend README</a>.</p>
+          </div>
+          <div class="shrink-0 flex flex-wrap items-center gap-4" data-reveal="150">
+            <a href="https://github.com/robbyaliasaakbar/robbyaliasaakbar.github.io/tree/main/jobtracker" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">View frontend source</a>
+            <a href="https://github.com/robbyaliasaakbar/backend-api-services-jobtracker" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">View backend API</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Requirements plek 015 -->
+    <section class="pb-20 pt-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>System Requirements</p>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Live view</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Modern browser + internet</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Live app login</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Akun auth :7002 (OTP email)</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Live app jam</p>
+            <p class="mt-2 text-sm font-medium leading-snug">08.00 to 21.00 WIB</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Local dev FE</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Node 22+, npm 10, port 7013 kosong</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Local BE</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Node 22+, Docker, Postgres :5432, port 7012/7014 kosong</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="200">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Funnel</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Tailscale funnel :7443 to 127.0.0.1:7014</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="240">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Test gate</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">lint 0, test hijau, build 38 modules</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="280">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">mimo v2.6 flash via cline cli</p>
+          </div>
+        </div>
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal>First experiment developed with a hosted model instead of the local coder. The ledger runs on GitHub Pages, the data still lives on the home PC behind one encrypted funnel as EXP 010 through 015.</p>
+      </div>
+    </section>
+    <!-- Screenshots plek 015, 8 file 800x500 -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Screenshots</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">App First Then Terminal Green At The End</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">Eight captures in strict order. App first then terminal, green at the end for climax. Login plus dashboard plus modal plus mobile, then door plus contract plus lint backend plus lint frontend.</p>
+        <div class="mt-12 space-y-16">
+          <div data-reveal="0">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">1</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Login Session - Sample Ledger Panel</h3>
+              <span class="text-xs font-mono text-neutral-400">login-session.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments016/login-session.webp" alt="JobTracker login page with sample ledger panel - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Login - ledger book plus REKAAN panel not user data</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">2</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Dashboard - Strip Plus Bar Plus Donut</h3>
+              <span class="text-xs font-mono text-neutral-400">dashboard.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments016/dashboard.webp" alt="JobTracker dashboard with pipeline strip bar chart donut and ledger table - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Dashboard - daily driver 3 lamaran plus bar plus donut in sync</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">3</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Add Modal - Solid White Plus Red Shadow</h3>
+              <span class="text-xs font-mono text-neutral-400">added-lamaran-form.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments016/added-lamaran-form.webp" alt="Add lamaran modal with solid white card and red offset shadow - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Modal - solid white plus red offset shadow one courage</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">4</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Mobile - Table To Cards</h3>
+              <span class="text-xs font-mono text-neutral-400">mobile-version.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments016/mobile-version.webp" alt="JobTracker mobile cards with pipeline charts and stacked rows - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Mobile - table to cards on HP 360px works</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">5</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Door - Caddy One Door Plus Health</h3>
+              <span class="text-xs font-mono text-neutral-400">terminal-door.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments016/terminal-door.webp" alt="Terminal showing Caddy one door routing and health checks - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Door - one door one funnel auth only passes through</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">6</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Contract - Seven Enum Plus Fail Closed</h3>
+              <span class="text-xs font-mono text-neutral-400">terminal-contract.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments016/terminal-contract.webp" alt="Terminal showing seven status enum and fail closed token rejection - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Contract - identical PHP contract plus fail closed without real token</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">7</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Backend - Lint Clean Plus 16 Tests</h3>
+              <span class="text-xs font-mono text-neutral-400">lint-backend.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments016/lint-backend.webp" alt="Backend lint clean and sixteen tests green - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Backend - BE 16 tests green plus PHP date parity</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">8</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Frontend - Lint Plus 21 Tests Plus Build</h3>
+              <span class="text-xs font-mono text-neutral-400">lint-frontend.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments016/lint-frontend.webp" alt="Frontend lint test build green with relative assets and zero localhost - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Frontend - FE 21 tests plus relative build plus 0 localhost</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Live Demo plek 015 card -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live Demo</p>
+        <div class="mt-8 border border-black/10 rounded-2xl p-8 sm:p-12 bg-white" data-reveal="50">
+          <h2 class="font-display font-bold text-2xl sm:text-3xl tracking-tight">Live ledger plus home backend, no VPS bill</h2>
+          <p class="mt-4 text-base text-neutral-600 leading-relaxed max-w-2xl">The ledger is still /jobtracker/ from EXP 010 rebuilt. This experiment proves a static tracker can run enterprise habits on a home PC. Try the app live, then compare with the terminal shots below.</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a href="https://robbyaliasaakbar.github.io/jobtracker/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Open Live App - /jobtracker/</a>
+            <span class="text-xs font-mono text-neutral-500">Live frontend, home PC backend</span>
+          </div>
+          <div class="mt-6 border-t border-black/10 pt-6">
+            <p class="text-xs sm:text-sm text-neutral-500 leading-relaxed max-w-3xl">Backend home PC 08.00 to 21.00 WIB. If the computer or funnel door is closed, the app shows an honest offline card, which is expected and not broken. Test rows were cleaned where shown. Demo uses live frontend plus home backend only.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Summary plek 015 -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">For those of you unable to read this data from technical standpoint, here is the conclusion:</h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>1. My job notebook was messy but useful, so I rebuilt it to look calm and work daily</p>
+            <p>2. You log in the same way, your old notes still fit, nothing to move by hand</p>
+            <p>3. One door for the browser, one key check, no new passwords written anywhere</p>
+            <p>4. My home computer sleeps at night, when it is off the app says so honestly</p>
+            <p>5. The move kept every row, counts match and samples match, old file kept seven days</p>
+            <p>6. Everything that broke is written here, eighteen small stories, no hidden magic</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Details plek 015, 5 blok S8 -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Same Contract New Backbone Plus Honest Tradeoffs</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">Massive upgrade from EXP010. Same shape plus same errors, new backbone plus one door plus green gate. Here are the five decisions that move a static tracker to enterprise habits on a home PC.</p>
+        <div class="mt-12 space-y-12">
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Same Contract, New Backbone</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">validate.js plus lamaran.js</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">The v1 vanilla app was 4 files with zero build. The v2 React app is full new with 2 screens, yet shape plus 7 enum plus error messages stay plek PHP legacy (<code class="code-inline">src/validate.js</code> plus <code class="code-inline">src/api/lamaran.js</code>). Because the contract never changed, old notes still fit and migration stays smooth.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Development used hosted model <code class="code-inline">mimo v2.6 flash via cline cli</code>, not local and not opencode. Bang Rob led research plus architecture plus review plus test, Udin typed code plus suggestions.</p>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">One Door Plus One Funnel</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">Caddy :7014 plus funnel :7443</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">Caddy on <code class="code-inline">:7014</code> is one door. <code class="code-inline">/api</code> goes to <code class="code-inline">:7012</code>, <code class="code-inline">/auth</code> passes to <code class="code-inline">:7002</code> frozen, <code class="code-inline">/health</code> answers 200. One funnel on <code class="code-inline">:7443</code> forwards to the door. Auth is only read via <code class="code-inline">GET /api/me</code>, never written, Knex never connects to auth.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Proof is <code class="code-inline">infra/Caddyfile</code> plus curl to 4 endpoints. Local plus funnel plus status all green, auth without token answers 401 asking for token.</p>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Cutover Without Losing A Row</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">migrate plus COUNT match</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">Backup first, then read SQLite read only from backup, then insert to Postgres with idempotent signature (<code class="code-inline">scripts/migrate-lamaran.js</code>). COUNT matches plus 5 samples match. Old SQLite file stays for 7 days after cutover.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Date parity was fixed with raw string parser for pg DATE so save plus read never shifts a day. Parser was patched in server plus cutover together.</p>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Ledger UI That Stays Calm</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">5 auth modes plus strip bar donut</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">Paper token plus hairlines plus one brave accent. Five auth modes plus dashboard strip 7 plus bar plus donut tap to filter in sync, table to cards on mobile, solid modal, toast, offline card that says the server is sleeping.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Proof is screenshots plus <code class="code-inline">design-token.css</code>. No icon library, no router, no heavy store, by decision.</p>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Green Gate Before Push</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">lint 0 plus test 21 plus build 38</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">Lint 0 plus test 21 of 21 plus build 38 modules plus copy dist plus relative assets plus 0 localhost. CI adds Postgres service so green means tests really ran, not fake green.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Proof is Actions YAML plus logs. Frontend <code class="code-inline">frontend.yml</code> plus backend <code class="code-inline">backend.yml</code> both green before push.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Evidence plek 015 -->
+    <section class="py-20 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Evidence Log</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Standalone Evidence Log: One Door Plus Contract Plus Green Gate</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">Every claim about one door plus contract plus green gate is backed by verifiable command line outputs from 27 Sep 2026. Passwords and full tokens never appear, raw status plus counts plus file listings remain exact.</p>
+        <div class="mt-12 space-y-10">
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E1. One Door Answers Local</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">ok true Local</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Hitting BE plus Caddy plus Caddy to BE proves one door routes correctly.</p>
+            <pre class="code-block mt-4">curl -s http://127.0.0.1:7012/health
+{"ok":true}
+
+curl -s http://127.0.0.1:7014/health
+ok
+
+curl -s http://127.0.0.1:7014/api/health
+{"ok":true}</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: BE plus door plus door to BE all ok.</p>
+          </div>
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E2. Funnel Forwards Plus Auth Asks Token</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">401 Ask Token</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Hitting public funnel without token proves forwarding works and auth stays defensive.</p>
+            <pre class="code-block mt-4">curl -sk https://aispec.tail06293c.ts.net:7443/health
+ok
+
+curl -sk https://aispec.tail06293c.ts.net:7443/api/health
+{"ok":true}
+
+curl -sk https://aispec.tail06293c.ts.net:7443/auth/api/me
+{"error":"Token tidak sah atau kedaluwarsa"}</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: funnel to door ok, auth answers 401 asking for token.</p>
+          </div>
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E3. Contract Enum Plus Fail Closed</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">7 Enum Intact</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Grep proves 7 stages intact plus fake token stays rejected.</p>
+            <pre class="code-block mt-4">grep STATUS src/validate.js
+baru, interview-hr, technical-test, interview-user, offering, diterima, ditolak
+
+curl token ngawur
+{"error":"Token tidak sah atau kedaluwarsa"}</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: identical PHP contract, fail closed without real token.</p>
+          </div>
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E4. Backend Green 16 Pass</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">16 Pass 0 Fail</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Lint clean plus suite green plus date parity with PHP.</p>
+            <pre class="code-block mt-4">npm run lint
+clean 0 problems
+
+npm test
+16 pass 0 fail</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: BE green, date alias plek PHP.</p>
+          </div>
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E5. Frontend Green 21 Plus Build Relative</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">21 Passed Relative</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Lint plus vitest plus build proves Pages ready with zero localhost.</p>
+            <pre class="code-block mt-4">npm run lint
+clean
+
+npx vitest run
+3 files 21 passed
+
+npm run build
+38 modules 137ms css 35.93KB js 256.59KB
+src="./assets/index-CbM5JKKw.js"
+
+grep localhost:7002 dist -r
+0</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: FE green, relative assets, 0 localhost safe for live.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Failure plek 015 tiered -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Failure Log</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Eighteen Failures Written Honestly</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">Eighteen stories plus 4 near miss plus 12 UI notes. Five deep dives below, thirteen honest list after. Three found before live, one on live, all fixed with receipts.</p>
+        <div class="mt-12">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="font-display font-bold text-xs tracking-[0.18em] uppercase text-accent">Tier 1 Incidents</span>
+            <span class="text-xs text-neutral-400">Five Deep Dive Case Studies</span>
+          </div>
+          <div class="space-y-8">
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">1. Dates Shift A Day</h3>
+                <span class="text-xs font-mono text-accent font-semibold">TZ Silent Bug DEV HIGH</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> Save 2026-09-26 came back as 2026-09-25. Silent, no error, only visible on read back.</p>
+                <p><strong>Diagnosis:</strong> pg DATE became Date at midnight local plus toISOString to UTC shifted back 7 hours for WIB.</p>
+                <p><strong>Fix:</strong> Raw string parser for type 1082 in pgtypes plus same patch in cutover. Save plus read shielded by integration test.</p>
+                <p><strong>Lesson:</strong> Timezone is silent, prove with save plus read, never trust local midnight.</p>
+              </div>
+            </div>
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">2. Build Green But Runtime Crash</h3>
+                <span class="text-xs font-mono text-accent font-semibold">Silent Killer DEV HIGH</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> Build exit 0 yet warning about getToken undefined. Production screen never finished loading.</p>
+                <p><strong>Diagnosis:</strong> AppStore called a helper never exported from auth. Exit 0 hid the broken bootstrap.</p>
+                <p><strong>Fix:</strong> Re export getToken from auth plus read warnings as errors. Bootstrap verified in browser.</p>
+                <p><strong>Lesson:</strong> Exit 0 is not success, read warnings line by line.</p>
+              </div>
+            </div>
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">3. Container Hits Itself To 503 Live Login</h3>
+                <span class="text-xs font-mono text-accent font-semibold">Localhost Trap LIVE HIGH</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> Live login 503. BE container shot to its own localhost, not host auth.</p>
+                <p><strong>Diagnosis:</strong> Localhost inside container means itself, not host. Auth lives outside the container network.</p>
+                <p><strong>Fix:</strong> Host env plus compose service name for auth URL. Live login verified after restart.</p>
+                <p><strong>Lesson:</strong> Localhost changes meaning inside containers, use explicit host names.</p>
+              </div>
+            </div>
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">4. Absolute Base To 404 Blank White</h3>
+                <span class="text-xs font-mono text-accent font-semibold">Base Path PRE-LIVE HIGH</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> Pages showed blank white with 404 on assets. Absolute base broke on project Pages.</p>
+                <p><strong>Diagnosis:</strong> Base /jobtracker/ expects domain root, Pages serves from sub path.</p>
+                <p><strong>Fix:</strong> Relative base plus VITE_BASE removed plus assets ignored by ESLint. Relative proved safe.</p>
+                <p><strong>Lesson:</strong> Relative base survives Pages, absolute base dies quietly.</p>
+              </div>
+            </div>
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">5. CORS Plus Stale Bundle Double Trap</h3>
+                <span class="text-xs font-mono text-accent font-semibold">Dev Plus Bundle PRE-LIVE HIGH</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> Dev on 7013 shot funnel 7443 and got preflight without allow header. Dev also served old funnel artifact.</p>
+                <p><strong>Diagnosis:</strong> Funnel origin not in frozen allowlist plus dev served stale bundle with embedded funnel URL.</p>
+                <p><strong>Fix:</strong> Dev env to localhost, refuse to add origin to frozen. Restore from index template plus restart. Prove with curl plus grep bundle.</p>
+                <p><strong>Lesson:</strong> Prove with outputs, never guess origin plus bundle issues.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-16">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="font-display font-bold text-xs tracking-[0.18em] uppercase text-neutral-500">Tier 2 Log</span>
+            <span class="text-xs text-neutral-400">Thirteen Honest List Plus Near Miss Plus UI Notes</span>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5 bg-paper" data-reveal="0">
+            <div class="text-xs text-neutral-600 leading-relaxed space-y-2">
+              <p>F1 DEV small: test command read as file path to plain run. Lesson: 0 run once mistaken as tested.</p>
+              <p>F4 DEV medium: event hack while context existed to rewrite. Lesson: stay with context.</p>
+              <p>F5 DEV small: unused disable twice wrong fix to remove directive. Lesson: target 0 warnings.</p>
+              <p>F6 DEV small: duplicate SampleLedger import to tidy. Side effect F7 split.</p>
+              <p>F7 DEV workflow: editor refused big file plus overwrite to split AuthPage to 3 files cleaner.</p>
+              <p>F8 DEV workflow: pkill matched own shell twice to anti self pattern.</p>
+              <p>F9 DEV false alarm: parallel ls read stale to sequential check.</p>
+              <p>F10 DEV small: SQL one liner quote trap to binding.</p>
+              <p>F11 DEV small: grep handle miss to read caller router first.</p>
+              <p>F12 DEV prevented: skeleton Caddy 2 bugs to host plus strip prefix before run.</p>
+              <p>F13 DEV prevented: fake green CI to add Postgres plus TEST_URL.</p>
+              <p>F14 DEV workflow: long sleep hit timeout twice to split poll.</p>
+              <p>PRE-LIVE recap F16 to F18: 3 found before push, 0 users hit. If leaked: blank plus no login plus wrong diagnosis.</p>
+              <p>Near miss 4: live CORS checked before push plus TZ patch also in cutover plus E2E account canceled to protect frozen auth plus 8 compromises openly admitted.</p>
+              <p>UI notes G1 to G12: funnel artifact rewrite plus dark tone plus moss fix plus solid modal plus hover border plus paper ink stamp tokens plus AuthPage REKAAN plus strip 28 plus boxed toolbar plus 500ms interactivity plus sleep card plus lint test build tracking.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- FAQ plek 015 -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper" open>
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Is this a new login?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">No. Same shared auth as EXP 011. Old notes still open with the same key.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Did my old data move?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Yes. Read only copy, counts match plus five samples, old file kept seven days.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why one door?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Browser remembers one address. Data goes one way, auth goes another, health says ok.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why does it sleep at night?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Home PC by decision, no VPS bill. Off means honest card, data stays safe.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why Postgres?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Real relations plus safe concurrent plus VPS ready, reuse container, zero cost.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why so many failures?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Eighteen on record. Three found before live, one on live, all fixed with receipts.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+    <!-- Live Status plek 015 -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live Status</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Live Status - Live Ledger, Home-PC Backend</h2>
+        <div class="mt-8 grid sm:grid-cols-2 gap-4" data-reveal="150">
+          <div class="border border-emerald-200 rounded-2xl p-6 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-emerald-700">&#9989; What works now</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>React ledger live /jobtracker/ with CRUD 7 stages</li>
+              <li>Bar plus donut tap to filter in sync</li>
+              <li>Caddy one door 7014 plus funnel 7443</li>
+              <li>Postgres cutover verified with COUNT plus samples</li>
+              <li>CI green for frontend plus backend</li>
+            </ul>
+          </div>
+          <div class="border border-amber-300 bg-amber-50/50 rounded-2xl p-6">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-amber-700">&#128679; What is not production yet</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>Not 24/7, local PC runs 08.00 to 21.00 WIB</li>
+              <li>Token 1h, Postgres single container reuse</li>
+              <li>No rate limit page yet</li>
+              <li>Hardening is a separate project</li>
+            </ul>
+          </div>
+        </div>
+        <blockquote class="quote-block mt-8 text-sm sm:text-base text-neutral-600 leading-relaxed border-amber-300 bg-amber-50 rounded-r-2xl p-6" data-reveal>Ledger live on GitHub Pages. Backend runs on my personal PC (funnel :7443 to Caddy :7014 to :7012 plus :7002 frozen). Off means offline card, expected. Transcripts plus file listing show how it works.</blockquote>
+      </div>
+    </section>
+    <!-- Disclaimer plek 015 -->
+    <section class="py-16 border-t border-black/10 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="max-w-3xl" data-reveal>
+          <p class="eyebrow">Disclaimer</p>
+          <h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">Disclaimer - Live Ledger, Home Backend, Not Production-Hardened</h2>
+          <blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">Built with mimo v2.6 flash via cline cli hosted, not local and not opencode. Test rows cleaned where shown. Passwords, tokens, and OTP codes are never shown.</blockquote>
+          <p class="mt-6 text-sm text-neutral-700 leading-relaxed"><strong>Shared backend:</strong> <a class="underline hover:text-accent" href="exp011.html">EXP 011 (:7002)</a> &middot; <strong>v1 story:</strong> <a class="underline hover:text-accent" href="exp010.html">EXP 010 (vanilla)</a> &middot; <strong>This:</strong> EXP 016 (v2 enterprise) &middot; <strong>Machine:</strong> <a class="underline hover:text-accent" href="exp001.html">EXP 001</a></p>
+        </div>
+      </div>
+    </section>
+    <!-- Closing CTA plek 015 -->
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal>
+          <a href="experiments-list.html" class="arrow-link font-display text-sm uppercase"><span aria-hidden="true">&larr;</span> Back to Experiments</a>
+          <a href="contact.html" class="arrow-link font-display text-sm uppercase">Have a problem worth exploring? <span aria-hidden="true">-&gt;</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- Footer plek 015 1:1 -->
+  <footer class="bg-dark-section text-white">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8">
+      <div class="grid gap-12 md:grid-cols-3">
+        <div>
+          <p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p>
+          <p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">Applied AI Systems Builder</p>
+          <p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">Exploring AI systems, local LLMs, automation workflows, and practical tools that actually work in real business operations.<br>Building what matters, and checking whether AI is truly useful in everyday work.</p>
+        </div>
+        <div class="md:justify-self-center">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="/" class="footer-link">Home</a></li>
+            <li><a href="profile.html" class="footer-link">Profile</a></li>
+            <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="md:justify-self-end">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li>
+            <li><a href="https://www.reddit.com/user/Full_Director87/" target="_blank" rel="noopener" class="footer-link">Reddit</a></li>
+            <li><a href="https://www.instagram.com/ybboraa/" target="_blank" rel="noopener" class="footer-link">Instagram</a></li>
+            <li><a href="mailto:ibborarts@gmail.com" class="footer-link">Email</a></li>
+            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p>
+        <p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p>
+      </div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
