@@ -58,7 +58,7 @@
         "image": "https://robbyaliasaakbar.github.io/images/experiments007/homepage-hero.webp",
         "url": "https://robbyaliasaakbar.github.io/exp007.html",
         "datePublished": "2026-09-04",
-        "dateModified": "2026-09-25",
+        "dateModified": "2026-09-28",
         "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp007.html" },
         "inLanguage": "en-US",
         "articleSection": "Experiments",
@@ -215,7 +215,7 @@
             From 30 Minutes to 5 Seconds: Automating Mass CV Screening Without In-System AI.
           </h1>
           <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">
-            Can 1–5 CV PDFs be screened from a 30-minute manual review to a 5-second ranked shortlist — without heavy AI or hallucination — using only <code class="code-inline">pdf.js</code>, 24-node <code class="code-inline">n8n</code> orchestration, and a predictable rule-based scoring on a private server? Deadline: 3 days. Delivered in 5 hours.
+            Can 1–5 CV PDFs be screened from a 30-minute manual review to a 5-second ranked shortlist, without heavy AI or hallucination, using only <code class="code-inline">pdf.js</code>, 24-node <code class="code-inline">n8n</code> orchestration, and a predictable rule-based scoring on a private server? Deadline: 3 days. Delivered in 5 hours.
           </p>
         </div>
       </div>
@@ -371,7 +371,7 @@
             Predictable Scoring — 70% Threshold, No LLM Feeling
           </h2>
           <p class="mt-2 text-sm text-neutral-600">
-            20 skill = 40% + 6 education = 30% + 6 experience = 30%. 5 CV samples: 80,75,50,35,25 — only 2 <code class="code-inline">Lolos ≥70%</code>. The rest are predictable, auditable, and adjustable.
+            20 skill = 40% + 6 education = 30% + 6 experience = 30%. 5 CV samples: 80,75,50,35,25, with only 2 <code class="code-inline">Lolos ≥70%</code>. The rest are predictable, auditable, and adjustable.
           </p>
         </div>
 
@@ -387,13 +387,13 @@
             <span>score / 100 — threshold 70 (dashed line in analysis, not in chart)</span>
             <span>100</span>
           </div>
-          <p class="mt-4 text-xs text-neutral-500 leading-relaxed">CV3 (Drafter & 3D, 10y) 80 → Lolos, CV1 (Arch, 7y) 75 → Lolos, CV4/2/5 (50,35,25) → Tidak Lolos. CSV says <code class="code-inline">Lolos 80% utk Drafter & 3D Visualization</code> — HR knows why.</p>
+          <p class="mt-4 text-xs text-neutral-500 leading-relaxed">CV3 (Drafter & 3D, 10y) 80 → Lolos, CV1 (Arch, 7y) 75 → Lolos, CV4/2/5 (50,35,25) → Tidak Lolos. CSV says <code class="code-inline">Lolos 80% utk Drafter & 3D Visualization</code>. HR knows why.</p>
         </div>
 
         <!-- Flow diagram -->
         <div class="mt-8 border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="200">
           <h3 class="font-display font-extrabold text-sm tracking-[0.08em] uppercase">Workflow Orchestration, Not Hallucination</h3>
-          <p class="mt-2 text-xs text-neutral-500">Bot without in-system AI — local LLM only as syntax assistant.</p>
+          <p class="mt-2 text-xs text-neutral-500">Bot without in-system AI: local LLM only as syntax assistant.</p>
           <div class="mt-6 flex flex-col gap-3 text-xs font-mono">
             <div class="flex flex-col lg:flex-row items-center gap-3">
               <span class="px-3 py-2 bg-ink text-white rounded-lg font-bold">1–5 PDF (Browser)</span>
@@ -421,7 +421,7 @@
         </div>
 
         <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal>
-          Deadline was 3 days (Fri 4 Sept 2026) — delivered in 5 hours. That speed came from keeping AI outside the system and keeping the workflow predictable.
+          Deadline was 3 days (Fri 4 Sept 2026), delivered in 5 hours. That speed came from keeping AI outside the system and keeping the workflow predictable.
         </p>
       </div>
     </section>
@@ -434,11 +434,11 @@
             For those unable to interpret the data from a technical standpoint, here is the conclusion:
           </h2>
           <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
-            <p>This is not a demo — it’s a hiring tool that cuts 30 minutes of manual CV opening to about 5 seconds. You upload 1–5 PDFs on your phone or laptop (drag & drop or tap), and it ranks them for you.</p>
-            <p>It’s fair per position: a Junior Architect is scored on AutoCAD/Revit, a Drafter on Enscape/D5, an Interior Designer on Photoshop — so no one is judged on the wrong skills. You get a table (Rank, CV, Position, Score, Status) and a CSV you open in Excel — with a clear reason like “Lolos 75% utk Junior Architect”.</p>
+            <p>This is not a demo. It’s a hiring tool that cuts 30 minutes of manual CV opening to about 5 seconds. You upload 1–5 PDFs on your phone or laptop (drag & drop or tap), and it ranks them for you.</p>
+            <p>It’s fair per position: a Junior Architect is scored on AutoCAD/Revit, a Drafter on Enscape/D5, an Interior Designer on Photoshop, so no one is judged on the wrong skills. You get a table (Rank, CV, Position, Score, Status) and a CSV you open in Excel, with a clear reason like “Lolos 75% utk Junior Architect”.</p>
             <p>It doesn’t use heavy AI inside. The score is a simple, auditable rule HR can change (20 skills 40% + 6 edu 30% + 6 exp 30%, pass at 70%). That makes it predictable and fast, with no hallucination.</p>
-            <p>It runs 100% on your own private computer — the PDFs never leave your browser, and the database cleans itself after each batch. No SaaS fee, no token cost.</p>
-            <p>It was due in 3 days — it was delivered in 5 hours. For a small team hiring a few roles at a time, it’s sufficient, stable, and you own it 100%.</p>
+            <p>It runs 100% on your own private computer. The PDFs never leave your browser, and the database cleans itself after each batch. No SaaS fee, no token cost.</p>
+            <p>It was due in 3 days and delivered in 5 hours. For a small team hiring a few roles at a time, it’s sufficient, stable, and you own it 100%.</p>
           </div>
         </div>
       </div>
@@ -454,20 +454,20 @@
           <!-- PROBLEM -->
           <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
             <div class="lg:col-span-3"><span class="detail-label">Problem</span></div>
-            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">A manufacturing company is hiring fast for 3 roles (Junior Architect, Drafter & 3D Visualization, Interior Designer). HR screens CVs manually — opening 5 PDFs one-by-one takes ~30 minutes, is subjective, and doesn’t scale. The AI Specialist test asks for a POC in 3 days that is end-to-end, lightweight, HR-friendly, mobile-friendly, and runs locally on a private server (not public, no login, no SaaS).</p></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">A manufacturing company is hiring fast for 3 roles (Junior Architect, Drafter & 3D Visualization, Interior Designer). HR screens CVs manually: opening 5 PDFs one-by-one takes ~30 minutes, is subjective, and doesn’t scale. The AI Specialist test asks for a POC in 3 days that is end-to-end, lightweight, HR-friendly, mobile-friendly, and runs locally on a private server (not public, no login, no SaaS).</p></div>
           </div>
 
           <!-- SPECIFICATIONS -->
           <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
             <div class="lg:col-span-3"><span class="detail-label">Specifications</span></div>
             <ol class="lg:col-span-9 space-y-4 list-none">
-              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Single-page landing `index.html` 626 lines — `HTML5 + Tailwind CDN + Vanilla JS + pdf.js 2.16.105`, `Inter + Manrope`, `bg-grid`, `data-reveal`, `mobile sticky bottom` bar, `toast` (success/error/info, auto 3.2s), `progress Mengekstrak 3/5...` with bar, validation `PDF only, max 5MB/file, max 5 files, dup check`, badge `cv_1..cv_5`, no login.</p></li>
-              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Client-side extraction: <code class="code-inline">pdfjsLib.getDocument({data: arrayBuffer}).promise → getPage → getTextContent → join</code>, returns <code class="code-inline">{text, page_count}</code>, wraps as JSON Array <code class="code-inline">[{id: "cv_1", filename, size_kb, page_count, text, uploaded_at}]</code> — array directly, for n8n `Split In Batches`, with `AbortController 15s` and `fallback Download JSON` if webhook offline.</p></li>
-              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">n8n workflow `Technical Test` 24 nodes — `Webhook POST /upload-cv (responseNode)` → `Code Extractor` (pecah 5 CV) → `Code Keyword Router` (Posisi A/B/C) → `Edit Fields Rapihin` (10 fields) → `Switch Posisi` (3 outputs + fallback) → 3 branches each `Pemecah (1 per 1) → Normalisasi → Edit Fields → Hitung 40/30/30 → ekstrak` → `Merge Gabungan (Append 3)` → `Code Ranking (sort desc)` → `database (Postgres upsert)` → `Respond Ranking (allIncomingItems)` → `Postgres Clean (TRUNCATE)`.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Single-page landing `index.html` 626 lines: `HTML5 + Tailwind CDN + Vanilla JS + pdf.js 2.16.105`, `Inter + Manrope`, `bg-grid`, `data-reveal`, `mobile sticky bottom` bar, `toast` (success/error/info, auto 3.2s), `progress Mengekstrak 3/5...` with bar, validation `PDF only, max 5MB/file, max 5 files, dup check`, badge `cv_1..cv_5`, no login.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Client-side extraction: <code class="code-inline">pdfjsLib.getDocument({data: arrayBuffer}).promise → getPage → getTextContent → join</code>, returns <code class="code-inline">{text, page_count}</code>, wraps as JSON Array <code class="code-inline">[{id: "cv_1", filename, size_kb, page_count, text, uploaded_at}]</code>, array directly, for n8n `Split In Batches`, with `AbortController 15s` and `fallback Download JSON` if webhook offline.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">n8n workflow `Technical Test` 24 nodes: `Webhook POST /upload-cv (responseNode)` → `Code Extractor` (pecah 5 CV) → `Code Keyword Router` (Posisi A/B/C) → `Edit Fields Rapihin` (10 fields) → `Switch Posisi` (3 outputs + fallback) → 3 branches each `Pemecah (1 per 1) → Normalisasi → Edit Fields → Hitung 40/30/30 → ekstrak` → `Merge Gabungan (Append 3)` → `Code Ranking (sort desc)` → `database (Postgres upsert)` → `Respond Ranking (allIncomingItems)` → `Postgres Clean (TRUNCATE)`.</p></li>
               <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Keyword routing: Posisi A `Junior Architect` (12 keywords: autocad, revit, sketchup, lumion, building code...), Posisi B `Drafter & 3D Visualization` (15: enscape, d5 render, shop drawing, as-built...), Posisi C `Interior Designer` (10: furniture, lighting, photoshop, illustrator...).</p></li>
-              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">5.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Predictable scoring (per report, 70% threshold): <code class="code-inline">20 skill = 40% + 6 edu = 30% + 6 exp = 30%</code>, <code class="code-inline">total = round(skillScore+eduScore+expScore)</code>, <code class="code-inline">≥70% Lolos, &lt;70% Tidak</code> — implemented as 1 CV per 1, no batch OOM, 3 jalur duplicated for fairness per position.</p></li>
-              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">6.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Output: ranking `rank 1..5` with <code class="code-inline">{id_cv, nama_file, posisi, total_score, status, alasan}</code> — e.g., `Lolos 80% utk Drafter & 3D Visualization` — table in landing page + `Download Ranking (JSON)` + `Download CSV` with Indonesian headers <code class="code-inline">Peringkat, ID CV, Nama File, Posisi Dilamar, Skor (0-100), Status, Alasan</code> + BOM <code class="code-inline">0xEFBBBF</code> for Excel.</p></li>
-              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">7.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Local private server: <code class="code-inline">Python 3 http.server</code> on <code class="code-inline">http://localhost:8010</code> (8000 taken) + webhook <code class="code-inline">http://localhost:5678/webhook/upload-cv</code> — no public URL, no data leaves, PDFs only in browser memory.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">5.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Predictable scoring (per report, 70% threshold): <code class="code-inline">20 skill = 40% + 6 edu = 30% + 6 exp = 30%</code>, <code class="code-inline">total = round(skillScore+eduScore+expScore)</code>, <code class="code-inline">≥70% Lolos, &lt;70% Tidak</code>, implemented as 1 CV per 1, no batch OOM, 3 jalur duplicated for fairness per position.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">6.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Output: ranking `rank 1..5` with <code class="code-inline">{id_cv, nama_file, posisi, total_score, status, alasan}</code>: e.g., `Lolos 80% utk Drafter & 3D Visualization`, table in landing page + `Download Ranking (JSON)` + `Download CSV` with Indonesian headers <code class="code-inline">Peringkat, ID CV, Nama File, Posisi Dilamar, Skor (0-100), Status, Alasan</code> + BOM <code class="code-inline">0xEFBBBF</code> for Excel.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">7.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Local private server: <code class="code-inline">Python 3 http.server</code> on <code class="code-inline">http://localhost:8010</code> (8000 taken) + webhook <code class="code-inline">http://localhost:5678/webhook/upload-cv</code>: no public URL, no data leaves, PDFs only in browser memory.</p></li>
               <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">8.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">Mobile & robust: breakpoints `sm 640 md 768 lg 1024`, upload zone `full width`, file cards `full width`, ranking table `overflow-x-auto scrollbar-thin`, <code class="code-inline">try/catch per file</code>, `firstLine` name fallback, `slice(0,5)` guard, `TRUNCATE` after delivery → fresh for next batch.</p></li>
             </ol>
           </div>
@@ -475,23 +475,23 @@
           <!-- HYPOTHESIS -->
           <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
             <div class="lg:col-span-3"><span class="detail-label">Hypothesis</span></div>
-            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">For mass hiring with a 3-day deadline, workflow orchestration (pdf.js + n8n + Postgres) with a predictable, auditable rule is more maintainable, predictable, and resource-efficient than embedding an LLM (even local) inside the scoring. Hallucination risk outweighs benefit; local LLM is better as a supervised syntax assistant (Ornith 35B via OpenCode/MCP) rather than the system’s brain.</p></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">For mass hiring with a 3-day deadline, workflow orchestration (pdf.js + n8n + Postgres) with a predictable, auditable rule is more maintainable, predictable, and resource-efficient than embedding an LLM (even local) inside the scoring. Hallucination risk outweighs benefit. A local LLM is better as a supervised syntax assistant (Ornith 35B via OpenCode/MCP) rather than the system’s brain.</p></div>
           </div>
 
           <!-- EXPERIMENT -->
           <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
             <div class="lg:col-span-3"><span class="detail-label">Experiment</span></div>
-            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">I built the landing page per component (upload zone, list with `cv_1..cv_5`, pdf.js extract, JSON POST, ranking table) with deterministic prompts via OpenCode + MCP, each validated in small windows. I built the n8n workflow 1 node per checkpoint (18 checkpoints, 24 nodes), tested per node, and confirmed with the owner before next. The whole POC was delivered in 5 hours — well under the 3-day deadline — on consumer hardware, 100% locally.</p></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">I built the landing page per component (upload zone, list with `cv_1..cv_5`, pdf.js extract, JSON POST, ranking table) with deterministic prompts via OpenCode + MCP, each validated in small windows. I built the n8n workflow 1 node per checkpoint (18 checkpoints, 24 nodes), tested per node, and confirmed with the owner before next. The whole POC was delivered in 5 hours, well under the 3-day deadline, on consumer hardware, 100% locally.</p></div>
           </div>
 
           <!-- WHAT FAILED -->
           <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
             <div class="lg:col-span-3"><span class="detail-label">What Failed</span></div>
             <ol class="lg:col-span-9 space-y-4 list-none">
-              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Small quantized LLM → unstable:</strong> aggressive quant made scoring unpredictable, hard to debug, hallucinated skills — abandoned for rule-based 40/30/30.</p></li>
-              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Big LLM → heavy:</strong> more stable but needs strong hardware (my 12GB VRAM cannot sustain 5 CV parallel efficiently) — abandoned for workflow lightness.</p></li>
-              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>One-shot n8n generation → wrong:</strong> missed `body` vs `body.data` wrapping, Switch missed keyword, Merge misaligned — fixed by 1-node-per-checkpoint with explicit `Map` and `responseNode`.</p></li>
-              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>pdf.js on scanned PDFs → empty:</strong> no text layer → `text.length &lt;10` — handled with toast + `_error` flag per file, still pushing item instead of failing batch, plus 15s `AbortController` and fallback `Download JSON`.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Small quantized LLM → unstable:</strong> aggressive quant made scoring unpredictable, hard to debug, and hallucinated skills. Abandoned for rule-based 40/30/30.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>Big LLM → heavy:</strong> more stable but needs strong hardware (my 12GB VRAM cannot sustain 5 CV parallel efficiently). Abandoned for workflow lightness.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>One-shot n8n generation → wrong:</strong> missed `body` vs `body.data` wrapping, Switch missed keyword, Merge misaligned, fixed by 1-node-per-checkpoint with explicit `Map` and `responseNode`.</p></li>
+              <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed"><strong>pdf.js on scanned PDFs → empty:</strong> no text layer → `text.length &lt;10`, handled with toast + `_error` flag per file, still pushing item instead of failing batch, plus 15s `AbortController` and fallback `Download JSON`.</p></li>
             </ol>
           </div>
 
@@ -524,19 +524,19 @@
           <!-- RESULT -->
           <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
             <div class="lg:col-span-3"><span class="detail-label">Result</span></div>
-            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">POC is stable and delivered well within the 3-day deadline — <strong>actually completed in just 5 hours</strong> — live on private server <code class="code-inline">http://localhost:8010</code>. HR uploads on mobile or desktop, gets a ranked shortlist in ~5 seconds (2 Lolos of 5), downloads CSV for Excel, and Postgres is truncated automatically — no token cost, no data leaves, no manual cleanup, HR only does 3 clicks: Upload → Send → Download.</p></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">POC is stable and delivered well within the 3-day deadline, <strong>actually completed in just 5 hours</strong>, live on private server <code class="code-inline">http://localhost:8010</code>. HR uploads on mobile or desktop, gets a ranked shortlist in ~5 seconds (2 Lolos of 5), downloads CSV for Excel, and Postgres is truncated automatically: no token cost, no data leaves, no manual cleanup, HR only does 3 clicks: Upload → Send → Download.</p></div>
           </div>
 
           <!-- WHAT I LEARNED -->
           <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
             <div class="lg:col-span-3"><span class="detail-label">What I Learned</span></div>
-            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Predictability beats probability for HR: a simple auditable formula HR can tweak is more valuable than a black-box LLM. Workflow orchestration is the skill — supervision over syntax, bug potential, and ease of maintenance matters more than model size. Keeping AI as assistant (Ornith 35B) rather than the system’s brain made the POC shippable in 5 hours on consumer hardware, 100% locally.</p></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed">Predictability beats probability for HR: a simple auditable formula HR can tweak is more valuable than a black-box LLM. Workflow orchestration is the skill: supervision over syntax, bug potential, and ease of maintenance matters more than model size. Keeping AI as assistant (Ornith 35B) rather than the system’s brain made the POC shippable in 5 hours on consumer hardware, 100% locally.</p></div>
           </div>
 
           <!-- PRACTICAL IMPLICATION -->
           <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
             <div class="lg:col-span-3"><span class="detail-label">Practical Implication</span></div>
-            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed"><strong>For business owners/HR:</strong> you don’t need a SaaS ATS — a local workflow you own 100% cuts 30 min to 5 sec, with a clear <code class="code-inline">Lolos 70% utk Junior Architect</code> reason per candidate, fair per position, private. <strong>For recruiters:</strong> this proves the builder can ship landing page + n8n + Postgres end-to-end in 5 hours, 3-day deadline, with no hallucination and no data exfiltration — predictable engineering.</p></div>
+            <div class="lg:col-span-9"><p class="text-base text-neutral-700 leading-relaxed"><strong>For business owners/HR:</strong> you don’t need a SaaS ATS. A local workflow you own 100% cuts 30 min to 5 sec, with a clear <code class="code-inline">Lolos 70% utk Junior Architect</code> reason per candidate, fair per position, private. <strong>For recruiters:</strong> this proves the builder can ship landing page + n8n + Postgres end-to-end in 5 hours, 3-day deadline, with no hallucination and no data exfiltration: predictable engineering.</p></div>
           </div>
 
         </div>
@@ -579,14 +579,14 @@ const alasan = status==="Lolos"
         </div>
 
         <blockquote class="quote-block mt-10 text-sm sm:text-base text-ink leading-relaxed max-w-3xl" data-reveal>
-          Do not copy this snippet blindly. The key is <code class="code-inline">pdf.js in browser + rule 40/30/30</code>: local LLM was only a syntax assistant (Ornith 35B), supervised — not the brain. That kept the POC predictable and shippable in 5 hours.
+          Do not copy this snippet blindly. The key is <code class="code-inline">pdf.js in browser + rule 40/30/30</code>: local LLM was only a syntax assistant (Ornith 35B), supervised, not the brain. That kept the POC predictable and shippable in 5 hours.
         </blockquote>
 
         <ol class="mt-10 space-y-8 max-w-3xl list-none" data-reveal="100">
-          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I extracted PDFs in the <strong>browser</strong> so n8n only receives clean JSON — no binary handling, demo works even if n8n is offline (fallback <code class="code-inline">Download JSON</code>).</p></li>
-          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I kept scoring <strong>rule-based</strong> (20/6/6, 70%) so HR can audit and tweak it — not an LLM guess that hallucinates skills.</p></li>
-          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I duplicated <strong>3 branches A/B/C</strong> for fairness — Architect scored on Revit, Drafter on Enscape, Interior on Photoshop — same 40/30/30 but different skill sets.</p></li>
-          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I kept it <strong>private & fresh</strong>: <code class="code-inline">Python 3</code> on <code class="code-inline">localhost:8010</code>, <code class="code-inline">TRUNCATE</code> after delivery — no data leaves, no manual DB cleanup.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">1.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I extracted PDFs in the <strong>browser</strong> so n8n only receives clean JSON, no binary handling, and the demo works even if n8n is offline (fallback <code class="code-inline">Download JSON</code>).</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">2.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I kept scoring <strong>rule-based</strong> (20/6/6, 70%) so HR can audit and tweak it, not an LLM guess that hallucinates skills.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">3.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I duplicated <strong>3 branches A/B/C</strong> for fairness: Architect scored on Revit, Drafter on Enscape, Interior on Photoshop, same 40/30/30 but different skill sets.</p></li>
+          <li class="flex gap-4"><span class="font-display font-extrabold text-accent shrink-0">4.</span><p class="text-sm sm:text-base text-neutral-700 leading-relaxed">I kept it <strong>private & fresh</strong>: <code class="code-inline">Python 3</code> on <code class="code-inline">localhost:8010</code>, <code class="code-inline">TRUNCATE</code> after delivery. No data leaves, no manual DB cleanup.</p></li>
         </ol>
       </div>
     </section>
@@ -603,7 +603,7 @@ const alasan = status==="Lolos"
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              Small quantized models hallucinate and are unpredictable; big models are heavy and need strong hardware (RX 6700 XT 12GB cannot sustain 5 CV parallel). Workflow orchestration (<code class="code-inline">pdf.js + n8n + rule 40/30/30, 70% threshold</code>) is stable, fast (~5s), auditable, and 100% local — AI was only a supervised syntax assistant (Ornith 35B).
+              Small quantized models hallucinate and are unpredictable. Big models are heavy and need strong hardware (RX 6700 XT 12GB cannot sustain 5 CV parallel). Workflow orchestration (<code class="code-inline">pdf.js + n8n + rule 40/30/30, 70% threshold</code>) is stable, fast (~5s), auditable, and 100% local: AI was only a supervised syntax assistant (Ornith 35B).
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
@@ -612,7 +612,7 @@ const alasan = status==="Lolos"
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              Each row has a clear reason: e.g., <code class="code-inline">Lolos 80% utk Drafter & 3D Visualization</code> or <code class="code-inline">Tidak Lolos 35% utk Junior Architect</code>. The CSV header is Indonesian — <code class="code-inline">Peringkat, Skor (0-100), Status, Alasan</code> — so HR opens it in Excel and knows immediately. Threshold 70% is adjustable.
+              Each row has a clear reason: e.g., <code class="code-inline">Lolos 80% utk Drafter & 3D Visualization</code> or <code class="code-inline">Tidak Lolos 35% utk Junior Architect</code>. The CSV header is Indonesian: <code class="code-inline">Peringkat, Skor (0-100), Status, Alasan</code>, so HR opens it in Excel and knows immediately. Threshold 70% is adjustable.
             </p>
           </details>
           <details class="group border border-black/10 rounded-xl p-6 bg-paper">
@@ -621,7 +621,7 @@ const alasan = status==="Lolos"
               <span class="text-accent group-open:rotate-180 transition-transform">▼</span>
             </summary>
             <p class="mt-4 text-sm text-neutral-600 leading-relaxed">
-              Scanned PDFs with no text layer trigger a toast (<code class="code-inline">text &lt;10 chars</code>) but don’t fail the batch — the item is sent with empty text and an <code class="code-inline">_error</code> flag. If the webhook is offline (<code class="code-inline">15s timeout</code>), the landing page shows a fallback <code class="code-inline">Download JSON</code> so the demo still works.
+              Scanned PDFs with no text layer trigger a toast (<code class="code-inline">text &lt;10 chars</code>) but don’t fail the batch. The item is sent with empty text and an <code class="code-inline">_error</code> flag. If the webhook is offline (<code class="code-inline">15s timeout</code>), the landing page shows a fallback <code class="code-inline">Download JSON</code> so the demo still works.
             </p>
           </details>
         </div>
@@ -635,7 +635,7 @@ const alasan = status==="Lolos"
           <p class="eyebrow">Disclaimer</p>
           <h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">A Note on Results</h2>
           <blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">
-            This is a 3-day Proof of Concept — actually delivered in 5 hours — not a full Applicant Tracking System. The 70% threshold and 40/30/30 weights are subjective and based on the 5 CV samples — intentionally adjustable to the recruitment team’s criteria. The result (2 Lolos of 5) is a reference for HR to decide who to interview, not a final hiring decision. For its scope (5 CVs at a time, local, no token cost), it is sufficient and stable, but a scanned PDF with no text layer will still need manual review.
+            This is a 3-day Proof of Concept, actually delivered in 5 hours, not a full Applicant Tracking System. The 70% threshold and 40/30/30 weights are subjective and based on the 5 CV samples, intentionally adjustable to the recruitment team’s criteria. The result (2 Lolos of 5) is a reference for HR to decide who to interview, not a final hiring decision. For its scope (5 CVs at a time, local, no token cost), it is sufficient and stable, but a scanned PDF with no text layer will still need manual review.
           </blockquote>
         </div>
       </div>
