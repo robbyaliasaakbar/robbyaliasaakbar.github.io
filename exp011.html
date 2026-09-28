@@ -143,8 +143,8 @@
           <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.1]" data-reveal="200">One Auth Backend for Many Frontends — PHP, SQLite &amp; Docker Entry Point in a Day.</h1>
           <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">Can one small auth backend (PHP + SQLite + Docker, no framework, no Composer) serve many frontends with real OTP, opaque tokens, rate limits and per-user Job Tracker sync, built with only a 35B local coder?</p>
           <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="350">
-            <a href="exp010.html" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Read EXP 010 frontend</a>
-            <a href="exp001.html" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">Machine: EXP 001</a>
+            <a href="exp010.html" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">Read EXP 010 frontend</a>
+            <a href="exp001.html" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">Machine: EXP 001</a>
           </div>
           <p class="mt-4 text-xs text-neutral-500 font-mono" data-reveal="360">Same Tiel-Coder-35B via llama.cpp-server · 1 image · 1 file · 0 deps · Live daily 08.00–21.00 WIB (UTC+7)</p>
         </div>
@@ -161,7 +161,7 @@
             <p class="mt-4 font-mono text-xs text-neutral-500 break-all">github.com/robbyaliasaakbar/reuse-auth-backend-all-my-web.app</p>
           </div>
           <div class="shrink-0" data-reveal="150">
-            <a href="https://github.com/robbyaliasaakbar/reuse-auth-backend-all-my-web.app" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4">View source on GitHub</a>
+            <a href="https://github.com/robbyaliasaakbar/reuse-auth-backend-all-my-web.app" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">View source on GitHub</a>
           </div>
         </div>
       </div>
@@ -222,11 +222,11 @@ curl localhost:7002/api/me -H 'Authorization: Bearer ******'</pre></div>
         <div class="summary-callout p-8 sm:p-12" data-reveal>
           <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">For those of you unable to read this data from technical standpoint, here is the conclusion:</h2>
           <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
-            <p>Every new app needs login. Copying login 5 times gets messy fast. I asked myself if 1 small service could serve them all. ✨</p>
-            <p>I built one small login service on my own machine with local AI, no extra packages. My first try with scattered auth failed and drifted, so I switched to one place that decides everything. 🤝</p>
-            <p>The Job Tracker is the first customer. Next apps just register their address, no re-code. It sends 6-digit codes via email, gives 1-hour passes, and blocks spam after 5 tries. 💰</p>
-            <p>It already runs on modest hardware with 1 Docker image and 1 database file. For now it lives on my home PC (08.00–21.00 WIB), stable for this experiment and not yet 24/7. Reliability matters more than specs. 🛡️</p>
-            <p>What that means in practice: I only maintain auth once. Every new frontend just does fetch. That is the whole trick. 🎯</p>
+            <p>Every new app needs login. Copying login 5 times gets messy fast. I asked myself if 1 small service could serve them all.</p>
+            <p>I built one small login service on my own machine with local AI, no extra packages. My first try with scattered auth failed and drifted, so I switched to one place that decides everything.</p>
+            <p>The Job Tracker is the first customer. Next apps just register their address, no re-code. It sends 6-digit codes via email, gives 1-hour passes, and blocks spam after 5 tries.</p>
+            <p>It already runs on modest hardware with 1 Docker image and 1 database file. For now it lives on my home PC (08.00–21.00 WIB), stable for this experiment and not yet 24/7. Reliability matters more than specs.</p>
+            <p>What that means in practice: I only maintain auth once. Every new frontend just does fetch. That is the whole trick.</p>
           </div>
         </div>
       </div>
@@ -303,7 +303,7 @@ if ($email === null) json(401, ['error' => 'Token tidak sah atau kedaluwarsa']);
         <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Local PC, not yet 24/7 VPS.</h2>
         <div class="mt-8 grid sm:grid-cols-2 gap-4" data-reveal="150">
           <div class="border border-emerald-200 rounded-2xl p-6 bg-paper">
-            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-emerald-700">✅ What works now</p>
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-emerald-700">What works now</p>
             <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
               <li>Docker 1-command up</li>
               <li>Health ok without login</li>
@@ -317,7 +317,7 @@ if ($email === null) json(401, ['error' => 'Token tidak sah atau kedaluwarsa']);
             </ul>
           </div>
           <div class="border border-amber-300 bg-amber-50/50 rounded-2xl p-6">
-            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-amber-700">🚧 What isn&apos;t production yet</p>
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-amber-700">What isn&apos;t production yet</p>
             <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
               <li>Not yet 24/7</li>
               <li>Still local (personal PC)</li>
