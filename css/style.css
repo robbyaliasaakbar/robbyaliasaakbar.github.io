@@ -383,6 +383,20 @@ body {
   transform: translateY(-2px);
 }
 
+/* Inverted button: red base, white + red text on hover */
+.btn-invert {
+  border: 1px solid transparent;
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+
+.btn-invert:hover {
+  background-color: #FFFFFF;
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -10px rgba(12, 12, 12, .35);
+}
+
 /* ------------------------------------------------------------
    EXPERIMENT DETAIL PAGE COMPONENTS
    ------------------------------------------------------------ */
