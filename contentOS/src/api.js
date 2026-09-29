@@ -1,67 +1,110 @@
-// api.js — SATU-SATUNYA yang fetch BE data :7010.
-import { getToken } from './auth.js';
+// api.js — SATU-SATUNYA yang fetch data (Supabase PostgREST + RPC content_*).
+// Aturan list/ingest/dashboard/export ada di SQL (migration 5.3) — di sini cuma
+// bungkus fetch + serialisasi CSV. Kontrak keluar dipertahankan utk App.jsx.
+import { ensureFresh } from './auth.js';
+import { SUPABASE_URL, SUPABASE_ANON_KEY, REST_BASE } from './config.js';
 
-const BACKEND_PORT = import.meta.env.VITE_BACKEND_PORT || '7010';
-export const API =
-  import.meta.env.VITE_API_URL ||
-  (location.protocol + '//' + location.hostname + ':' + BACKEND_PORT);
+export const API = SUPABASE_URL; // tampil di Settings.jsx
+const RPC = REST_BASE + '/rpc/';
 
-function authHeader() {
-  const t = getToken();
-  return t ? { Authorization: 'Bearer ' + t } : {};
+async function authHeaders() {
+  const t = await ensureFresh();
+  return {
+    apikey: SUPABASE_ANON_KEY,
+    Authorization: 'Bearer ' + t,
+    'Content-Type': 'application/json',
+  };
 }
 
-export async function getContent({ q, tempat, status, tipe, kategori, page = 1, limit = 20 }) {
+function qs(params) {
   const p = new URLSearchParams();
-  if (q) p.set('q', q);
-  if (tempat) p.set('tempat', tempat);
-  if (status) p.set('status', status);
-  if (tipe) p.set('tipe', tipe);
-  if (kategori) p.set('kategori', kategori);
-  p.set('page', page);
-  p.set('limit', limit);
-  const res = await fetch(API + '/content?' + p.toString(), { headers: authHeader() });
-  return res.json();
+  for (const [k, v] of Object.entries(params)) {
+    if (v !== '' && v !== undefined && v !== null) p.set(k, String(v));
+  }
+  const s = p.toString();
+  return s ? '?' + s : '';
 }
 
-export async function getContentById(id) {
-  const res = await fetch(API + '/content/' + id, { headers: authHeader() });
-  return res.json();
-}
-
-export async function ingestContent(payload) {
-  const res = await fetch(API + '/content/ingest', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...authHeader() },
-    body: JSON.stringify(payload),
-  });
+// -> {total, page, limit, totalPages, count, data} | {error} | throw (network)
+export async function getContent({ q, tempat, status, tipe, kategori, page = 1, limit = 20 }) {
+  let res;
+  try {
+    res = await fetch(RPC + 'content_list' + qs({
+      p_q: q, p_tempat: tempat, p_status: status, p_tipe: tipe,
+      p_kategori: kategori, p_page: page, p_limit: limit,
+    }), { headers: await authHeaders() });
+  } catch (e) {
+    throw new Error('Network error');
+  }
   const j = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(j.error || 'failed');
-  return j; // {action: created|updated, item}
-}
-
-export async function deleteContent(id) {
-  const res = await fetch(API + '/content/' + id, { method: 'DELETE', headers: authHeader() });
-  const j = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(j.error || 'failed');
+  if (!res.ok) return { error: j.message || j.msg || 'Gagal load' };
   return j;
 }
 
-export async function getDashboard() {
-  const res = await fetch(API + '/dashboard', { headers: authHeader() });
-  return res.json();
+// -> {action: created|updated, item} | throw Error(pesan)
+export async function ingestContent(payload) {
+  let res;
+  try {
+    res = await fetch(RPC + 'content_ingest', {
+      method: 'POST',
+      headers: await authHeaders(),
+      body: JSON.stringify({ p_payload: payload }),
+    });
+  } catch (e) {
+    throw new Error('Network error');
+  }
+  const j = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(j.message || j.msg || 'Gagal simpan');
+  return j;
 }
 
+// -> {ok: true} | throw Error(pesan)
+export async function deleteContent(id) {
+  let res;
+  try {
+    res = await fetch(REST_BASE + '/content_ideas?id=eq.' + encodeURIComponent(id), {
+      method: 'DELETE',
+      headers: await authHeaders(),
+    });
+  } catch (e) {
+    throw new Error('Network error');
+  }
+  if (!res.ok) {
+    const j = await res.json().catch(() => ({}));
+    throw new Error(j.message || 'Gagal hapus');
+  }
+  return { ok: true };
+}
+
+// -> {total, by_status, by_tempat} | {total: undefined} (App abaikan)
+export async function getDashboard() {
+  let res;
+  try {
+    res = await fetch(RPC + 'content_dashboard', { headers: await authHeaders() });
+  } catch (e) {
+    return { total: undefined };
+  }
+  if (!res.ok) return { total: undefined };
+  return res.json().catch(() => ({ total: undefined }));
+}
+
+// CSV12 kolom identik header lama :7010; rows dari RPC content_export (terfilter).
 export async function downloadExport({ q, tempat, status, tipe, kategori }) {
-  const p = new URLSearchParams();
-  if (q) p.set('q', q);
-  if (tempat) p.set('tempat', tempat);
-  if (status) p.set('status', status);
-  if (tipe) p.set('tipe', tipe);
-  if (kategori) p.set('kategori', kategori);
-  const res = await fetch(API + '/content/export?' + p.toString(), { headers: authHeader() });
+  let res;
+  try {
+    res = await fetch(RPC + 'content_export' + qs({
+      p_q: q, p_tempat: tempat, p_status: status, p_tipe: tipe, p_kategori: kategori,
+    }), { headers: await authHeaders() });
+  } catch (e) {
+    throw new Error('Export failed');
+  }
   if (!res.ok) throw new Error('Export failed');
-  const blob = await res.blob();
+  const rows = await res.json();
+  const cols = ['id', 'user_email', 'tgl_buat', 'jadwal_posting', 'tempat', 'tipe',
+    'kategori', 'description', 'storyboard', 'caption', 'status', 'link_postingan'];
+  const esc = (s) => '"' + String(s ?? '').replace(/"/g, '""') + '"';
+  const lines = [cols.join(','), ...rows.map((r) => cols.map((c) => esc(r[c])).join(','))];
+  const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;

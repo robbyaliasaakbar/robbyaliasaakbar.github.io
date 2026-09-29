@@ -29,9 +29,9 @@ export default function Auth({ onAuthed }) {
     setBusy(true);
     const r = await apiLogin(liId.trim(), liPass);
     setBusy(false);
-    if (r.status === 0) return say('Auth mati, nyalain :7002 dulu', true);
+    if (r.status === 0) return say('Auth mati / offline', true);
     if (r.status === 429) return say('Kebanyakan coba', true);
-    if (!r.ok) return say('Email/password salah', true);
+    if (!r.ok) return say(r.data.error || 'Email/password salah', true);
     say('Login ok', false);
     onAuthed(r.data.token, r.data.user);
   }
@@ -50,9 +50,11 @@ export default function Auth({ onAuthed }) {
     });
     setBusy(false);
     if (!r.ok) return say(r.data.error || 'Gagal daftar', true);
+    // Autoconfirm ON -> session langsung; kalau kosong, arahkan cek email.
+    if (r.data && r.data.token) return onAuthed(r.data.token, r.data.user);
     setOtpEmail(rgEmail.trim());
     setMode('otp');
-    say('OTP terkirim, cek inbox.', false);
+    say('Cek email untuk konfirmasi akun.', false);
   }
   async function doVerify(e) {
     e.preventDefault();
@@ -69,9 +71,8 @@ export default function Auth({ onAuthed }) {
     setBusy(true);
     await apiForgot(lpEmail.trim());
     setBusy(false);
-    setOtpEmail(lpEmail.trim());
-    setMode('reset');
-    say('Kalau email terdaftar, OTP terkirim.', false);
+    setMode('login');
+    say('Kalau email terdaftar, link reset dikirim ke email.', false);
   }
   async function doReset(e) {
     e.preventDefault();

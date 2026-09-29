@@ -1,39 +1,169 @@
-// auth.js — SATU-SATUNYA yang fetch auth :7002. TOKEN_KEY='content.token' beda dari crm.token.
-const AUTH_PORT = import.meta.env.VITE_AUTH_PORT || '7002';
-export const AUTH_API =
-  import.meta.env.VITE_AUTH_URL ||
-  (location.protocol + '//' + location.hostname + ':' + AUTH_PORT);
+// auth.js — SATU-SATUNYA yang fetch auth (Supabase GoTrue, 5.3 cutover).
+// Kontrak lama {ok, status, data} + TOKEN_KEY='content.token' dipertahankan
+// biar Auth.jsx/App.jsx gak banyak berubah.
+import {
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+  AUTH_BASE,
+} from './config.js';
+
+export { SUPABASE_URL, SUPABASE_ANON_KEY, AUTH_BASE };
+export const AUTH_API = AUTH_BASE; // tampil di Settings.jsx
 export const TOKEN_KEY = 'content.token';
+const REFRESH_KEY = 'content.refresh';
+const EXP_KEY = 'content.exp';
 
 export function getToken() { return localStorage.getItem(TOKEN_KEY) || ''; }
 export function saveToken(t) { localStorage.setItem(TOKEN_KEY, t); }
-export function clearToken() { localStorage.removeItem(TOKEN_KEY); }
+export function clearToken() {
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(REFRESH_KEY);
+  localStorage.removeItem(EXP_KEY);
+}
+
+// Simpan refresh+exp dari respons GoTrue (dipakai ensureFresh).
+function stashSession(sess) {
+  if (sess && sess.refresh_token) localStorage.setItem(REFRESH_KEY, sess.refresh_token);
+  const exp = sess && sess.expires_at
+    ? sess.expires_at
+    : (sess && sess.expires_in ? Math.floor(Date.now() / 1000) + Number(sess.expires_in) : 0);
+  if (exp) localStorage.setItem(EXP_KEY, String(exp));
+}
+
+// Auto-refresh <60 dtk sebelum expired. Gagal refresh -> token lama dibiarkan;
+// kalau memang mati, apiMe akan 401 -> App clearToken (logout bersih).
+export async function ensureFresh() {
+  const t = getToken();
+  if (!t) return '';
+  const exp = Number(localStorage.getItem(EXP_KEY) || 0);
+  if (exp && exp - Math.floor(Date.now() / 1000) > 60) return t;
+  const rt = localStorage.getItem(REFRESH_KEY);
+  if (!rt) return t;
+  try {
+    const r = await fetch(AUTH_BASE + '/token?grant_type=refresh_token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY },
+      body: JSON.stringify({ refresh_token: rt }),
+    });
+    if (!r.ok) return t;
+    const s = await r.json();
+    saveToken(s.access_token);
+    stashSession(s);
+    return s.access_token;
+  } catch (e) {
+    return t;
+  }
+}
 
 async function post(path, obj) {
   let r;
   try {
-    r = await fetch(AUTH_API + path, {
+    r = await fetch(AUTH_BASE + path, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY },
       body: JSON.stringify(obj),
     });
   } catch (e) {
-    return { ok: false, status: 0, data: { error: 'Auth mati, nyalain :7002 dulu' } };
+    return { ok: false, status: 0, data: { error: 'Auth mati / offline' } };
   }
-  return { ok: r.ok, status: r.status, data: await r.json().catch(() => ({})) };
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) {
+    const msg = data.msg || data.error_description || data.error || ('Gagal (' + r.status + ')');
+    return { ok: false, status: r.status, data: { error: msg } };
+  }
+  return { ok: true, status: r.status, data };
 }
 
-export const apiLogin = (identifier, password) => post('/api/login', { identifier, password });
-export const apiRegister = (payload) => post('/api/register', payload);
-export const apiVerify = (email, kode) => post('/api/verify', { email, kode });
-export const apiForgot = (email) => post('/api/forgot', { email });
-export const apiReset = (email, kode, password_baru) => post('/api/reset', { email, kode, password_baru });
+// Bentuk user ringkas utk Settings/App: {id, email, username, role}
+function mapUser(u) {
+  return {
+    id: u && u.id,
+    email: (u && u.email) || '',
+    username: (u && u.user_metadata && u.user_metadata.username) || ((u && u.email) || '').split('@')[0],
+    role: 'user',
+  };
+}
+
+// Lengkapi username + role dari profiles (RLS: baca profil sendiri boleh).
+async function withRole(user) {
+  if (!user || !user.id) return user;
+  try {
+    const r = await fetch(SUPABASE_URL + '/rest/v1/profiles?id=eq.' + user.id + '&select=username,role', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + (await ensureFresh()) },
+    });
+    if (r.ok) {
+      const rows = await r.json();
+      if (rows && rows[0]) {
+        if (rows[0].username) user.username = rows[0].username;
+        if (rows[0].role) user.role = rows[0].role;
+      }
+    }
+  } catch (e) { /* profiles gagal -> tampilan default */ }
+  return user;
+}
+
+// GoTrue password grant. Identifier lama boleh username; Supabase cuma email.
+export async function apiLogin(identifier, password) {
+  if (!identifier || !identifier.includes('@')) {
+    return { ok: false, status: 400, data: { error: 'Masuk dengan email' } };
+  }
+  const r = await post('/token?grant_type=password', { email: identifier, password });
+  if (!r.ok) return r;
+  stashSession(r.data);
+  const user = await withRole(mapUser(r.data.user));
+  return { ok: true, status: 200, data: { token: r.data.access_token, user } };
+}
+
+// Signup: autoconfirm ON -> GoTrue langsung balas session (tanpa OTP).
+export async function apiRegister(payload) {
+  const r = await post('/signup', {
+    email: payload.email,
+    password: payload.password,
+    data: {
+      username: payload.username,
+      nama_depan: payload.nama_depan,
+      nama_belakang: payload.nama_belakang,
+      tanggal_lahir: payload.tanggal_lahir,
+    },
+  });
+  if (!r.ok) return r;
+  stashSession(r.data);
+  if (!r.data.access_token) {
+    // Autoconfirm mati (jarang) -> tanpa session, Auth.jsx arahkan cek email.
+    return { ok: true, status: 200, data: { token: '', user: null } };
+  }
+  const user = r.data.user ? await withRole(mapUser(r.data.user)) : null;
+  return { ok: true, status: 200, data: { token: r.data.access_token, user } };
+}
+
+// Konfirmasi kode 6 digit tidak ada di Supabase (autoconfirm ON) -> stub.
+export async function apiVerify() {
+  return { ok: false, status: 400, data: { error: 'Konfirmasi email otomatis — tidak perlu kode' } };
+}
+
+// Recovery: Supabase kirim LINK reset lewat email (bukan kode 6 digit).
+export async function apiForgot(email) {
+  return post('/recover', { email });
+}
+
+// Reset via kode tidak ada padanannya; jalur lama dipertahankan sbg stub.
+export async function apiReset() {
+  return { ok: false, status: 400, data: { error: 'Gunakan link dari email untuk ganti password' } };
+}
 
 export async function apiMe(token) {
+  const t = token || (await ensureFresh());
+  if (!t) return { ok: false, status: 401, data: {} };
+  let r;
   try {
-    const r = await fetch(AUTH_API + '/api/me', { headers: { Authorization: 'Bearer ' + token } });
-    return { ok: r.ok, status: r.status, data: await r.json().catch(() => ({})) };
+    r = await fetch(AUTH_BASE + '/user', {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + t },
+    });
   } catch (e) {
     return { ok: false, status: 0, data: {} };
   }
+  if (!r.ok) return { ok: false, status: r.status, data: {} };
+  const u = await r.json().catch(() => ({}));
+  const user = await withRole(mapUser(u));
+  return { ok: true, status: 200, data: user };
 }
