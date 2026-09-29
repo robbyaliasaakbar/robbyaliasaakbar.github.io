@@ -72,16 +72,18 @@ export default function Auth({ onAuthed, awal = 'login' }) {
     setBusy(true);
     await apiForgot(lpEmail.trim());
     setBusy(false);
-    setMode('login');
-    say('Kalau email terdaftar, link reset dikirim ke email.', false);
+    // OTP: kode 6 digit dikirim ke email — lanjut ke mode reset (email kebawa).
+    setMode('reset');
+    say('Kode reset dikirim ke email. Masukkan kode + password baru.', false);
   }
   async function doReset(e) {
     e.preventDefault();
     if (!rsKode.trim() || !rsBaru) return say('Isi kode + password baru.', true);
+    if (rsBaru.length < 8) return say('Password min 8 karakter.', true);
     setBusy(true);
-    const r = await apiReset(otpEmail, rsKode.trim(), rsBaru);
+    const r = await apiReset(lpEmail.trim(), rsKode.trim(), rsBaru);
     setBusy(false);
-    if (!r.ok) return say('Kode salah atau expired', true);
+    if (!r.ok) return say(r.data.error || 'Kode salah atau expired', true);
     setMode('login');
     say('Reset ok, silakan Masuk.', false);
   }

@@ -141,8 +141,8 @@ export async function apiVerify() {
   return { ok: false, status: 400, data: { error: 'Konfirmasi email otomatis — tidak perlu kode' } };
 }
 
-// Recovery: Supabase kirim LINK reset lewat email (bukan kode 6 digit).
-// redirect_to wajib dikirim: tanpa ini GoTrue pakai Site URL (localhost:3000).
+// Recovery: Supabase kirim KODE OTP 6 digit lewat email (template mode kode).
+// redirect_to tetap dikirim (harmless) — template sudah tidak pakai link.
 export async function apiForgot(email) {
   return post('/recover', {
     email,
@@ -150,9 +150,35 @@ export async function apiForgot(email) {
   });
 }
 
-// Reset via kode tidak ada padanannya; jalur lama dipertahankan sbg stub.
-export async function apiReset() {
-  return { ok: false, status: 400, data: { error: 'Gunakan link dari email untuk ganti password' } };
+// Reset via kode OTP: verify type=recovery -> sesi -> PUT /user password baru.
+export async function apiReset(email, kode, passwordBaru) {
+  const v = await post('/verify', { type: 'recovery', token: kode, email });
+  if (!v.ok) return v;
+  if (v.data.access_token) {
+    saveToken(v.data.access_token);
+    stashSession(v.data);
+  }
+  const t = getToken();
+  if (!t) return { ok: false, status: 401, data: { error: 'Sesi habis — minta kode baru' } };
+  let r;
+  try {
+    r = await fetch(AUTH_BASE + '/user', {
+      method: 'PUT',
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: 'Bearer ' + t,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password: passwordBaru }),
+    });
+  } catch (e) {
+    return { ok: false, status: 0, data: { error: 'Offline' } };
+  }
+  if (!r.ok) {
+    const d = await r.json().catch(() => ({}));
+    return { ok: false, status: r.status, data: { error: d.msg || d.error_description || 'Gagal ganti password' } };
+  }
+  return { ok: true, status: 200, data: {} };
 }
 
 export async function apiMe(token) {
