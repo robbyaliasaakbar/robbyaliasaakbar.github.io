@@ -9,6 +9,7 @@ const JUDUL = {
   otp: ['Cek email', 'Masukkan 6 digit kode yang kami kirim.'],
   lupa: ['Lupa password', 'Kami kirim kode reset kalau email terdaftar.'],
   reset: ['Password baru', 'Masukkan kode reset dan password baru.'],
+  ganti: ['Password baru', 'Tautan dibuka — buat password baru untuk akunmu.'],
 };
 
 const TOMBOL = {
@@ -17,6 +18,7 @@ const TOMBOL = {
   otp: 'verifikasi kode',
   lupa: 'kirim kode reset',
   reset: 'ganti password',
+  ganti: 'simpan password baru',
 };
 
 const SWITCH = {
@@ -28,6 +30,7 @@ const SWITCH = {
   otp: [['Batal, kembali masuk', 'login']],
   lupa: [['Ingat password? Masuk', 'login']],
   reset: [['Kembali masuk', 'login']],
+  ganti: [['Batal, kembali masuk', 'login']],
 };
 
 function KotakPesan({ teks, jenis }) {
@@ -44,9 +47,9 @@ function KotakPesan({ teks, jenis }) {
   );
 }
 
-export function AuthPage() {
-  const { login, register, verify, forgot, reset } = useStore();
-  const [mode, setMode] = useState('login');
+export function AuthPage({ awal = 'login' }) {
+  const { login, register, verify, forgot, reset, selesaikanPulih, keluar } = useStore();
+  const [mode, setMode] = useState(awal);
   const [v, setV] = useState({});
   const [pesan, setPesan] = useState(null); // {teks, jenis}
   const [sibuk, setSibuk] = useState(false);
@@ -89,6 +92,11 @@ export function AuthPage() {
         await reset({ email: v.email, kode: v.kode, password_baru: v.passwordBaru });
         ke('login');
         setPesan({ teks: 'Password diganti. Silakan masuk.', jenis: 'ok' });
+      } else if (mode === 'ganti') {
+        // Sesi recovery dari link email sudah terbuka di background.
+        if (v.passwordBaru !== v.konfirmasi) throw new Error('Konfirmasi password tidak sama');
+        await selesaikanPulih(v.passwordBaru);
+        // App otomatis pindah ke dashboard (state 'ready').
       }
     } catch (err) {
       setPesan({ teks: err.message || 'Gagal. Coba lagi.', jenis: 'error' });
@@ -143,7 +151,11 @@ export function AuthPage() {
             <button
               key={m}
               type="button"
-              onClick={() => ke(m)}
+              onClick={() => {
+                // Mode ganti (sesi recovery): batal = tutup sesi, bukan pindah tab.
+                if (mode === 'ganti') keluar();
+                else ke(m);
+              }}
               className="underline underline-offset-4 transition-colors hover:text-stamp"
             >
               {teks}

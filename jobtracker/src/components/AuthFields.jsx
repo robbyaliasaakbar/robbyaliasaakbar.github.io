@@ -52,6 +52,35 @@ export function AuthFields({ mode, v, set }) {
     );
   }
 
+  if (mode === 'ganti') {
+    // Link recovery: sesi sudah ada, tinggal buat password baru.
+    return (
+      <>
+        <Field label="password baru" wajib>
+          <Input
+            type="password"
+            value={v.passwordBaru || ''}
+            onChange={set('passwordBaru')}
+            autoComplete="new-password"
+            autoFocus
+            required
+            minLength={8}
+          />
+        </Field>
+        <Field label="ulangi password" wajib>
+          <Input
+            type="password"
+            value={v.konfirmasi || ''}
+            onChange={set('konfirmasi')}
+            autoComplete="new-password"
+            required
+            minLength={8}
+          />
+        </Field>
+      </>
+    );
+  }
+
   if (mode === 'otp' || mode === 'reset') {
     return (
       <>

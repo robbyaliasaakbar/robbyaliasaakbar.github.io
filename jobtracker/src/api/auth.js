@@ -79,5 +79,43 @@ export async function me() {
   return keUser(data, '');
 }
 
+// --- Recovery via link email (batch 5.2c) ---------------------------------
+// Supabase mengirim link reset ke email. Link itu balik ke halaman ini dengan
+// token di URL hash (#access_token=...&type=recovery, implicit flow).
+// Fungsi parse murni (string -> objek) supaya bisa ditest tanpa browser.
+
+export function parseRecoveryHash(hash) {
+  const h = String(hash || '').replace(/^#/, '');
+  if (!h) return null;
+  const p = new URLSearchParams(h);
+  if (p.get('type') !== 'recovery' || !p.get('access_token')) return null;
+  return {
+    access_token: p.get('access_token'),
+    refresh_token: p.get('refresh_token') || '',
+    expires_in: Number(p.get('expires_in')) || 3600,
+  };
+}
+
+// Cek lokasi browser sekarang. Kalau ada sesi recovery -> simpan sesi,
+// buang token dari URL (history.replaceState), dan laporkan true.
+export function cekRecoveryHash() {
+  if (typeof location === 'undefined') return false;
+  const sesi = parseRecoveryHash(location.hash);
+  if (!sesi) return false;
+  setSession(sesi);
+  try {
+    history.replaceState(null, '', location.pathname + location.search);
+  } catch {
+    /* file:// atau sandbox — biarin */
+  }
+  return true;
+}
+
+// Ganti password memakai sesi recovery yang baru saja dibuka dari link email.
+export async function gantiPassword(passwordBaru) {
+  const data = await request(AUTH_BASE, '/user', o({ method: 'PUT', body: { password: passwordBaru }, auth: true }));
+  return keUser(data, '');
+}
+
 // Logout lokal cukup (token server mati sendiri saat kedaluwarsa).
 export { clearToken, setToken, getToken };

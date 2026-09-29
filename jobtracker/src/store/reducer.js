@@ -2,7 +2,7 @@
 // Bentuk state: lihat initialState.
 
 export const initialState = {
-  status: 'checking', // 'checking' | 'guest' | 'offline' | 'ready'
+  status: 'checking', // 'checking' | 'guest' | 'pulih' | 'offline' | 'ready'
   user: null, // {email, nama}
   offlineMessage: '',
   lamaran: [],
@@ -30,6 +30,9 @@ export function reducer(state, action) {
       return { ...state, status: 'checking' };
     case 'auth/guest':
       return { ...initialState, status: 'guest' };
+    case 'auth/pulih':
+      // Sesi recovery dari link email terbuka — minta password baru dulu.
+      return { ...initialState, status: 'pulih' };
     case 'auth/offline':
       return { ...state, status: 'offline', offlineMessage: action.message || '' };
     case 'auth/ready':

@@ -28,6 +28,8 @@ export function AppStore({ children }) {
   // Bootstrap pas halaman dibuka: cek kartu (GET /api/me) ke auth pusat.
   const bootstrap = async () => {
     dispatch({ type: 'auth/checking' });
+    // Link recovery dari email: ada token di #hash -> minta password baru dulu.
+    if (authApi.cekRecoveryHash()) return dispatch({ type: 'auth/pulih' });
     if (!authApi.getToken()) return dispatch({ type: 'auth/guest' });
     try {
       const user = await authApi.me();
@@ -82,6 +84,14 @@ export function AppStore({ children }) {
     },
     forgot: (email) => authApi.forgot(email),
     reset: (payload) => authApi.reset(payload),
+
+    // Selesai recovery: ganti password via sesi link -> langsung masuk app.
+    async selesaikanPulih(passwordBaru) {
+      const user = await authApi.gantiPassword(passwordBaru);
+      dispatch({ type: 'auth/ready', user });
+      await muatList();
+      return user;
+    },
 
     async tambah(payload) {
       const row = await lamaranApi.create(payload);

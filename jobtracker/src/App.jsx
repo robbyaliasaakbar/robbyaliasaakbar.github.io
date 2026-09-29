@@ -18,7 +18,9 @@ export function App() {
 
   let halaman;
   if (state.status === 'checking') halaman = <Splash />;
-  else if (state.status === 'guest') halaman = <AuthPage />;
+  else if (state.status === 'pulih')
+    halaman = <AuthPage key="pulih" awal="ganti" />; // link recovery: minta password baru
+  else if (state.status === 'guest') halaman = <AuthPage key="guest" />;
   else if (state.status === 'offline') halaman = <OfflinePage />;
   else halaman = <DashboardPage />;
 
