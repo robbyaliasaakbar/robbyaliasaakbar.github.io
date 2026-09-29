@@ -37,21 +37,25 @@ Frontend:
 - Images in WebP format under images per experiment folder
 
 Backend and services:
-- Shared authentication backend on port 7002 with PHP 8.3 and SQLite in Docker, still in service for CV Screening only
-- Gmail OTP delivery with opaque 64 hex tokens valid for one hour
-- Supabase Auth with email codes, Postgres, row level security, database functions, and 2 Edge Functions since EXP 017 for Job Tracker, MiniLeads, and ContentOS
+- Supabase Auth with email codes for Job Tracker, MiniLeads, and ContentOS since EXP 017, old token keys are retired
+- Supabase Postgres with row level security, own rows or admin, a stranger reads nothing
+- Database functions and 2 Edge Functions for the logic heavy calls, the extract helper answers 401 without a signed token
 - The moved apps kept the old API response shape, so the frontends only swapped the auth layer and the base URL
-- Old containers for the three moved apps are stopped with restart off, and old token keys are retired
+- Old containers for the three moved apps are stopped with restart turned off, so they never wake up on reboot
+- Shared authentication backend on port 7002 with PHP 8.3 and SQLite in Docker, alive for CV Screening only, that decision is open
+- CV Screening scoring with n8n on port 5678 using a 24 node rule based workflow, its webhook needs the home PC awake
 - Internal MCP translator on the laptop with Node MCP SDK and 6 tools over stdio, reusing the same auth and data doors with zero new servers
-- CV Screening scoring with n8n on port 5678 using a 24 node rule based workflow
-- Tailscale Funnel for public HTTPS access to the remaining home computer services
+- Tailscale Funnel for the remaining home services, leftovers still answer on the side and the outage is not closed upstream
+- Supabase free tier covers 500MB database, 50k monthly users, and 2GB egress, zero monthly bill
 - No native PHP install required because the backend runs in one Docker image
 
 Infrastructure:
 - Static hosting on GitHub Pages from the main branch
-- Authentication and data for three apps run on Supabase, so they stay online around the clock without the home computer
-- n8n, WhatsApp, and the CV Screening auth backend still run on a personal home computer, online daily from 08.00 to 21.00 Western Indonesia Time
-- Outside those hours CV Screening login and upload requests fail with a clear status message
+- Authentication and data for three apps run on Supabase, so they work with the home computer off
+- The home computer now only carries the side paths, n8n, WhatsApp, Postgres, and the old auth for CV Screening
+- Home services stay online daily from 08.00 to 21.00 Western Indonesia Time, outside those hours CV Screening login and upload requests fail with a clear status message
+- Funnel leftovers still answer on the side, the outage is not closed upstream
+- Free tier limits apply, hardening is a separate project
 
 ## Project Structure
 
