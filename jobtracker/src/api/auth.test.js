@@ -1,5 +1,23 @@
 import { describe, test, expect } from 'vitest';
-import { parseRecoveryHash, cekRecoveryHash } from './auth.js';
+import { parseRecoveryHash, cekRecoveryHash, isEmail } from './auth.js';
+
+// Login bisa pakai email atau username (30-09-2026): identifier diklasifikasi
+// di FE, username di-resolve ke email lewat RPC di sisi database.
+describe('isEmail', () => {
+  test('format email -> true', () => {
+    expect(isEmail('nama@contoh.id')).toBe(true);
+    expect(isEmail('  nama+tag@sub.contoh.id  ')).toBe(true);
+  });
+
+  test('username / string aneh -> false', () => {
+    expect(isEmail('usernameku')).toBe(false);
+    expect(isEmail('nama@')).toBe(false);
+    expect(isEmail('@contoh.id')).toBe(false);
+    expect(isEmail('pakai spasi@contoh.id')).toBe(false);
+    expect(isEmail('')).toBe(false);
+    expect(isEmail(null)).toBe(false);
+  });
+});
 
 // Alur link recovery (batch 5.2c): token sampai ke SPA lewat #hash URL email.
 describe('parseRecoveryHash', () => {

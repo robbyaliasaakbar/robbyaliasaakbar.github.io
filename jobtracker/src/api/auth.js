@@ -6,10 +6,28 @@
 // - forgot   : Supabase mengirim LINK reset (bukan kode 6 digit) ke email.
 // - verify/reset: tetap tersimpan untuk jaga-jaga kalau OTP email diaktifkan lagi.
 
-import { AUTH_BASE, SUPABASE_ANON_KEY } from './config.js';
+import { AUTH_BASE, API_BASE, SUPABASE_ANON_KEY } from './config.js';
 import { request, setSession, clearToken, setToken, getToken } from './http.js';
 
 const o = (extra = {}) => ({ headers: { apikey: SUPABASE_ANON_KEY }, ...extra });
+
+// Identifier login boleh email atau username. Sederhana: ada "@" + domain
+// dianggap email, sisanya username yang di-resolve lewat RPC (username-login.sql).
+export const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
+
+// Username -> email (RPC public.cari_email_username, lihat PRD/username-login.sql).
+export async function resolveEmail(identifier) {
+  if (isEmail(identifier)) return String(identifier).trim();
+  const data = await request(
+    API_BASE,
+    '/rpc/cari_email_username',
+    o({ method: 'POST', body: { p_username: String(identifier || '').trim() } })
+  );
+  const baris = Array.isArray(data) ? data[0] : data;
+  const email = baris && baris.email;
+  if (!email) throw new Error('Username tidak ditemukan. Coba pakai email.');
+  return email;
+}
 
 const keUser = (u, fallbackEmail) => ({
   email: (u && u.email) || fallbackEmail || '',
@@ -17,22 +35,31 @@ const keUser = (u, fallbackEmail) => ({
 });
 
 export async function login({ email, password }) {
+  const keEmail = await resolveEmail(email);
   const data = await request(
     AUTH_BASE,
     '/token?grant_type=password',
-    o({ method: 'POST', body: { email, password } })
+    o({ method: 'POST', body: { email: keEmail, password } })
   );
   setSession(data);
-  return keUser(data.user, email);
+  return keUser(data.user, keEmail);
 }
 
-export async function register({ email, password, nama, telepon }) {
+export async function register({ email, password, nama, telepon, username }) {
   const data = await request(
     AUTH_BASE,
     '/signup',
     o({
       method: 'POST',
-      body: { email, password, data: { nama: nama || '', telepon: telepon || '' } },
+      body: {
+        email,
+        password,
+        data: {
+          username: (username || '').trim().toLowerCase(),
+          nama: nama || '',
+          telepon: telepon || '',
+        },
+      },
     })
   );
   // Sesi langsung ada = akun aktif tanpa konfirmasi -> auto-login.

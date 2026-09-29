@@ -16,14 +16,28 @@ export function AuthFields({ mode, v, set }) {
             </Field>
           </div>
         )}
-        <Field label="email" wajib>
+        {mode === 'daftar' && (
+          <Field label="username" wajib>
+            <Input
+              value={v.username || ''}
+              onChange={set('username')}
+              autoComplete="username"
+              required
+              minLength={3}
+              pattern="[A-Za-z0-9_.]+"
+              title="Hanya huruf, angka, titik, dan garis bawah"
+              placeholder="usernameku"
+            />
+          </Field>
+        )}
+        <Field label={mode === 'login' ? 'email atau username' : 'email'} wajib>
           <Input
-            type="email"
+            type={mode === 'login' ? 'text' : 'email'}
             value={v.email || ''}
             onChange={set('email')}
-            autoComplete="email"
+            autoComplete={mode === 'login' ? 'username' : 'email'}
             required
-            placeholder="nama@contoh.id"
+            placeholder={mode === 'login' ? 'nama@contoh.id atau username' : 'nama@contoh.id'}
           />
         </Field>
         <Field label="password" wajib>

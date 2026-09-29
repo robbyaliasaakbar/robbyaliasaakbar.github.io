@@ -75,6 +75,7 @@ export function AuthPage({ awal = 'login' }) {
           email: v.email,
           password: v.password,
           password_konfirmasi: v.konfirmasi,
+          username: v.username || '',
           nama: v.nama || '',
           telepon: v.telepon || '',
         });
