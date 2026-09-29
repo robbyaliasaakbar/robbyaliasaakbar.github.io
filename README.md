@@ -17,7 +17,7 @@ This repository contains a personal portfolio and applied research site focused 
 
 ## Overview
 
-The site has four core pages and fifteen documented experiments. Core pages present background, work, and contact. Experiment pages present technical case studies with terminal receipts, screenshots in WebP format, and honest failure analysis. Four experiments include live web applications hosted on GitHub Pages with backend services on a home computer. One experiment adds a local MCP translator so an LLM can write into the live tracker without a browser.
+The site has four core pages and seventeen documented experiments. Core pages present background, work, and contact. Experiment pages present technical case studies with terminal receipts, screenshots in WebP format, and honest failure analysis. Four experiments include live web applications hosted on GitHub Pages. Since EXP 017, three of those apps run their authentication and data on Supabase and work with the home computer off, while CV Screening still uses the home path for auth and n8n scoring. One experiment adds a local MCP translator so an LLM can write into the live tracker without a browser.
 
 The goal is to test whether artificial intelligence is truly useful in everyday work and to publish full evidence for every claim.
 
@@ -37,21 +37,21 @@ Frontend:
 - Images in WebP format under images per experiment folder
 
 Backend and services:
-- Shared authentication backend on port 7002 with PHP 8.3 and SQLite in Docker
+- Shared authentication backend on port 7002 with PHP 8.3 and SQLite in Docker, still in service for CV Screening only
 - Gmail OTP delivery with opaque 64 hex tokens valid for one hour
-- Job Tracker data API on the same authentication backend
-- MiniLeads data service on port 7005 with Node and Express and SQLite
-- ContentOS data service on port 7010 with Node Express and SQLite in Docker
+- Supabase Auth with email codes, Postgres, row level security, database functions, and 2 Edge Functions since EXP 017 for Job Tracker, MiniLeads, and ContentOS
+- The moved apps kept the old API response shape, so the frontends only swapped the auth layer and the base URL
+- Old containers for the three moved apps are stopped with restart off, and old token keys are retired
 - Internal MCP translator on the laptop with Node MCP SDK and 6 tools over stdio, reusing the same auth and data doors with zero new servers
 - CV Screening scoring with n8n on port 5678 using a 24 node rule based workflow
-- Tailscale Funnel for public HTTPS access to home computer services
+- Tailscale Funnel for public HTTPS access to the remaining home computer services
 - No native PHP install required because the backend runs in one Docker image
 
 Infrastructure:
 - Static hosting on GitHub Pages from the main branch
-- Backend and n8n run on a personal home computer
-- Online daily from 08.00 to 21.00 Western Indonesia Time when the computer is on
-- Outside those hours the frontend stays readable and shows a clear status message
+- Authentication and data for three apps run on Supabase, so they stay online around the clock without the home computer
+- n8n, WhatsApp, and the CV Screening auth backend still run on a personal home computer, online daily from 08.00 to 21.00 Western Indonesia Time
+- Outside those hours CV Screening login and upload requests fail with a clear status message
 
 ## Project Structure
 
@@ -59,7 +59,7 @@ Infrastructure:
 - profile.html - Background and focus areas
 - contact.html - Contact options and form entry
 - experiments-list.html - Index of all experiments
-- exp001.html to exp015.html - Individual experiment case studies
+- exp001.html to exp017.html - Individual experiment case studies
 - template-exp000.html - Template for future experiments, not indexed
 - 404.html - Custom not found page, not indexed
 - css/style.css - Shared custom styles
@@ -93,6 +93,8 @@ Infrastructure:
 | 013 | Multi User CV Screening Platform | React and Vite with in browser extraction, seven step pipeline, n8n scoring | exp013.html |
 | 014 | Content Tracking Web App with Server Side Pagination | React and Vite with server pagination, Chart.js tap to filter, shared auth fourth customer, 12 failures documented | exp014.html |
 | 015 | Internal MCP Door for My Own Web App with No Manual Entry | Local MCP translator with 6 tools plus primary opencode agent writing into live ContentOS, 2 failures documented | exp015.html |
+| 016 | From Static Tracker to Enterprise System JobTracker EXP010 Rebuilt on a Home PC Without VPS Bills | React and Express and Postgres and Caddy one door with CI green, 18 failures documented | exp016.html |
+| 017 | Four Apps One Door Zero Funnel, Tracing Outages and Moving Auth and Data to Supabase | Supabase Auth, Postgres, Edge Functions, RLS with 13 failures documented, zero VPS bill | exp017.html |
 
 Each experiment page includes system requirements, screenshots, live demo status, evidence log with terminal receipts, failure log, frontend code essence, FAQ, and disclaimer.
 
@@ -100,15 +102,16 @@ Each experiment page includes system requirements, screenshots, live demo status
 
 | App | Frontend | Backend | Ports | Public Access | Token Key |
 |-----|----------|---------|-------|---------------|-----------|
-| Job Tracker | HTML and Tailwind CDN and Vanilla JS in 4 files | Shared authentication backend with lamaran API | Local 7001 to 7002 | https://aispec.tail06293c.ts.net | jobTracker dot token in local storage |
-| MiniLeads | React 18 and Vite 6 and Chart.js with custom CSS | Shared authentication backend plus Node Express data service with 2049 leads | Local 7006 to 7005 and 7002 | Auth at https://aispec.tail06293c.ts.net and data at https://aispec.tail06293c.ts.net:8443 | crm dot token in local storage |
+| Job Tracker | HTML and Tailwind CDN and Vanilla JS in 4 files | Supabase Auth, Postgres, and Edge Functions since EXP 017 | Cloud only | https://robbyaliasaakbar.github.io/jobtracker/ | Supabase session |
+| MiniLeads | React 18 and Vite 6 and Chart.js with custom CSS | Supabase Auth, Postgres, and Edge Functions since EXP 017 | Cloud only | https://robbyaliasaakbar.github.io/miniLeads/ | Supabase session |
 | CV Screening | React 18 and Vite 6 and PDF.js with custom CSS | Shared authentication backend plus n8n workflow with 24 nodes | Local 7008 to 7002 and 5678 | Auth at https://aispec.tail06293c.ts.net and webhook at https://aispec.tail06293c.ts.net:10000/webhook/upload-cv | cv dot token in local storage |
-| ContentOS | React 18 and Vite 6 and Chart.js with custom CSS | Shared authentication backend plus Node Express data service on port 7010 with content.db | Local 7011 to 7010 and 7002 | Auth at https://aispec.tail06293c.ts.net and data at https://aispec.tail06293c.ts.net:9443 | content dot token in local storage |
+| ContentOS | React 18 and Vite 6 and Chart.js with custom CSS | Supabase Auth, Postgres, and Edge Functions since EXP 017 | Cloud only | https://robbyaliasaakbar.github.io/contentOS/ | Supabase session |
 
 Notes:
-- Authentication uses the same backend for all four apps with zero new authentication code for the second, third, and fourth app except additive profile update
-- MiniLeads data service is a separate local service with server side pagination and per user isolation
-- ContentOS data service is an isolated local service with server side pagination, slot reuse IDs, and zero in-system AI
+- Since EXP 017, Job Tracker, MiniLeads, and ContentOS use Supabase Auth with email codes and row level security, so a user reads only their own rows
+- The move kept the old API response shape through database functions and 2 Edge Functions, so the frontends only swapped the auth layer and the base URL
+- Data for 2050 leads, content rows, and lamaran rows moved with counts verified, and the old containers are stopped with restart off
+- CV Screening is the one app still on the home path. Its auth runs on port 7002 and its scoring runs in n8n on port 5678, so uploads need the home computer awake
 - CV Screening scoring is stateless with fresh truncate on every run and downloads in JSON and CSV format
 - The n8n editor is hidden with path restriction. Root returns 404 while webhook returns 200
 - Build URLs are baked at Vite build time from production environment files
@@ -121,15 +124,15 @@ Portfolio pages:
 - Open http://localhost:8000 in a browser
 
 Job Tracker:
-- Serve jobtracker on port 7001 and backend on port 7002
-- Set window dot JOB underscore API to the backend URL before testing
+- Serve the jobtracker folder with a static server for preview
+- Supabase URL and anon key are set in jobtracker/.env
 
 MiniLeads:
 - Run npm install once in miniLeads, then run npm run dev for local work
 - Local frontend defaults to port 7006 through environment config
 - Local data API defaults to http://localhost:7005
 - Local authentication defaults to http://localhost:7002
-- Run npm run build for GitHub Pages output with public Funnel URLs
+- Run npm run build for the GitHub Pages output with Supabase config from .env.production
 
 CV Screening:
 - Run npm install once in cv_screening, then run npm run dev for local work
@@ -140,18 +143,18 @@ CV Screening:
 ContentOS:
 - Run npm install once in contentOS, then run npm run dev for local work
 - Local frontend defaults to port 7011 through environment config
-- Local data API defaults to http://localhost:7010
-- Local authentication defaults to http://localhost:7002
-- Run npm run build for GitHub Pages output with public Funnel URLs
+- Local development and the production build both talk to Supabase for authentication and data
+- Run npm run build for the GitHub Pages output
 
 ## Deployment
 
 - Push to the main branch of robbyaliasaakbar dot github dot io
 - GitHub Pages publishes static files automatically with no build step for portfolio pages
 - React apps publish from their dist output to miniLeads, cv_screening, and contentOS subfolders
-- Backend services stay on the home computer and are exposed with Tailscale Funnel
-- Funnel routes: port 443 to Docker port 7002 for authentication, port 8443 to port 7005 for MiniLeads data, port 9443 to Docker port 7010 for ContentOS data, port 10000 with webhook path restriction to port 5678 for n8n
-- If the home computer is off, login and data requests fail with a clear message. This behavior is documented on every live page
+- Authentication and data for Job Tracker, MiniLeads, and ContentOS run on Supabase since EXP 017, so they stay up with the home computer off
+- Remaining home services such as n8n, WhatsApp, Postgres, and the CV Screening auth backend are exposed with Tailscale Funnel
+- Funnel routes still in use: port 443 to Docker port 7002 for CV Screening authentication, and port 10000 with webhook path restriction to port 5678 for n8n
+- If the home computer is off, CV Screening login and upload requests fail with a clear message. This behavior is documented on the page
 
 ## SEO and Performance
 
