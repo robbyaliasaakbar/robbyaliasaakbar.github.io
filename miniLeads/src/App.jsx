@@ -119,7 +119,7 @@ export default function App() {
       const end = (j.page - 1) * j.limit + j.count;
       setInfo(`Showing ${start}-${end} of ${j.total} leads`);
     } catch (e) {
-      setInfo('Backend :7005 is down — run node server.js first.');
+      setInfo('Auth/Data unreachable — periksa koneksi, lalu login ulang.');
     }
   }
 

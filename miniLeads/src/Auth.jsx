@@ -142,6 +142,8 @@ export default function Auth({ onAuthed }) {
     });
     setBusy(false);
     if (!r.ok) return say(en(r.data.error) || en(r.data.message), r.status >= 400);
+    // Autoconfirm ON -> langsung sesi, masuk app (tanpa OTP).
+    if (r.data && r.data.token) return done(r.data.token, r.data.user);
     setOtpEmail(rgEmail.trim());
     say(r.data.message ? en(r.data.message) + ' Check your inbox.' : 'OTP sent. Check your inbox.');
     goto('otp');
