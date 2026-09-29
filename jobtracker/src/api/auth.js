@@ -66,7 +66,7 @@ export const forgot = async (email) => {
   );
   return {
     message:
-      'Kalau email terdaftar, kami kirim link reset password ke email itu. Buka link dari email untuk mengganti password.',
+      'Kalau email terdaftar, kami kirim kode reset ke email itu. Masukkan kode + password baru di bawah.',
   };
 };
 

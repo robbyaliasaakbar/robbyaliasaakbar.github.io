@@ -85,9 +85,12 @@ export function AuthPage({ awal = 'login' }) {
         await verify({ email: v.email, kode: v.kode });
       } else if (mode === 'lupa') {
         const r = await forgot(v.email);
-        setPesan({ teks: r.message || 'Kalau email terdaftar, link reset dikirim ke email.', jenis: 'ok' });
-        // Tidak pindah ke mode 'reset': Supabase mengirim LINK lewat email,
-        // bukan kode 6 digit — ganti password dilakukan dari link di email.
+        // OTP: Supabase mengirim KODE 6 digit lewat email — lanjut ke mode
+        // 'reset' (kode + password baru). Email dipertahankan biar gak ketik ulang.
+        const email = v.email;
+        setMode('reset');
+        setV({ email });
+        setPesan({ teks: r.message || 'Kode reset dikirim ke email.', jenis: 'ok' });
       } else if (mode === 'reset') {
         await reset({ email: v.email, kode: v.kode, password_baru: v.passwordBaru });
         ke('login');
@@ -164,7 +167,7 @@ export function AuthPage({ awal = 'login' }) {
         </div>
 
         <p className="mt-10 font-sans text-xs leading-relaxed text-faded">
-          Server bangun sekitar 08.00–21.00 WIB. Di luar jam itu login belum bisa — datanya tetap aman.
+          Login aktif 24 jam — arsip lamaranmu tetap aman.
         </p>
       </main>
 
