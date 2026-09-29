@@ -167,3 +167,58 @@ export async function apiMe(token) {
   const user = await withRole(mapUser(u));
   return { ok: true, status: 200, data: user };
 }
+
+// ===== Recovery via link email (implicit flow GoTrue) =====
+// URL bentuknya #access_token=...&expires_in=3600&refresh_token=...&type=recovery
+// Diparse murni biar gampang ditest; null kalau bukan hash recovery.
+
+export function parseRecoveryHash(hash) {
+  if (!hash || hash.indexOf('type=recovery') === -1) return null;
+  const p = new URLSearchParams(hash.charAt(0) === '#' ? hash.slice(1) : hash);
+  const access = p.get('access_token');
+  if (!access) return null;
+  return {
+    access_token: access,
+    refresh_token: p.get('refresh_token') || '',
+    expires_in: Number(p.get('expires_in')) || 3600,
+  };
+}
+
+// Cek location.hash; kalau recovery -> simpan sesi, buang hash dari URL.
+// -> true kalau sesi recovery tersimpan.
+export function cekRecoveryHash() {
+  const s = parseRecoveryHash(typeof location !== 'undefined' ? location.hash || '' : '');
+  if (!s) return false;
+  saveToken(s.access_token);
+  if (s.refresh_token) localStorage.setItem(REFRESH_KEY, s.refresh_token);
+  localStorage.setItem(EXP_KEY, String(Math.floor(Date.now() / 1000) + s.expires_in));
+  if (typeof history !== 'undefined' && history.replaceState) {
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+  return true;
+}
+
+// PUT /auth/v1/user — ganti password pakai sesi recovery yang baru disimpan.
+export async function gantiPassword(baru) {
+  const t = await ensureFresh();
+  if (!t) return { ok: false, status: 401, data: { error: 'Sesi habis — buka link dari email lagi' } };
+  let r;
+  try {
+    r = await fetch(AUTH_BASE + '/user', {
+      method: 'PUT',
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: 'Bearer ' + t,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password: baru }),
+    });
+  } catch (e) {
+    return { ok: false, status: 0, data: { error: 'Offline' } };
+  }
+  if (!r.ok) {
+    const d = await r.json().catch(() => ({}));
+    return { ok: false, status: r.status, data: { error: d.msg || d.error_description || 'Gagal ganti password' } };
+  }
+  return { ok: true, status: 200, data: {} };
+}

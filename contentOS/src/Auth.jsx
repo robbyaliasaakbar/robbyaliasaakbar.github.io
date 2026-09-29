@@ -1,12 +1,12 @@
-// Auth.jsx — login reuse :7002. Mode: login/register/otp/forgot/reset.
+// Auth.jsx — login via Supabase GoTrue. Mode: login/register/otp/forgot/reset/pulih.
 import { useState } from 'react';
-import { apiLogin, apiRegister, apiVerify, apiForgot, apiReset } from './auth.js';
+import { apiLogin, apiRegister, apiVerify, apiForgot, apiReset, gantiPassword, clearToken } from './auth.js';
 
 const inputCls = 'w-full px-3 py-2.5 min-h-[44px] border border-ink/15 dark:border-white/15 rounded-xl text-sm focus:ring-2 focus:ring-accent focus:border-accent bg-paper dark:bg-[#0e0e10]';
 const btnCls = 'w-full bg-ink dark:bg-[#ededed] text-paper dark:text-[#0e0e10] font-display font-bold text-xs tracking-[0.14em] uppercase rounded-xl px-4 py-3 min-h-[44px] disabled:opacity-40';
 
-export default function Auth({ onAuthed }) {
-  const [mode, setMode] = useState('login');
+export default function Auth({ onAuthed, awal = 'login' }) {
+  const [mode, setMode] = useState(awal);
   const [msg, setMsg] = useState({ text: '', error: false });
   const [busy, setBusy] = useState(false);
   const [liId, setLiId] = useState('');
@@ -20,6 +20,7 @@ export default function Auth({ onAuthed }) {
   const [lpEmail, setLpEmail] = useState('');
   const [rsKode, setRsKode] = useState('');
   const [rsBaru, setRsBaru] = useState('');
+  const [rsUlang, setRsUlang] = useState('');
 
   function say(text, error = false) { setMsg({ text, error }); }
   function goto(m) { setMode(m); say(''); }
@@ -84,6 +85,26 @@ export default function Auth({ onAuthed }) {
     setMode('login');
     say('Reset ok, silakan Masuk.', false);
   }
+  // Mode pulih: sesi dari link email, tinggal ganti password.
+  async function doPulih(e) {
+    e.preventDefault();
+    if (!rsBaru || rsBaru.length < 8) return say('Password min 8 karakter.', true);
+    if (rsBaru !== rsUlang) return say('Password tidak sama.', true);
+    setBusy(true);
+    const r = await gantiPassword(rsBaru);
+    setBusy(false);
+    if (!r.ok) return say(r.data.error || 'Gagal ganti password', true);
+    clearToken();
+    setRsBaru(''); setRsUlang('');
+    setMode('login');
+    say('Password diganti, silakan masuk.', false);
+  }
+  function batalPulih() {
+    clearToken();
+    setRsBaru(''); setRsUlang('');
+    setMode('login');
+    setMsg({ text: '', error: false });
+  }
 
   return (
     <div className="min-h-screen">
@@ -96,7 +117,7 @@ export default function Auth({ onAuthed }) {
       <main className="max-w-6xl mx-auto px-4 py-8 flex justify-center">
         <div className="w-full max-w-md bg-paper dark:bg-[#0e0e10] border border-ink/10 dark:border-white/10 rounded-2xl p-6">
           <p className="eyebrow">Auth</p>
-          <h1 className="mt-2 font-display font-extrabold text-2xl">{mode === 'login' ? 'Masuk' : mode === 'register' ? 'Daftar' : mode === 'otp' ? 'Verifikasi' : mode === 'forgot' ? 'Lupa' : 'Reset'}</h1>
+          <h1 className="mt-2 font-display font-extrabold text-2xl">{mode === 'login' ? 'Masuk' : mode === 'register' ? 'Daftar' : mode === 'otp' ? 'Verifikasi' : mode === 'forgot' ? 'Lupa' : mode === 'pulih' ? 'Password baru' : 'Reset'}</h1>
           {msg.text && <div className={'mt-4 px-4 py-3 rounded-xl text-sm ' + (msg.error ? 'bg-accent/10 text-accent' : 'bg-emerald-50 text-emerald-700')}>{msg.text}</div>}
           {mode === 'login' && (
             <form onSubmit={doLogin} className="mt-4 space-y-3">
@@ -138,6 +159,15 @@ export default function Auth({ onAuthed }) {
               <input value={rsKode} onChange={(e) => setRsKode(e.target.value)} placeholder="Kode OTP" className={inputCls + ' text-center tracking-[0.3em]'} />
               <input type="password" value={rsBaru} onChange={(e) => setRsBaru(e.target.value)} placeholder="Password baru" className={inputCls} />
               <button disabled={busy} className={btnCls}>Reset</button>
+            </form>
+          )}
+          {mode === 'pulih' && (
+            <form onSubmit={doPulih} className="mt-4 space-y-3">
+              <p className="text-sm text-neutral-600 dark:text-neutral-300">Tautan dibuka — buat password baru untuk akunmu.</p>
+              <input type="password" value={rsBaru} onChange={(e) => setRsBaru(e.target.value)} placeholder="Password baru min 8" className={inputCls} />
+              <input type="password" value={rsUlang} onChange={(e) => setRsUlang(e.target.value)} placeholder="Ulangi password baru" className={inputCls} />
+              <button disabled={busy} className={btnCls}>Simpan password baru</button>
+              <button type="button" onClick={batalPulih} className="w-full text-sm text-neutral-500">Batal, kembali masuk</button>
             </form>
           )}
         </div>

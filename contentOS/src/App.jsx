@@ -1,6 +1,6 @@
 // App.jsx — pegang user + routing Auth/Board/Settings, jangan fetch langsung (via api.js/auth.js).
 import { useEffect, useState } from 'react';
-import { getToken, saveToken, clearToken, apiMe } from './auth.js';
+import { getToken, saveToken, clearToken, apiMe, cekRecoveryHash } from './auth.js';
 import { getContent, ingestContent, deleteContent, getDashboard, downloadExport } from './api.js';
 import { getTheme, saveTheme, applyTheme } from './theme.js';
 import Auth from './Auth.jsx';
@@ -27,11 +27,14 @@ export default function App() {
   const [online, setOnline] = useState(true);
   const [loading, setLoading] = useState(false); // skeleton shimmer pas fetch
   const [menuOpen, setMenuOpen] = useState(false); // hamburger khusus mobile
+  const [pulih, setPulih] = useState(false); // sesi recovery dari link email aktif
 
   function say(t, kind = 'ok') { setToast({ text: t, kind }); setTimeout(() => setToast({ text: '', kind: 'ok' }), 3000); }
   function changeTheme(t) { setTheme(t); saveTheme(t); applyTheme(t); }
 
   async function checkAuth() {
+    // Link recovery email (#access_token...&type=recovery) menang lebih dulu.
+    if (cekRecoveryHash()) { setPulih(true); setChecked(true); return; }
     const t = getToken();
     if (!t) { setChecked(true); return; }
     const me = await apiMe(t);
@@ -89,7 +92,7 @@ export default function App() {
   }
 
   if (!checked) return <p className="p-8 text-sm">Loading...</p>;
-  if (!user) return <Auth onAuthed={(t, u) => { saveToken(t); setUser(u); load(1, filters); refreshDash(); say('Login ok'); }} />;
+  if (!user) return <Auth awal={pulih ? 'pulih' : 'login'} onAuthed={(t, u) => { saveToken(t); setUser(u); load(1, filters); refreshDash(); say('Login ok'); }} />;
   if (view === 'settings') return <Settings user={user} theme={theme} onTheme={changeTheme} onBack={() => setView('app')} onLogout={() => { clearToken(); setUser(null); setView('app'); }} />;
 
   return (
