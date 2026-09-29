@@ -1,10 +1,17 @@
-// Basis URL. Dev (tanpa .env): ikut hostname browser, port auth 7002 / API 7012
-// (pola yang sama dengan FE lama). Produksi: di-set di .env.production (funnel Caddy).
-
-const origin = () =>
-  typeof location !== 'undefined' ? `${location.protocol}//${location.hostname}` : 'http://localhost';
+// Basis URL — Arsitektur B (29-09-2026): frontend langsung ke Supabase
+// (auth GoTrue + PostgREST). Tidak ada lagi funnel :7002 / :7012.
+// Publishable/anon key AMAN diekspos di bundle — yang menjaga data adalah RLS.
+// Bisa dioverride lewat .env (dev) / .env.production (build Pages).
 
 const bersih = (v) => (v || '').replace(/\/+$/, '');
 
-export const AUTH_BASE = bersih(import.meta.env.VITE_AUTH_URL) || `${origin()}:7002`;
-export const API_BASE = bersih(import.meta.env.VITE_API_URL) || `${origin()}:7012`;
+export const SUPABASE_URL =
+  bersih(import.meta.env.VITE_SUPABASE_URL) || 'https://yvnrzfgxsjzjsxkgjcfn.supabase.co';
+
+export const SUPABASE_ANON_KEY =
+  (import.meta.env.VITE_SUPABASE_ANON_KEY || '').trim() ||
+  'sb_publishable_bCCZBzL38dqmU9xz3P8ymg_DIC_39nt';
+
+// Path standar Supabase — dipakai auth.js (GoTrue) dan lamaran.js (PostgREST).
+export const AUTH_BASE = `${SUPABASE_URL}/auth/v1`;
+export const API_BASE = `${SUPABASE_URL}/rest/v1`;

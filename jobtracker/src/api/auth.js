@@ -1,33 +1,83 @@
-// Auth — SEMUA ke auth pusat FROZEN (:7002 / suffix /auth di belakang Caddy).
-// Endpoint persis seperti FE lama: register, verify, login, forgot, reset, me.
+// Auth — Supabase GoTrue langsung dari browser (Arsitektur B, 29-09-2026).
+// Kontrak dipertahankan persis seperti FE lama: login, register, verify,
+// forgot, reset, me — supaya AppStore/AuthPage tidak berubah bentuk.
+// - register : "Confirm email" sudah DIMATIKAN di dashboard -> akun langsung
+//              aktif dan GoTrue langsung balik sesi (auto-login, tanpa kode OTP).
+// - forgot   : Supabase mengirim LINK reset (bukan kode 6 digit) ke email.
+// - verify/reset: tetap tersimpan untuk jaga-jaga kalau OTP email diaktifkan lagi.
 
-import { AUTH_BASE } from './config.js';
-import { request, setToken, clearToken, getToken } from './http.js';
+import { AUTH_BASE, SUPABASE_ANON_KEY } from './config.js';
+import { request, setSession, clearToken, setToken, getToken } from './http.js';
 
-const post = (path, body) => request(AUTH_BASE, path, { method: 'POST', body });
+const o = (extra = {}) => ({ headers: { apikey: SUPABASE_ANON_KEY }, ...extra });
+
+const keUser = (u, fallbackEmail) => ({
+  email: (u && u.email) || fallbackEmail || '',
+  nama: (u && u.user_metadata && u.user_metadata.nama) || '',
+});
 
 export async function login({ email, password }) {
-  const data = await post('/api/login', { email, password });
-  setToken(data.token);
-  return data.user;
+  const data = await request(
+    AUTH_BASE,
+    '/token?grant_type=password',
+    o({ method: 'POST', body: { email, password } })
+  );
+  setSession(data);
+  return keUser(data.user, email);
 }
 
-export async function register(payload) {
-  return post('/api/register', payload); // balikin {message, cek} -> lanjut OTP
+export async function register({ email, password, nama, telepon }) {
+  const data = await request(
+    AUTH_BASE,
+    '/signup',
+    o({
+      method: 'POST',
+      body: { email, password, data: { nama: nama || '', telepon: telepon || '' } },
+    })
+  );
+  // Sesi langsung ada = akun aktif tanpa konfirmasi -> auto-login.
+  if (data.access_token) {
+    setSession(data);
+    return { message: 'Akun aktif. Langsung masuk.', user: keUser(data.user, email) };
+  }
+  // Cadangan kalau "Confirm email" dinyalakan lagi: minta kode dulu.
+  return { message: 'Kode verifikasi dikirim ke email. Cek inbox kamu.' };
 }
 
 export async function verify({ email, kode }) {
-  const data = await post('/api/verify', { email, kode });
-  setToken(data.token);
-  return data.user;
+  const data = await request(
+    AUTH_BASE,
+    '/verify',
+    o({ method: 'POST', body: { type: 'signup', token: kode, email } })
+  );
+  if (data.access_token) setSession(data);
+  return keUser(data.user, email);
 }
 
-export const forgot = (email) => post('/api/forgot', { email });
-export const reset = (payload) => post('/api/reset', payload);
+export const forgot = async (email) => {
+  await request(AUTH_BASE, '/recover', o({ method: 'POST', body: { email } }));
+  return {
+    message:
+      'Kalau email terdaftar, kami kirim link reset password ke email itu. Buka link dari email untuk mengganti password.',
+  };
+};
+
+// Reset lewat kode 6 digit (hanya jalan kalau OTP email aktif di dashboard).
+export async function reset({ email, kode, password_baru }) {
+  const data = await request(
+    AUTH_BASE,
+    '/verify',
+    o({ method: 'POST', body: { type: 'recovery', token: kode, email } })
+  );
+  if (data.access_token) setSession(data);
+  await request(AUTH_BASE, '/user', o({ method: 'PUT', body: { password: password_baru }, auth: true }));
+  return { ok: true };
+}
 
 export async function me() {
-  const data = await request(AUTH_BASE, '/api/me', { auth: true });
-  return { email: data.email, nama: data.nama || '' };
+  const data = await request(AUTH_BASE, '/user', o({ auth: true }));
+  return keUser(data, '');
 }
 
+// Logout lokal cukup (token server mati sendiri saat kedaluwarsa).
 export { clearToken, setToken, getToken };

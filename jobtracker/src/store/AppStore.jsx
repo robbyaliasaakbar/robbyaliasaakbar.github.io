@@ -65,7 +65,15 @@ export function AppStore({ children }) {
       await muatList();
       return user;
     },
-    register: (payload) => authApi.register(payload),
+    async register(payload) {
+      const r = await authApi.register(payload);
+      // Auto-login (Confirm email mati): sesi sudah ada -> langsung siapkan app.
+      if (r && r.user) {
+        dispatch({ type: 'auth/ready', user: r.user });
+        await muatList();
+      }
+      return r;
+    },
     async verify(payload) {
       const user = await authApi.verify(payload);
       dispatch({ type: 'auth/ready', user });

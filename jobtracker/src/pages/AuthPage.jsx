@@ -75,14 +75,16 @@ export function AuthPage() {
           nama: v.nama || '',
           telepon: v.telepon || '',
         });
+        if (r && r.user) return; // langsung aktif + auto-login — App pindah ke dashboard.
         setPesan({ teks: r.message || 'Kode sudah dikirim. Cek email kamu.', jenis: 'ok' });
         setMode('otp');
       } else if (mode === 'otp') {
         await verify({ email: v.email, kode: v.kode });
       } else if (mode === 'lupa') {
         const r = await forgot(v.email);
-        setPesan({ teks: r.message || 'Kode reset dikirim (kalau email terdaftar).', jenis: 'ok' });
-        setMode('reset');
+        setPesan({ teks: r.message || 'Kalau email terdaftar, link reset dikirim ke email.', jenis: 'ok' });
+        // Tidak pindah ke mode 'reset': Supabase mengirim LINK lewat email,
+        // bukan kode 6 digit — ganti password dilakukan dari link di email.
       } else if (mode === 'reset') {
         await reset({ email: v.email, kode: v.kode, password_baru: v.passwordBaru });
         ke('login');
