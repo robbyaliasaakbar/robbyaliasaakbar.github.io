@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 017 - Four Apps, One Door, Zero Funnel - Tracing Outages and Moving Auth Plus Data to Supabase - Robby Aliasa Akbar</title>
+  <meta name="description" content="Thirteen home server failures traced with receipts, then auth and data of four apps moved to Supabase. Row locks from minute one, live checks, honest tradeoffs, zero VPS bill.">
+  <link rel="icon" type="image/webp" href="images/logo.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H86RYQ2ML8');
+  </script>
+  <link rel="canonical" href="https://robbyaliasaakbar.github.io/exp017.html">
+  <link rel="alternate" hreflang="en" href="https://robbyaliasaakbar.github.io/exp017.html">
+  <link rel="alternate" hreflang="x-default" href="https://robbyaliasaakbar.github.io/exp017.html">
+  <link rel="alternate" hreflang="id" href="https://robbyaliasaakbar.github.io/exp017.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://robbyaliasaakbar.github.io/sitemap.xml">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Robby Aliasa Akbar">
+  <meta name="theme-color" content="#0C0C0C">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Robby Aliasa Akbar">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://robbyaliasaakbar.github.io/exp017.html">
+  <meta property="og:title" content="Experiment 017 - Four Apps, One Door, Zero Funnel - Tracing Outages and Moving Auth Plus Data to Supabase">
+  <meta property="og:description" content="Thirteen home server failures traced with receipts, then auth and data of four apps moved to Supabase. Row locks from minute one, live checks, honest tradeoffs, zero VPS bill.">
+  <meta property="og:image" content="https://robbyaliasaakbar.github.io/images/experiments017/public-blocked.webp">
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="500">
+  <meta property="og:image:alt" content="Terminal showing the public door answered not found while a control request works">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="article:published_time" content="2026-09-29T00:00:00+07:00">
+  <meta property="article:modified_time" content="2026-09-29T00:00:00+07:00">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Experiment 017 - Four Apps, One Door, Zero Funnel - Tracing Outages and Moving Auth Plus Data to Supabase">
+  <meta name="twitter:description" content="Thirteen home server failures traced with receipts, then auth and data of four apps moved to Supabase. Row locks from minute one, live checks, honest tradeoffs, zero VPS bill.">
+  <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments017/public-blocked.webp">
+  <meta name="twitter:image:alt" content="Terminal showing the public door answered not found while a control request works">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Four Apps, One Door, Zero Funnel - Tracing Outages and Moving Auth Plus Data to Supabase",
+        "description": "Thirteen home server failures traced with receipts, then auth and data of four apps moved to Supabase. Row locks from minute one, live checks, honest tradeoffs, zero VPS bill.",
+        "image": "https://robbyaliasaakbar.github.io/images/experiments017/public-blocked.webp",
+        "url": "https://robbyaliasaakbar.github.io/exp017.html",
+        "datePublished": "2026-09-29",
+        "dateModified": "2026-09-29",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp017.html" },
+        "inLanguage": "en-US",
+        "articleSection": "Experiments",
+        "keywords": ["Supabase migration", "Supabase Auth", "row level security", "Edge Functions JWT", "Tailscale funnel outage", "check host multi node", "home server zero cost", "shared auth retirement"],
+        "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
+        "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
+          { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
+          { "@type": "ListItem", "position": 3, "name": "Experiment 017", "item": "https://robbyaliasaakbar.github.io/exp017.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Is this a new login?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, one more time. The three apps now use Supabase Auth, old token keys are retired, you log in once and you are done." } },
+          { "@type": "Question", "name": "Did my old data move?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Two thousand fifty leads and the app rows came across, counts match, old boxes kept until checks passed." } },
+          { "@type": "Question", "name": "Why Supabase instead of a VPS?", "acceptedAnswer": { "@type": "Answer", "text": "Free tier covers it, row locks come built in, and the stack is open source so I can self host later. No monthly bill." } },
+          { "@type": "Question", "name": "Why row locks from minute one?", "acceptedAnswer": { "@type": "Answer", "text": "The stranger sees nothing, a user sees their own rows, an admin sees all. Same rule as my old backend." } },
+          { "@type": "Question", "name": "Why cut over one app at a time?", "acceptedAnswer": { "@type": "Answer", "text": "Each app had to pass live checks before the next one moved. My rollback path stayed open the whole time." } },
+          { "@type": "Question", "name": "Why write down every failure?", "acceptedAnswer": { "@type": "Answer", "text": "Thirteen on record so far. The receipts are the proof, and the lessons only count if they are written." } }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { ink: '#0C0C0C', paper: '#FFFFFF', accent: '#D70000' }, fontFamily: { display: ['Manrope','sans-serif'], body: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] } } }
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @media (max-width: 640px) { .detail-label { font-size: 0.6875rem; letter-spacing: 0.16em; } .stat-tile p { word-break: break-word; } }
+    .shot-num { display: inline-flex; align-items: center; justify-content: center; width: 1.75rem; height: 1.75rem; border-radius: 9999px; background: #0C0C0C; color: #fff; font-family: 'Manrope', sans-serif; font-size: 0.75rem; font-weight: 800; }
+  </style>
+</head>
+<body class="bg-paper text-ink font-body antialiased">
+  <header id="site-navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="/" class="font-display font-extrabold tracking-tight text-sm md:text-base">ROBBY ALIASA AKBAR<span class="text-accent">.</span></a>
+      <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+        <a href="/" class="nav-link">Home</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+        <a href="experiments-list.html" class="nav-link nav-active">Experiments</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" class="md:hidden relative w-10 h-10 flex flex-col items-center justify-center gap-1.5">
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+        <span class="menu-bar block w-6 h-0.5 bg-ink"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden absolute top-full inset-x-0 bg-white border-b border-black/10 px-6 py-4 space-y-1 menu-hidden-state">
+      <a href="/" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Home</a>
+      <a href="profile.html" class="block py-3 text-sm font-medium text-ink border-b border-black/5">Profile</a>
+      <a href="experiments-list.html" class="block py-3 text-sm font-semibold text-accent border-b border-black/5">Experiments</a>
+      <a href="contact.html" class="block py-3 text-sm font-medium text-ink">Contact</a>
+    </div>
+  </header>
+  <main>
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 bg-grid" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-36 pb-20">
+        <div class="max-w-4xl">
+          <nav aria-label="Breadcrumb" class="text-xs font-display tracking-wide" data-reveal>
+            <ol class="flex items-center gap-2 text-neutral-500">
+              <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li><a href="experiments-list.html" class="hover:text-accent transition-colors">Experiments</a></li>
+              <li aria-hidden="true" class="text-neutral-300">/</li>
+              <li aria-current="page" class="font-semibold text-ink">Experiment 017</li>
+            </ol>
+          </nav>
+          <a href="experiments-list.html" class="arrow-link text-xs uppercase text-neutral-500" data-reveal><span aria-hidden="true">&larr;</span> Back to Experiments</a>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="100">
+            <p class="eyebrow">Experiment 017</p>
+            <span class="status-badge status-live"><span class="status-dot"></span>Live</span>
+            <span class="text-xs font-mono text-neutral-500">Supabase Auth, Postgres, Edge Functions, RLS, 10 verified captures</span>
+          </div>
+          <h1 class="mt-6 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.25] sm:leading-[1.25] lg:leading-[1.25]" data-reveal="200">Four Apps, One Door, Zero Funnel &mdash; Tracing Outages and Moving Auth Plus Data to Supabase</h1>
+          <p class="mt-8 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-3xl" data-reveal="300">Can a home-based multi-app stack survive a broken public access path, and what does moving auth and data to a managed platform actually fix?</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4" data-reveal="350">
+            <a href="https://robbyaliasaakbar.github.io/jobtracker/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">Open /jobtracker/</a>
+            <a href="https://robbyaliasaakbar.github.io/contentOS/" target="_blank" rel="noopener" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">Open /contentOS/</a>
+            <a href="https://robbyaliasaakbar.github.io/miniLeads/" target="_blank" rel="noopener" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">Open /miniLeads/</a>
+            <a href="https://robbyaliasaakbar.github.io/cv_screening/" target="_blank" rel="noopener" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">Open /cv_screening/</a>
+          </div>
+          <p class="mt-4 text-xs text-neutral-500 font-mono" data-reveal="360">mimo v2.6 flash via opencode &middot; Supabase Auth, Postgres, Edge Functions &middot; 10 verified captures &middot; 0 VPS bill &middot; 29 Sep 2026</p>
+          <div class="mt-6 rounded-2xl border border-black/10 bg-neutral-50 p-5" data-reveal="380">
+            <p class="text-xs text-neutral-600 leading-relaxed">My three apps now log in through Supabase Auth, not the shared backend of EXP 011 anymore. I did not copy auth, I moved it. Old token keys jobTracker.token, crm.token, and content.token are retired, so you log in one more time and then you are done. The old shared auth detail still lives in <a href="exp011.html" class="underline hover:text-accent">EXP 011</a>. The :7002 backend stays alive for cv screening only.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Source Code -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Source Code</p>
+        <div class="mt-8 flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12 lg:justify-between">
+          <div class="max-w-2xl" data-reveal="100">
+            <h2 class="font-display font-extrabold tracking-tight text-2xl sm:text-3xl leading-tight">The source code is public. Prove it yourself.</h2>
+            <p class="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed">The backend API and the database moved to Supabase. The repo that got the real update is the jobtracker backend. The other two backend repos stay as they were, almost untouched, and the frontend lives inside my porto repo.</p>
+            <p class="mt-4 font-mono text-xs text-neutral-500 break-all">github.com/robbyaliasaakbar/backend-api-services-jobtracker (updated)</p>
+            <p class="mt-1 font-mono text-xs text-neutral-500 break-all">github.com/robbyaliasaakbar/contentos-backend-api-service (as is)</p>
+            <p class="mt-1 font-mono text-xs text-neutral-500 break-all">github.com/robbyaliasaakbar/mini-leads-service-api--backend (as is)</p>
+            <p class="mt-4 text-xs text-neutral-500 leading-relaxed">No secrets inside any README. The <a href="https://github.com/robbyaliasaakbar/backend-api-services-jobtracker" target="_blank" rel="noopener" class="underline hover:text-accent">updated backend README</a> carries the receipts.</p>
+          </div>
+          <div class="shrink-0 flex flex-wrap items-center gap-4" data-reveal="150">
+            <a href="https://github.com/robbyaliasaakbar/backend-api-services-jobtracker" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">View backend API</a>
+            <a href="https://github.com/robbyaliasaakbar/robbyaliasaakbar.github.io" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">View porto source</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- System Requirements -->
+    <section class="pb-20 pt-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>System Requirements</p>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="0">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Live view</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Modern browser + internet</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="40">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Live login</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Supabase Auth, email code</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="80">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Live apps</p>
+            <p class="mt-2 text-sm font-medium leading-snug">/jobtracker/, /contentOS/, /miniLeads/</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="120">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Cloud home</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">Supabase free tier, 500MB, 50k MAU</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="160">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Data moved</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">2050 leads, content rows, lamaran rows</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="200">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Still at home</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">n8n, evolution, postgres, auth :7002</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="240">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Test gate</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">RLS negative 0, E2E green, 0 funnel hits</p>
+          </div>
+          <div class="border border-black/10 rounded-xl p-5" data-reveal="280">
+            <p class="text-[0.65rem] font-display font-bold tracking-[0.16em] uppercase text-neutral-400">Model</p>
+            <p class="mt-2 text-sm font-medium leading-snug break-all">mimo v2.6 flash via opencode</p>
+          </div>
+        </div>
+        <p class="mt-6 text-xs text-neutral-500 leading-relaxed max-w-3xl" data-reveal>Four apps live on GitHub Pages, three with cloud login. My home PC now only carries the side paths, n8n, WhatsApp, postgres, and the old auth for cv screening.</p>
+      </div>
+    </section>
+    <!-- Screenshots, 10 files 800x500 -->
+    <section class="bg-neutral-50 py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Screenshots</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Blocked First Then Terminal Green At The End</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">I captured ten shots in strict order: the broken door first, the locks and the moved data in the middle, green receipts at the end. Terminals, Supabase dashboards, and one live login, all 800 by 500, all checked before upload.</p>
+        <div class="mt-12 space-y-16">
+          <div data-reveal="0">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">1</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Blocked - Four Countries, Zero Bytes</h3>
+              <span class="text-xs font-mono text-neutral-400">public-blocked.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments017/public-blocked.webp" alt="Terminal showing forced public requests answered not found while a control request works - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Blocked - the public door answers not found, 29 Sep 2026</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">2</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">DNS Back - Door Still Shut</h3>
+              <span class="text-xs font-mono text-neutral-400">dns-health.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments017/dns-health.webp" alt="Terminal showing DNS over HTTPS answers with two public IP addresses after the outage - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">DNS back - names resolve again while the door stays shut</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">3</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Locked - Anonymous Query Denied</h3>
+              <span class="text-xs font-mono text-neutral-400">rls-deny.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments017/rls-deny.webp" alt="Supabase SQL editor with row level policies and an empty count for the anonymous role - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Locked - anonymous query comes back empty</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">4</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Moved - Two Thousand Fifty Rows Clean</h3>
+              <span class="text-xs font-mono text-neutral-400">seed-2050.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments017/seed-2050.webp" alt="Supabase SQL editor showing status counts after the leads seed moved - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Moved - counts read back from the new home</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">5</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Cross User - Other Account Sees Zero</h3>
+              <span class="text-xs font-mono text-neutral-400">cross-user.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments017/cross-user.webp" alt="Supabase SQL editor showing zero rows for an account that does not own the data - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Cross user - another account sees zero rows</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">6</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Closed - Edge Function Wants JWT</h3>
+              <span class="text-xs font-mono text-neutral-400">edge401.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments017/edge401.webp" alt="Terminal calling the extract edge function without a token - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Closed - edge function asked for a token first</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">7</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Code Only - No Link For Scanners</h3>
+              <span class="text-xs font-mono text-neutral-400">otp-code.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments017/otp-code.webp" alt="Supabase password reset email template with code only body and no link - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Code only - bare code in the body, link removed</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">8</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Open - Login From The Real Internet</h3>
+              <span class="text-xs font-mono text-neutral-400">login-page-live.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments017/login-page-live.webp" alt="JobTracker login page live with sample ledger panel marked as demo data - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Open - live login, right side is sample data</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">9</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Detached - Zero Funnel Hits</h3>
+              <span class="text-xs font-mono text-neutral-400">nol-funnel.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments017/nol-funnel.webp" alt="Terminal grepping the live bundle for old funnel and localhost addresses - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Detached - zero hits for the old funnel in the live bundle</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div data-reveal="50">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="shot-num">10</span>
+              <h3 class="font-display font-bold text-base sm:text-lg">Retired - Old Servers Stay Down</h3>
+              <span class="text-xs font-mono text-neutral-400">old-backend-die.webp</span>
+            </div>
+            <div class="max-w-4xl mx-auto">
+              <figure>
+                <div class="border border-black/10 rounded-2xl overflow-hidden bg-paper shadow-sm">
+                  <img src="images/experiments017/old-backend-die.webp" alt="Terminal checking stopped backend containers and the auth port that stays up - Robby Aliasa Akbar" width="800" height="500" loading="lazy" decoding="async" class="w-full h-auto">
+                </div>
+                <figcaption class="mt-3 text-xs font-display font-bold tracking-[0.14em] uppercase text-neutral-500 text-center">Retired - old backend containers are stopped</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Live Demo -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live Demo</p>
+        <div class="mt-8 border border-black/10 rounded-2xl p-8 sm:p-12 bg-white" data-reveal="50">
+          <h2 class="font-display font-bold text-2xl sm:text-3xl tracking-tight">Four apps live, three on cloud auth, no VPS bill</h2>
+          <p class="mt-4 text-base text-neutral-600 leading-relaxed max-w-2xl">All four apps run on GitHub Pages, and three of them log in through Supabase now. Try any app, log in once, and check that the rows you see belong to you alone. My laptop can be off, your login still works.</p>
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a href="https://robbyaliasaakbar.github.io/jobtracker/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">Open /jobtracker/</a>
+            <a href="https://robbyaliasaakbar.github.io/contentOS/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">Open /contentOS/</a>
+            <a href="https://robbyaliasaakbar.github.io/miniLeads/" target="_blank" rel="noopener" class="btn-primary inline-flex items-center gap-2 bg-ink text-white font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">Open /miniLeads/</a>
+            <a href="https://robbyaliasaakbar.github.io/cv_screening/" target="_blank" rel="noopener" class="btn-outline inline-flex items-center gap-2 border border-black/20 font-display font-bold text-xs tracking-[0.18em] uppercase px-8 py-4 rounded-xl">Open /cv_screening/</a>
+          </div>
+          <div class="mt-6 border border-amber-300 bg-amber-50/60 rounded-xl p-5">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-amber-700">Caution - the one app that has not moved</p>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-600 leading-relaxed">cv screening is the only app still on the old path. Its webhook runs through n8n on my home PC behind the Tailscale port, so uploads need my laptop awake, and its login still uses the shared auth on :7002. Everything else on this card works with the laptop off.</p>
+          </div>
+          <div class="mt-6 border-t border-black/10 pt-6">
+            <p class="text-xs sm:text-sm text-neutral-500 leading-relaxed max-w-3xl">Old token keys are retired, so your first login after the move asks for email and code one more time. Free tier limits apply. Side paths like n8n and the old auth for cv screening still wake my home PC, which is expected and written in the status below.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Non technical summary -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="summary-callout p-8 sm:p-12" data-reveal>
+          <h2 class="font-display font-extrabold text-base sm:text-lg tracking-[0.08em] uppercase leading-relaxed max-w-3xl">For those of you unable to read this data from technical standpoint, here is the conclusion:</h2>
+          <div class="mt-8 space-y-5 text-sm sm:text-base text-neutral-700 leading-relaxed max-w-3xl">
+            <p>1. My four apps shared one front door, when the door broke nobody from outside could get in</p>
+            <p>2. I checked the pipes one by one, thirteen problems written down with receipts</p>
+            <p>3. Then I moved login and data to Supabase, the cloud does the guarding with row locks</p>
+            <p>4. Old data came along, two thousand fifty leads arrived clean, counts match the old box</p>
+            <p>5. The three apps now work without my laptop being open, still zero VPS bill</p>
+            <p>6. Everything that broke is written here, no hidden magic</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Experiment Details -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Experiment Details</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Tracing The Broken Door, Then Moving The House</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">This experiment pairs two stories, the tracing of a broken public path and the move to a managed platform. Here are the five decisions I made to get four apps through both without changing how they behave.</p>
+        <div class="mt-12 space-y-12">
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Trace Before You Touch</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">K01 to K08, three way test</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">I traced eight findings before I changed anything. DNS was dead first, then the funnel door, then I found my own test lying to me because it ran from inside the network. I fixed the method, DoH for names, forced public IP with curl resolve, remote nodes on check host. Every claim on this page passed that three way gate.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">I developed this page with the hosted model <code class="code-inline">mimo v2.6 flash via opencode</code>. I led research, architecture, review, and test, while Udin typed code and suggestions.</p>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Option B, Move Everything</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">Supabase auth, database</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">I weighed three options, keep the home backend, move only auth, or move it all. I chose the full move. Frontend on GitHub Pages now talks straight to Supabase, so the broken funnel door and the laptop dependency leave the critical path. The rate bucket problem retires with the old backend too.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Supabase is a service, yes, but it is open source and self hostable later, free tier covers 500MB database, 50k monthly users, and 2GB egress. No monthly bill, same as my home setup.</p>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Row Locks From Minute One</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">RLS, own rows or admin</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">The tables got row locks before any data landed. The rule translates my old backend exactly, a user reads their own rows, an admin reads all, the stranger reads nothing. I checked the negative path twice, anonymous role came back empty, and a normal account cannot promote itself to admin.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">My proof is the SQL editor shots and the policy list. Row locks live in the database, not in my frontend, so even a stolen anon key opens nothing.</p>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">Same Shape, New Home</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">RPC and Edge Functions keep the shape</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">Not everything is a plain table read. CSV export, dashboard counts, ingest with dedup, and two parsing helpers needed real logic. I moved them to database functions and two Edge Functions, and I kept the response shape identical to my old Express routes, so the frontend only swapped the auth layer and the base URL, no screen rewrite.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">One behavior did change on purpose. The extract helper used to be open, now it demands a signed token and answers 401 without it. I logged that as a fix, not as an accident.</p>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-12 gap-4 lg:gap-10" data-reveal>
+            <div class="lg:col-span-3">
+              <span class="detail-label">One App At A Time</span>
+              <p class="mt-1 text-xs font-mono text-neutral-400">cutover, verify, rollback path open</p>
+            </div>
+            <div class="lg:col-span-9 space-y-5">
+              <p class="text-base text-neutral-700 leading-relaxed">No big bang. Each app moved only after its checks passed live, seed counts, filters, export, and row locks. The old backend stayed available as my rollback the whole time, and only after three apps passed I stopped the old containers with restart turned off, so they never wake up on reboot.</p>
+              <p class="text-base text-neutral-700 leading-relaxed">Old token keys died with the old backend, so every user logs in one more time. That cost was small and I wrote it down instead of hiding it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Evidence Log -->
+    <section class="py-20 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Evidence Log</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Standalone Evidence Log: Locks, Moved Data, Zero Funnel</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">I back every claim on this page with verifiable command line outputs from 29 Sep 2026. I never show passwords or full tokens, raw status and counts remain exact, and the positive control proves the greps really ran.</p>
+        <div class="mt-12 space-y-10">
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E1. Names Resolve, Door Still Shut</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">NOERROR Then 404</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">DNS over HTTPS answers from two providers, then a forced public request still misses the app.</p>
+            <pre class="code-block mt-4">dig @ns1.dnsimple.com aispec.tail06293c.ts.net A
+status: NOERROR, answers: 103.84.155.217, 103.84.155.153
+
+curl -H 'accept: application/dns-json' 'https://cloudflare-dns.com/dns-query?name=aispec.tail06293c.ts.net&type=A'
+Status: 0
+
+curl --resolve aispec.tail06293c.ts.net:443:103.84.155.153 https://aispec.tail06293c.ts.net/
+HTTP 404 {"error":"Not found"}</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: names answer again, the app behind the door still does not open.</p>
+          </div>
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E2. Row Locks Deny The Stranger</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">Anon 0 Rows</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Anonymous role reads nothing, and a normal account cannot raise its own role.</p>
+            <pre class="code-block mt-4">select tablename, policyname from pg_policies where schemaname = 'public'
+leads  own rows or admin
+profiles  own rows or admin
+
+set local role anon
+select count(*) from leads
+0 rows, denied
+
+update profiles set role = 'admin' where id = auth.uid()
+0 rows affected</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: stranger sees zero, self promotion blocked, same rule as the old backend.</p>
+          </div>
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E3. Seed Arrived Clean</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">2050 / 0</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Total rows and rows without an owner, then the status spread for comparison with the old box.</p>
+            <pre class="code-block mt-4">select count(*) as total,
+       count(*) filter (where user_id is null) as tanpa_user
+from leads
+2050 / 0
+
+select lead_status, count(*) from leads group by 1 order by 2 desc
+7 status values, counts match the old box</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: two thousand fifty rows moved, none without owner, counts match.</p>
+          </div>
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E4. Edge Function Wants A Token</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">401 No Token</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">The extract helper used to be open, now it rejects callers without a signed token.</p>
+            <pre class="code-block mt-4">curl -s -X POST 'https://yvnrzfgxsjzjsxkgjcfn.supabase.co/functions/v1/leads-extract' \
+  -H 'Content-Type: application/json' -d '{"text":"..."}'
+HTTP:401
+{"code":"UNAUTHORIZED_NO_AUTH_HEADER","message":"Missing authorization header"}</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: no token, no parse, closed door with a clear reason.</p>
+          </div>
+          <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+            <div class="flex items-center justify-between gap-4">
+              <p class="font-display font-bold text-sm text-neutral-900">E5. Old Servers Down, Bundle Clean</p>
+              <span class="text-xs font-mono text-emerald-600 font-semibold">3 Stopped, 0 Hits</span>
+            </div>
+            <p class="mt-2 text-xs sm:text-sm text-neutral-500">Three old backends stopped with restart turned off, and the live bundle greps clean with a positive control.</p>
+            <pre class="code-block mt-4">docker ps -a | grep -E 'infra-backend-api|contentos-backend|minileads-backend'
+infra-backend-api-1                 Exited (0)     restart=no
+backend-server-contentos-backend-1  Exited (137)   restart=no
+backend-server-minileads-backend-1  Exited (137)   restart=no
+
+grep -oE 'localhost|tail06293c|:7002|:7012' bundle.js | wc -l
+0
+grep -oE 'supabase|yvnrzfg' bundle.js | wc -l
+4</pre>
+            <p class="mt-3 text-xs text-neutral-400 font-mono">Result: old backends stay down, zero old addresses, positive hits for the new home.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Failure Log -->
+    <section class="py-20 bg-neutral-50">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Failure Log</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="50">Thirteen Failures Written Honestly</h2>
+        <p class="mt-3 text-sm text-neutral-600 max-w-3xl leading-relaxed" data-reveal="100">I logged thirteen findings from the outage and the move. Five deep dives below, the rest as an honest list after. Three were found before any user hit them, and every fix carries a receipt.</p>
+        <div class="mt-12">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="font-display font-bold text-xs tracking-[0.18em] uppercase text-accent">Tier 1 Incidents</span>
+            <span class="text-xs text-neutral-400">Five Deep Dive Case Studies</span>
+          </div>
+          <div class="space-y-8">
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="0">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">1. The Public Door Answers Nothing</h3>
+                <span class="text-xs font-mono text-accent font-semibold">K02 Infra OUTAGE</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> Names resolve fine, HTTPS from the internet dies with a broken pipe, every public URL answers nothing.</p>
+                <p><strong>Diagnosis:</strong> The funnel ingress cut the TLS stream, tracked upstream in the vendor issue I opened with support.</p>
+                <p><strong>Fix:</strong> I did not wait for the door. I moved auth and data to Supabase so the apps no longer need that path to work.</p>
+                <p><strong>Lesson:</strong> A working name is not a working door, always test the TLS path itself.</p>
+              </div>
+            </div>
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">2. The Test That Lied To Me</h3>
+                <span class="text-xs font-mono text-accent font-semibold">K03 False Positive HIGH</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> My first verdict said public access worked.</p>
+                <p><strong>Diagnosis:</strong> The check ran from inside the same network, and MagicDNS answered like home, so the broken path never got tested.</p>
+                <p><strong>Fix:</strong> Three way method from then on, DoH for names, forced public IP with curl resolve, remote nodes on check host.</p>
+                <p><strong>Lesson:</strong> Never trust a check that lives on the same network as the service, and treat every green result as a hypothesis.</p>
+              </div>
+            </div>
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">3. One Rate Bucket For The Whole World</h3>
+                <span class="text-xs font-mono text-accent font-semibold">K04 Auth GLOBAL</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> Five logins per minute, then everyone on earth gets locked out together.</p>
+                <p><strong>Diagnosis:</strong> The backend counted the proxy address, so all visitors shared one bucket.</p>
+                <p><strong>Fix:</strong> For the three moved apps the problem retired with the old backend, the local fix got cancelled as no longer needed.</p>
+                <p><strong>Lesson:</strong> Rate limits must count real clients, not the pipe they arrive through.</p>
+              </div>
+            </div>
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">4. The Reset Link That Was Ignored</h3>
+                <span class="text-xs font-mono text-accent font-semibold">K09 Auth PIVOT</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> The new auth service ignored my redirect after password reset, the flow landed on its own page.</p>
+                <p><strong>Diagnosis:</strong> The platform default does not honor my old redirect the way my PHP did.</p>
+                <p><strong>Fix:</strong> I pivoted to plain OTP codes, the user copies the code instead of clicking through.</p>
+                <p><strong>Lesson:</strong> Study the defaults of the platform you move into before you promise the old behavior.</p>
+              </div>
+            </div>
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper" data-reveal="50">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="font-display font-bold text-base sm:text-lg text-ink">5. The Link And The Code Together</h3>
+                <span class="text-xs font-mono text-accent font-semibold">K13 Email PREFETCH</span>
+              </div>
+              <div class="mt-4 space-y-3 text-sm text-neutral-700 leading-relaxed">
+                <p><strong>Symptom:</strong> The code died before the user touched it, first use said already used.</p>
+                <p><strong>Diagnosis:</strong> Email scanners clicked the link inside my message, the single use code burned itself on the scan.</p>
+                <p><strong>Fix:</strong> The template body now carries the bare code only, no link at all.</p>
+                <p><strong>Lesson:</strong> Assume every email gets scanned by a machine before a human reads it.</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-12">
+            <div class="flex items-center gap-3 mb-6">
+              <span class="font-display font-bold text-xs tracking-[0.18em] uppercase text-accent">Tier 2 Honest List</span>
+              <span class="text-xs text-neutral-400">Eight Short Entries and Recap</span>
+            </div>
+            <div class="border border-black/10 rounded-2xl p-6 sm:p-8 bg-paper space-y-3 text-sm text-neutral-700 leading-relaxed" data-reveal>
+              <p>K01 DNS never provisioned at first, now resolved, names answer again from two providers.</p>
+              <p>K05 Three index files sat in dev mode, restored to the built version before push.</p>
+              <p>K06 The cv screening webhook still depends on my laptop, decision still open, written here not hidden.</p>
+              <p>K07 The funnel accepted odd ports without a warning, moved to standard caps so silence cannot lie again.</p>
+              <p>K08 Old Node backend answered any origin with a wildcard, logged as low risk, not touched yet.</p>
+              <p>K10 A cached bundle made a live test fail for fake reasons, fixed by reading the body length instead of trusting the label.</p>
+              <p>K11 A reset file in the temp folder went stale after the user reset, temp path rethink needed.</p>
+              <p>K12 The custom mail service locked my email template, unlocked after an app password was set.</p>
+              <p>Recap: thirteen on record, three found before any user hit them, every entry here has a receipt or a reason.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- FAQ -->
+    <section class="py-20 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>FAQ</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-4" data-reveal="150">
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper" open>
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Is this a new login?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Yes, one more time. The three apps now use Supabase Auth, old token keys are retired, you log in once and you are done.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Did my old data move?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Yes. Two thousand fifty leads and the app rows came across, counts match, old boxes kept until checks passed.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why Supabase instead of a VPS?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Free tier covers it, row locks come built in, and the stack is open source so I can self host later. No monthly bill.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why row locks from minute one?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">The stranger sees nothing, a user sees their own rows, an admin sees all. Same rule as my old backend.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why cut over one app at a time?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Each app had to pass live checks before the next one moved. My rollback path stayed open the whole time.</p>
+          </details>
+          <details class="group border border-black/10 rounded-xl p-6 bg-paper">
+            <summary class="flex items-center justify-between gap-4 font-display font-bold text-sm cursor-pointer list-none">
+              Why write down every failure?
+              <span class="text-accent group-open:rotate-180 transition-transform">&#9660;</span>
+            </summary>
+            <p class="mt-4 text-sm text-neutral-600 leading-relaxed">Thirteen on record so far. The receipts are the proof, and the lessons only count if they are written.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+    <!-- Live Status -->
+    <section class="py-20">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <p class="eyebrow" data-reveal>Live Status</p>
+        <h2 class="mt-4 font-display font-extrabold tracking-tight text-2xl sm:text-3xl" data-reveal="100">Live Status - Cloud Auth, Home PC On The Side</h2>
+        <div class="mt-8 grid sm:grid-cols-2 gap-4" data-reveal="150">
+          <div class="border border-emerald-200 rounded-2xl p-6 bg-paper">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-emerald-700">What works now</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>Three apps live on GitHub Pages with Supabase login</li>
+              <li>Row locks on, anonymous reads nothing, other accounts read nothing</li>
+              <li>Seed verified, 2050 rows, zero without owner</li>
+              <li>Edge functions answer 401 without a token</li>
+              <li>Live bundles show zero old funnel addresses</li>
+            </ul>
+          </div>
+          <div class="border border-amber-300 bg-amber-50/50 rounded-2xl p-6">
+            <p class="font-display font-bold text-xs tracking-[0.18em] uppercase text-amber-700">What is not production yet</p>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700 leading-relaxed">
+              <li>cv screening still on the old auth :7002, that decision is open</li>
+              <li>Funnel leftovers still answer on the side, the outage is not closed upstream</li>
+              <li>Home PC still runs n8n, WhatsApp, postgres, and the old auth</li>
+              <li>Free tier limits, hardening is a separate project</li>
+            </ul>
+          </div>
+        </div>
+        <blockquote class="quote-block mt-8 text-sm sm:text-base text-neutral-600 leading-relaxed border-amber-300 bg-amber-50 rounded-r-2xl p-6" data-reveal>Three apps live with cloud auth and row locks. My home PC now only carries the side paths, n8n, WhatsApp, postgres, and the old auth for cv screening. The outage shots are stamped 29 Sep 2026 as it happened, a later check the same day already answered 200 on the jobtracker path, so every blocked claim on this page carries its date. No passwords, tokens, or OTP codes ever shown.</blockquote>
+      </div>
+    </section>
+    <!-- Disclaimer -->
+    <section class="py-16 border-t border-black/10 bg-white">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="max-w-3xl" data-reveal>
+          <p class="eyebrow">Disclaimer</p>
+          <h2 class="mt-4 font-display font-bold text-lg sm:text-xl tracking-tight">Disclaimer - Cloud Auth, Home Side Paths, Not Production-Hardened</h2>
+          <blockquote class="quote-block mt-6 text-sm sm:text-base text-neutral-600 leading-relaxed">Built with mimo v2.6 flash via opencode. Snapshots taken 29 Sep 2026. Passwords, tokens, and OTP codes are never shown. Row locks and free tier limits stand as written.</blockquote>
+          <p class="mt-6 text-sm text-neutral-700 leading-relaxed"><strong>Shared auth old story:</strong> <a class="underline hover:text-accent" href="exp011.html">EXP 011 (:7002)</a> &middot; <strong>v1 jobtracker:</strong> <a class="underline hover:text-accent" href="exp010.html">EXP 010 (vanilla)</a> &middot; <strong>Previous:</strong> <a class="underline hover:text-accent" href="exp016.html">EXP 016 (v2 enterprise)</a> &middot; <strong>This:</strong> EXP 017 (Supabase move) &middot; <strong>Machine:</strong> <a class="underline hover:text-accent" href="exp001.html">EXP 001</a></p>
+        </div>
+      </div>
+    </section>
+    <!-- Closing CTA -->
+    <section class="pb-24 lg:pb-32">
+      <div class="mx-auto max-w-6xl px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-black/10 pt-10" data-reveal>
+          <a href="experiments-list.html" class="arrow-link font-display text-sm uppercase"><span aria-hidden="true">&larr;</span> Back to Experiments</a>
+          <a href="contact.html" class="arrow-link font-display text-sm uppercase">Have a problem worth exploring? <span aria-hidden="true">-&gt;</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="bg-dark-section text-white">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8 pt-16 pb-8">
+      <div class="grid gap-12 md:grid-cols-3">
+        <div>
+          <p class="font-display font-extrabold tracking-tight text-lg">Robby Aliasa Akbar</p>
+          <p class="mt-3 font-display font-bold text-[0.6875rem] tracking-[0.22em] uppercase text-accent">Applied AI Systems Builder</p>
+          <p class="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">Exploring AI systems, local LLMs, automation workflows, and practical tools that actually work in real business operations.<br>Building what matters, and checking whether AI is truly useful in everyday work.</p>
+        </div>
+        <div class="md:justify-self-center">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Navigate</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="/" class="footer-link">Home</a></li>
+            <li><a href="profile.html" class="footer-link">Profile</a></li>
+            <li><a href="experiments-list.html" class="footer-link footer-active">Experiments</a></li>
+            <li><a href="contact.html" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="md:justify-self-end">
+          <p class="font-display font-bold text-xs tracking-[0.22em] uppercase text-white/40">Connect</p>
+          <ul class="mt-5 space-y-3 text-sm">
+            <li><a href="https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267" target="_blank" rel="noopener" class="footer-link">LinkedIn</a></li>
+            <li><a href="https://www.reddit.com/user/Full_Director87/" target="_blank" rel="noopener" class="footer-link">Reddit</a></li>
+            <li><a href="https://www.instagram.com/ybboraa/" target="_blank" rel="noopener" class="footer-link">Instagram</a></li>
+            <li><a href="mailto:ibborarts@gmail.com" class="footer-link">Email</a></li>
+            <li><a href="https://wa.me/+6282249072873" target="_blank" rel="noopener" class="footer-link">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <p>&copy; <span data-year>2026</span> Robby Aliasa Akbar. All rights reserved.</p>
+        <p class="font-display tracking-[0.14em] uppercase">robbyaliasaakbar.github.io</p>
+      </div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

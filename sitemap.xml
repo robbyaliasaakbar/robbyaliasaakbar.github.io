@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://robbyaliasaakbar.github.io/</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-09-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -29,7 +29,7 @@
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/experiments-list.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -501,6 +501,53 @@
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/lint-frontend.webp</image:loc>
       <image:title>Experiment 016 — Frontend lint test build green relative assets</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://robbyaliasaakbar.github.io/exp017.html</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/public-blocked.webp</image:loc>
+      <image:title>Experiment 017 — Blocked, the public door answers not found</image:title>
+      <image:caption>Blocked, the public door answers not found on 29 Sep 2026</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/dns-health.webp</image:loc>
+      <image:title>Experiment 017 — DNS back while the door stays shut</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/rls-deny.webp</image:loc>
+      <image:title>Experiment 017 — Row locks on, anonymous query comes back empty</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/seed-2050.webp</image:loc>
+      <image:title>Experiment 017 — Moved, two thousand fifty rows read back clean</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/cross-user.webp</image:loc>
+      <image:title>Experiment 017 — Cross user check, another account sees zero rows</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/edge401.webp</image:loc>
+      <image:title>Experiment 017 — Edge function rejects requests without a token</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/otp-code.webp</image:loc>
+      <image:title>Experiment 017 — Code only login, no link for scanners</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/login-page-live.webp</image:loc>
+      <image:title>Experiment 017 — Live login from the real internet</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/nol-funnel.webp</image:loc>
+      <image:title>Experiment 017 — Zero old funnel hits in the live bundle</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/old-backend-die.webp</image:loc>
+      <image:title>Experiment 017 — Retired, old backend containers stay down</image:title>
     </image:image>
   </url>
   <url>
