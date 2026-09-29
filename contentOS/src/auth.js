@@ -142,8 +142,12 @@ export async function apiVerify() {
 }
 
 // Recovery: Supabase kirim LINK reset lewat email (bukan kode 6 digit).
+// redirect_to wajib dikirim: tanpa ini GoTrue pakai Site URL (localhost:3000).
 export async function apiForgot(email) {
-  return post('/recover', { email });
+  return post('/recover', {
+    email,
+    redirect_to: window.location.origin + '/contentOS/',
+  });
 }
 
 // Reset via kode tidak ada padanannya; jalur lama dipertahankan sbg stub.

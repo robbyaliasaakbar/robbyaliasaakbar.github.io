@@ -55,7 +55,15 @@ export async function verify({ email, kode }) {
 }
 
 export const forgot = async (email) => {
-  await request(AUTH_BASE, '/recover', o({ method: 'POST', body: { email } }));
+  // redirect_to wajib dikirim: tanpa ini GoTrue pakai Site URL (localhost:3000).
+  await request(
+    AUTH_BASE,
+    '/recover',
+    o({
+      method: 'POST',
+      body: { email, redirect_to: window.location.origin + '/jobtracker/' },
+    })
+  );
   return {
     message:
       'Kalau email terdaftar, kami kirim link reset password ke email itu. Buka link dari email untuk mengganti password.',
