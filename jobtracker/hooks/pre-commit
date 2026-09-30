@@ -1,0 +1,37 @@
+#!/bin/sh
+# Penjaga deploy jobtracker — file ini juga tersimpan di jobtracker/hooks/.
+# Kecelakaan 0a96f67 (index.html versi dev ke-push) bikin halaman live blank.
+#
+# Didukung: git add . && git commit -m "..." && git push  (dari root repo).
+# Hook rebuild otomatis kalau yang di-stage menyentuh:
+#   - jobtracker/index.html versi dev (/src/main.jsx), atau
+#   - jobtracker/src/** atau jobtracker/package.json (kode baru butuh bundle baru)
+# Kalau build gagal, commit diblokir dengan pesan.
+
+PERLU_BUILD=0
+STAGED=$(git diff --cached --name-only)
+
+if echo "$STAGED" | grep -q '^jobtracker/index.html$'; then
+  if git show ":jobtracker/index.html" | grep -q 'src="/src/main.jsx"'; then
+    PERLU_BUILD=1
+  fi
+fi
+echo "$STAGED" | grep -qE '^jobtracker/src/' && PERLU_BUILD=1
+echo "$STAGED" | grep -q '^jobtracker/package.json$' && PERLU_BUILD=1
+
+if [ "$PERLU_BUILD" = "1" ]; then
+  echo "hook: butuh build terbaru — menjalankan npm run build…"
+  cd jobtracker || exit 1
+  if ! npm run build >/dev/null 2>&1; then
+    echo ""
+    echo "  DIBLOKIR: build gagal (cek npm install / error build)."
+    echo "  Perbaiki dulu, lalu commit lagi."
+    exit 1
+  fi
+  cp dist/index.html ./index.html
+  rm -rf assets
+  cp -r dist/assets ./assets
+  cd ..
+  git add jobtracker/index.html jobtracker/assets
+  echo "hook: artefak build terpasang & ter-stage ulang ✓"
+fi
