@@ -44,6 +44,15 @@ describe('reducer auth', () => {
     expect(s.status).toBe('offline');
     expect(s.offlineMessage).toBe('tidur');
   });
+
+  test('user/updated menggabungkan metadata user (halaman Pengaturan)', () => {
+    const s = reducer(
+      { ...initialState, status: 'ready', user: { email: 'a@b.id', nama: 'Lama' } },
+      { type: 'user/updated', user: { nama: 'Baru' } }
+    );
+    expect(s.status).toBe('ready'); // sesi tetap
+    expect(s.user).toEqual({ email: 'a@b.id', nama: 'Baru' });
+  });
 });
 
 describe('reducer list', () => {

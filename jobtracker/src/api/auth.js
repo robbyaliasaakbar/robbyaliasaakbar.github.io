@@ -9,7 +9,11 @@
 import { AUTH_BASE, API_BASE, SUPABASE_ANON_KEY } from './config.js';
 import { request, setSession, clearToken, setToken, getToken } from './http.js';
 
-const o = (extra = {}) => ({ headers: { apikey: SUPABASE_ANON_KEY }, ...extra });
+const o = (extra = {}) => ({
+  ...extra,
+  // header extra digabung, bukan menimpa apikey
+  headers: { apikey: SUPABASE_ANON_KEY, ...(extra.headers || {}) },
+});
 
 // Identifier login boleh email atau username. Sederhana: ada "@" + domain
 // dianggap email, sisanya username yang di-resolve lewat RPC (username-login.sql).
@@ -18,11 +22,20 @@ export const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').
 // Username -> email (RPC public.cari_email_username, lihat PRD/username-login.sql).
 export async function resolveEmail(identifier) {
   if (isEmail(identifier)) return String(identifier).trim();
-  const data = await request(
-    API_BASE,
-    '/rpc/cari_email_username',
-    o({ method: 'POST', body: { p_username: String(identifier || '').trim() } })
-  );
+  let data;
+  try {
+    data = await request(
+      API_BASE,
+      '/rpc/cari_email_username',
+      o({ method: 'POST', body: { p_username: String(identifier || '').trim() } })
+    );
+  } catch (e) {
+    // Fungsi RPC belum ada di database -> SQL setup belum dijalankan.
+    if (e && e.status === 404) {
+      throw new Error('Login username belum aktif di server. Sementara pakai email ya.', { cause: e });
+    }
+    throw e;
+  }
   const baris = Array.isArray(data) ? data[0] : data;
   const email = baris && baris.email;
   if (!email) throw new Error('Username tidak ditemukan. Coba pakai email.');
@@ -154,3 +167,73 @@ export async function gantiPassword(passwordBaru) {
 
 // Logout lokal cukup (token server mati sendiri saat kedaluwarsa).
 export { clearToken, setToken, getToken };
+
+// --- Pengaturan akun (halaman Pengaturan) ----------------------------------
+// Gerbang verifikasi aksi sensitif: konfirmasi password (re-login diam-diam).
+// Lebih andal daripada OTP email: instan, tanpa expiry, tanpa template.
+// (kirimOtp/verifikasiOtp di bawah tetap tersimpan kalau mau balik ke OTP.)
+
+// Cek password: token grant dengan kredensial yang sama. Sukses = pemilik akun.
+export async function cekPassword({ email, password }) {
+  const data = await request(
+    AUTH_BASE,
+    '/token?grant_type=password',
+    o({ method: 'POST', body: { email, password } })
+  );
+  setSession(data); // sekalian segarkan sesi
+  return keUser(data.user, email);
+}
+
+export async function kirimOtp(email) {
+  await request(
+    AUTH_BASE,
+    '/recover',
+    o({ method: 'POST', body: { email, redirect_to: window.location.origin + '/jobtracker/' } })
+  );
+  return { message: `Kode OTP dikirim ke ${email}. Cek inbox kamu.` };
+}
+
+// Verifikasi kode -> sesi baru untuk user yang sama (bukti kepemilikan email).
+export async function verifikasiOtp({ email, kode }) {
+  const data = await request(
+    AUTH_BASE,
+    '/verify',
+    o({ method: 'POST', body: { type: 'recovery', token: String(kode || '').trim(), email } })
+  );
+  if (data.access_token) setSession(data);
+  return keUser(data.user, email);
+}
+
+// Satu pintu update akun: password, email, atau metadata (nama/username/telepon).
+// Catatan: GoTrue menimpa user_metadata dengan isi `data`, jadi selalu kirim
+// metadata lengkap dari state terbaru, bukan cuma field yang berubah.
+export async function perbaruiUser({ password, email, data } = {}) {
+  const body = {};
+  if (password) body.password = password;
+  if (email) body.email = email;
+  if (data) body.data = data;
+  const hasil = await request(AUTH_BASE, '/user', o({ method: 'PUT', body, auth: true }));
+  return keUser(hasil, email);
+}
+
+// Baris profiles milik user yang sedang login (RLS: id = auth.uid()).
+export async function profilSaya(email) {
+  const path = `/profiles?select=username,nama,telepon&email=eq.${encodeURIComponent(email)}`;
+  const rows = await request(API_BASE, path, o({ auth: true }));
+  return Array.isArray(rows) ? rows[0] || null : rows || null;
+}
+
+// Patch baris profiles milik sendiri. emailKunci = email saat ini (kunci WHERE),
+// patch = {username?, nama?, telepon?, email?} — hanya field yang dikirim.
+// Constraint unique username di DB yang menjaga duplikat (error 23505).
+export async function simpanProfile({ emailKunci, patch }) {
+  const path = `/profiles?email=eq.${encodeURIComponent(emailKunci)}`;
+  const rows = await request(
+    API_BASE,
+    path,
+    o({ method: 'PATCH', auth: true, headers: { Prefer: 'return=representation' }, body: patch })
+  );
+  const row = Array.isArray(rows) ? rows[0] : rows;
+  if (!row) throw new Error('Profil tidak ditemukan. Coba keluar lalu masuk lagi.');
+  return row;
+}

@@ -52,10 +52,27 @@ update public.profiles
 set username = lower(trim(split_part(email, '@', 1)))
 where username is null or trim(username) = '';
 
--- 4. Username wajib unik dan tidak boleh kosong.
---    GAGAL DI SINI = ada username dobel; rapikan dulu datanya, baru jalankan ulang.
-alter table public.profiles
-  add constraint profiles_username_key unique (username);
+-- 4. Username wajib unik dan tidak boleh kosong. Idempoten: kalau constraint
+--    sudah ada, dilewati — aman dijalanin ulang.
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_constraint c
+    join pg_class t on t.oid = c.conrelid
+    join pg_attribute a on a.attrelid = t.oid and a.attnum = any(c.conkey)
+    where t.relname = 'profiles'
+      and c.contype = 'u'
+      and a.attname = 'username'
+  ) then
+    begin
+      alter table public.profiles add constraint profiles_username_key unique (username);
+    exception when duplicate_object then
+      -- Nama constraint sudah dipakai object lain -> pakai nama cadangan.
+      alter table public.profiles add constraint profiles_username_unik unique (username);
+    end;
+  end if;
+end $$;
 
 alter table public.profiles
   alter column username set not null;

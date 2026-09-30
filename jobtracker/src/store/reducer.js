@@ -39,6 +39,9 @@ export function reducer(state, action) {
       return { ...state, status: 'ready', user: action.user, offlineMessage: '', listError: '' };
     case 'auth/logout':
       return { ...initialState, status: 'guest' };
+    case 'user/updated':
+      // Metadata akun berubah (nama/email) dari halaman Pengaturan.
+      return { ...state, user: { ...(state.user || {}), ...action.user } };
     case 'list/loaded':
       return { ...state, lamaran: urutTerbaru(action.data || []), listError: '' };
     case 'list/error':

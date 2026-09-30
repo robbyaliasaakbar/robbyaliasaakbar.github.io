@@ -1,4 +1,4 @@
-import { Field, Input } from './ui.jsx';
+import { Field, Input, PasswordInput } from './ui.jsx';
 
 // Isian form login per mode. v = nilai form induk, set = pembuat handler.
 
@@ -41,8 +41,8 @@ export function AuthFields({ mode, v, set }) {
           />
         </Field>
         <Field label="password" wajib>
-          <Input
-            type="password"
+          <PasswordInput
+            aria-label="password"
             value={v.password || ''}
             onChange={set('password')}
             autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
@@ -52,8 +52,8 @@ export function AuthFields({ mode, v, set }) {
         </Field>
         {mode === 'daftar' && (
           <Field label="ulangi password" wajib>
-            <Input
-              type="password"
+            <PasswordInput
+              aria-label="ulangi password"
               value={v.konfirmasi || ''}
               onChange={set('konfirmasi')}
               autoComplete="new-password"

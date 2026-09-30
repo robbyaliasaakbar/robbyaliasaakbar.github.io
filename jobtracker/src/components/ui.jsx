@@ -1,6 +1,8 @@
 // Primitif minimal tegas — ketat 3 warna (Paper/Ink/Signal) + opacity.
 // Label Inter sentence case, isian boxed 8px, tombol hitam→merah.
 
+import { useState } from 'react';
+
 export function Field({ label, wajib, children }) {
   return (
     <label className="block">
@@ -18,6 +20,53 @@ const inputClass =
 
 export function Input({ ...props }) {
   return <input className={inputClass} {...props} />;
+}
+
+function IkonMata({ terbuka }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-[18px] w-[18px]"
+    >
+      {terbuka ? (
+        <>
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+          <circle cx="12" cy="12" r="3" />
+        </>
+      ) : (
+        <>
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+          <line x1="1" y1="1" x2="23" y2="23" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+// Input password dengan tombol tampilkan/sembunyikan. State per-field,
+// jadi tiap kolom password punya tombolnya sendiri.
+export function PasswordInput({ ...props }) {
+  const [terbuka, setTerbuka] = useState(false);
+  return (
+    <div className="relative">
+      <input type={terbuka ? 'text' : 'password'} className={`${inputClass} pr-11`} {...props} />
+      <button
+        type="button"
+        onClick={() => setTerbuka((s) => !s)}
+        aria-label={terbuka ? 'sembunyikan password' : 'tampilkan password'}
+        aria-pressed={terbuka}
+        className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-[6px] p-2 text-faded transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stamp/40"
+      >
+        <IkonMata terbuka={terbuka} />
+      </button>
+    </div>
+  );
 }
 
 export function Select({ children, ...props }) {

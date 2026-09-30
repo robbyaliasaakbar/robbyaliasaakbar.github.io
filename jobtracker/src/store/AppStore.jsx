@@ -107,6 +107,9 @@ export function AppStore({ children }) {
       await lamaranApi.remove(id);
       dispatch({ type: 'list/remove', id });
     },
+    perbaruiUser(user) {
+      dispatch({ type: 'user/updated', user });
+    },
     popToast: (id) => dispatch({ type: 'toast/pop', id }),
     async cobaLagi() {
       dispatch({ type: 'auth/checking' });

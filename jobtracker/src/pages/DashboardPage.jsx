@@ -3,6 +3,7 @@ import { useStore } from '../store/AppStore.jsx';
 import { urutTerbaru } from '../store/reducer.js';
 import { STATUS_META } from '../data/status.js';
 import { Masthead } from '../components/Masthead.jsx';
+import { SettingsPage } from './SettingsPage.jsx';
 import { PipelineStrip } from '../components/PipelineStrip.jsx';
 import { StatusChart } from '../components/StatusChart.jsx';
 import { StatusDonut } from '../components/StatusDonut.jsx';
@@ -16,6 +17,7 @@ export function DashboardPage() {
   const [status, setStatus] = useState('semua');
   const [urut, setUrut] = useState('desc');
   const [form, setForm] = useState(null); // null | {mode:'tambah'} | {mode:'ubah', row}
+  const [pengaturan, setPengaturan] = useState(false);
 
   const rows = useMemo(() => {
     let out = state.lamaran;
@@ -55,9 +57,15 @@ export function DashboardPage() {
     }
   }
 
+  if (pengaturan) return <SettingsPage onKembali={() => setPengaturan(false)} />;
+
   return (
     <div className="min-h-screen">
-      <Masthead email={state.user ? state.user.email : ''} onLogout={keluar} />
+      <Masthead
+        email={state.user ? state.user.email : ''}
+        onLogout={keluar}
+        onPengaturan={() => setPengaturan(true)}
+      />
       <PipelineStrip
         lamaran={state.lamaran}
         selected={status}
