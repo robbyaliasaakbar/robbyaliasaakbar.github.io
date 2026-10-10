@@ -17,24 +17,28 @@ This repository contains a personal portfolio and applied research site focused 
 
 ## Overview
 
-The site has four core pages and seventeen documented experiments. Core pages present background, work, and contact. Experiment pages present technical case studies with terminal receipts, screenshots in WebP format, and honest failure analysis. Four experiments include live web applications hosted on GitHub Pages. Since EXP 017, three of those apps run their authentication and data on Supabase and work with the home computer off, while CV Screening still uses the home path for auth and n8n scoring. One experiment adds a local MCP translator so an LLM can write into the live tracker without a browser.
+The site has four core pages and seventeen documented experiments, built as a React 18 single-page application with Vite 6. Core pages present background, work, and contact. Experiment pages present technical case studies with terminal receipts, screenshots in WebP format, and honest failure analysis. Four experiments include live web applications hosted on GitHub Pages. Since EXP 017, three of those apps run their authentication and data on Supabase and work with the home computer off, while CV Screening still uses the home path for auth and n8n scoring. One experiment adds a local MCP translator so an LLM can write into the live tracker without a browser.
 
 The goal is to test whether artificial intelligence is truly useful in everyday work and to publish full evidence for every claim.
 
 ## Tech Stack
 
-Frontend:
-- HTML5 with semantic structure and correct heading hierarchy
-- Tailwind CSS through CDN for portfolio and experiment pages
-- Vanilla JavaScript for portfolio interactions
+Frontend (portfolio):
+- React 18 with Vite 6, multi-page build (21 HTML entries)
+- React Router 6 for SPA navigation between pages
+- Tailwind CSS 3.4 bundled (no CDN)
+- Custom components: InteractiveCta, ScreenshotCarousel, TiltBox, Eyebrow, Button, ScrollToTop, StatusBadge, Chart
+- Fonts: Manrope 400-800 (display and body)
+- Images in WebP format under images per experiment folder
+- Per-page SEO via Seo component (title, meta, OG, JSON-LD, canonical, hreflang)
+- GA4 SPA pageview tracking via GtagTracker component
+- Source code in sandbox/, build output in root
+
+Frontend (sub-apps):
 - React 18 with Vite 6 for MiniLeads, CV Screening, and ContentOS
+- Vanilla JavaScript for Job Tracker
 - Chart.js for MiniLeads and ContentOS analytics and Job Tracker trends
 - PDF.js for in browser CV text extraction
-- Custom CSS in css/style.css for shared components
-- Lightweight JavaScript in js/main.js for navigation and reveal effects
-- Lightweight SVG charts in js/charts.js with no heavy dependencies
-- Fonts: Manrope for display, Inter for body, JetBrains Mono for code
-- Images in WebP format under images per experiment folder
 
 Backend and services:
 - Supabase Auth with email codes for Job Tracker, MiniLeads, and ContentOS since EXP 017, old token keys are retired
@@ -59,21 +63,25 @@ Infrastructure:
 
 ## Project Structure
 
-- index.html - Home page
-- profile.html - Background and focus areas
-- contact.html - Contact options and form entry
-- experiments-list.html - Index of all experiments
-- exp001.html to exp017.html - Individual experiment case studies
-- template-exp000.html - Template for future experiments, not indexed
+Portfolio (React + Vite, source in sandbox/):
+- sandbox/src/pages/ - Home, Profile, Contact, ExperimentsList, Exp001-017
+- sandbox/src/components/shared/ - InteractiveCta, ScreenshotCarousel, TiltBox, Chart, Seo, Navbar, Footer, etc.
+- sandbox/src/App.jsx - Routes + GtagTracker (GA4 SPA pageview)
+- sandbox/public/ - humans.txt, robots.txt, sitemap.xml
+- sandbox/vite.config.js - Multi-page build config (21 HTML entries)
+- assets/ - Built JS and CSS bundles (main-*.js, main-*.css)
+- index.html, profile.html, contact.html, experiments-list.html - Built HTML entries
+- exp001.html to exp017.html - Built HTML entries with per-page SEO
 - 404.html - Custom not found page, not indexed
-- css/style.css - Shared custom styles
-- js/main.js - Navigation, mobile menu, reveal effects
-- js/charts.js - Lightweight charts
-- images - Logo, portrait, and per experiment WebP assets
-- jobtracker - Live Job Tracker frontend with vanilla JavaScript
-- miniLeads - Live MiniLeads CRM frontend with React and Vite
-- cv_screening - Live CV Screening frontend with React and Vite
-- contentOS - Live ContentOS frontend with React, Vite, and Chart.js
+- images/ - Logo, portrait, and per experiment WebP assets
+
+Sub-apps (separate React/Vanilla projects):
+- jobtracker/ - Job Tracker frontend (Vanilla JS)
+- miniLeads/ - MiniLeads CRM frontend (React + Vite)
+- cv_screening/ - CV Screening frontend (React + Vite)
+- contentOS/ - ContentOS frontend (React + Vite + Chart.js)
+
+Static files:
 - robots.txt - Search engine rules
 - sitemap.xml - Full URL and image sitemap
 - humans.txt - Team and site credits
@@ -122,10 +130,12 @@ Notes:
 
 ## Local Development
 
-Portfolio pages:
-- Serve the folder with a static server for preview
-- Example with Python: python3 -m http.server 8000
-- Open http://localhost:8000 in a browser
+Portfolio (React + Vite):
+- cd sandbox
+- npm install once
+- npm run dev for local development (port 5173)
+- npm run build for production build (outputs to sandbox/dist/)
+- Copy dist/* to root for deployment
 
 Job Tracker:
 - Serve the jobtracker folder with a static server for preview
@@ -152,8 +162,10 @@ ContentOS:
 
 ## Deployment
 
+- Build the React app in sandbox/ with npm run build
+- Copy sandbox/dist/* to root (replace HTML files and assets/)
 - Push to the main branch of robbyaliasaakbar dot github dot io
-- GitHub Pages publishes static files automatically with no build step for portfolio pages
+- GitHub Pages publishes static files automatically
 - React apps publish from their dist output to miniLeads, cv_screening, and contentOS subfolders
 - Authentication and data for Job Tracker, MiniLeads, and ContentOS run on Supabase since EXP 017, so they stay up with the home computer off
 - Remaining home services such as n8n, WhatsApp, Postgres, and the CV Screening auth backend are exposed with Tailscale Funnel
@@ -165,11 +177,12 @@ ContentOS:
 - Canonical URLs and hreflang for English default and Indonesian alternate
 - Open Graph and Twitter cards with WebP images
 - JSON-LD for WebSite, Person, Article, BreadcrumbList, FAQPage, CollectionPage, and ContactPage
+- Per-page SEO meta in built HTML entries (crawler reads static HTML, not JS render)
+- SPA pageview tracking via GtagTracker component (fires on every route change)
 - Sitemap at sitemap.xml with image extensions
-- Robots at robots.txt with allow for public pages and disallow for template and 404
+- Robots at robots.txt with allow for public pages and disallow for 404
 - Humans credits at humans.txt
-- Preconnect and DNS prefetch for analytics and Tailwind CDN
-- Preload for portrait image on key pages
+- Preconnect for Google Fonts and analytics
 - Responsive layout for mobile, tablet, and desktop
 - Semantic HTML with alt text and correct title and meta description on every page
 - Google Analytics 4 with ID G-H86RYQ2ML8
@@ -188,7 +201,8 @@ ContentOS:
 
 - Provider: Google Analytics 4
 - Measurement ID: G-H86RYQ2ML8
-- Loaded with gtag dot js on all public pages
+- Loaded with gtag dot js on all pages
+- SPA pageview tracking via GtagTracker component (fires on every React Router navigation)
 - Used for basic traffic insight only. No personal data is published in experiment evidence
 
 ## Disclaimer

@@ -1,13 +1,39 @@
-# Rahasia — JANGAN PERNAH commit (ada password di miniLeads/.env)
-**/.env
-
-# Sampah install (55M+, install ulang via npm install)
+# Dependencies
 node_modules/
 
-# Database (bikin ulang via load, jangan ikut repo)
-*.db
-*.db.bak-*
-
-# Log + sampah OS
+# Build output
+dist/
 *.log
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Internal tools
+.kilo/
+*.zcodeignore
+
+# Environment (jangan commit secrets)
+.env
+.env.local
+.env.*.local
+
+# Sub-apps: .env sudah di-ignore di masing-masing .gitignore
+# Tapi double-ignore di root juga biar aman
+jobtracker/.env
+jobtracker/.env.local
+miniLeads/.env
+miniLeads/.env.local
+cv_screening/.env
+cv_screening/.env.local
+contentOS/.env
+contentOS/.env.local
+
+# Database files (SQLite backups)
+*.db
+*.sqlite
+*.sqlite3

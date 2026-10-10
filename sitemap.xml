@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://robbyaliasaakbar.github.io/</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/profile.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -29,532 +29,189 @@
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/experiments-list.html</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp</image:loc>
-      <image:title>Experiment 001 — 35B MoE model on 12GB VRAM</image:title>
+      <image:title>Experiments by Robby Aliasa Akbar</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp001.html</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp</image:loc>
       <image:title>Experiment 001 — 35B MoE model runs on 12GB VRAM</image:title>
-      <image:caption>Screenshot of Experiment 001 — 35B MoE model running on 12GB VRAM</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp002.html</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments002/experiment002.webp</image:loc>
       <image:title>Experiment 002 — Prefill speed on long context inference</image:title>
-      <image:caption>Screenshot of Experiment 002 — prefill speed on long context inference</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp003.html</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments003/experiment003.webp</image:loc>
       <image:title>Experiment 003 — Automation agent workflow for business research</image:title>
-      <image:caption>Screenshot of Experiment 003 — automation agent workflow</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp004.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments004/exp004-1.webp</image:loc>
       <image:title>Experiment 004 — Creating digital employees with open-source LLMs</image:title>
-      <image:caption>Screenshot of digital employees workflow — n8n automation</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments004/exp004-2.webp</image:loc>
-      <image:title>Experiment 004 — Workflow details 2</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments004/exp004-3.webp</image:loc>
-      <image:title>Experiment 004 — Workflow details 3</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp005.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments005/homepage.webp</image:loc>
-      <image:title>Experiment 005 — Building a Full Feature Services Business Website Using Only Local AI — homepage</image:title>
-      <image:caption>Screenshot of Experiment 005 — homepage layout built with local AI</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments005/gallery.webp</image:loc>
-      <image:title>Experiment 005 — Gallery with 14 before-after sliders</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments005/estimation-calculator.webp</image:loc>
-      <image:title>Experiment 005 — Cost estimation calculator with 44 items</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments005/seo-score-pagespeed-mobile.webp</image:loc>
-      <image:title>Experiment 005 — Pagespeed score mobile version</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments005/seo-score-pagespeed-desktop.webp</image:loc>
-      <image:title>Experiment 005 — Pagespeed score desktop version</image:title>
+      <image:title>Experiment 005 — Full Feature Services Website Using Only Local AI</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp006.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments006/invoice-form-preview.webp</image:loc>
-      <image:title>Experiment 006 — Invoice generator form and live A4 preview</image:title>
-      <image:caption>Screenshot of invoice generator with form and live A4 preview — 919 lines</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments006/invoice-mobile-sticky.webp</image:loc>
-      <image:title>Experiment 006 — Mobile sticky bar for invoice admin</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments006/invoice-pdf-selectable.webp</image:loc>
-      <image:title>Experiment 006 — Text-based PDF with selectable bank account</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments006/invoice-filemanager-hostinger.webp</image:loc>
-      <image:title>Experiment 006 — Hostinger File Manager file-based storage</image:title>
+      <image:title>Experiment 006 — Self-Contained Invoice System Without a Database</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp007.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments007/homepage-hero.webp</image:loc>
-      <image:title>Experiment 007 — CV screening landing page hero — 10x faster</image:title>
-      <image:caption>Screenshot of CV screening landing page hero</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments007/upload-queue.webp</image:loc>
-      <image:title>Experiment 007 — Upload queue 5 CV with badges cv_1..cv_5</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments007/ranking-result.webp</image:loc>
-      <image:title>Experiment 007 — Ranking result 5 CV with 70% threshold</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments007/n8n-workflow.webp</image:loc>
-      <image:title>Experiment 007 — n8n workflow 24 nodes Technical Test</image:title>
+      <image:title>Experiment 007 — Automating Mass CV Screening Without In-System AI</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp008.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments008/rocm-bench.webp</image:loc>
-      <image:title>Experiment 008 — ROCm benchmark 653 t/s vs Vulkan 354 t/s on RX 6700 XT</image:title>
-      <image:caption>Screenshot of ROCm vs Vulkan benchmark on gfx1031</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments008/vulkan-bench.webp</image:loc>
-      <image:title>Experiment 008 — Vulkan benchmark baseline</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments008/core-dump.webp</image:loc>
-      <image:title>Experiment 008 — Flash-attention assert core dump on gfx1031</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments008/lact-rocm.webp</image:loc>
-      <image:title>Experiment 008 — LACT tuning ROCm run</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments008/lact-vulkan.webp</image:loc>
-      <image:title>Experiment 008 — LACT tuning Vulkan run</image:title>
+      <image:title>Experiment 008 — ROCm gfx1031 vs Vulkan on RX 6700 XT</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp009.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments009/server-prefill-580.webp</image:loc>
-      <image:title>Experiment 009 — Prefill reaching 580 tok/s sustained native gfx1031</image:title>
-      <image:caption>Prefill 580 tok/s sustained at 20K+ cached on 35B split</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments009/rocminfo-versions.webp</image:loc>
-      <image:title>Experiment 009 — Versions llama-server hipcc rocminfo native proof</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments009/prefill-perf.webp</image:loc>
-      <image:title>Experiment 009 — Prefill perf btop lact log in one frame</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments009/decode-perf.webp</image:loc>
-      <image:title>Experiment 009 — Decode perf btop lact log in one frame</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments009/evidence-native-log.webp</image:loc>
-      <image:title>Experiment 009 — Evidence ROCm native server log</image:title>
+      <image:title>Experiment 009 — Native ROCm gfx1031 Without HSA_OVERRIDE</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp010.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments010/desktop-version.webp</image:loc>
-      <image:title>Experiment 010 — Job Tracker dashboard desktop full view</image:title>
-      <image:caption>Dashboard with stats filter form and table built with local 35B coder</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments010/auth-html.webp</image:loc>
-      <image:title>Experiment 010 — Job Tracker login form</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments010/otp.webp</image:loc>
-      <image:title>Experiment 010 — Register and OTP verification flow</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments010/mobile-version.webp</image:loc>
-      <image:title>Experiment 010 — Mobile cards view replacing table</image:title>
+      <image:title>Experiment 010 — Production-Ready Job Tracker UI With 35B Local Coder</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp011.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/docker-ps.webp</image:loc>
-      <image:title>Experiment 011 — Docker backend running on port 7002</image:title>
-      <image:caption>One auth backend for many frontends with PHP SQLite Docker</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/health-curl.webp</image:loc>
-      <image:title>Experiment 011 — Health check returning ok without login</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/auth-flow.webp</image:loc>
-      <image:title>Experiment 011 — Register verify login me flow</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/Cors-preflight.webp</image:loc>
-      <image:title>Experiment 011 — CORS preflight allowing frontend origin</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/databse-users.webp</image:loc>
-      <image:title>Experiment 011 — SQLite schema structure only</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments011/rate-limit.webp</image:loc>
-      <image:title>Experiment 011 — Rate limit returning 429 after 5 tries</image:title>
+      <image:title>Experiment 011 — One Auth Backend for Many Frontends</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp012.html</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/homepage-light.webp</image:loc>
-      <image:title>Experiment 012 — Dashboard in light theme</image:title>
-      <image:caption>MiniLeads CRM dashboard with 2049 leads and analytics</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/homepage-dark.webp</image:loc>
-      <image:title>Experiment 012 — Dashboard in dark theme</image:title>
-      <image:caption>MiniLeads CRM dashboard with dark theme and preserved rank colors</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/auth-login-light.webp</image:loc>
-      <image:title>Experiment 012 — Login screen light mode</image:title>
-      <image:caption>Shared auth login reusing EXP 011 backend</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/auth-login-dark.webp</image:loc>
-      <image:title>Experiment 012 — Login screen dark mode</image:title>
-      <image:caption>Shared auth login in dark mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/auth-regis-light.webp</image:loc>
-      <image:title>Experiment 012 — Registration screen light mode</image:title>
-      <image:caption>Registration and OTP verification flow in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/auth-regis-dark.webp</image:loc>
-      <image:title>Experiment 012 — Registration screen dark mode</image:title>
-      <image:caption>Registration and OTP verification flow in dark mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/setting-page-light.webp</image:loc>
-      <image:title>Experiment 012 — Settings page light mode</image:title>
-      <image:caption>Account details and appearance picker in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments012/setting-page-dark.webp</image:loc>
-      <image:title>Experiment 012 — Settings page dark mode</image:title>
-      <image:caption>Account details and appearance picker in dark mode</image:caption>
+      <image:title>Experiment 012 — Multi-User CRM With Server-Side Pagination</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp013.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/homepage-light.webp</image:loc>
-      <image:title>Experiment 013 — Hero and upload queue light mode</image:title>
-      <image:caption>CV screening hero and upload queue in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/homepage-dark.webp</image:loc>
-      <image:title>Experiment 013 — Hero and upload queue dark mode</image:title>
-      <image:caption>CV screening hero and upload queue in dark mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/extracting-pdf-to-json-light.webp</image:loc>
-      <image:title>Experiment 013 — PDF text extraction to JSON light mode</image:title>
-      <image:caption>In-browser PDF extraction to JSON in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/extracting-pdf-to-json-dark.webp</image:loc>
-      <image:title>Experiment 013 — PDF text extraction to JSON dark mode</image:title>
-      <image:caption>In-browser PDF extraction to JSON in dark mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/realtime-visual-progress-light.webp</image:loc>
-      <image:title>Experiment 013 — Realtime visual pipeline progress light mode</image:title>
-      <image:caption>Seven-step visual pipeline progress in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/realtime-visual-progress-dark.webp</image:loc>
-      <image:title>Experiment 013 — Realtime visual pipeline progress dark mode</image:title>
-      <image:caption>Seven-step visual pipeline progress in dark mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/login-light.webp</image:loc>
-      <image:title>Experiment 013 — Shared auth login light mode</image:title>
-      <image:caption>Shared auth login reusing EXP 011 backend in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/login-dark.webp</image:loc>
-      <image:title>Experiment 013 — Shared auth login dark mode</image:title>
-      <image:caption>Shared auth login in dark mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/register-light.webp</image:loc>
-      <image:title>Experiment 013 — User registration light mode</image:title>
-      <image:caption>User registration and Gmail OTP verification in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/register-dark.webp</image:loc>
-      <image:title>Experiment 013 — User registration dark mode</image:title>
-      <image:caption>User registration and Gmail OTP verification in dark mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/settings-light.webp</image:loc>
-      <image:title>Experiment 013 — Settings and profile management light mode</image:title>
-      <image:caption>Profile editing and appearance settings in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments013/settings-dark.webp</image:loc>
-      <image:title>Experiment 013 — Settings and profile management dark mode</image:title>
-      <image:caption>Profile editing and appearance settings in dark mode</image:caption>
+      <image:title>Experiment 013 — Multi-User CV Screening Platform</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp014.html</loc>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/dashboard-light.webp</image:loc>
-      <image:title>Experiment 014 — ContentOS dashboard and analytics light mode</image:title>
-      <image:caption>ContentOS dashboard metrics and server-paginated content table in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/dashboard-dark.webp</image:loc>
-      <image:title>Experiment 014 — ContentOS dashboard and analytics dark mode</image:title>
-      <image:caption>ContentOS dashboard metrics and server-paginated content table in dark mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/form-idea-light.webp</image:loc>
-      <image:title>Experiment 014 — Content creation and edit modal light mode</image:title>
-      <image:caption>Ten-column content drafting modal with URL validation in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/form-idea-dark.webp</image:loc>
-      <image:title>Experiment 014 — Content creation and edit modal dark mode</image:title>
-      <image:caption>Ten-column content drafting modal with URL validation in dark mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/login-light.webp</image:loc>
-      <image:title>Experiment 014 — Shared authentication login light mode</image:title>
-      <image:caption>Shared auth login reusing EXP 011 backend in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/login-dark.webp</image:loc>
-      <image:title>Experiment 014 — Shared authentication login dark mode</image:title>
-      <image:caption>Shared auth login in dark mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/regis-light.webp</image:loc>
-      <image:title>Experiment 014 — Account registration light mode</image:title>
-      <image:caption>Account registration with email OTP verification in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments014/regis-dark.webp</image:loc>
-      <image:title>Experiment 014 — Account registration dark mode</image:title>
-      <image:caption>Account registration with email OTP verification in dark mode</image:caption>
+      <image:title>Experiment 014 — Content Tracking Web App With Server Side Pagination</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp015.html</loc>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/dashboard-light-app.webp</image:loc>
-      <image:title>Experiment 015 — ContentOS live board light mode</image:title>
-      <image:caption>Live tracker board used by the MCP scribe in light mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/dashboard-dark-app.webp</image:loc>
-      <image:title>Experiment 015 — ContentOS live board dark mode</image:title>
-      <image:caption>Live tracker board used by the MCP scribe in dark mode</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/agent-list.webp</image:loc>
-      <image:title>Experiment 015 — Global agent list with contentos-manager</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/login.webp</image:loc>
-      <image:title>Experiment 015 — Login receipt and empty dashboard</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/mcp-crud1.webp</image:loc>
-      <image:title>Experiment 015 — MCP run part 1 login and create</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/mcp-crud2.webp</image:loc>
-      <image:title>Experiment 015 — MCP run part 2 read back</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments015/mcp-crud3.webp</image:loc>
-      <image:title>Experiment 015 — MCP run part 3 edit delete clean</image:title>
+      <image:title>Experiment 015 — LLM Writes Into My Own Web App Through Internal MCP</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp016.html</loc>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/dashboard.webp</image:loc>
-      <image:title>Experiment 016 — JobTracker dashboard with pipeline strip bar donut and ledger</image:title>
-      <image:caption>Daily driver 3 lamaran plus bar plus donut in sync</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/login-session.webp</image:loc>
-      <image:title>Experiment 016 — Login session with sample ledger panel</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/added-lamaran-form.webp</image:loc>
-      <image:title>Experiment 016 — Add lamaran modal solid white plus red shadow</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/mobile-version.webp</image:loc>
-      <image:title>Experiment 016 — Mobile cards with pipeline charts and stacked rows</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/terminal-door.webp</image:loc>
-      <image:title>Experiment 016 — Caddy one door routing and health checks</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/terminal-contract.webp</image:loc>
-      <image:title>Experiment 016 — Seven status enum and fail closed token rejection</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/lint-backend.webp</image:loc>
-      <image:title>Experiment 016 — Backend lint clean and sixteen tests green</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments016/lint-frontend.webp</image:loc>
-      <image:title>Experiment 016 — Frontend lint test build green relative assets</image:title>
+      <image:title>Experiment 016 — From Static Tracker to Enterprise System JobTracker</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/exp017.html</loc>
-    <lastmod>2026-09-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/public-blocked.webp</image:loc>
-      <image:title>Experiment 017 — Blocked, the public door answers not found</image:title>
-      <image:caption>Blocked, the public door answers not found on 29 Sep 2026</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/dns-health.webp</image:loc>
-      <image:title>Experiment 017 — DNS back while the door stays shut</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/rls-deny.webp</image:loc>
-      <image:title>Experiment 017 — Row locks on, anonymous query comes back empty</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/seed-2050.webp</image:loc>
-      <image:title>Experiment 017 — Moved, two thousand fifty rows read back clean</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/cross-user.webp</image:loc>
-      <image:title>Experiment 017 — Cross user check, another account sees zero rows</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/edge401.webp</image:loc>
-      <image:title>Experiment 017 — Edge function rejects requests without a token</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/otp-code.webp</image:loc>
-      <image:title>Experiment 017 — Code only login, no link for scanners</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/login-page-live.webp</image:loc>
-      <image:title>Experiment 017 — Live login from the real internet</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/nol-funnel.webp</image:loc>
-      <image:title>Experiment 017 — Zero old funnel hits in the live bundle</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://robbyaliasaakbar.github.io/images/experiments017/old-backend-die.webp</image:loc>
-      <image:title>Experiment 017 — Retired, old backend containers stay down</image:title>
+      <image:title>Experiment 017 — Four Apps, One Door, Zero Funnel — Moving to Supabase</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://robbyaliasaakbar.github.io/contact.html</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
     <image:image>
       <image:loc>https://robbyaliasaakbar.github.io/images/Profile.webp</image:loc>
       <image:title>Contact Robby Aliasa Akbar</image:title>
