@@ -31,35 +31,87 @@
     <meta name="twitter:description" content="Native ROCm on RX 6700 XT gfx1031 with one-line MMA fix: 580 tok/s prefill sustained at 20K+ cached on 35B A3B split, no override, flash-attn + KV q8_0 + 131K ctx.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments009/server-prefill-580.webp">
     <meta name="twitter:image:alt" content="Experiment 009 — From Override to Native: Robust ROCm gfx1031 Without HSA_OVERRIDE">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 009 — From Override to Native: Robust ROCm gfx1031 Without HSA_OVERRIDE",
+      "description": "Native ROCm on RX 6700 XT gfx1031 with one-line MMA fix: 580 tok/s prefill sustained at 20K+ cached on 35B A3B split, no override, flash-attn + KV q8_0 + 131K ctx.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments009/server-prefill-580.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp009.html",
+      "datePublished": "2026-09-28",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp009.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 009 — From Override to Native: Robust ROCm gfx1031 Without HSA_OVERRIDE",
-          "description": "Native ROCm on RX 6700 XT gfx1031 with one-line MMA fix: 580 tok/s prefill sustained at 20K+ cached on 35B A3B split, no override, flash-attn + KV q8_0 + 131K ctx.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments009/server-prefill-580.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp009.html",
-          "datePublished": "2026-09-28",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp009.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 009", "item": "https://robbyaliasaakbar.github.io/exp009.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 009",
+          "item": "https://robbyaliasaakbar.github.io/exp009.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why require native instead of HSA_OVERRIDE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Override gave FA-off, top_k CPU fallback tanking decode, and random mid-inference core dumps. For 35B split at 70K+ that is unusable. Native was slower to achieve but stable, with rocminfo proving no spoofing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is head_dim 512 a universal fix I can copy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Conditional on amd_mfma_available and this HIP + commit. Validate failure mode first. Method generalizes, number doesn't."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why did SGLang and vLLM start working too?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unknown. Flagged honestly. Likely parallel ROCm-level changes untracked. If you understand the mechanics, author invites explanation."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

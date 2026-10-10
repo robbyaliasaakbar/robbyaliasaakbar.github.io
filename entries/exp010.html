@@ -31,35 +31,87 @@
     <meta name="twitter:description" content="Job Tracker frontend built in 5 hours with only Tiel-Coder 35B local LLM: real OTP auth, CRUD, search/filter/sort, responsive table-to-cards, no framework, live on GitHub Pages.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments010/desktop-version.webp">
     <meta name="twitter:image:alt" content="Experiment 010 — Building a Production-Ready Job Tracker UI With Only a 35B Local Coder">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 010 — Building a Production-Ready Job Tracker UI With Only a 35B Local Coder",
+      "description": "Job Tracker frontend built in 5 hours with only Tiel-Coder 35B local LLM: real OTP auth, CRUD, search/filter/sort, responsive table-to-cards, no framework, live on GitHub Pages.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments010/desktop-version.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp010.html",
+      "datePublished": "2026-09-28",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp010.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 010 — Building a Production-Ready Job Tracker UI With Only a 35B Local Coder",
-          "description": "Job Tracker frontend built in 5 hours with only Tiel-Coder 35B local LLM: real OTP auth, CRUD, search/filter/sort, responsive table-to-cards, no framework, live on GitHub Pages.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments010/desktop-version.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp010.html",
-          "datePublished": "2026-09-28",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp010.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 010", "item": "https://robbyaliasaakbar.github.io/exp010.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 010",
+          "item": "https://robbyaliasaakbar.github.io/exp010.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this just a static HTML demo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Frontend is static on GitHub Pages, but auth + data go to a real backend (PHP 8.3 + SQLite) running on my PC for now. Guard checks token via /api/me on every open. Full entrypoint in EXP 011."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why no framework? Is vanilla production-ready?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For this scale yes. Four small files (guard/store/app/auth) are easier to review and faster to iterate than framework boilerplate. No build step means GitHub Pages deploy is trivial."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does login sometimes fail?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Backend is not on a 24/7 VPS yet. It lives on my personal PC, online daily 08.00–21.00 WIB (UTC+7) when my PC is on. Outside those hours API is unreachable and login cannot succeed. Frontend shows a toast and stays readable. Screenshots remain as proof."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

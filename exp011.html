@@ -31,35 +31,87 @@
     <meta name="twitter:description" content="One PHP + SQLite + Docker auth backend for many frontends, built with only Tiel-Coder 35B local LLM: OTP via Gmail, opaque tokens, rate limits, per-user Job Tracker API, zero dependencies.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments011/docker-ps.webp">
     <meta name="twitter:image:alt" content="Experiment 011 — One Auth Backend for Many Frontends — PHP SQLite Docker">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 011 — One Auth Backend for Many Frontends — PHP SQLite Docker",
+      "description": "One PHP + SQLite + Docker auth backend for many frontends, built with only Tiel-Coder 35B local LLM: OTP via Gmail, opaque tokens, rate limits, per-user Job Tracker API, zero dependencies.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments011/docker-ps.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp011.html",
+      "datePublished": "2026-09-28",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp011.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 011 — One Auth Backend for Many Frontends — PHP SQLite Docker",
-          "description": "One PHP + SQLite + Docker auth backend for many frontends, built with only Tiel-Coder 35B local LLM: OTP via Gmail, opaque tokens, rate limits, per-user Job Tracker API, zero dependencies.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments011/docker-ps.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp011.html",
-          "datePublished": "2026-09-28",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp011.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 011", "item": "https://robbyaliasaakbar.github.io/exp011.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 011",
+          "item": "https://robbyaliasaakbar.github.io/exp011.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why PHP + SQLite + Docker instead of Node + Postgres?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Locked for this scale: PHP built-ins already cover hash + random + PDO, SQLite is 1 file with zero server, Docker gives PHP without native install. Postgres + JWT + mailer libs are noted as production upgrades, not v1."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can :7001 talk to :7002 without being blocked?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Explicit CORS allowlist plus same-host pass for Tailscale. Preflight OPTIONS returns 204 with Allow-Origin only for listed hosts. Next app (:7003) just gets added to the list."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does the API sometimes not answer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not on a 24/7 VPS yet. Home PC, online daily 08.00–21.00 WIB (UTC+7). Outside those hours fetch fails and frontend shows a toast. Screenshots + curl logs remain as proof."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

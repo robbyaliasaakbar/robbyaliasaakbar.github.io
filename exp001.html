@@ -31,35 +31,87 @@
     <meta name="twitter:description" content="Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp">
     <meta name="twitter:image:alt" content="Experiment 001 — The 35B MoE model runs on an older architecture with 12GB of VRAM">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 001 — The 35B MoE model runs on an older architecture with 12GB of VRAM",
+      "description": "Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp001.html",
+      "datePublished": "2026-09-25",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp001.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 001 — The 35B MoE model runs on an older architecture with 12GB of VRAM",
-          "description": "Testing whether 12GB of VRAM and an older GPU architecture can run open-source LLMs optimally without putting undue strain on the GPU.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments001/experiment001.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp001.html",
-          "datePublished": "2026-09-25",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp001.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 001", "item": "https://robbyaliasaakbar.github.io/exp001.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 001",
+          "item": "https://robbyaliasaakbar.github.io/exp001.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can a 35B MoE model really run on 12GB VRAM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, with the right quantization (IQ4_NL), native ROCm backend, and careful layer placement using --n-cpu-moe 26, it runs stable at up to 28 tok/s decode and 581 tok/s prefill without ever running out of memory."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What was the biggest bottleneck you found?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not VRAM size but KV-cache and thread scheduling. Using --threads 4 and --no-kv-unified for a single user kept junction thermal at max 85°C and made 128K context stable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I copy your llama.cpp config directly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The config is a reference tuned for i5-11400F + RX 6700 XT. You must retest --n-cpu-moe, --threads, and batch sizes on your own hardware."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

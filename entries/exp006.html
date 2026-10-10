@@ -31,35 +31,87 @@
     <meta name="twitter:description" content="Can a live A4 invoice tool with customer DB and selectable PDF be built with only local LLMs — no MySQL, just .js + 44 lines PHP? Evidence: 919 lines.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments006/invoice-form-preview.webp">
     <meta name="twitter:image:alt" content="Experiment 006 — Building a Self-Contained Invoice System Without a Database">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 006 — Building a Self-Contained Invoice System Without a Database",
+      "description": "Can a live A4 invoice tool with customer DB and selectable PDF be built with only local LLMs — no MySQL, just .js + 44 lines PHP? Evidence: 919 lines.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments006/invoice-form-preview.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp006.html",
+      "datePublished": "2026-09-28",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp006.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 006 — Building a Self-Contained Invoice System Without a Database",
-          "description": "Can a live A4 invoice tool with customer DB and selectable PDF be built with only local LLMs — no MySQL, just .js + 44 lines PHP? Evidence: 919 lines.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments006/invoice-form-preview.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp006.html",
-          "datePublished": "2026-09-28",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp006.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 006", "item": "https://robbyaliasaakbar.github.io/exp006.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 006",
+          "item": "https://robbyaliasaakbar.github.io/exp006.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do I need a database for a small business invoice system?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. For under ~10k customers, a single customers.js file on Hostinger file storage (100GB) is enough. It&apos;s downloadable via File Manager, no phpMyAdmin. save.php (44 lines) handles POST {'{type, content}'} with allowlist. localStorage is fallback if fetch fails."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is selectable text in PDF important?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Customers need to copy the bank account BCA 5771 •• 465 without retyping. Screenshot PDFs (850KB, image) don&apos;t allow copy. Text-based jsPDF (45KB) does, and it&apos;s 19x smaller. Logo still embeds via canvas PNG conversion."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can local AI really handle jsPDF and file save logic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, but batched per component. One-shot generation hallucinated pricelist and broke logo CORS. Batched prompting (form → preview → pdf → save.php) with human validation produced 919 lines that work on shared hosting."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

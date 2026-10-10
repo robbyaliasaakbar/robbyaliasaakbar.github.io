@@ -31,35 +31,87 @@
     <meta name="twitter:description" content="MiniLeads CRM with shared auth backend: React + Vite, 2049 leads, server-side pagination, tap-to-filter charts, CSV import/export, dark mode, live on GitHub Pages via Tailscale Funnel.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments012/homepage-light.webp">
     <meta name="twitter:image:alt" content="Experiment 012 — Multi-User CRM With Server-Side Pagination, React + Vite, Live on GitHub Pages">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 012 — Multi-User CRM With Server-Side Pagination, React + Vite, Live on GitHub Pages",
+      "description": "MiniLeads CRM with shared auth backend: React + Vite, 2049 leads, server-side pagination, tap-to-filter charts, CSV import/export, dark mode, live on GitHub Pages via Tailscale Funnel.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments012/homepage-light.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp012.html",
+      "datePublished": "2026-09-28",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp012.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 012 — Multi-User CRM With Server-Side Pagination, React + Vite, Live on GitHub Pages",
-          "description": "MiniLeads CRM with shared auth backend: React + Vite, 2049 leads, server-side pagination, tap-to-filter charts, CSV import/export, dark mode, live on GitHub Pages via Tailscale Funnel.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments012/homepage-light.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp012.html",
-          "datePublished": "2026-09-28",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp012.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 012", "item": "https://robbyaliasaakbar.github.io/exp012.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 012",
+          "item": "https://robbyaliasaakbar.github.io/exp012.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why React for this app but vanilla for the article page?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The app juggles filters, pagination, three charts, CSV flows and theme in one state tree, so React earns its place. The article is static content, meaning vanilla HTML plus Tailwind is lighter and matches every other experiment page."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can a static GitHub Page talk to your home PC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Two Tailscale Funnel doors handle the traffic. Port 443 proxies to auth on port 7002, and port 8443 proxies to CRM data on port 7005. The JavaScript bundle bakes in those public URLs at build time. When the PC is turned off, the doors are closed and the page explains that honestly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does the API sometimes not answer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is not running on a 24/7 cloud server yet. It lives on my personal home computer and stays online daily. Outside those operating hours any data request fails and the app shows a toast. Screenshots and curl logs remain as proof."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

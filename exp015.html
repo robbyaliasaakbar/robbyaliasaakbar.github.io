@@ -31,35 +31,111 @@
     <meta name="twitter:description" content="Local MCP with 6 tools plus a primary opencode agent that writes ideas straight into live ContentOS. Planned in EXP 014, now shipped with receipts.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments015/dashboard-light-app.webp">
     <meta name="twitter:image:alt" content="Experiment 015 - Letting the LLM Into My Own Web App Through an Internal MCP, No Manual Entry">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 015 - Letting the LLM Into My Own Web App Through an Internal MCP, No Manual Entry",
+      "description": "Local MCP with 6 tools plus a primary opencode agent that writes ideas straight into live ContentOS. Planned in EXP 014, now shipped with receipts.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments015/dashboard-light-app.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp015.html",
+      "datePublished": "2026-09-26",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp015.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 015 - Letting the LLM Into My Own Web App Through an Internal MCP, No Manual Entry",
-          "description": "Local MCP with 6 tools plus a primary opencode agent that writes ideas straight into live ContentOS. Planned in EXP 014, now shipped with receipts.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments015/dashboard-light-app.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp015.html",
-          "datePublished": "2026-09-26",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp015.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 015", "item": "https://robbyaliasaakbar.github.io/exp015.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 015",
+          "item": "https://robbyaliasaakbar.github.io/exp015.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why not just type in the app?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Typing stays. The scribe is for locked ideas from chat, it only carries what you approve."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the AI work alone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. You brainstorm, you lock, it saves. Delete always asks for the id first."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this a new backend?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Same auth and same data doors as EXP 014. One translator file, zero new servers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is my password?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nowhere on this page. Login happens in session memory, secrets never land in git or screenshots."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why only six tools?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "List, get, save, remove, dashboard and login. Enough to carry ideas, small enough to track."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does it fail when your PC is off?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No VPS by decision, home PC and secure tunnels (:443 auth, :9443 data). Off means doors closed and the page says so instead of pretending. Same honesty as EXP 010 through 014."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

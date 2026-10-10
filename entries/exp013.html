@@ -31,35 +31,111 @@
     <meta name="twitter:description" content="CV screening platform with shared auth backend: React + Vite, in-browser PDF extraction, 7-step realtime pipeline, n8n scoring, live on GitHub Pages via Tailscale Funnel.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments013/homepage-light.webp">
     <meta name="twitter:image:alt" content="Experiment 013 - Multi-User CV Screening Platform, React + Vite, Live on GitHub Pages">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 013 - Multi-User CV Screening Platform, React + Vite, Live on GitHub Pages",
+      "description": "CV screening platform with shared auth backend: React + Vite, in-browser PDF extraction, 7-step realtime pipeline, n8n scoring, live on GitHub Pages via Tailscale Funnel.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments013/homepage-light.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp013.html",
+      "datePublished": "2026-09-28",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp013.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 013 - Multi-User CV Screening Platform, React + Vite, Live on GitHub Pages",
-          "description": "CV screening platform with shared auth backend: React + Vite, in-browser PDF extraction, 7-step realtime pipeline, n8n scoring, live on GitHub Pages via Tailscale Funnel.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments013/homepage-light.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp013.html",
-          "datePublished": "2026-09-28",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp013.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 013", "item": "https://robbyaliasaakbar.github.io/exp013.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 013",
+          "item": "https://robbyaliasaakbar.github.io/exp013.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does screening require login when the original test did not?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The test proved the engine. The platform proves one account serves many apps. Login ties screenings to people, and the same backend serves all three apps with zero re-code."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where do my CVs go? Is anything stored?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Text is extracted in your browser, scored by the workflow, then the result table is wiped fresh every run by design. Downloads (JSON/CSV) are yours to keep. 5 sample CVs, 2780 to 7523 chars each, never leave your browser as files."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is the screening webhook open? Is that not a hole?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Measured decision, documented on-page: stateless endpoint, self-wiping results, near-zero attacker ROI (a spammer only scores their own junk). The n8n editor itself answers 404 on the public door. Hardening scales with threat, not with fear."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Too good to be true? 27 failures says otherwise — which one hurt most?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Exposing the n8n editor to the internet during go-live. Full stop, documented with curl receipts. Also: a workflow edit that never persisted while the tool said saved. Both are on this page with evidence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does it fail when your PC is off?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No VPS by decision, home PC and secure tunnels (:443 auth, :10000 screening). Off means doors closed and the page says so instead of pretending. Same honesty as EXP 010/011/012."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why React for the portal but rule-code instead of AI for scoring?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "React earns its place (upload queue, live pipeline view, auth, settings in one state tree). Scoring stays rule-based 50-20-30 so every point is explainable. AI is used where it helps, not where it impresses."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

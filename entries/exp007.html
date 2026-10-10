@@ -31,35 +31,87 @@
     <meta name="twitter:description" content="Can 1–5 CV PDFs be screened from 30-minute manual review to 5-second ranked shortlist without in-system AI? A local workflow: pdf.js → n8n 24 nodes → Postgres, 70% threshold.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments007/homepage-hero.webp">
     <meta name="twitter:image:alt" content="Experiment 007 — From 30 Minutes to 5 Seconds: Automating Mass CV Screening Without In-System AI">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 007 — From 30 Minutes to 5 Seconds: Automating Mass CV Screening Without In-System AI",
+      "description": "Can 1–5 CV PDFs be screened from 30-minute manual review to 5-second ranked shortlist without in-system AI? A local workflow: pdf.js → n8n 24 nodes → Postgres, 70% threshold.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments007/homepage-hero.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp007.html",
+      "datePublished": "2026-09-28",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp007.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 007 — From 30 Minutes to 5 Seconds: Automating Mass CV Screening Without In-System AI",
-          "description": "Can 1–5 CV PDFs be screened from 30-minute manual review to 5-second ranked shortlist without in-system AI? A local workflow: pdf.js → n8n 24 nodes → Postgres, 70% threshold.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments007/homepage-hero.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp007.html",
-          "datePublished": "2026-09-28",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp007.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 007", "item": "https://robbyaliasaakbar.github.io/exp007.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 007",
+          "item": "https://robbyaliasaakbar.github.io/exp007.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why not put AI inside the scoring system?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Small quantized models hallucinate and are unpredictable. Big models are heavy and need strong hardware (RX 6700 XT 12GB cannot sustain 5 CV parallel). Workflow orchestration (pdf.js + n8n + rule 40/30/30, 70% threshold) is stable, fast (~5s), auditable, and 100% local: AI was only a supervised syntax assistant (Ornith 35B)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does HR know why a CV passed or failed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Each row has a clear reason: e.g., Lolos 80% utk Drafter & 3D Visualization or Tidak Lolos 35% utk Junior Architect. The CSV header is Indonesian: Peringkat, Skor (0-100), Status, Alasan, so HR opens it in Excel and knows immediately. Threshold 70% is adjustable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if the CV is a scanned PDF or the webhook is offline?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Scanned PDFs with no text layer trigger a toast (text <10 chars) but don’t fail the batch. The item is sent with empty text and an _error flag. If the webhook is offline (15s timeout), the landing page shows a fallback Download JSON so the demo still works."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

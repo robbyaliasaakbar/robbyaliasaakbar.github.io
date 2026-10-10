@@ -31,35 +31,87 @@
     <meta name="twitter:description" content="Can RX 6700 XT gfx1031 beat Vulkan by 23% wall-clock on 8K context once the ROCm GFX-target bug and flash-attention assert are fixed? ROCm 653 vs Vulkan 354 t/s prefill.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments008/rocm-bench.webp">
     <meta name="twitter:image:alt" content="Experiment 008 — Found the Bug, Fixed the Stack: ROCm gfx1031 vs Vulkan on RX 6700 XT">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 008 — Found the Bug, Fixed the Stack: ROCm gfx1031 vs Vulkan on RX 6700 XT",
+      "description": "Can RX 6700 XT gfx1031 beat Vulkan by 23% wall-clock on 8K context once the ROCm GFX-target bug and flash-attention assert are fixed? ROCm 653 vs Vulkan 354 t/s prefill.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments008/rocm-bench.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp008.html",
+      "datePublished": "2026-09-28",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp008.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 008 — Found the Bug, Fixed the Stack: ROCm gfx1031 vs Vulkan on RX 6700 XT",
-          "description": "Can RX 6700 XT gfx1031 beat Vulkan by 23% wall-clock on 8K context once the ROCm GFX-target bug and flash-attention assert are fixed? ROCm 653 vs Vulkan 354 t/s prefill.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments008/rocm-bench.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp008.html",
-          "datePublished": "2026-09-28",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp008.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 008", "item": "https://robbyaliasaakbar.github.io/exp008.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 008",
+          "item": "https://robbyaliasaakbar.github.io/exp008.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why not just use Vulkan? It works out of the box.",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vulkan needs no patch, but at 8192 context it does 354 t/s prefill vs ROCm 653 t/s. That is 23.1s vs 12.5s prefill, net 35.6s vs 27.3s full cycle. Below ~1760 tokens Vulkan is net-faster, above that ROCm wins. For long-context research and agentic work, ROCm is clearly better once running."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is forcing max_blocks_per_sm = 1 safe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unknown. That is why it is reported as bug #26702, not a fix. It avoids the crash and benches stably across 3 runs, but only a maintainer can confirm correctness and occupancy for gfx1031. Do not treat the one-liner as an upstream fix."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this explain the decode being slower on ROCm?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. llama-bench excludes sampling time, so the TOP_K unsupported on ROCm log seen in llama-server is not confirmed as the cause of the tg512 gap here. That TOP_K CPU fallback was a side effect of the gfx override. It is indirectly fixed in EXP 009 by running natively without override."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

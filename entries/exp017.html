@@ -31,35 +31,111 @@
     <meta name="twitter:description" content="Thirteen home server failures traced with receipts, then auth and data of four apps moved to Supabase. Row locks from minute one, live checks, honest tradeoffs, zero VPS bill.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments017/public-blocked.webp">
     <meta name="twitter:image:alt" content="Experiment 017 - Four Apps, One Door, Zero Funnel - Tracing Outages and Moving Auth Plus Data to Supabase">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 017 - Four Apps, One Door, Zero Funnel - Tracing Outages and Moving Auth Plus Data to Supabase",
+      "description": "Thirteen home server failures traced with receipts, then auth and data of four apps moved to Supabase. Row locks from minute one, live checks, honest tradeoffs, zero VPS bill.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments017/public-blocked.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp017.html",
+      "datePublished": "2026-09-29",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp017.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 017 - Four Apps, One Door, Zero Funnel - Tracing Outages and Moving Auth Plus Data to Supabase",
-          "description": "Thirteen home server failures traced with receipts, then auth and data of four apps moved to Supabase. Row locks from minute one, live checks, honest tradeoffs, zero VPS bill.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments017/public-blocked.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp017.html",
-          "datePublished": "2026-09-29",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp017.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 017", "item": "https://robbyaliasaakbar.github.io/exp017.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 017",
+          "item": "https://robbyaliasaakbar.github.io/exp017.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this a new login?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, one more time. The three apps now use Supabase Auth, old token keys are retired, you log in once and you are done."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Did my old data move?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Two thousand fifty leads and the app rows came across, counts match, old boxes kept until checks passed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why Supabase instead of a VPS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Free tier covers it, row locks come built in, and the stack is open source so I can self host later. No monthly bill."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why row locks from minute one?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The stranger sees nothing, a user sees their own rows, an admin sees all. Same rule as my old backend."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why cut over one app at a time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Each app had to pass live checks before the next one moved. My rollback path stayed open the whole time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why write down every failure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Thirteen on record so far. The receipts are the proof, and the lessons only count if they are written."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

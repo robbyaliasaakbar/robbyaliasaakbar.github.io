@@ -31,35 +31,87 @@
     <meta name="twitter:description" content="What does it actually take to optimally use AI as an autonomous research assistant? Is it just the model? As it turns out, no.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments003/experiment003.webp">
     <meta name="twitter:image:alt" content="Experiment 003 — Automation agent workflow for business research needs">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 003 — Automation agent workflow for business research needs",
+      "description": "What does it actually take to optimally use AI as an autonomous research assistant? Is it just the model? As it turns out, no.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments003/experiment003.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp003.html",
+      "datePublished": "2026-09-25",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp003.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 003 — Automation agent workflow for business research needs",
-          "description": "What does it actually take to optimally use AI as an autonomous research assistant? Is it just the model? As it turns out, no.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments003/experiment003.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp003.html",
-          "datePublished": "2026-09-25",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp003.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 003", "item": "https://robbyaliasaakbar.github.io/exp003.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 003",
+          "item": "https://robbyaliasaakbar.github.io/exp003.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why wasn",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At 33 tool calls the model lost short-term memory, coherence dropped to 58%. Adding KV-cache management and deterministic system prompt brought it to 87-99%."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What made the final workflow hit 99% tool success?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The full chain: MCP + RAG + KVCM + Layer Placement + Deterministic Prompt + Fine-Tuning Domain. Each added 5-15% quality in final weight. See How I Score above for pts (3/1/0) and 22 identical runs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does one research run take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "About 51 minutes for 33 tool calls on consumer hardware (Gemma 26B via llama.cpp, local), slower than frontier API but with self-correction active and fully local."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>

@@ -31,35 +31,119 @@
     <meta name="twitter:description" content="Can a full-feature business site with slider, animations, 44-item calculator & SEO be built end-to-end using only local LLMs? Evidence: 14 pages, 28 images.">
     <meta name="twitter:image" content="https://robbyaliasaakbar.github.io/images/experiments005/homepage.webp">
     <meta name="twitter:image:alt" content="Experiment 005. Building a Full Feature Services Business Website Using Only Local AI">
-    <script type="application/ld+json">
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
+      "@type": "Article",
+      "headline": "Experiment 005. Building a Full Feature Services Business Website Using Only Local AI",
+      "description": "Can a full-feature business site with slider, animations, 44-item calculator & SEO be built end-to-end using only local LLMs? Evidence: 14 pages, 28 images.",
+      "image": "https://robbyaliasaakbar.github.io/images/experiments005/homepage.webp",
+      "url": "https://robbyaliasaakbar.github.io/exp005.html",
+      "datePublished": "2026-09-28",
+      "dateModified": "2026-10-10",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://robbyaliasaakbar.github.io/exp005.html"
+      },
+      "inLanguage": "en-US",
+      "articleSection": "Experiments",
+      "author": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar",
+        "url": "https://robbyaliasaakbar.github.io/profile.html"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Robby Aliasa Akbar"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Article",
-          "headline": "Experiment 005. Building a Full Feature Services Business Website Using Only Local AI",
-          "description": "Can a full-feature business site with slider, animations, 44-item calculator & SEO be built end-to-end using only local LLMs? Evidence: 14 pages, 28 images.",
-          "image": "https://robbyaliasaakbar.github.io/images/experiments005/homepage.webp",
-          "url": "https://robbyaliasaakbar.github.io/exp005.html",
-          "datePublished": "2026-09-28",
-          "dateModified": "2026-10-10",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "https://robbyaliasaakbar.github.io/exp005.html" },
-          "inLanguage": "en-US",
-          "articleSection": "Experiments",
-          "author": { "@type": "Person", "name": "Robby Aliasa Akbar", "url": "https://robbyaliasaakbar.github.io/profile.html" },
-          "publisher": { "@type": "Person", "name": "Robby Aliasa Akbar" }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://robbyaliasaakbar.github.io/"
         },
         {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://robbyaliasaakbar.github.io/" },
-            { "@type": "ListItem", "position": 2, "name": "Experiments", "item": "https://robbyaliasaakbar.github.io/experiments-list.html" },
-            { "@type": "ListItem", "position": 3, "name": "Experiment 005", "item": "https://robbyaliasaakbar.github.io/exp005.html" }
-          ]
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Experiments",
+          "item": "https://robbyaliasaakbar.github.io/experiments-list.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Experiment 005",
+          "item": "https://robbyaliasaakbar.github.io/exp005.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can local AI really generate a production estimator with 44 price rules?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, but only with deterministic prompts and manual validation. Initial calc hallucinated prices for Kasur 200 plus 180 etc. Splitting pricelist.js as single source of truth (22 categories, 44 items) and forcing dependent dropdowns to read from it verbatim fixed it. AI drafted the loops and WA deep link. Human ensured every item matched."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What broke when you let AI build the slider fully?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Clip path direction, divider sync, and touch vs mouse handlers. The local LLM needed zero doubt instructions for inset() percentages and event handling (mousedown vs touchstart). One shot full page generation failed. Batched per piece with explicit slider.js pattern succeeded."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How did you get SEO 100 without cloud AI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Manual SEO layer. Canonical, OG 1200x630, three JSON LD schemas (LocalBusiness, Service, BreadcrumbList), preload Hero dot webp, sitemap fix for Search Console, internal linking pass. AI gave baseline meta. Human optimized beyond template. Performance still has headroom (65 mobile plus 88 desktop). SEO is 100, perf is not, and that honesty is intentional."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is Instagram plus WhatsApp not enough?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In my case, IG plus TikTok plus WA drove discovery but left customers guessing. I needed a portal where they could validate we are professional, credible, and not a scam. With complete info, real before after proof, and transparent pricing. That is where trust is built."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does this website filter customers daily?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 14 before after pairs, 44 item calculator, and 14 complete pages answer repetitive questions before they become chats. I see fewer just curious inquiries and more qualified ones. The website does the filtering for this specific service."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the agency 5 to 15 million cost accurate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is my market observation for this exact scope. 14 pages, 14 sliders, 44 item calculator, and SEO. In 2025 to 2026. It varies by agency trust, quality, and track record. What is consistent is control. With local LLM, my source code and credentials are my copyright and I can maintain anytime."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I really build this in 2 days with local LLM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "I did in 2 full days, but only because 5 prerequisites were met. I understood my business domain, mapped the customer journey end to end from chat to payment, knew basic SEO, gave deterministic zero doubt instructions, and researched the right local model (ORNITH 35B). Without them, I needed 33 revisions and about 4M tokens."
+          }
         }
       ]
     }
-    </script>
+  ]
+}</script>
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H86RYQ2ML8"></script>
