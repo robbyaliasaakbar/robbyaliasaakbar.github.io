@@ -88,8 +88,10 @@ export default function Hero() {
             <img
               src="/images/mypp.webp"
               alt="Portrait of Robby Aliasa Akbar — Applied AI Systems Builder"
-              width="443"
-              height="1210"
+              width="444"
+              height="1211"
+              loading="eager"
+              fetchpriority="high"
               decoding="async"
               className="relative z-10 w-full rounded-2xl object-cover drop-shadow-2xl"
             />
