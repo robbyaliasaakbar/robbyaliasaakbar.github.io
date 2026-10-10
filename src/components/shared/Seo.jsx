@@ -119,8 +119,25 @@ export default function Seo({
             image: absImage,
             url,
             inLanguage: 'en-US',
-            author: { '@type': 'Person', name: 'Robby Aliasa Akbar', url: `${SITE}/profile.html` },
-            publisher: { '@type': 'Person', name: 'Robby Aliasa Akbar' },
+            author: {
+              '@type': 'Person',
+              name: 'Robby Aliasa Akbar',
+              url: `${SITE}/profile.html`,
+              image: `${SITE}/images/Profile.webp`,
+              jobTitle: 'Applied AI Systems Builder',
+            },
+            publisher: {
+              '@type': 'Person',
+              name: 'Robby Aliasa Akbar',
+              url: `${SITE}/profile.html`,
+              image: `${SITE}/images/Profile.webp`,
+              sameAs: [
+                'https://github.com/robbyaliasaakbar',
+                'https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267',
+                'https://www.reddit.com/user/Full_Director87/',
+                'https://www.instagram.com/ybboraa/',
+              ],
+            },
           },
           {
             '@type': 'BreadcrumbList',
