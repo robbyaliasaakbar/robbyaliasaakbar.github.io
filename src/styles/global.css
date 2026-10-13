@@ -1,7 +1,7 @@
 /* ============================================================
    Global styles — sandbox (React + Vite)
    Palette : White #FFFFFF · Black #0C0C0C · Red #D70000
-   Fonts   : full Manrope (spec upgrade)
+   Fonts   : full Plus Jakarta Sans (spec upgrade)
    ============================================================ */
 
 @tailwind base;
@@ -10,7 +10,7 @@
 
 :root {
   --ink: #0C0C0C;
-  --paper: #FFFFFF;
+  --paper: #F8FAFC;
   --accent: #D70000;
 }
 
@@ -21,7 +21,7 @@ html {
 body {
   background-color: var(--paper);
   color: var(--ink);
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -29,6 +29,56 @@ body {
 ::selection {
   background-color: var(--accent);
   color: #FFFFFF;
+}
+
+/* ------------------------------------------------------------
+   NEUMORPHISM — base (plan: upgraded tampilan)
+   Sengaja ditaruh SEBELUM section scroll-reveal di bawah:
+   aturan [data-reveal] harus MENANG buat elemen yang punya
+   data-reveal, biar transisi reveal (opacity + transform .7s)
+   gak ketimpa transition .neu-card (animasi reveal jadi kepotong).
+   Hover lift dipisah ke .neu-card-hover:hover di BAWAH file
+   (spesifisikasnya cukup tinggi buat ngalahin [data-reveal].revealed).
+   Surface: #E5E5E5 (neutral-200 (abu terang, pilihan user), tetap netral
+   situs), shadow 2 arah halus biar gak norak.
+   ------------------------------------------------------------ */
+.neu-card {
+  /* Tile putih nyatu sama background — pemisah HARUS shadow */
+  background-color: #F8FAFC;
+  border-radius: 1.5rem;
+  border: none;
+  box-shadow:
+    /* edge bevel tipis */
+    inset 1px 1px 0 rgba(255, 255, 255, .9),
+    inset -1px -1px 0 rgba(0, 0, 0, .06),
+    /* bayangan keliling — atas-kiri tipis, bawah-kanan lebih dalem */
+    -8px -8px 20px rgba(0, 0, 0, .08),
+    12px 12px 26px rgba(0, 0, 0, .15);
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+
+/* Pressed / terbenam — buat quote block dsb (statik, tanpa transition
+   biar gak nimpa transisi reveal) */
+.neu-inset {
+  background-color: #F8FAFC;
+  border-radius: 1.5rem;
+  border: none;
+  box-shadow:
+    inset 8px 8px 16px rgba(0, 0, 0, .14),
+    inset -8px -8px 16px rgba(255, 255, 255, .95);
+}
+
+/* Pill neumorphic — Approach. Hover invert ke hitam tetap dari
+   .approach-pill (dideklarasi setelah ini → transition dia yang menang,
+   isinya juga udah lengkap: background, color, transform) */
+.neu-pill {
+  background-color: #F8FAFC;
+  border: none;
+  border-radius: 9999px;
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, .85),
+    -5px -5px 12px rgba(0, 0, 0, .07),
+    7px 7px 16px rgba(0, 0, 0, .13);
 }
 
 /* ------------------------------------------------------------
@@ -61,12 +111,14 @@ body {
 
 /* ------------------------------------------------------------
    HERO — subtle blueprint grid backdrop
+   Revisi user: garis ink (.045 → .10) biar kontras kelihatan,
+   tetap warna palette (ink #0C0C0C), bukan putih tulang lagi.
    ------------------------------------------------------------ */
 
 .bg-grid {
   background-image:
-    linear-gradient(rgba(12, 12, 12, .045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(12, 12, 12, .045) 1px, transparent 1px);
+    linear-gradient(rgba(12, 12, 12, .10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(12, 12, 12, .10) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, #000 40%, transparent 100%);
   -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, #000 40%, transparent 100%);
@@ -76,7 +128,7 @@ body {
 .quote-block {
   border-left: 3px solid var(--accent);
   padding-left: 1.25rem;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 600;
   overflow-wrap: anywhere;
   word-break: break-word;
@@ -162,7 +214,7 @@ body {
   border: 1.5px solid rgba(12, 12, 12, .15);
   border-radius: 9999px;
   background: #fff;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: .72rem;
   font-weight: 800;
   letter-spacing: .14em;
@@ -214,7 +266,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: .5rem;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
   letter-spacing: .08em;
   transition: color .25s ease, gap .25s ease;
@@ -341,7 +393,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: .625rem;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: .8125rem;
   font-weight: 700;
   letter-spacing: .22em;
@@ -444,7 +496,7 @@ body {
   gap: .5rem;
   padding: .375rem .875rem;
   border-radius: 9999px;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .16em;
@@ -556,7 +608,7 @@ body {
 }
 
 .splash-name {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 800;
   font-size: .8rem;
   letter-spacing: .28em;
@@ -649,7 +701,7 @@ body {
 
 /* Narrative subsection label */
 .detail-label {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: .75rem;
   font-weight: 700;
   letter-spacing: .2em;
@@ -733,5 +785,37 @@ body {
   [data-reveal].reveal-throw {
     transform: none;
     transition: none;
+  }
+}
+
+/* force-tailwind-regen-3 */
+/* 4 ikon kanan: +25% dari w-14 sm:w-16 (56/64 → 70/80) */
+.hero-ico-lg { width: 4.375rem; }
+@media (min-width: 640px) { .hero-ico-lg { width: 5rem; } }
+.hero-logo { width: 18rem; max-width: none; }
+@media (min-width: 640px) { .hero-logo { width: 20.25rem; } }
+@media (min-width: 1024px) { .hero-logo { width: 22.5rem; } }
+
+/* ------------------------------------------------------------
+   NEUMORPHISM — hover (DIPISAH dari base di atas)
+   .neu-card-hover:hover sengaja di bawah file: selain menangin
+   [data-reveal].revealed buat elemen reveal, transisi hover juga
+   ikut deklarasi ini → lift + shadow dalam jalan .25s pas hover.
+   Pulang dari hover: fallback ke transisi [data-reveal] (ease-out
+   cepat di awal) → turunnya terasa halus bukan patah.
+   ------------------------------------------------------------ */
+.neu-card-hover:hover {
+  box-shadow:
+    -10px -10px 24px rgba(0, 0, 0, .1),
+    17px 17px 34px rgba(0, 0, 0, .2);
+  transform: translateY(-3px);
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neu-card,
+  .neu-card-hover:hover {
+    transition: none;
+    transform: none;
   }
 }

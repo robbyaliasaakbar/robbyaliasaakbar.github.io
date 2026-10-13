@@ -1,101 +1,126 @@
 import Eyebrow from '../shared/Eyebrow.jsx'
 import InteractiveCta from '../shared/InteractiveCta.jsx'
+import HeroBanner from './HeroBanner.jsx'
 import TiltBox from '../shared/TiltBox.jsx'
+import { useLanguage } from '../../context/LanguageContext.jsx'
+import { pick } from '../../i18n/translations.js'
 
 /*
   Hero — konten di-port dari index.html (section HERO).
-  Foto: me-nobg.webp (HD, background transparan — hasil cutout).
+  Revisi user: foto pribadi → HeroBanner (logo pusat + 12 ikon drift).
   Reveal animation: pakai data-reveal + useScrollReveal (dipanggil di Home).
+
+  Revisi tema v4 — bento layout persis sketsa user:
+  - eyebrow di LUAR tile (baris 1, kiri)
+  - tile besar (span 8): H1 + 2 paragraf (reveal 500 / 2100)
+  - banner (span 4, col-start 9, row 1-3): dari baris eyebrow sampe bawah
+    baris intro/quote, neu-card di DIV GRID (tile penuh kolom & span),
+    isi = HeroBanner (logo center + ikon-ikon ngambang)
+  - tile intro (span 4) + quote inset (span 4) di baris 3
+  - tombol CTA TANPA tile, span 8, baris 4 kiri bawah (sejajar horizontal)
+  - baris 4 kolom 9-12 KOSONG sengaja (kayak sketsa)
+  Semua delay reveal DIPERTAHANKAN persis:
+    0 (eyebrow) / 500 (h1) / 1000 (foto bounce) / 1500 / 1800 / 2100 / 2400.
+  Mobile: stack — urutan eyebrow → tile besar → intro → quote → tombol → foto.
+  Copy 100% sama, TiltBox di logo banner tetap, tombol gak diubah.
 */
 export default function Hero() {
+  const { lang } = useLanguage()
+  const t = (key) => pick(lang, 'hero', key)
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Blueprint grid backdrop — identik website asli */}
-      <div className="absolute inset-0 bg-grid" aria-hidden="true"></div>
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#F8FAFC]">
+      {/* TEKSTUR — kertas lecek (crumpled paper) via SVG noise */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.7] mix-blend-multiply"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035' numOctaves='5' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23ffffff' surfaceScale='4'%3E%3CfeDistantLight azimuth='45' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundSize: '300px 300px',
+        }}
+      />
 
-      <div className="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-32 pb-20 grid lg:grid-cols-12 gap-14 lg:gap-10 items-center">
+      <div className="relative mx-auto max-w-6xl px-6 lg:px-8 w-full pt-32 pb-20 grid lg:grid-cols-12 gap-6">
 
-        {/* Left: identity */}
-        <div className="lg:col-span-7">
-          {/* Revisi user: eyebrow slide masuk dari KIRI, duluan (delay 0) */}
-          <div data-reveal className="reveal-from-left">
-            <Eyebrow>Applied AI System</Eyebrow>
-          </div>
+        {/* Eyebrow — baris 1, di luar tile (sketsa) */}
+        <div data-reveal className="reveal-from-left lg:col-span-8">
+          <Eyebrow>{t('eyebrow')}</Eyebrow>
+        </div>
 
-          {/* Revisi user: nama JATUH dari ATAS, barengan sama eyebrow (delay 0) */}
+        {/* Banner — DOM dipindah ke sini khusus MOBILE: urutan eyebrow → banner → nama.
+            Desktop TIDAK berubah karena placement eksplisit (col-start-9, row-start-1, row-span-3)
+            di grid lg:grid-cols-12 — CSS Grid mengabaikan DOM order untuk item explicit. */}
+        <div
+          className="lg:col-start-9 lg:col-span-4 lg:row-start-1 lg:row-span-3 neu-card p-6 flex items-center justify-center reveal-bounce"
+          data-reveal="1000"
+        >
+          <HeroBanner />
+        </div>
+
+        {/* Tile besar — H1 + 2 paragraf. Tile TANPA data-reveal (langsung
+            kelihatan pas splash buka), isinya yang animate sendiri. */}
+        <TiltBox max={5} className="lg:col-span-8">
+          <div className="neu-card h-full p-8 sm:p-10">
+          {/* Revisi user: nama JATUH dari ATAS (delay 500) */}
           <h1
-            className="mt-6 font-display font-extrabold tracking-tight text-5xl sm:text-6xl lg:text-7xl leading-[1.02] reveal-drop"
+            className="font-display font-extrabold uppercase tracking-tight text-5xl sm:text-6xl lg:text-7xl leading-[1.02] reveal-drop"
+            style={{ WebkitTextStroke: '1px currentColor' }}
             data-reveal="500"
           >
             Robby Aliasa Akbar
           </h1>
 
-          <p
-            className="mt-8 text-lg sm:text-xl text-neutral-600 leading-relaxed max-w-xl"
-            data-reveal="1500"
-          >
-            AI gives you drafts, not answers.
-            <br />
-            Every output needs checking. Every result has to prove itself in real daily
-            work.
-          </p>
-
-          <blockquote
-            className="quote-block mt-8 text-base sm:text-lg text-ink max-w-xl"
-            data-reveal="1800"
-          >
-            No hype. I test AI in real conditions and keep what survives real business
-            use.
-          </blockquote>
-
           <div
-            className="mt-8 space-y-4 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-xl"
+            className="mt-8 space-y-4 text-base sm:text-lg text-neutral-600 leading-relaxed"
             data-reveal="2100"
           >
-            <p>
-              I spend most of my time testing where AI helps and where it gets in the
-              way. A lot of ideas fail here first so they do not fail on you.
-            </p>
-            <p>
-              What stays is usually boring in a good way. Clear steps, checked outputs,
-              and a backup plan for when AI guesses wrong.
+            <p>{t('p1')}</p>
+            <p>{t('p2')}</p>
+          </div>
+          </div>
+        </TiltBox>
+
+        {/* Tile intro (drafts) */}
+        <TiltBox max={5} className="lg:col-span-4">
+          <div className="neu-card h-full p-8" data-reveal="1500">
+            <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
+              {lang === 'id'
+                ? 'Hal yang dihasilkan AI itu, seharusnya hanya dijadikan sebagai draft, dan bukan sebagai jawaban mutlak.'
+                : 'AI gives you drafts, not answers.'}
+              <br />
+              {lang === 'id'
+                ? 'Setiap outputnya wajib di cek, wajib di test untuk ngebuktiin kalau memang outputnya bener bener berguna buat kerjaan harian.'
+                : 'Every output needs checking. Every result has to prove itself in real daily work.'}
             </p>
           </div>
+        </TiltBox>
 
-          {/* CTA — minimalis: 2 tombol sejajar (revisi M3) + tilt/parallax */}
-          <div className="mt-10 flex flex-wrap items-center gap-4" data-reveal="2400">
-            <InteractiveCta variant="primary" href="/experiments-list.html">
-              View All Experiments
-            </InteractiveCta>
-            <InteractiveCta
-              variant="invert"
-              href="https://github.com/robbyaliasaakbar"
-              external
-            >
-              View GitHub Profile <span aria-hidden="true">↗</span>
-            </InteractiveCta>
-          </div>
-        </div>
+        {/* Tile quote — sama persis kayak tile lain (revisi user) */}
+        <TiltBox max={5} className="lg:col-span-4">
+          <blockquote
+            className="neu-card h-full p-6 text-base sm:text-lg text-ink font-semibold"
+            data-reveal="1800"
+          >
+            {t('quote')}
+          </blockquote>
+        </TiltBox>
 
-        {/* Right: profile photo — cutout + tilt ngikutin mouse
-            Revisi user: foto BOUNCE IN (sedikit delay biar kepisah dari
-            eyebrow+nama yang masuk duluan) */}
+        {/* Tombol CTA — baris 4, kolom 1-8 (kiri bawah, kayak sketsa):
+            span lebar → 2 tombol SEJAJAR horizontal tanpa numpuk.
+            Kolom 9-12 baris 4 KOSONG sengaja (ruang kosong kanan bawah). */}
         <div
-          className="lg:col-span-5 flex justify-center lg:justify-end reveal-bounce"
-          data-reveal="1000"
+          className="lg:col-span-8 flex flex-wrap items-center gap-4"
+          data-reveal="2400"
         >
-          <TiltBox max={3.5} className="photo-frame relative w-48 sm:w-64 lg:w-full max-w-[18rem]">
-            <img
-              src="/images/mypp.webp"
-              alt="Portrait of Robby Aliasa Akbar — Applied AI Systems Builder"
-              width="444"
-              height="1211"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              className="relative z-10 w-full rounded-2xl object-cover drop-shadow-2xl"
-            />
-          </TiltBox>
+          <InteractiveCta variant="primary" href="/experiments-list.html">
+            {t('ctaPrimary')}
+          </InteractiveCta>
+          <InteractiveCta
+            variant="invert"
+            href="https://github.com/robbyaliasaakbar"
+            external
+          >
+            {t('ctaSecondary')} <span aria-hidden="true">↗</span>
+          </InteractiveCta>
         </div>
       </div>
     </section>

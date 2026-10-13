@@ -1,4 +1,4 @@
-# Robby Aliasa Akbar - AI Systems Builder and Experimenter
+# Robby Aliasa Akbar - Applied AI System
 
 Live site: https://robbyaliasaakbar.github.io
 
@@ -17,25 +17,27 @@ This repository contains a personal portfolio and applied research site focused 
 
 ## Overview
 
-The site has four core pages and seventeen documented experiments, built as a React 18 single-page application with Vite 6. Core pages present background, work, and contact. Experiment pages present technical case studies with terminal receipts, screenshots in WebP format, and honest failure analysis. Four experiments include live web applications hosted on GitHub Pages. Since EXP 017, three of those apps run their authentication and data on Supabase and work with the home computer off, while CV Screening still uses the home path for auth and n8n scoring. One experiment adds a local MCP translator so an LLM can write into the live tracker without a browser.
+The site has four core pages and seventeen documented experiments, built as a React 18 multi-page application with Vite. Core pages present background, work, and contact. Experiment pages present technical case studies with terminal receipts, screenshots in WebP format, and honest failure analysis. Four experiments include live web applications hosted on GitHub Pages. Since EXP 017, three of those apps run their authentication and data on Supabase and work with the home computer off, while CV Screening still uses the home path for auth and n8n scoring. One experiment adds a local MCP translator so an LLM can write into the live tracker without a browser.
 
-The goal is to test whether artificial intelligence is truly useful in everyday work and to publish full evidence for every claim.
+The homepage features a Neumorphism and Bento Grid design with an EN and ID language toggle. The goal is to test whether artificial intelligence is truly useful in everyday work and to publish full evidence for every claim.
 
 ## Tech Stack
 
 Frontend (portfolio):
-- React 18 with Vite 6, multi-page build (21 HTML entries)
-- React Router 6 for SPA navigation between pages
+- React 18 with Vite 5, multi-page build (21 HTML entries)
+- React Router 7 for SPA navigation between pages
 - Tailwind CSS 3.4 bundled (no CDN)
-- Custom components: InteractiveCta, ScreenshotCarousel, TiltBox, Eyebrow, Button, ScrollToTop, StatusBadge, Chart
-- Fonts: Manrope 400-800 (display and body)
+- framer-motion and react-parallax-tilt for animations
+- Custom components: InteractiveCta, ScreenshotCarousel, TiltBox, Eyebrow, Button, ScrollToTop, StatusBadge, Chart, Seo, Navbar, Footer
+- Fonts: Plus Jakarta Sans 400-800 (display and body), JetBrains Mono for code blocks
 - Images in WebP format under images per experiment folder
 - Per-page SEO via Seo component (title, meta, OG, JSON-LD, canonical, hreflang)
 - GA4 SPA pageview tracking via GtagTracker component
-- Source code in sandbox/, build output in root
+- EN and ID language toggle via LanguageContext and translations.js (client side, localStorage)
+- Source code in src/ and entries/, build output in root
 
 Frontend (sub-apps):
-- React 18 with Vite 6 for MiniLeads, CV Screening, and ContentOS
+- React 18 with Vite for MiniLeads, CV Screening, and ContentOS
 - Vanilla JavaScript for Job Tracker
 - Chart.js for MiniLeads and ContentOS analytics and Job Tracker trends
 - PDF.js for in browser CV text extraction
@@ -63,17 +65,27 @@ Infrastructure:
 
 ## Project Structure
 
-Portfolio (React + Vite, source in sandbox/):
-- sandbox/src/pages/ - Home, Profile, Contact, ExperimentsList, Exp001-017
-- sandbox/src/components/shared/ - InteractiveCta, ScreenshotCarousel, TiltBox, Chart, Seo, Navbar, Footer, etc.
-- sandbox/src/App.jsx - Routes + GtagTracker (GA4 SPA pageview)
-- sandbox/public/ - humans.txt, robots.txt, sitemap.xml
-- sandbox/vite.config.js - Multi-page build config (21 HTML entries)
-- assets/ - Built JS and CSS bundles (main-*.js, main-*.css)
+Portfolio (React + Vite, source in src/ and entries/):
+- src/pages/ - Home, Profile, Contact, ExperimentsList, Exp001-017
+- src/components/home/ - Hero, HeroBanner, FeaturedExperiments, CapabilitySection, ApproachSection, ClosingSection, AboutSection, CTASection, Splash
+- src/components/shared/ - InteractiveCta, ScreenshotCarousel, TiltBox, Chart, Seo, Navbar, Footer, Eyebrow, Button, StatusBadge, ScrollToTop
+- src/components/experiment/ - ZoomImage, ScreenshotCarousel, Chart
+- src/context/LanguageContext.jsx - EN and ID language state (localStorage)
+- src/i18n/translations.js - All copy EN and ID per section
+- src/data/experiments.js - Experiment metadata for all 17
+- src/hooks/ - useScrollReveal, usePageTitle
+- src/styles/global.css - Neumorphism utilities, fonts, custom classes
+- src/App.jsx - Routes + GtagTracker (GA4 SPA pageview)
+- src/main.jsx - Entry point with LanguageProvider
+- entries/ - Source HTML entries with SEO meta and GA4 (21 files)
+- public/ - Vite static files (humans.txt, robots.txt, sitemap.xml, images/)
+- vite.config.js - Multi-page build config (21 HTML entries)
+- tailwind.config.js - Palette (ink, paper, accent) and fonts
+- assets/ - Built JS and CSS bundles
 - index.html, profile.html, contact.html, experiments-list.html - Built HTML entries
 - exp001.html to exp017.html - Built HTML entries with per-page SEO
 - 404.html - Custom not found page, not indexed
-- images/ - Logo, portrait, and per experiment WebP assets
+- images/ - Logo, portrait, OG banner, and per experiment WebP assets
 
 Sub-apps (separate React/Vanilla projects):
 - jobtracker/ - Job Tracker frontend (Vanilla JS)
@@ -85,6 +97,18 @@ Static files:
 - robots.txt - Search engine rules
 - sitemap.xml - Full URL and image sitemap
 - humans.txt - Team and site credits
+
+## Design System
+
+The homepage uses a Neumorphism and Bento Grid design language:
+- Surface: #F8FAFC (cool white) with soft two-directional shadows
+- Palette: ink #0C0C0C, paper #F8FAFC, accent #D70000
+- Neumorphism utilities: .neu-card, .neu-card-hover, .neu-inset, .neu-pill in global.css
+- Bento Grid: asymmetric tile layouts on desktop, stacked on mobile
+- Hero banner: crumpled paper texture (SVG feTurbulence), logo with 12 drifting tech icons
+- Motion: reveal animations (data-reveal), TiltBox parallax, framer-motion scroll parallax
+- Mobile: infinite carousel with cover-flow scale and snap-proximity in Featured section
+- Typography: Plus Jakarta Sans 400-800, hero name with uppercase and text stroke
 
 ## Experiments
 
@@ -115,9 +139,9 @@ Each experiment page includes system requirements, screenshots, live demo status
 | App | Frontend | Backend | Ports | Public Access | Token Key |
 |-----|----------|---------|-------|---------------|-----------|
 | Job Tracker | HTML and Tailwind CDN and Vanilla JS in 4 files | Supabase Auth, Postgres, and Edge Functions since EXP 017 | Cloud only | https://robbyaliasaakbar.github.io/jobtracker/ | Supabase session |
-| MiniLeads | React 18 and Vite 6 and Chart.js with custom CSS | Supabase Auth, Postgres, and Edge Functions since EXP 017 | Cloud only | https://robbyaliasaakbar.github.io/miniLeads/ | Supabase session |
-| CV Screening | React 18 and Vite 6 and PDF.js with custom CSS | Shared authentication backend plus n8n workflow with 24 nodes | Local 7008 to 7002 and 5678 | Auth at https://aispec.tail06293c.ts.net and webhook at https://aispec.tail06293c.ts.net:10000/webhook/upload-cv | cv dot token in local storage |
-| ContentOS | React 18 and Vite 6 and Chart.js with custom CSS | Supabase Auth, Postgres, and Edge Functions since EXP 017 | Cloud only | https://robbyaliasaakbar.github.io/contentOS/ | Supabase session |
+| MiniLeads | React 18 and Vite and Chart.js with custom CSS | Supabase Auth, Postgres, and Edge Functions since EXP 017 | Cloud only | https://robbyaliasaakbar.github.io/miniLeads/ | Supabase session |
+| CV Screening | React 18 and Vite and PDF.js with custom CSS | Shared authentication backend plus n8n workflow with 24 nodes | Local 7008 to 7002 and 5678 | Auth at https://aispec.tail06293c.ts.net and webhook at https://aispec.tail06293c.ts.net:10000/webhook/upload-cv | cv dot token in local storage |
+| ContentOS | React 18 and Vite and Chart.js with custom CSS | Supabase Auth, Postgres, and Edge Functions since EXP 017 | Cloud only | https://robbyaliasaakbar.github.io/contentOS/ | Supabase session |
 
 Notes:
 - Since EXP 017, Job Tracker, MiniLeads, and ContentOS use Supabase Auth with email codes and row level security, so a user reads only their own rows
@@ -131,11 +155,10 @@ Notes:
 ## Local Development
 
 Portfolio (React + Vite):
-- cd sandbox
-- npm install once
+- npm install once in the project root
 - npm run dev for local development (port 5173)
-- npm run build for production build (outputs to sandbox/dist/)
-- Copy dist/* to root for deployment
+- npm run build for production build (outputs to dist/)
+- Copy dist/entries/*.html and dist/assets/ to root for deployment
 
 Job Tracker:
 - Serve the jobtracker folder with a static server for preview
@@ -162,8 +185,8 @@ ContentOS:
 
 ## Deployment
 
-- Build the React app in sandbox/ with npm run build
-- Copy sandbox/dist/* to root (replace HTML files and assets/)
+- Build the React app with npm run build
+- Copy dist/entries/*.html and dist/assets/ to root (replace HTML files and assets/)
 - Push to the main branch of robbyaliasaakbar dot github dot io
 - GitHub Pages publishes static files automatically
 - React apps publish from their dist output to miniLeads, cv_screening, and contentOS subfolders
@@ -175,11 +198,11 @@ ContentOS:
 ## SEO and Performance
 
 - Canonical URLs and hreflang for English default and Indonesian alternate
-- Open Graph and Twitter cards with WebP images
+- Open Graph and Twitter cards with WebP images (OG banner: metadata-banner.webp at 1200x630)
 - JSON-LD for WebSite, Person, Article, BreadcrumbList, FAQPage, CollectionPage, and ContactPage
 - Per-page SEO meta in built HTML entries (crawler reads static HTML, not JS render)
 - SPA pageview tracking via GtagTracker component (fires on every route change)
-- Sitemap at sitemap.xml with image extensions
+- Sitemap at sitemap.xml with image extensions and lastmod dates
 - Robots at robots.txt with allow for public pages and disallow for 404
 - Humans credits at humans.txt
 - Preconnect for Google Fonts and analytics

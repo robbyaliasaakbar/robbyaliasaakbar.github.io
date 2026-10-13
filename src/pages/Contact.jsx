@@ -93,7 +93,7 @@ export default function Contact() {
       <Seo
         title="Contact — Robby Aliasa Akbar"
         description="If you have a business problem, technical question, or AI opportunity that needs validation, feel free to reach out."
-        image="/images/Profile.webp"
+        image="/images/metadata-banner.webp"
         path="/contact.html"
         type="website"
       />

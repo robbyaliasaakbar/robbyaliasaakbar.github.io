@@ -149,7 +149,7 @@ export default function Profile() {
       <Seo
         title="Profile — Robby Aliasa Akbar"
         description="I'm a self-taught applied AI systems builder. I explore local LLMs, inference, automation, agent architecture, and practical AI systems."
-        image="/images/Profile.webp"
+        image="/images/metadata-banner.webp"
         path="/profile.html"
         type="website"
       />

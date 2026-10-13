@@ -24,9 +24,9 @@ export default function Home() {
   return (
     <main>
       <Seo
-        title="Robby Aliasa Akbar — Applied AI Systems Builder"
-        description="Applied AI systems builder. I explore local LLMs, automation, and real business tools through 17 documented experiments. See what actually works."
-        image="/images/Profile.webp"
+        title="Robby Aliasa Akbar — Applied AI System"
+        description="Applied AI systems. Exploring AI systems, local LLMs, automation workflows, and practical tools that actually work in real business operations."
+        image="/images/metadata-banner.webp"
         path="/"
         type="website"
       />

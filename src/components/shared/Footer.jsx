@@ -1,16 +1,11 @@
 import { Link, useLocation } from 'react-router-dom'
+import { useLanguage } from '../../context/LanguageContext.jsx'
+import { pick } from '../../i18n/translations.js'
 
 /*
   Footer — di-port identik dari index.html (baris FOOTER).
   Link internal pakai <Link>, active state ngikutin lokasi route.
 */
-
-const NAV_LINKS = [
-  { to: '/', label: 'Home' },
-  { to: '/profile.html', label: 'Profile' },
-  { to: '/experiments-list.html', label: 'Experiments' },
-  { to: '/contact.html', label: 'Contact' },
-]
 
 const SOCIAL_LINKS = [
   { href: 'https://www.linkedin.com/in/robby-aliasa-akbar-001a2a267', label: 'LinkedIn' },
@@ -23,6 +18,15 @@ const SOCIAL_LINKS = [
 export default function Footer() {
   const location = useLocation()
   const year = new Date().getFullYear()
+  const { lang } = useLanguage()
+  const t = (key) => pick(lang, 'footer', key)
+
+  const NAV_LINKS = [
+    { to: '/', label: t('home') },
+    { to: '/profile.html', label: t('profile') },
+    { to: '/experiments-list.html', label: t('experiments') },
+    { to: '/contact.html', label: t('contact') },
+  ]
 
   return (
     <footer className="bg-dark-section text-white">
@@ -30,10 +34,10 @@ export default function Footer() {
 
         {/* Currently — live status block */}
         <div className="border-b border-white/10 pb-10 mb-10">
-          <p className="eyebrow">Currently</p>
+          <p className="eyebrow">{t('currently')}</p>
           <p className="mt-4 flex items-start gap-3 font-display font-bold text-lg sm:text-xl leading-snug">
             <span className="live-dot mt-2" aria-hidden="true"></span>
-            Testing where AI helps — and where it gets in the way.
+            {t('status')}
           </p>
         </div>
 
@@ -44,21 +48,17 @@ export default function Footer() {
               Robby Aliasa Akbar
             </p>
             <p className="mt-3 font-display font-bold text-xs tracking-[0.22em] uppercase text-accent">
-              Applied AI Systems Builder
+              {t('brand')}
             </p>
             <p className="mt-5 text-base text-white/60 leading-relaxed max-w-sm">
-              Exploring AI systems, local LLMs, automation workflows, and practical tools
-              that actually work in real business operations.
-              <br />
-              Building what matters, and checking whether AI is truly useful in everyday
-              work.
+              {t('tagline')}
             </p>
           </div>
 
           {/* Middle: navigate */}
           <div className="md:justify-self-center">
             <p className="font-display font-bold text-sm tracking-[0.22em] uppercase text-white/40">
-              Navigate
+              {t('navigate')}
             </p>
             <ul className="mt-5 space-y-3 text-base">
               {NAV_LINKS.map((link) => {
@@ -80,7 +80,7 @@ export default function Footer() {
           {/* Right: connect */}
           <div className="md:justify-self-end">
             <p className="font-display font-bold text-sm tracking-[0.22em] uppercase text-white/40">
-              Connect
+              {t('connect')}
             </p>
             <ul className="mt-5 space-y-3 text-base">
               {SOCIAL_LINKS.map((link) => (
@@ -100,7 +100,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-white/40">
-          <p>&copy; {year} Robby Aliasa Akbar. All rights reserved.</p>
+          <p>&copy; {year} Robby Aliasa Akbar. {t('rights')}</p>
           <p className="font-display tracking-[0.14em] uppercase">
             robbyaliasaakbar.github.io
           </p>

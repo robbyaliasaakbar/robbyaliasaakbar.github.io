@@ -3,6 +3,8 @@ import Eyebrow from '../shared/Eyebrow.jsx'
 import InteractiveCta from '../shared/InteractiveCta.jsx'
 import StatusBadge from '../shared/StatusBadge.jsx'
 import TiltBox from '../shared/TiltBox.jsx'
+import { useLanguage } from '../../context/LanguageContext.jsx'
+import { pick } from '../../i18n/translations.js'
 
 /*
   FeaturedExperiments — port konten asli section SELECTED EXPERIMENTS
@@ -115,72 +117,92 @@ const EXPERIMENTS = [
 // throwDelay/throwDur: "lempar ke atas" per card (desktop grid) — stagger
 // delay + durasi beda-beda biar gak seragam (revisi user).
 function ExperimentCard({ exp, plain = false, throwDelay, throwDur }) {
+  // BENTO spans (revisi tema) — cuma aktif di grid desktop (md/lg).
+  // Di mobile flex carousel, class col-span gak ngaruh apa pun.
+  // 017 = tile besar 2x2, 004 = tile lebar penutup → grid penuh tanpa lubang.
+  const span =
+    exp.code === 'EXP 017'
+      ? ' md:col-span-2 lg:col-span-2 lg:row-span-2'
+      : exp.code === 'EXP 004'
+        ? ' md:col-span-2 lg:col-span-1'
+        : ''
   return (
     // Mobile: w 75% BENERAN (flex item ngambil max-content gambar ~844px kalo
-    // cuma min-w → card kepotong lebar layar) + snap-center (card aktif
+    // cuma min-w-0 → card kepotong lebar layar) + snap-center (card aktif
     // selalu pas DI TENGAH layar, kartu sebelah nyipul kiri-kanan).
     // min-w-0: neutralisir min-content flex biar semua card LEBAR SERAGAM 75%.
     // TANPA h-full: height:100% di flex item MELARANG align-items:stretch jalan
     // → tinggi card beda-beda. Tanpa itu stretch bikin semua card TINGGI SERAGAM.
     // Desktop: sm:w-auto → grid yang atur lebar kolom, seperti semula
-    <TiltBox max={5} className="min-w-0 w-[75%] shrink-0 snap-center sm:w-auto">
-      <a
-        href={exp.href}
-        aria-label={exp.aria}
-        className={
-          'exp-card group flex flex-col h-full border border-black/10 rounded-2xl p-5 sm:p-8 bg-paper' +
-          (plain ? '' : ' reveal-throw')
-        }
-        data-reveal={plain ? undefined : throwDelay}
-        style={plain ? undefined : { '--throw-dur': throwDur }}
-      >
-        <div className="rounded-xl overflow-hidden border border-black/10 mb-4 sm:mb-6">
-          <img
-            src={exp.image}
-            alt={exp.imageAlt}
-            width="800"
-            height="500"
-            loading="lazy"
-            decoding="async"
-            className="w-full aspect-[16/10] object-cover object-top"
-          />
-        </div>
+    // Revisi mobile: TiltBox DI-SKIP (plain div) — tilt itu efek hover mouse,
+    // di touch justru nambah pointer event overhead & bentrok sama native scroll.
+    (() => {
+      const wrapperClass = 'min-w-0 w-[75%] shrink-0 snap-center sm:w-auto' + span
+      const anchor = (
+        <a
+          href={exp.href}
+          aria-label={exp.aria}
+          className={
+            // Revisi tema: border tipis + bg-paper diganti .neu-card (emboss)
+            'exp-card group flex flex-col h-full neu-card neu-card-hover p-5 sm:p-8' +
+            (plain ? '' : ' reveal-throw')
+          }
+          data-reveal={plain ? undefined : throwDelay}
+          style={plain ? undefined : { '--throw-dur': throwDur }}
+        >
+          <div className="rounded-xl overflow-hidden border border-black/10 mb-4 sm:mb-6">
+            <img
+              src={exp.image}
+              alt={exp.imageAlt}
+              width="800"
+              height="500"
+              loading="lazy"
+              decoding="async"
+              className="w-full aspect-[16/10] object-cover object-top"
+            />
+          </div>
 
-        <div className="flex items-center justify-between">
-          <span className="font-display font-bold text-sm tracking-[0.2em] text-neutral-400">
-            {exp.code}
+          <div className="flex items-center justify-between">
+            <span className="font-display font-bold text-sm tracking-[0.2em] text-neutral-400">
+              {exp.code}
+            </span>
+            <span className="flex flex-wrap justify-end gap-2">
+              {exp.badges.map((badge) => (
+                <StatusBadge
+                  key={badge.variant + (badge.label || '')}
+                  variant={badge.variant}
+                  label={badge.label}
+                />
+              ))}
+            </span>
+          </div>
+
+          <h3 className="mt-4 sm:mt-6 font-display font-bold text-base sm:text-lg leading-snug">
+            {exp.title}
+          </h3>
+
+          {/* Revisi user: description DIHAPUS tampilannya di semua ukuran
+              (mobile udah locked hidden — desktop ikut disembunyikan) */}
+          <p className="mt-4 text-base text-neutral-600 leading-relaxed flex-1 hidden">
+            {exp.desc}
+          </p>
+
+          {/* Spacer: nyodorin arrow nempel ke BAWAH card di semua ukuran
+              (di grid bento, tinggi card beda-beda → arrow tetap rata bawah) */}
+          <div className="flex-1" aria-hidden="true" />
+
+          <span className="exp-card-arrow mt-5 sm:mt-8 inline-flex items-center gap-2 font-display font-bold text-xs sm:text-sm tracking-[0.14em] uppercase">
+            {exp.cta} <span aria-hidden="true">-&gt;</span>
           </span>
-          <span className="flex flex-wrap justify-end gap-2">
-            {exp.badges.map((badge) => (
-              <StatusBadge
-                key={badge.variant + (badge.label || '')}
-                variant={badge.variant}
-                label={badge.label}
-              />
-            ))}
-          </span>
-        </div>
-
-        <h3 className="mt-4 sm:mt-6 font-display font-bold text-base sm:text-lg leading-snug">
-          {exp.title}
-        </h3>
-
-        {/* Revisi user: description DIHAPUS tampilannya di semua ukuran
-            (mobile udah locked hidden — desktop ikut disembunyikan) */}
-        <p className="mt-4 text-base text-neutral-600 leading-relaxed flex-1 hidden">
-          {exp.desc}
-        </p>
-
-        {/* Spacer khusus MOBILE: nyodorin arrow nempel ke bawah card biar rata
-            (judul tiap card beda-beda jumlah barisnya).
-            Desktop: sm:hidden → display:none, nol pengaruh */}
-        <div className="flex-1 sm:hidden" aria-hidden="true" />
-
-        <span className="exp-card-arrow mt-5 sm:mt-8 inline-flex items-center gap-2 font-display font-bold text-xs sm:text-sm tracking-[0.14em] uppercase">
-          {exp.cta} <span aria-hidden="true">-&gt;</span>
-        </span>
-      </a>
-    </TiltBox>
+        </a>
+      )
+      if (plain) return <div className={wrapperClass}>{anchor}</div>
+      return (
+        <TiltBox max={5} className={wrapperClass}>
+          {anchor}
+        </TiltBox>
+      )
+    })()
   )
 }
 
@@ -191,6 +213,17 @@ const THROW_DUR = ['0.9s', '1.12s', '1s', '1.22s', '1.06s', '1.3s']
 
 export default function FeaturedExperiments() {
   const trackRef = useRef(null)
+  const { lang } = useLanguage()
+  const t = (key) => pick(lang, 'featured', key)
+
+  const LIST = EXPERIMENTS.map((exp) => {
+    const key = exp.code.toLowerCase().replace(' ', '') // exp017, exp016, dst
+    return {
+      ...exp,
+      title: pick(lang, 'featured', key + '.title'),
+      cta: pick(lang, 'featured', key + '.cta'),
+    }
+  })
 
   // Breakpoint yang sama dengan CSS (Tailwind sm = 640px).
   // Mobile → render 3 SET kartu (clone) buat efek INFINITE.
@@ -268,6 +301,8 @@ export default function FeaturedExperiments() {
   // Efek sampingnya: tepi kiri-kanan jadi lebih lega (background putih full)
   // tanpa nambah padding → ukuran card active TIDAK berubah.
   // Transform di <a> (anak TiltBox) — gak bentrok sama transform tilt.
+  // Revisi mobile: SKIP kartu di luar area visible track — dulu 18 kartu
+  // getBoundingClientRect() per frame → layout thrashing → scroll kasar.
   useEffect(() => {
     const track = trackRef.current
     if (!track || !isMobile) return
@@ -278,9 +313,12 @@ export default function FeaturedExperiments() {
       const pitch = getPitch() || 1
       const rect = track.getBoundingClientRect()
       const viewCenter = rect.left + rect.width / 2
+      const margin = rect.width // toleransi: kartu sampai 1 viewport di luar
       const kids = track.children
       for (let i = 0; i < kids.length; i++) {
         const r = kids[i].getBoundingClientRect()
+        // skip clone set yang jauh di luar viewport (hemat layout read)
+        if (r.right < rect.left - margin || r.left > rect.right + margin) continue
         const cardCenter = r.left + r.width / 2
         const dist = Math.abs(cardCenter - viewCenter)
         const t = Math.min(1, dist / pitch) // 0 = center, ≥1 = kartu samping
@@ -321,6 +359,9 @@ export default function FeaturedExperiments() {
   // maju 1 kartu halus (smooth). Gak ada lagi "balik ke awal" yang kasar —
   // lewat batas set → normalisasi invisible di atas yang bikin INFINITE.
   // - pause saat hover mouse / pegang layar (touch), jalan lagi setelah lepas
+  // - Revisi mobile: resume pakai DELAY 1500ms setelah touchend — dulu resume
+  //   langsung pas jari lepas, autoplay scrollBy bentrok sama momentum scroll
+  //   native → terasa kasar & susah geser.
   // - reduced-motion / desktop (grid, gak scrollable) → mati otomatis
   useEffect(() => {
     const track = trackRef.current
@@ -329,6 +370,7 @@ export default function FeaturedExperiments() {
     if (track.scrollWidth <= track.clientWidth + 4) return // desktop grid → skip
 
     let timer = null
+    let resumeTimer = null
 
     const tick = () => {
       const pitch = getPitch()
@@ -342,21 +384,30 @@ export default function FeaturedExperiments() {
       clearInterval(timer)
       timer = null
     }
-    const pause = () => stop()
-    const resume = () => start()
+    const pause = () => {
+      stop()
+      clearTimeout(resumeTimer)
+    }
+    const scheduleResume = () => {
+      clearTimeout(resumeTimer)
+      resumeTimer = setTimeout(() => {
+        if (!timer) start()
+      }, 1500)
+    }
 
     start()
     track.addEventListener('mouseenter', pause)
-    track.addEventListener('mouseleave', resume)
+    track.addEventListener('mouseleave', scheduleResume)
     track.addEventListener('touchstart', pause, { passive: true })
-    track.addEventListener('touchend', resume, { passive: true })
+    track.addEventListener('touchend', scheduleResume, { passive: true })
 
     return () => {
       stop()
+      clearTimeout(resumeTimer)
       track.removeEventListener('mouseenter', pause)
-      track.removeEventListener('mouseleave', resume)
+      track.removeEventListener('mouseleave', scheduleResume)
       track.removeEventListener('touchstart', pause)
-      track.removeEventListener('touchend', resume)
+      track.removeEventListener('touchend', scheduleResume)
     }
   }, [isMobile])
 
@@ -414,7 +465,7 @@ export default function FeaturedExperiments() {
   }, [])
 
   return (
-    <section className="py-24 lg:py-32">
+    <section className="py-24 lg:py-32 bg-[#F8FAFC]">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         {/* Revisi user: header animasi kayak hero — eyebrow slide dari kiri
             (duluan), h2 jatuh dari atas (nyusul), description jatuh lagi
@@ -422,26 +473,24 @@ export default function FeaturedExperiments() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
             <div data-reveal className="reveal-from-left">
-              <Eyebrow>Selected Experiments</Eyebrow>
+              <Eyebrow>{t('eyebrow')}</Eyebrow>
             </div>
             <h2
               className="mt-4 font-display font-extrabold tracking-tight text-3xl sm:text-4xl lg:text-5xl reveal-drop"
               data-reveal="500"
             >
-              Selected Experiments
+              {t('heading')}
             </h2>
             <p
               className="mt-4 text-base sm:text-lg text-neutral-600 leading-relaxed max-w-2xl"
               data-reveal="850"
             >
-              6 of 17 experiments. Every claim below links to a live app, public source
-              code, or proof from outside my site. For the complete collection with full
-              evidence, failure logs, and live demos, head to the full experiments list.
+              {t('desc')}
             </p>
           </div>
           <div data-reveal="1200" className="shrink-0">
             <InteractiveCta variant="primary" href="/experiments-list.html">
-              View All Experiments <span aria-hidden="true">-&gt;</span>
+              {t('cta')} <span aria-hidden="true">-&gt;</span>
             </InteractiveCta>
           </div>
         </div>
@@ -454,13 +503,17 @@ export default function FeaturedExperiments() {
             - Spoiler scale 0.85 origin ke arah tengah → lebih kecil dari
               active tapi nyipulnya gak kepotong (nempel tapi menyusut).
             - 3 set clone (infinite) + autoplay halus.
+            - Revisi mobile: snap-mandatory → snap-proximity — mandatory
+              berebut sama programmatic scrollBy autoplay → scroll kasar.
+              Proximity: snap lembut HANYA saat user berhenti dekat snap point,
+              programmatic scroll autoplay di-skip (gak dipaksa snap).
             Desktop (≥640px) → grid persis semula, gak tersentuh.
             py-4: buffer vertical biar card miring gak kepotong (clip-y). */}
         <div
           ref={trackRef}
-          className="mt-12 -mx-6 px-6 flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar py-4 sm:mx-0 sm:px-0 sm:py-0 sm:overflow-visible sm:grid sm:gap-6 md:grid-cols-2 lg:grid-cols-3"
+          className="mt-12 -mx-6 px-6 flex gap-4 overflow-x-auto snap-x snap-proximity no-scrollbar py-4 sm:mx-0 sm:px-0 sm:py-0 sm:overflow-visible sm:grid sm:gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
-            {list.map((exp, idx) => (
+            {LIST.map((exp, idx) => (
               <ExperimentCard
                 key={exp.code + '-' + idx}
                 exp={exp}

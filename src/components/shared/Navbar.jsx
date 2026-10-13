@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Button from './Button.jsx'
+import { useLanguage } from '../../context/LanguageContext.jsx'
+import { pick } from '../../i18n/translations.js'
 
 /*
   Navbar — Opsi A: "Status-Forward".
@@ -10,13 +12,6 @@ import Button from './Button.jsx'
   - Hamburger toggle, mobile menu tutup saat pindah halaman
 */
 
-const NAV_LINKS = [
-  { to: '/', label: 'Home' },
-  { to: '/profile.html', label: 'Profile' },
-  { to: '/experiments-list.html', label: 'Experiments' },
-  { to: '/contact.html', label: 'Contact' },
-]
-
 const isActivePath = (pathname, to) =>
   pathname === to || (to === '/experiments-list.html' && pathname.startsWith('/exp'))
 
@@ -24,6 +19,14 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
+  const { lang, setLang } = useLanguage()
+
+  const NAV_LINKS = [
+    { to: '/', label: pick(lang, 'navbar', 'home') },
+    { to: '/profile.html', label: pick(lang, 'navbar', 'profile') },
+    { to: '/experiments-list.html', label: pick(lang, 'navbar', 'experiments') },
+    { to: '/contact.html', label: pick(lang, 'navbar', 'contact') },
+  ]
 
   // Scroll state — sama persis dengan main.js (threshold > 12px)
   useEffect(() => {
@@ -56,12 +59,35 @@ export default function Navbar() {
             title="Currently building"
           >
             <span className="live-dot" aria-hidden="true"></span>
-            Building
+            {pick(lang, 'navbar', 'building')}
           </span>
         </div>
 
-        {/* Right: Desktop nav + CTA */}
-        <div className="hidden md:flex items-center gap-8 lg:gap-10 text-base font-medium">
+        {/* Right: Desktop nav + Language toggle + CTA */}
+        <div className="hidden md:flex items-center gap-6 lg:gap-8 text-base font-medium">
+          {/* Language toggle */}
+          <div className="flex items-center gap-1 text-xs font-bold tracking-widest uppercase">
+            <button
+              onClick={() => setLang('en')}
+              className={`px-2 py-1 rounded transition-colors ${
+                lang === 'en' ? 'text-accent' : 'text-ink/40 hover:text-ink/70'
+              }`}
+              aria-label="Switch to English"
+            >
+              EN
+            </button>
+            <span className="text-ink/25" aria-hidden="true">|</span>
+            <button
+              onClick={() => setLang('id')}
+              className={`px-2 py-1 rounded transition-colors ${
+                lang === 'id' ? 'text-accent' : 'text-ink/40 hover:text-ink/70'
+              }`}
+              aria-label="Ganti ke Bahasa Indonesia"
+            >
+              ID
+            </button>
+          </div>
+
           {NAV_LINKS.map((link) => {
             const isActive = isActivePath(location.pathname, link.to)
             return (
@@ -129,6 +155,27 @@ export default function Navbar() {
         >
           GitHub <span aria-hidden="true">↗</span>
         </a>
+
+        {/* Language toggle mobile */}
+        <div className="flex items-center gap-2 pt-3 text-xs font-bold tracking-widest uppercase">
+          <button
+            onClick={() => setLang('en')}
+            className={`px-3 py-1.5 rounded transition-colors ${
+              lang === 'en' ? 'text-accent' : 'text-ink/40'
+            }`}
+          >
+            EN
+          </button>
+          <span className="text-ink/25" aria-hidden="true">|</span>
+          <button
+            onClick={() => setLang('id')}
+            className={`px-3 py-1.5 rounded transition-colors ${
+              lang === 'id' ? 'text-accent' : 'text-ink/40'
+            }`}
+          >
+            ID
+          </button>
+        </div>
       </div>
     </header>
   )

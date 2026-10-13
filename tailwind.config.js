@@ -5,14 +5,14 @@ export default {
     extend: {
       colors: {
         ink: '#0C0C0C',
-        paper: '#FFFFFF',
+        paper: '#F8FAFC',
         accent: '#D70000',
       },
       fontFamily: {
-        // Full Manrope — spec upgrade: tidak ada font lain
-        sans: ['Manrope', 'sans-serif'],
-        display: ['Manrope', 'sans-serif'],
-        body: ['Manrope', 'sans-serif'],
+        // Full Plus Jakarta Sans — spec upgrade: tidak ada font lain
+        sans: ['Plus Jakarta Sans', 'sans-serif'],
+        display: ['Plus Jakarta Sans', 'sans-serif'],
+        body: ['Plus Jakarta Sans', 'sans-serif'],
       },
     },
   },

@@ -42,7 +42,7 @@ function setJsonLd(obj) {
 export default function Seo({
   title,
   description,
-  image = '/images/Profile.webp',
+  image = '/images/metadata-banner.webp',
   path = '/',
   type = 'website',
   jsonLd,
@@ -124,7 +124,7 @@ export default function Seo({
               name: 'Robby Aliasa Akbar',
               url: `${SITE}/profile.html`,
               image: `${SITE}/images/Profile.webp`,
-              jobTitle: 'Applied AI Systems Builder',
+              jobTitle: 'Applied AI System',
             },
             publisher: {
               '@type': 'Person',
