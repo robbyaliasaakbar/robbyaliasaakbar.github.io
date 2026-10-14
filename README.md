@@ -19,7 +19,7 @@ This repository contains a personal portfolio and applied research site focused 
 
 The site has four core pages and seventeen documented experiments, built as a React 18 multi-page application with Vite. Core pages present background, work, and contact. Experiment pages present technical case studies with terminal receipts, screenshots in WebP format, and honest failure analysis. Four experiments include live web applications hosted on GitHub Pages. Since EXP 017, three of those apps run their authentication and data on Supabase and work with the home computer off, while CV Screening still uses the home path for auth and n8n scoring. One experiment adds a local MCP translator so an LLM can write into the live tracker without a browser.
 
-The homepage features a Neumorphism and Bento Grid design with an EN and ID language toggle. The goal is to test whether artificial intelligence is truly useful in everyday work and to publish full evidence for every claim.
+The homepage and profile page both use a Neumorphism and Bento Grid design with an EN and ID language toggle. The goal is to test whether artificial intelligence is truly useful in everyday work and to publish full evidence for every claim.
 
 ## Tech Stack
 
@@ -33,7 +33,7 @@ Frontend (portfolio):
 - Images in WebP format under images per experiment folder
 - Per-page SEO via Seo component (title, meta, OG, JSON-LD, canonical, hreflang)
 - GA4 SPA pageview tracking via GtagTracker component
-- EN and ID language toggle via LanguageContext and translations.js (client side, localStorage)
+- EN and ID language toggle via LanguageContext and translations.js (client side, localStorage), wired for Homepage and Profile pages
 - Source code in src/ and entries/, build output in root
 
 Frontend (sub-apps):
@@ -98,17 +98,26 @@ Static files:
 - sitemap.xml - Full URL and image sitemap
 - humans.txt - Team and site credits
 
+Project docs:
+- README.md - This file. Project overview, stack, and setup.
+- CONTRIBUTING.md - Contribution rules. PR-only workflow, ENGINEERING.md log required.
+- ENGINEERING.md - Changelog. Every PR adds an entry.
+- LICENSE - Apache License 2.0.
+- COPY-TRACKING.md - Copy review file for i18n (delete after final).
+
 ## Design System
 
-The homepage uses a Neumorphism and Bento Grid design language:
+The homepage and profile page use a Neumorphism and Bento Grid design language:
 - Surface: #F8FAFC (cool white) with soft two-directional shadows
 - Palette: ink #0C0C0C, paper #F8FAFC, accent #D70000
 - Neumorphism utilities: .neu-card, .neu-card-hover, .neu-inset, .neu-pill in global.css
 - Bento Grid: asymmetric tile layouts on desktop, stacked on mobile
 - Hero banner: crumpled paper texture (SVG feTurbulence), logo with 12 drifting tech icons
 - Motion: reveal animations (data-reveal), TiltBox parallax, framer-motion scroll parallax
-- Mobile: infinite carousel with cover-flow scale and snap-proximity in Featured section
+- Mobile: infinite carousel with cover-flow scale and snap-proximity in Featured section, hero DOM reordered so name appears before photo
 - Typography: Plus Jakarta Sans 400-800, hero name with uppercase and text stroke
+- Profile page: 8 sections with bento grids (Hero 12-col, Positioning 12-col, Journey zigzag 2-1-1-2, Focus Areas asymmetric, Adaptive Approach dark anchor, Principles zigzag, Value Proposition 3-col, Closing clean light)
+- Decorative quote marks on profile hero quote tile (text-ink, font-extrabold, text-6xl)
 
 ## Experiments
 
